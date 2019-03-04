@@ -1,0 +1,47 @@
+{
+  "name": "eslint-plugin-vue-i18n",
+  "description": "ESLint plugin for Vue I18n",
+  "version": "0.0.1",
+  "author": {
+    "name": "kazuya kawaguchi",
+    "email": "kawakazu80@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/kazupon/eslint-plugin-vue-i18n/issues"
+  },
+  "devDependencies": {
+    "conventional-changelog-cli": "^2.0.12",
+    "conventional-github-releaser": "^3.1.2",
+    "eslint": "^5.15.0",
+    "eslint-plugin-vue-libs": "^3.0.0",
+    "git-commit-message-convention": "git://github.com/kazupon/git-commit-message-convention.git",
+    "mocha": "^6.0.2"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "homepage": "https://github.com/kazupon/eslint-plugin-vue-i18n#readme",
+  "keywords": [
+    "eslint",
+    "eslint-plugin",
+    "eslintplugin",
+    "i18n",
+    "internationalization",
+    "vue",
+    "vue-i18n",
+    "vue.js",
+    "vuejs"
+  ],
+  "license": "MIT",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kazupon/eslint-plugin-vue-i18n.git"
+  },
+  "scripts": {
+    "changelog": "conventional-changelog -i CHANGELOG.md -s -n ./node_modules/git-commit-message-convention/convention.js",
+    "lint": "eslint . --ignore-pattern \"!.*\"",
+    "release": "conventional-github-releaser -n ./node_modules/git-commit-message-convention/convention.js",
+    "test": "mocha ./tests/**/*.js"
+  }
+}
