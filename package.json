@@ -48,7 +48,7 @@
   },
   "scripts": {
     "changelog": "conventional-changelog -i CHANGELOG.md -s -n ./node_modules/git-commit-message-convention/convention.js",
-    "lint": "eslint . --ignore-pattern \"!.*\"",
+    "lint": "eslint lib scripts tests docs/.vuepress --ignore-pattern \"!.*\"",
     "release": "conventional-github-releaser -n ./node_modules/git-commit-message-convention/convention.js",
     "generate": "node scripts/update.js",
     "clean": "rimraf .nyc_output coverage docs/.vuepress/dist",
