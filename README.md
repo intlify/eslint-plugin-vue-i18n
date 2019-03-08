@@ -1,46 +1,47 @@
-# eslint-plugin-vue-i18n
+# :globe_with_meridians: eslint-plugin-vue-i18n
 
-ESLint plugin for vue-i18n
+ESLint plugin for Vue I18n
 
-## Installation
+<a href="https://www.patreon.com/kazupon" target="_blank">
+  <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patreon">
+</a>
 
-You'll first need to install [ESLint](http://eslint.org):
+## :cd: Installation
 
-```
-$ npm i eslint --save-dev
-```
+Use [npm](https://www.npmjs.com/) or a compatible tool.
 
-Next, install `eslint-plugin-vue-i18n`:
-
-```
-$ npm install eslint-plugin-vue-i18n --save-dev
+```sh
+npm install --save-dev eslint eslint-plugin-vue-i18n
 ```
 
-**Note:** If you installed ESLint globally (using the `-g` flag) then you must also install `eslint-plugin-vue-i18n` globally.
+## :rocket: Usage
 
-## Usage
+Configure your `.eslintrc.*` file.
 
-Add `vue-i18n` to the plugins section of your `.eslintrc` configuration file. You can omit the `eslint-plugin-` prefix:
+For example:
 
 ```json
 {
-    "plugins": [
-        "vue-i18n"
-    ]
+  "extends": [
+    "eslint:recommended",
+    "plugin:vue-i18n/recommended"
+  ],
+  "rules": {
+    // Optional.
+    "vue-i18n/no-dynamic-key": "error"
+  }
 }
 ```
 
+## :white_check_mark: TODO
+- [x] no-missing-key
+- [ ] no-dynamic-key
+- [ ] no-unused-key
+- [ ] no-raw-text
+- [ ] valid-message-syntax
+- [ ] keys-order
+- [ ] replace documentation example with `eslint-playground` component
 
-Then configure the rules you want to use under the rules section.
+## :copyright: License
 
-```json
-{
-    "rules": {
-        "vue-i18n/rule-name": 2
-    }
-}
-```
-
-## Supported Rules
-
-* Fill in provided rules here
+[MIT](http://opensource.org/licenses/MIT)

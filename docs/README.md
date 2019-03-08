@@ -1,5 +1,9 @@
 # Getting Started
 
+<a href="https://www.patreon.com/kazupon" target="_blank">
+  <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patreon">
+</a>
+
 ## :cd: Installation
 
 Use [npm](https://www.npmjs.com/) or a compatible tool.
@@ -22,7 +26,7 @@ For example:
   ],
   "rules": {
     // Optional.
-    "vue-i18n/no-missing-key": "error"
+    "vue-i18n/no-dynamic-key": "error"
   }
 }
 ```
