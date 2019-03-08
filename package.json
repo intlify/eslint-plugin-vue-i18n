@@ -15,11 +15,15 @@
     "eslint": "^5.15.0",
     "eslint-plugin-vue-libs": "^3.0.0",
     "git-commit-message-convention": "git://github.com/kazupon/git-commit-message-convention.git",
+    "vue-eslint-parser": "^6.0.3",
     "mocha": "^6.0.2"
   },
   "engines": {
     "node": ">=0.10.0"
   },
+  "files": [
+    "lib"
+  ],
   "homepage": "https://github.com/kazupon/eslint-plugin-vue-i18n#readme",
   "keywords": [
     "eslint",
@@ -43,5 +47,8 @@
     "lint": "eslint . --ignore-pattern \"!.*\"",
     "release": "conventional-github-releaser -n ./node_modules/git-commit-message-convention/convention.js",
     "test": "mocha ./tests/**/*.js"
+  },
+  "dependencies": {
+    "glob": "^7.1.3"
   }
 }
