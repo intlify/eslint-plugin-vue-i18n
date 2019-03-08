@@ -10,7 +10,7 @@ const { resolve } = require('path')
 const { withCategories } = require('./lib/rules')
 
 function toTableRow (rule) {
-  const mark = `${rule.recommended ? '🌟' : ''}${rule.fixable ? '✒️' : ''}`
+  const mark = `${rule.recommended ? ':star:' : ''}${rule.fixable ? ':black_nib:' : ''}`
   const link = `[vue-i18n/<wbr>${rule.name}](./${rule.name}.html)`
   const description = rule.description || '(no description)'
   return `| ${link} | ${description} | ${mark} |`

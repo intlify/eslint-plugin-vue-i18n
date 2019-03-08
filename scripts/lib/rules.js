@@ -26,8 +26,11 @@ const rules = readdirSync(resolve(__dirname, '../../lib/rules'))
 
 module.exports = rules
 module.exports.withCategories = [
+  'Possible Errors'
+  /*
   'Best Practices',
   'Stylistic Issues'
+  */
 ].map(
   category => ({
     category,
