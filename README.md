@@ -35,6 +35,9 @@ For example:
 }
 ```
 
+## :scroll: Changelog
+Details changes for each release are documented in the [CHANGELOG.md](https://github.com/kazupon/eslint-plugin-vue-i18n/blob/master/CHANGELOG.md).
+
 ## :white_check_mark: TODO
 - [x] no-missing-key
 - [ ] no-dynamic-key
