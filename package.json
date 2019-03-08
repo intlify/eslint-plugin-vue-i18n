@@ -16,6 +16,9 @@
     "eslint-plugin-vue-libs": "^3.0.0",
     "git-commit-message-convention": "git://github.com/kazupon/git-commit-message-convention.git",
     "mocha": "^6.0.2",
+    "nyc": "^13.3.0",
+    "opener": "^1.5.1",
+    "rimraf": "^2.6.3",
     "vue-eslint-parser": "^6.0.3",
     "vuepress": "^1.0.0-alpha.39"
   },
@@ -48,9 +51,12 @@
     "lint": "eslint . --ignore-pattern \"!.*\"",
     "release": "conventional-github-releaser -n ./node_modules/git-commit-message-convention/convention.js",
     "generate": "node scripts/update.js",
+    "clean": "rimraf .nyc_output coverage docs/.vuepress/dist",
     "docs": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "test": "mocha ./tests/**/*.js"
+    "test": "mocha ./tests/**/*.js",
+    "test:coverage": "nyc mocha ./tests/**/*.js",
+    "coverage": "nyc report --reporter lcov && opener coverage/lcov-report/index.html"
   },
   "dependencies": {
     "glob": "^7.1.3"
