@@ -1,5 +1,7 @@
 # :globe_with_meridians: eslint-plugin-vue-i18n
 
+[![CircleCI](https://circleci.com/gh/kazupon/eslint-plugin-vue-i18n.svg?style=svg)](https://circleci.com/gh/kazupon/eslint-plugin-vue-i18n)
+
 ESLint plugin for Vue I18n
 
 <a href="https://www.patreon.com/kazupon" target="_blank">
