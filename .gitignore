@@ -1,6 +1,9 @@
 node_modules
-coverage
+.nyc_output
 .DS_Store
+.vscode
+docs/.vuepress/dist
+coverage
 *.log
 *.swp
 *~
