@@ -18,7 +18,7 @@ Configure your `.eslintrc.*` file.
 
 For example:
 
-```json
+```js
 {
   "extends": [
     "eslint:recommended",
@@ -27,6 +27,11 @@ For example:
   "rules": {
     // Optional.
     "vue-i18n/no-dynamic-key": "error"
+  },
+  "settings": {
+    "vue-i18n": {
+      "localeDir": "./pato/to/locales/*.json" // extention is glob formatting!
+    }
   }
 }
 ```

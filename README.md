@@ -8,32 +8,9 @@ ESLint plugin for Vue I18n
   <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patreon">
 </a>
 
-## :cd: Installation
+## :book: Documentation
 
-Use [npm](https://www.npmjs.com/) or a compatible tool.
-
-```sh
-npm install --save-dev eslint eslint-plugin-vue-i18n
-```
-
-## :rocket: Usage
-
-Configure your `.eslintrc.*` file.
-
-For example:
-
-```json
-{
-  "extends": [
-    "eslint:recommended",
-    "plugin:vue-i18n/recommended"
-  ],
-  "rules": {
-    // Optional.
-    "vue-i18n/no-dynamic-key": "error"
-  }
-}
-```
+See [here](https://kazupon.github.io/eslint-plugin-vue-i18n/)
 
 ## :scroll: Changelog
 Details changes for each release are documented in the [CHANGELOG.md](https://github.com/kazupon/eslint-plugin-vue-i18n/blob/master/CHANGELOG.md).
