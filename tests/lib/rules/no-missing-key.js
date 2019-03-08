@@ -42,7 +42,11 @@ tester.run('no-missing-key', rule, {
     settings,
     code: `$t('hello {name}')`
   }, {
-    // Identifier
+    // instance member
+    settings,
+    code: `i18n.t('hello {name}')`
+  }, {
+    // identifier
     settings,
     code: `$t(key)`
   }, {
