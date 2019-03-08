@@ -11,7 +11,7 @@ module.exports = {
   serviceWorker: false,
   evergreen: true,
   head: [
-    ['meta', { name: 'theme-color', content: '#3eaf7c' }],
+    ['meta', { name: 'theme-color', content: '#3eaf7c' }]
   ],
   themeConfig: {
     repo: 'kazupon/eslint-plugin-vue-i18n',
