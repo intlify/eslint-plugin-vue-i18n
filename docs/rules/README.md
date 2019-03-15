@@ -7,11 +7,11 @@
 
 | Rule ID | Description |    |
 |:--------|:------------|:---|
-| [vue-i18n/<wbr>no-missing-key](./no-missing-key.html) | disallow missing locale message key at localization methods | :star: |
+| [vue-i18n/<wbr>no-missing-keys](./no-missing-keys.html) | disallow missing locale message key at localization methods | :star: |
 
 ## Best Practices
 
 | Rule ID | Description |    |
 |:--------|:------------|:---|
-| [vue-i18n/<wbr>no-unused-key](./no-unused-key.html) | disallow unused localization keys |  |
+| [vue-i18n/<wbr>no-unused-keys](./no-unused-keys.html) | disallow unused localization keys |  |
 

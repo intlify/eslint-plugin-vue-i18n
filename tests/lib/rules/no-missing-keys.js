@@ -4,7 +4,7 @@
 'use strict'
 
 const RuleTester = require('eslint').RuleTester
-const rule = require('../../../lib/rules/no-missing-key')
+const rule = require('../../../lib/rules/no-missing-keys')
 
 const baseDir = './tests/fixtures/locales'
 const resolve = file => `${baseDir}/${file}`
@@ -20,7 +20,7 @@ const tester = new RuleTester({
   parserOptions: { ecmaVersion: 2015 }
 })
 
-tester.run('no-missing-key', rule, {
+tester.run('no-missing-keys', rule, {
   valid: [{
     // basic key
     settings,

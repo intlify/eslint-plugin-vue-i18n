@@ -1,4 +1,4 @@
-# vue-i18n/no-unused-key
+# vue-i18n/no-unused-keys
 
 > disallow unused localization keys
 
@@ -78,7 +78,7 @@ You can specify allowed directive-comments.
 
 ```json
 {
-  "vue-i18n/no-unused-key": ["error", {
+  "vue-i18n/no-unused-keys": ["error", {
     "extensions": [".js", ".vue"]
   }]
 }

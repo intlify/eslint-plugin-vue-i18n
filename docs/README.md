@@ -26,7 +26,7 @@ For example:
   ],
   "rules": {
     // Optional.
-    "vue-i18n/no-dynamic-key": "error"
+    "vue-i18n/no-dynamic-keys": "error"
   },
   "settings": {
     "vue-i18n": {

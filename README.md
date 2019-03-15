@@ -16,9 +16,9 @@ See [here](https://kazupon.github.io/eslint-plugin-vue-i18n/)
 Details changes for each release are documented in the [CHANGELOG.md](https://github.com/kazupon/eslint-plugin-vue-i18n/blob/master/CHANGELOG.md).
 
 ## :white_check_mark: TODO
-- [x] no-missing-key
-- [ ] no-dynamic-key
-- [x] no-unused-key
+- [x] no-missing-keys
+- [ ] no-dynamic-keys
+- [x] no-unused-keys
 - [ ] no-raw-text
 - [ ] valid-message-syntax
 - [ ] keys-order

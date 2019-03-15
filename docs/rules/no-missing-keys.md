@@ -1,4 +1,4 @@
-# vue-i18n/no-missing-key
+# vue-i18n/no-missing-keys
 
 > disallow missing locale message key at localization methods
 

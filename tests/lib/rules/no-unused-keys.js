@@ -24,13 +24,13 @@ const linter = new CLIEngine({
   },
   plugins: ['vue-i18n'],
   rules: {
-    'vue-i18n/no-unused-key': 'error'
+    'vue-i18n/no-unused-keys': 'error'
   },
   useEslintrc: true,
   extensions: ['.js', '.vue', '.json']
 })
 
-describe('no-unused-key', () => {
+describe('no-unused-keys', () => {
   let originalCwd
   const resolveFilename = Module._resolveFilename
 
@@ -57,13 +57,13 @@ describe('no-unused-key', () => {
     const [enResult] = messages.results
       .filter(result => result.filePath === enFullPath)
     enResult.messages.forEach(message => {
-      assert.equal(message.ruleId, 'vue-i18n/no-unused-key')
+      assert.equal(message.ruleId, 'vue-i18n/no-unused-keys')
     })
     const jaFullPath = resolve(__dirname, '../../fixtures/locales/ja.json')
     const [jaResult] = messages.results
       .filter(result => result.filePath === jaFullPath)
     jaResult.messages.forEach(message => {
-      assert.equal(message.ruleId, 'vue-i18n/no-unused-key')
+      assert.equal(message.ruleId, 'vue-i18n/no-unused-keys')
     })
   })
 })
