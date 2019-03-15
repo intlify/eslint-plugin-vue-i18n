@@ -74,14 +74,14 @@ i18n.t('hi')
 
 ## Options
 
-You can specify allowed directive-comments.
-
 ```json
 {
   "vue-i18n/no-unused-keys": ["error", {
+    "src": ["./src"],
     "extensions": [".js", ".vue"]
   }]
 }
 ```
 
+- `src`: specify the source codes directory to be able to lint. If you don't set any options, it set to `process.cwd()` as default.
 - `extenstions`: an array to allow specified lintable target file extention. If you don't set any options, it set to `.js` and` .vue` as default.
