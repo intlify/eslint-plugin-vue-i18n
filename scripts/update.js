@@ -17,10 +17,12 @@ require('./update-docs-index')
 require('./update-recommended-rules')
 
 // indices.
-for (const dirPath of [
-  resolve(__dirname, '../lib/configs'),
-  resolve(__dirname, '../lib/rules'),
-  resolve(__dirname, '../lib/utils')
+for (const pairs of [
+  [resolve(__dirname, '../lib/configs')],
+  [resolve(__dirname, '../lib/rules')],
+  [resolve(__dirname, '../lib/processors'), '.'],
+  [resolve(__dirname, '../lib/utils')]
 ]) {
-  writeFileSync(`${dirPath}.js`, createIndex(dirPath))
+  const [dirPath, prefix] = pairs
+  writeFileSync(`${dirPath}.js`, createIndex(dirPath, prefix))
 }

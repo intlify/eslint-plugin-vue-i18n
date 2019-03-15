@@ -18,7 +18,7 @@ Details changes for each release are documented in the [CHANGELOG.md](https://gi
 ## :white_check_mark: TODO
 - [x] no-missing-key
 - [ ] no-dynamic-key
-- [ ] no-unused-key
+- [x] no-unused-key
 - [ ] no-raw-text
 - [ ] valid-message-syntax
 - [ ] keys-order

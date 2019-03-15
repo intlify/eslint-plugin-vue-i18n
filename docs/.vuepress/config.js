@@ -1,3 +1,7 @@
+/**
+ * @fileoverview VuePress configration
+ * @author kazuya kawaguchi (a.k.a. kazupon)
+ */
 'use strict'
 
 const { withCategories } = require('../../scripts/lib/rules')

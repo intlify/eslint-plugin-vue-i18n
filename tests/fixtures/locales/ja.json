@@ -9,6 +9,5 @@
   },
   "hello_dio": "こんにちは、アンダースコア DIO！",
   "hello {name}": "こんにちは、{name}！",
-  "hello-dio": "こんにちは、ハイフン DIO！",
-  "foo.bar.buz": "こんにちは、フラットなキー！"
+  "hello-dio": "こんにちは、ハイフン DIO！"
 }

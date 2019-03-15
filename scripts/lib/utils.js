@@ -15,7 +15,7 @@ function format (text) {
   return lintResult.results[0].output || text
 }
 
-function createIndex (dirPath) {
+function createIndex (dirPath, prefix = '') {
   const dirName = basename(dirPath)
   return format(`/** DON'T EDIT THIS FILE; was created by scripts. */
   'use strict'
@@ -23,7 +23,7 @@ function createIndex (dirPath) {
   module.exports = {
     ${readdirSync(dirPath)
     .map(file => basename(file, '.js'))
-    .map(id => `'${id}': require('./${dirName}/${id}'),`)
+    .map(id => `'${prefix}${id}': require('./${dirName}/${id}'),`)
     .join('\n    ')}
   }
   `)
