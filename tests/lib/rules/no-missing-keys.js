@@ -6,7 +6,7 @@
 const RuleTester = require('eslint').RuleTester
 const rule = require('../../../lib/rules/no-missing-keys')
 
-const baseDir = './tests/fixtures/locales'
+const baseDir = './tests/fixtures/no-missing-keys/locales'
 const resolve = file => `${baseDir}/${file}`
 
 const settings = {
@@ -90,6 +90,12 @@ tester.run('no-missing-keys', rule, {
     errors: [
       `'missing' does not exist in '${resolve('en.json')}'`,
       `'missing' does not exist in '${resolve('ja.json')}'`
+    ]
+  }, {
+    // settings.vue-i18n.localeDir' error
+    code: `$t('missing')`,
+    errors: [
+      `You need to 'localeDir' at 'settings. See the 'eslint-plugin-vue-i18n documentation`
     ]
   }]
 })

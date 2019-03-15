@@ -1,0 +1,8 @@
+{
+  "hello": "hello world",
+  "messages": {
+    "hello": "hi DIO!"
+  },
+  "hello_dio": "hello underscore DIO!",
+  "hello {name}": "hello {name}!"
+}

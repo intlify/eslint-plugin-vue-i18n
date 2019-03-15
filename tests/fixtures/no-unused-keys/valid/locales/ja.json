@@ -1,0 +1,8 @@
+{
+  "hello": "ハローワールド",
+  "messages": {
+    "hello": "こんにちは、DIO！"
+  },
+  "hello_dio": "こんにちは、アンダースコア DIO！",
+  "hello {name}": "こんにちは、{name}！"
+}

@@ -8,28 +8,6 @@ const { CLIEngine } = require('eslint')
 const { resolve, join } = require('path')
 const assert = require('assert')
 
-const baseDir = './locales'
-
-const linter = new CLIEngine({
-  baseConfig: {
-    settings: {
-      'vue-i18n': {
-        localeDir: `${baseDir}/*.json`
-      }
-    }
-  },
-  parser: 'vue-eslint-parser',
-  parserOptions: {
-    ecmaVersion: 2015
-  },
-  plugins: ['vue-i18n'],
-  rules: {
-    'vue-i18n/no-unused-keys': 'error'
-  },
-  useEslintrc: true,
-  extensions: ['.js', '.vue', '.json']
-})
-
 describe('no-unused-keys', () => {
   let originalCwd
   const resolveFilename = Module._resolveFilename
@@ -42,7 +20,7 @@ describe('no-unused-keys', () => {
       return resolveFilename.apply(this, arguments)
     }
     originalCwd = process.cwd()
-    const p = join(__dirname, '../../fixtures')
+    const p = join(__dirname, '../../fixtures/no-unused-keys')
     process.chdir(p)
   })
 
@@ -50,20 +28,95 @@ describe('no-unused-keys', () => {
     process.chdir(originalCwd)
   })
 
-  it('should be detected unsued keys', () => {
-    const messages = linter.executeOnFiles(['.'])
-    assert.equal(messages.errorCount, 6)
-    const enFullPath = resolve(__dirname, '../../fixtures/locales/en.json')
-    const [enResult] = messages.results
-      .filter(result => result.filePath === enFullPath)
-    enResult.messages.forEach(message => {
-      assert.equal(message.ruleId, 'vue-i18n/no-unused-keys')
+  describe('errors', () => {
+    it('settings.vue-i18n.localeDir', () => {
+      const linter = new CLIEngine({
+        baseConfig: {},
+        parser: 'vue-eslint-parser',
+        parserOptions: {
+          ecmaVersion: 2015
+        },
+        plugins: ['vue-i18n'],
+        rules: {
+          'vue-i18n/no-unused-keys': 'error'
+        },
+        extensions: ['.js', '.vue', '.json']
+      })
+
+      const messages = linter.executeOnFiles(['.'])
+      assert.equal(messages.errorCount, 4)
+      messages.results.map(result => {
+        return result.messages
+          .filter(message => message.ruleId === 'vue-i18n/no-unused-keys')
+      }).reduce((values, current) => values.concat(current), [])
+        .forEach(message => {
+          assert.equal(message.message, `You need to 'localeDir' at 'settings. See the 'eslint-plugin-vue-i18n documentation`)
+        })
     })
-    const jaFullPath = resolve(__dirname, '../../fixtures/locales/ja.json')
-    const [jaResult] = messages.results
-      .filter(result => result.filePath === jaFullPath)
-    jaResult.messages.forEach(message => {
-      assert.equal(message.ruleId, 'vue-i18n/no-unused-keys')
+  })
+
+  describe('valid', () => {
+    it('should be not detected unsued keys', () => {
+      const linter = new CLIEngine({
+        baseConfig: {
+          settings: {
+            'vue-i18n': {
+              localeDir: `./valid/locales/*.json`
+            }
+          }
+        },
+        parser: 'vue-eslint-parser',
+        parserOptions: {
+          ecmaVersion: 2015
+        },
+        plugins: ['vue-i18n'],
+        rules: {
+          'vue-i18n/no-unused-keys': ['error', {
+            src: resolve(__dirname, '../../fixtures/no-unused-keys/valid')
+          }]
+        },
+        extensions: ['.js', '.vue', '.json']
+      })
+
+      const messages = linter.executeOnFiles(['.'])
+      assert.equal(messages.errorCount, 0)
+    })
+  })
+
+  describe('invalid', () => {
+    it('should be detected unsued keys', () => {
+      const linter = new CLIEngine({
+        baseConfig: {
+          settings: {
+            'vue-i18n': {
+              localeDir: `./invalid/locales/*.json`
+            }
+          }
+        },
+        parser: 'vue-eslint-parser',
+        parserOptions: {
+          ecmaVersion: 2015
+        },
+        plugins: ['vue-i18n'],
+        rules: {
+          'vue-i18n/no-unused-keys': 'error'
+        },
+        extensions: ['.js', '.vue', '.json']
+      })
+
+      const messages = linter.executeOnFiles(['.'])
+      assert.equal(messages.errorCount, 6)
+
+      function checkRuleId (path) {
+        const fullPath = resolve(__dirname, path)
+        const [result] = messages.results
+          .filter(result => result.filePath === fullPath)
+        result.messages.forEach(message => {
+          assert.equal(message.ruleId, 'vue-i18n/no-unused-keys')
+        })
+      }
+      checkRuleId('../../fixtures/no-unused-keys/invalid/locales/en.json')
+      checkRuleId('../../fixtures/no-unused-keys/invalid/locales/ja.json')
     })
   })
 })
