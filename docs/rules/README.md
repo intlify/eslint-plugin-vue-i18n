@@ -13,5 +13,6 @@
 
 | Rule ID | Description |    |
 |:--------|:------------|:---|
+| [vue-i18n/<wbr>no-dynamic-keys](./no-dynamic-keys.html) | disallow localization dynamic keys at localization methods |  |
 | [vue-i18n/<wbr>no-unused-keys](./no-unused-keys.html) | disallow unused localization keys |  |
 
