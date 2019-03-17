@@ -19,14 +19,14 @@ module.exports = {
   ],
   themeConfig: {
     repo: 'kazupon/eslint-plugin-vue-i18n',
-    docsRepo: "kazupon/eslint-plugin-vue-i18n",
+    docsRepo: 'kazupon/eslint-plugin-vue-i18n',
     docsDir: 'docs',
     docsBranch: 'master',
     editLinks: true,
     search: false,
     lastUpdated: true,
     serviceWorker: {
-      updatePopup: true,
+      updatePopup: true
     },
     nav: [{
       text: 'Patreon',
