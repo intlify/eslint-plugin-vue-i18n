@@ -12,17 +12,22 @@ module.exports = {
   base: '/eslint-plugin-vue-i18n/',
   title: 'eslint-plugin-vue-i18n',
   description: 'ESLint plugin for Vue I18n',
-  serviceWorker: false,
+  serviceWorker: true,
   evergreen: true,
   head: [
     ['meta', { name: 'theme-color', content: '#3eaf7c' }]
   ],
   themeConfig: {
     repo: 'kazupon/eslint-plugin-vue-i18n',
+    docsRepo: "kazupon/eslint-plugin-vue-i18n",
     docsDir: 'docs',
     docsBranch: 'master',
     editLinks: true,
     search: false,
+    lastUpdated: true,
+    serviceWorker: {
+      updatePopup: true,
+    },
     nav: [{
       text: 'Patreon',
       link: 'https://www.patreon.com/kazupon'
