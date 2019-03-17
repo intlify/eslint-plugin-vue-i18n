@@ -8,6 +8,7 @@
 | Rule ID | Description |    |
 |:--------|:------------|:---|
 | [vue-i18n/<wbr>no-missing-keys](./no-missing-keys.html) | disallow missing locale message key at localization methods | :star: |
+| [vue-i18n/<wbr>no-v-html](./no-v-html.html) | disallow use of localization methods on v-html to prevent XSS attack | :star: |
 
 ## Best Practices
 
