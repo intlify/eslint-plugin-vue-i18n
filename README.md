@@ -1,12 +1,17 @@
-# :globe_with_meridians: eslint-plugin-vue-i18n
+<p align="center"><img width="143px" height="130px" src="./assets/eslint-plugin-vue-i18n.svg" alt="ESLint plugin for Vue I18n logo"></p>
 
-[![CircleCI](https://circleci.com/gh/kazupon/eslint-plugin-vue-i18n.svg?style=svg)](https://circleci.com/gh/kazupon/eslint-plugin-vue-i18n)
+<h1 align="center">eslint-plugin-vue-i18n</h1>
+<p align="center">
+  <a href="https://circleci.com/gh/kazupon/eslint-plugin-vue-i18n/tree/dev"><img src="https://circleci.com/gh/kazupon/eslint-plugin-vue-i18n/tree/dev.svg?style=shield" alt="Build Status"></a>
+</p>
 
-ESLint plugin for Vue I18n
+<p align="center">ESLint plugin for Vue I18n</p>
 
-<a href="https://www.patreon.com/kazupon" target="_blank">
-  <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patreon">
-</a>
+<p align="center">
+  <a href="https://www.patreon.com/kazupon" target="_blank">
+    <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patreon">
+  </a>
+</p>
 
 ## :book: Documentation
 
