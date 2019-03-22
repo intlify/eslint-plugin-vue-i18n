@@ -33,6 +33,9 @@
   "engines": {
     "node": ">=0.10.0"
   },
+  "peerDependencies": {
+    "eslint": "^5.0.0"
+  },
   "files": [
     "lib"
   ],
