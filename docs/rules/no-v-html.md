@@ -60,7 +60,7 @@ localization codes:
 
 ## :mute: When Not To Use It
 
-If you are certain the content passed to `v-html` is sanitized HTML you can disable this rule.
+If you are certain the content passed to `v-html` is trusted HTML you can disable this rule.
 
 ## :books: Further reading
 

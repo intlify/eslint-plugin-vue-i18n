@@ -43,8 +43,8 @@ i18n.t('hello')
 :+1: Examples of **correct** code for this rule:
 
 locale messages:
-// ✓ GOOD
 ```js
+// ✓ GOOD
 {
   "hello": "Hello! DIO!",
   "hi": "Hi! DIO!"
