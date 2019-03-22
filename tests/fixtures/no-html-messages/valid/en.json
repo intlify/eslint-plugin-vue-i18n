@@ -1,0 +1,8 @@
+{
+  "hello": "Hello! DIO!",
+  "hi": "Hi! DIO!",
+  "contents": {
+    "banner": "banner: {0}",
+    "modal": "modal: {0}"
+  }
+}

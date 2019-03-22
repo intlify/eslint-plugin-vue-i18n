@@ -25,6 +25,7 @@ Details changes for each release are documented in the [CHANGELOG.md](https://gi
 - [x] no-dynamic-keys
 - [x] no-unused-keys
 - [x] no-v-html
+- [ ] no-html-message
 - [ ] no-raw-text
 - [ ] valid-message-syntax
 - [ ] keys-order

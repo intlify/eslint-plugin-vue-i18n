@@ -16,6 +16,7 @@
     "json-to-ast": "^2.1.0",
     "jsondiffpatch": "^0.3.11",
     "lodash": "^4.17.11",
+    "parse5": "^5.1.0",
     "vue-eslint-parser": "^6.0.3"
   },
   "devDependencies": {
