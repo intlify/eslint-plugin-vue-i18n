@@ -26,7 +26,7 @@ const rules = readdirSync(resolve(__dirname, '../../lib/rules'))
 
 module.exports = rules
 module.exports.withCategories = [
-  'Possible Errors',
+  'Recommended',
   'Best Practices'
   /*
   'Stylistic Issues'

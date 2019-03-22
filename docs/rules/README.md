@@ -3,7 +3,7 @@
 - :star: mark: the rule which is enabled by `vue-i18n/recommended` preset.
 - :black_nib: mark: the rule which is fixable by `eslint --fix` command.
 
-## Possible Errors
+## Recommended
 
 | Rule ID | Description |    |
 |:--------|:------------|:---|
