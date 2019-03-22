@@ -32,7 +32,7 @@ module.exports = {
   plugins: ['vue-i18n'],
   rules: {
     ${rules.filter(rule => rule.recommended)
-    .map(rule => `'${rule.id}': 'error',`)
+    .map(rule => `'${rule.id}': 'warn',`)
     .join('\n        ')}
   },
 }`)
