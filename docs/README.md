@@ -1,37 +1,17 @@
-# Getting Started
+# Introduction
 
-<a href="https://www.patreon.com/kazupon" target="_blank">
-  <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patreon">
-</a>
+<p align="center"><img width="143px" height="130px" src="/eslint-plugin-vue-i18n/eslint-plugin-vue-i18n.svg" alt="ESLint plugin for Vue I18n logo"></p>
 
-## :cd: Installation
+eslint-plugin-vue-i18n is ESLint plugin of Vue I18n. It easily integrates some localization features to your Vue.js Application.
 
-Use [npm](https://www.npmjs.com/) or a compatible tool.
+Go to [Get Started](./started.md)
 
-```sh
-npm install --save-dev eslint eslint-plugin-vue-i18n
-```
+## Become a Patreon
 
-## :rocket: Usage
+Is your company using vue-i18n, eslint-plugin-vue-i18n, and related vue-i18n tools to build awesome apps? Join the other patrons and become a sponsor to add your logo on this documentation! Supporting me on Patreon allows me to work less for a job and to work more on Free Open Source Software such as eslint-plugin-vue-i18n! Thank you!
 
-Configure your `.eslintrc.*` file.
-
-For example:
-
-```js
-{
-  "extends": [
-    "eslint:recommended",
-    "plugin:vue-i18n/recommended"
-  ],
-  "rules": {
-    // Optional.
-    "vue-i18n/no-dynamic-keys": "error"
-  },
-  "settings": {
-    "vue-i18n": {
-      "localeDir": "./pato/to/locales/*.json" // extention is glob formatting!
-    }
-  }
-}
-```
+<p style="text-align: center;">
+  <a href="https://www.patreon.com/kazupon" target="_blank">
+    <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patreon">
+  </a>
+</p>

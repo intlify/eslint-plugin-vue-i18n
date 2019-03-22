@@ -35,10 +35,10 @@ module.exports = {
       text: 'Release Notes',
       link: 'https://github.com/kazupon/eslint-plugin-vue-i18n/releases'
     }],
-    sidebarDepth: 0,
     sidebar: {
       '/': [
         '/',
+        '/started',
         '/rules/',
         ...withCategories.map(({ category, rules }) => ({
           title: `Rules in ${category}`,
