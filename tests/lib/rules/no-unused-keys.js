@@ -25,6 +25,7 @@ describe('no-unused-keys', () => {
   })
 
   after(() => {
+    Module._resolveFilename = resolveFilename
     process.chdir(originalCwd)
   })
 
