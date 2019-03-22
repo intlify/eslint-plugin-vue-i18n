@@ -26,9 +26,10 @@ Details changes for each release are documented in the [CHANGELOG.md](https://gi
 - [x] no-unused-keys
 - [x] no-v-html
 - [x] no-html-message
-- [ ] no-raw-text
 - [ ] valid-message-syntax
+- [ ] no-raw-text
 - [ ] keys-order
+- [ ] locale messages caching
 - [ ] replace documentation example with `eslint-playground` component
 
 ## :copyright: License
