@@ -92,6 +92,18 @@ tester.run('no-missing-keys', rule, {
       `'missing' does not exist in '${resolve('ja.json')}'`
     ]
   }, {
+    // using <i18n> functional component in template block
+    settings,
+    code: `<template>
+      <div id="app">
+        <i18n path="missing"/>
+      </div>
+    </template>`,
+    errors: [
+      `'missing' does not exist in '${resolve('en.json')}'`,
+      `'missing' does not exist in '${resolve('ja.json')}'`
+    ]
+  }, {
     // settings.vue-i18n.localeDir' error
     code: `$t('missing')`,
     errors: [
