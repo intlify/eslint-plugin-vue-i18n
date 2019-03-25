@@ -15,6 +15,7 @@ You can be detected with this rule the following:
 - `$tc`
 - `tc`
 - `v-t`
+- `<i18n>` 
 
 :-1: Examples of **incorrect** code for this rule:
 
@@ -34,6 +35,8 @@ localization codes:
     <p>{{ $t(msg) }}</p>
     <!-- ✗ BAD -->
     <p v-t="msg"></p>
+    <!-- ✗ BAD -->
+    <i18n :path="msg"></i18n>
   </div>
 </template>
 ```
@@ -78,6 +81,8 @@ localization codes:
     <p>{{ $t('hello') }}</p>
     <!-- ✓ GOOD -->
     <p v-t="'hello'"></p>
+    <!-- ✓ GOOD -->
+    <i18n path="hello"></i18n>
   </div>
 </template>
 ```

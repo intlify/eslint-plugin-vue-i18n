@@ -57,6 +57,14 @@ tester.run('no-dynamic-keys', rule, {
       `'missing' dynamic key is used'`
     ]
   }, {
+    // using <i18n> functional component in template block
+    code: `<template>
+      <i18n :path="missing"/>
+    </template>`,
+    errors: [
+      `'missing' dynamic key is used'`
+    ]
+  }, {
     // using custom directive in template block
     code: `<template>
       <p v-t="missing"></p>
