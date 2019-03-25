@@ -23,6 +23,7 @@
     "conventional-changelog-cli": "^2.0.12",
     "conventional-github-releaser": "^3.1.2",
     "eslint": "^5.15.0",
+    "eslint-plugin-markdown": "^1.0.0",
     "eslint-plugin-vue-libs": "^3.0.0",
     "git-commit-message-convention": "git://github.com/kazupon/git-commit-message-convention.git",
     "mocha": "^6.0.2",
@@ -66,6 +67,7 @@
     "docs:build": "vuepress build docs",
     "generate": "node scripts/update.js",
     "lint": "eslint lib scripts tests docs/.vuepress --ignore-pattern \"!.*\"",
+    "lint:docs": "eslint --ext js,vue,md docs --ignore-pattern \"!.*\"",
     "release": "conventional-github-releaser -n ./node_modules/git-commit-message-convention/convention.js",
     "test": "mocha ./tests/**/*.js",
     "test:coverage": "nyc mocha ./tests/**/*.js"

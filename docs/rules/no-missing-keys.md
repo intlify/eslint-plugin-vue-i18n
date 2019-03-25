@@ -42,6 +42,8 @@ localization codes:
 ```
 
 ```js
+import VueI18n from 'vue-i18n'
+
 const i18n = new VueI18n({
   locale: 'en',
   messages: {
@@ -67,17 +69,19 @@ localization codes:
 ```vue
 <template>
   <div class="app">
-    <!-- ✗ GOOD -->
+    <!-- ✓ GOOD -->
     <p>{{ $t('hello') }}</p>
-    <!-- ✗ GOOD -->
+    <!-- ✓ GOOD -->
     <p v-t="'hello'"></p>
-    <!-- ✗ GOOD -->
+    <!-- ✓ GOOD -->
     <i18n path="hello" tag="p"></i18n>
   </div>
 </template>
 ```
 
 ```js
+import VueI18n from 'vue-i18n'
+
 const i18n = new VueI18n({
   locale: 'en',
   messages: {

@@ -11,7 +11,7 @@ This rule is aimed at eliminating unused localization keys.
 :-1: Examples of **incorrect** code for this rule:
 
 locale messages:
-```js
+```json
 // ✗ BAD
 {
   "hello": "Hello! DIO!",
@@ -30,6 +30,8 @@ In localization codes of application:
 ```
 
 ```js
+import VueI18n from 'vue-i18n'
+
 const i18n = new VueI18n({
   locale: 'en',
   messages: {
@@ -43,7 +45,7 @@ i18n.t('hello')
 :+1: Examples of **correct** code for this rule:
 
 locale messages:
-```js
+```json
 // ✓ GOOD
 {
   "hello": "Hello! DIO!",
@@ -62,6 +64,8 @@ In localization codes of application:
 ```
 
 ```js
+import VueI18n from 'vue-i18n'
+
 const i18n = new VueI18n({
   locale: 'en',
   messages: {

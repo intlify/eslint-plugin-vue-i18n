@@ -20,21 +20,21 @@ Configure your `.eslintrc.*` file.
 For example:
 
 ```js
-{
-  "extends": [
-    "eslint:recommended",
-    "plugin:vue-i18n/recommended"
+module.export = {
+  extends: [
+    'eslint:recommended',
+    'plugin:vue-i18n/recommended'
   ],
-  "rules": {
+  rules: {
     // Optional.
-    "vue-i18n/no-dynamic-keys": "error",
-    "vue-i18n/no-unused-keys": ["error", {
-      "extensions": [".js", ".vue"]
+    'vue-i18n/no-dynamic-keys': 'error',
+    'vue-i18n/no-unused-keys': ['error', {
+      extensions: ['.js', '.vue']
     }]
   },
-  "settings": {
-    "vue-i18n": {
-      "localeDir": "./path/to/locales/*.json" // extention is glob formatting!
+  settings: {
+    'vue-i18n': {
+      localeDir: './path/to/locales/*.json' // extention is glob formatting!
     }
   }
 }

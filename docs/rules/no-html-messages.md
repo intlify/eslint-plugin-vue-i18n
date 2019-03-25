@@ -13,7 +13,7 @@ This rule is aimed at eliminating HTML localization messages.
 :-1: Examples of **incorrect** code for this rule:
 
 locale messages:
-```js
+```json
 // ✗ BAD
 {
   "hello": "Hello! DIO!",
@@ -40,6 +40,9 @@ In localization codes of application:
 ```
 
 ```js
+import Vue from 'vue'
+import VueI18n from 'vue-i18n'
+
 const i18n = new VueI18n({
   locale: 'en',
   messages: {
@@ -48,7 +51,7 @@ const i18n = new VueI18n({
 })
 
 new Vue({
-  i18n,
+  i18n
   // ...
 }).$mount('#app')
 ```
@@ -56,7 +59,7 @@ new Vue({
 :+1: Examples of **correct** code for this rule:
 
 locale messages:
-```js
+```json
 // ✓ GOOD
 {
   "hello": "Hello! DIO!",
@@ -85,6 +88,9 @@ In localization codes of application:
 ```
 
 ```js
+import Vue from 'vue'
+import VueI18n from 'vue-i18n'
+
 // import some components used in i18n component
 import Banner from './path/to/components/Banner.vue'
 import Modal from './path/to/components/Modal.vue'
