@@ -12,9 +12,9 @@ This rule encourage i18n in about the application needs to be localized.
 
 `template` option:
 ```js
-const MyComponent = {
+export default {
   // ✗ BAD
-  template: '<p>hello</p>',
+  template: '<p>hello</p>'
   // ...
 }
 ```
@@ -29,7 +29,7 @@ const MyComponent = {
 
 `JSX`:
 ```js
-const MyComponent = {
+export default {
   // ✗ BAD
   render: h => (<p>hello</p>)
   // ...
@@ -40,9 +40,9 @@ const MyComponent = {
 
 `template` option:
 ```js
-const MyComponent = {
+export default {
   // ✓ GOOD
-  template: '<p>{{ $('hello') }}</p>',
+  template: `<p>{{ $('hello') }}</p>`
   // ...
 }
 ```
@@ -57,7 +57,7 @@ const MyComponent = {
 
 `JSX`:
 ```js
-const MyComponent = {
+export default {
   // ✓ GOOD
   render: h => (<p>this.$t('hello')</p>)
   // ...
