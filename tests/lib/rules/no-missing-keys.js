@@ -7,7 +7,6 @@ const RuleTester = require('eslint').RuleTester
 const rule = require('../../../lib/rules/no-missing-keys')
 
 const baseDir = './tests/fixtures/no-missing-keys/locales'
-const resolve = file => `${baseDir}/${file}`
 
 const settings = {
   'vue-i18n': {
@@ -68,8 +67,8 @@ tester.run('no-missing-keys', rule, {
     settings,
     code: `$t('missing')`,
     errors: [
-      `'missing' does not exist in '${resolve('en.json')}'`,
-      `'missing' does not exist in '${resolve('ja.json')}'`
+      `'missing' does not exist`,
+      `'missing' does not exist`
     ]
   }, {
     // using mustaches in template block
@@ -78,8 +77,8 @@ tester.run('no-missing-keys', rule, {
       <p>{{ $t('missing') }}</p>
     </template>`,
     errors: [
-      `'missing' does not exist in '${resolve('en.json')}'`,
-      `'missing' does not exist in '${resolve('ja.json')}'`
+      `'missing' does not exist`,
+      `'missing' does not exist`
     ]
   }, {
     // using custom directive in template block
@@ -88,8 +87,8 @@ tester.run('no-missing-keys', rule, {
       <p v-t="'missing'"></p>
     </template>`,
     errors: [
-      `'missing' does not exist in '${resolve('en.json')}'`,
-      `'missing' does not exist in '${resolve('ja.json')}'`
+      `'missing' does not exist`,
+      `'missing' does not exist`
     ]
   }, {
     // using <i18n> functional component in template block
@@ -100,8 +99,8 @@ tester.run('no-missing-keys', rule, {
       </div>
     </template>`,
     errors: [
-      `'missing' does not exist in '${resolve('en.json')}'`,
-      `'missing' does not exist in '${resolve('ja.json')}'`
+      `'missing' does not exist`,
+      `'missing' does not exist`
     ]
   }, {
     // settings.vue-i18n.localeDir' error
