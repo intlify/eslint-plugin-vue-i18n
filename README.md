@@ -20,17 +20,13 @@ See [here](https://kazupon.github.io/eslint-plugin-vue-i18n/)
 ## :scroll: Changelog
 Details changes for each release are documented in the [CHANGELOG.md](https://github.com/kazupon/eslint-plugin-vue-i18n/blob/master/CHANGELOG.md).
 
-## :white_check_mark: TODO
-- [x] no-missing-keys
-- [x] no-dynamic-keys
-- [x] no-unused-keys
-- [x] no-v-html
-- [x] no-html-message
-- [ ] valid-message-syntax
-- [ ] no-raw-text
-- [ ] keys-order
-- [x] locale messages caching
-- [ ] replace documentation example with `eslint-playground` component
+## :exclamation: Issues
+
+Please make sure to read the [Issue Reporting Checklist](https://github.com/kazupon/eslint-plugin-vue-i18n/blob/master/CONTRIBUTING.md#issue-reporting-guidelines) before opening an issue. Issues not conforming to the guidelines may be closed immediately.
+
+## :muscle: Contribution
+
+Please make sure to read the [Contributing Guide](https://github.com/kazupon/eslint-plugin-vue-i18n/blob/master/CONTRIBUTING.md) before making a pull request.
 
 ## :copyright: License
 
