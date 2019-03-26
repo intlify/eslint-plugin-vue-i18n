@@ -29,7 +29,7 @@ Details changes for each release are documented in the [CHANGELOG.md](https://gi
 - [ ] valid-message-syntax
 - [ ] no-raw-text
 - [ ] keys-order
-- [ ] locale messages caching
+- [x] locale messages caching
 - [ ] replace documentation example with `eslint-playground` component
 
 ## :copyright: License
