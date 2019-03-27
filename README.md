@@ -2,7 +2,7 @@
 
 <h1 align="center">eslint-plugin-vue-i18n</h1>
 <p align="center">
-  <a href="https://circleci.com/gh/kazupon/eslint-plugin-vue-i18n/tree/dev"><img src="https://circleci.com/gh/kazupon/eslint-plugin-vue-i18n/tree/dev.svg?style=shield" alt="Build Status"></a>
+  <a href="https://circleci.com/gh/kazupon/eslint-plugin-vue-i18n/tree/master"><img src="https://circleci.com/gh/kazupon/eslint-plugin-vue-i18n/tree/master.svg?style=svg" alt="Build Status"></a>
 </p>
 
 <p align="center">ESLint plugin for Vue I18n</p>
