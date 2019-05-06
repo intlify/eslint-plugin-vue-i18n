@@ -108,5 +108,15 @@ tester.run('no-missing-keys', rule, {
     errors: [
       `You need to 'localeDir' at 'settings. See the 'eslint-plugin-vue-i18n documentation`
     ]
+  }, {
+    // nested basic
+    settings,
+    code: `$t('missing.path')`,
+    errors: [
+      `'missing.path' does not exist`,
+      `'missing.path' does not exist`,
+      `'missing.path' does not exist`,
+      `'missing.path' does not exist`
+    ]
   }]
 })
