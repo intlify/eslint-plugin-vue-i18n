@@ -1,3 +1,13 @@
+<a name="0.1.1"></a>
+## [0.1.1](https://github.com/kazupon/eslint-plugin-vue-i18n/compare/v0.1.0...v0.1.1) (2019-05-08)
+
+
+### :bug: Bug Fixes
+
+* **no-missing-keys:** fix plugin crashes on missing nested path ([#7](https://github.com/kazupon/eslint-plugin-vue-i18n/issues/7)) by [@williamchong007](https://github.com/williamchong007) ([ed02d94](https://github.com/kazupon/eslint-plugin-vue-i18n/commit/ed02d94)), closes [#7](https://github.com/kazupon/eslint-plugin-vue-i18n/issues/7)
+
+
+
 <a name="0.1.0"></a>
 # 0.1.0 (2019-04-10)
 
