@@ -15,7 +15,7 @@ const settings = {
 }
 
 const tester = new RuleTester({
-  parser: 'vue-eslint-parser',
+  parser: require.resolve('vue-eslint-parser'),
   parserOptions: { ecmaVersion: 2015 }
 })
 

@@ -22,9 +22,9 @@
   "devDependencies": {
     "conventional-changelog-cli": "^2.0.12",
     "conventional-github-releaser": "^3.1.2",
-    "eslint": "^5.15.0",
+    "eslint": "^5.15.0 || ^6.0.0",
     "eslint-plugin-markdown": "^1.0.0",
-    "eslint-plugin-vue-libs": "^3.0.0",
+    "eslint-plugin-vue-libs": "^3.0.0 || ^4.0.0",
     "git-commit-message-convention": "git://github.com/kazupon/git-commit-message-convention.git",
     "mocha": "^6.0.2",
     "nyc": "^13.3.0",
@@ -36,7 +36,7 @@
     "node": ">=0.10.0"
   },
   "peerDependencies": {
-    "eslint": "^5.0.0"
+    "eslint": "^5.0.0 || ^6.0.0"
   },
   "files": [
     "lib"

@@ -39,7 +39,7 @@ describe('no-html-messages', () => {
             }
           }
         },
-        parser: 'vue-eslint-parser',
+        parser: require.resolve('vue-eslint-parser'),
         parserOptions: {
           ecmaVersion: 2015
         },
@@ -65,7 +65,7 @@ describe('no-html-messages', () => {
             }
           }
         },
-        parser: 'vue-eslint-parser',
+        parser: require.resolve('vue-eslint-parser'),
         parserOptions: {
           ecmaVersion: 2015
         },

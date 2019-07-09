@@ -33,7 +33,7 @@ describe('no-unused-keys', () => {
     it('settings.vue-i18n.localeDir', () => {
       const linter = new CLIEngine({
         baseConfig: {},
-        parser: 'vue-eslint-parser',
+        parser: require.resolve('vue-eslint-parser'),
         parserOptions: {
           ecmaVersion: 2015
         },
@@ -66,7 +66,7 @@ describe('no-unused-keys', () => {
             }
           }
         },
-        parser: 'vue-eslint-parser',
+        parser: require.resolve('vue-eslint-parser'),
         parserOptions: {
           ecmaVersion: 2015
         },
@@ -94,7 +94,7 @@ describe('no-unused-keys', () => {
             }
           }
         },
-        parser: 'vue-eslint-parser',
+        parser: require.resolve('vue-eslint-parser'),
         parserOptions: {
           ecmaVersion: 2015
         },
