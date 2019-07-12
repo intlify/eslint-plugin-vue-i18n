@@ -33,7 +33,7 @@
     "vuepress": "^1.0.0-alpha.39"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=10.0.0"
   },
   "peerDependencies": {
     "eslint": "^5.0.0 || ^6.0.0"
