@@ -1,3 +1,18 @@
+<a name="0.2.0"></a>
+# [0.2.0](https://github.com/kazupon/eslint-plugin-vue-i18n/compare/v0.1.1...v0.2.0) (2019-07-12)
+
+
+### :star: New Features
+
+* **rule:** support no-raw-text rule ([76077b4](https://github.com/kazupon/eslint-plugin-vue-i18n/commit/76077b4)), closes [#2](https://github.com/kazupon/eslint-plugin-vue-i18n/issues/2)
+
+
+### :zap: Improvements
+
+* support ESLint v6 ([69e16a6](https://github.com/kazupon/eslint-plugin-vue-i18n/commit/69e16a6)), closes [#12](https://github.com/kazupon/eslint-plugin-vue-i18n/issues/12)
+
+
+
 <a name="0.1.1"></a>
 ## [0.1.1](https://github.com/kazupon/eslint-plugin-vue-i18n/compare/v0.1.0...v0.1.1) (2019-05-08)
 
