@@ -2,6 +2,8 @@
 
 > disallow to string literal in template or JSX
 
+- :star: The `"extends": "plugin:vue-i18n/recommended"` property in a configuration file enables this rule.
+
 This rule warns the usage of string literal.
 
 This rule encourage i18n in about the application needs to be localized.
