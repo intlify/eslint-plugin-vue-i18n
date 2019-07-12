@@ -10,7 +10,7 @@ npm install --save-dev eslint eslint-plugin-vue-i18n
 
 ::: tip Requirements
 - ESLint v5.0.0 or later
-- Node.js v10.0.0 or later
+- Node.js v10.13.0 or later
 :::
 
 ## :rocket: Usage
