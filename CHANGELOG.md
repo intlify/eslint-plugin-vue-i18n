@@ -1,3 +1,13 @@
+<a name="0.2.1"></a>
+## [0.2.1](https://github.com/kazupon/eslint-plugin-vue-i18n/compare/v0.2.0...v0.2.1) (2019-07-16)
+
+
+### :bug: Bug Fixes
+
+* **rule:** fix no-raw-text bug ([bc6a830](https://github.com/kazupon/eslint-plugin-vue-i18n/commit/bc6a830))
+
+
+
 <a name="0.2.0"></a>
 # [0.2.0](https://github.com/kazupon/eslint-plugin-vue-i18n/compare/v0.1.1...v0.2.0) (2019-07-12)
 
