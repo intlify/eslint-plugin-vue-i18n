@@ -40,6 +40,14 @@ tester.run('no-raw-text', rule, {
         }
       }
     `
+  }, {
+    code: `
+      export default {
+        props: {
+          template: Object
+        }
+      }
+    `
   }],
 
   invalid: [{
