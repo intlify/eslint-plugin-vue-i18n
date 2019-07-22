@@ -1,3 +1,13 @@
+<a name="0.2.2"></a>
+## [0.2.2](https://github.com/kazupon/eslint-plugin-vue-i18n/compare/v0.2.1...v0.2.2) (2019-07-22)
+
+
+### :bug: Bug Fixes
+
+* **rule:** fix cannot detect raw text of template syntax expression ([84f37b8](https://github.com/kazupon/eslint-plugin-vue-i18n/commit/84f37b8)), closes [#23](https://github.com/kazupon/eslint-plugin-vue-i18n/issues/23)
+
+
+
 <a name="0.2.1"></a>
 ## [0.2.1](https://github.com/kazupon/eslint-plugin-vue-i18n/compare/v0.2.0...v0.2.1) (2019-07-16)
 
