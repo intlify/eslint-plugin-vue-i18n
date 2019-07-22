@@ -1,0 +1,9 @@
+{
+    "eslint.options": { "configFile": ".eslintrc.js" },
+    "eslint.validate": [
+        "javascript"
+    ],
+    "eslint.alwaysShowStatus": true,
+    "eslint.packageManager": "yarn",
+    "eslint.run": "onSave"
+}

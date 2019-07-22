@@ -1,7 +1,6 @@
 node_modules
 .nyc_output
 .DS_Store
-.vscode
 docs/.vuepress/dist
 coverage
 *.log
