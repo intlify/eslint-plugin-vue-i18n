@@ -1,3 +1,13 @@
+<a name="0.2.3"></a>
+## [0.2.3](https://github.com/kazupon/eslint-plugin-vue-i18n/compare/v0.2.2...v0.2.3) (2019-07-22)
+
+
+### :bug: Bug Fixes
+
+* **rule:** fix detect literal ([6b6efae](https://github.com/kazupon/eslint-plugin-vue-i18n/commit/6b6efae)), closes [#24](https://github.com/kazupon/eslint-plugin-vue-i18n/issues/24)
+
+
+
 <a name="0.2.2"></a>
 ## [0.2.2](https://github.com/kazupon/eslint-plugin-vue-i18n/compare/v0.2.1...v0.2.2) (2019-07-22)
 
