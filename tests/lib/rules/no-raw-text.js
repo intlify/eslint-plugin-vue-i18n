@@ -28,6 +28,7 @@ tester.run('no-raw-text', rule, {
   }, {
     code: `
     <template>
+      <comp :value="1" :msg="$t('foo.bar')"/>
       <p>{{ hello }}</p>
     </template>
     `
