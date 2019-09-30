@@ -19,18 +19,20 @@ const tester = new RuleTester({
 
 tester.run('no-raw-text', rule, {
   valid: [{
-    code: `<template>
-      <div class="app">
-        <p class="a1">{{ $t('hello') }}</p>
-        <p class="inner">{{ $t('click') }}<a href="/foo">{{ $t('here') }}</a>{{ $t('terminal') }}</p>
-      </div>
-    </template>`
+    code: `
+      <template>
+        <div class="app">
+          <p class="a1">{{ $t('hello') }}</p>
+          <p class="inner">{{ $t('click') }}<a href="/foo">{{ $t('here') }}</a>{{ $t('terminal') }}</p>
+        </div>
+      </template>
+    `
   }, {
     code: `
-    <template>
-      <comp :value="1" :msg="$t('foo.bar')"/>
-      <p>{{ hello }}</p>
-    </template>
+      <template>
+        <comp :value="1" :msg="$t('foo.bar')"/>
+        <p>{{ hello }}</p>
+      </template>
     `
   }, {
     filename: 'test.vue',
@@ -55,6 +57,29 @@ tester.run('no-raw-text', rule, {
         }
       }
     `
+  }, {
+    code: `
+      <template>
+        <md-icon>person</md-icon>
+        <v-icon>menu</v-icon>
+      </template>
+    `,
+    options: [{ ignoreNodes: ['md-icon', 'v-icon'] }],
+  }, {
+    code: `
+      <template>
+        <p>{{ $t('foo') }}: {{ $t('bar') }}</p>
+      </template>
+    `,
+    options: [{ ignorePattern: '^[-.#:()&]+$' }],
+  }, {
+    code: `
+      <template>
+        <p>hello</p>
+        <p>world</p>
+      </template>
+    `,
+    options: [{ ignoreText: ['hello', 'world'] }],
   }],
 
   invalid: [{
@@ -190,6 +215,40 @@ tester.run('no-raw-text', rule, {
     `,
     errors: [{
       message: `raw text 'hello' is used`, line: 4
+    }]
+  }, {
+    code: `
+      <template>
+        <md-icon>person</md-icon>
+        <v-icon>menu</v-icon>
+        <p>hello</p>
+      </template>
+    `,
+    options: [{ ignoreNodes: ['md-icon', 'v-icon'] }],
+    errors: [{
+      message: `raw text 'hello' is used`, line: 5
+    }]
+  }, {
+    code: `
+      <template>
+        <p>{{ $t('foo') }}: {{ $t('bar') }}</p>
+        <p>hello</p>
+      </template>
+    `,
+    options: [{ ignorePattern: '^[-.#:()&]+$' }],
+    errors: [{
+      message: `raw text 'hello' is used`, line: 4
+    }]
+  }, {
+    code: `
+      <template>
+        <p>hello</p>
+        <p>world</p>
+      </template>
+    `,
+    options: [{ ignoreText: ['hello'] }],
+    errors: [{
+      message: `raw text 'world' is used`, line: 4
     }]
   }]
 })

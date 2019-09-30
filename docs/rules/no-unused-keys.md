@@ -76,7 +76,7 @@ const i18n = new VueI18n({
 i18n.t('hi')
 ```
 
-## Options
+## :gear: Options
 
 ```json
 {
