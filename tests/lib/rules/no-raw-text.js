@@ -64,14 +64,14 @@ tester.run('no-raw-text', rule, {
         <v-icon>menu</v-icon>
       </template>
     `,
-    options: [{ ignoreNodes: ['md-icon', 'v-icon'] }],
+    options: [{ ignoreNodes: ['md-icon', 'v-icon'] }]
   }, {
     code: `
       <template>
         <p>{{ $t('foo') }}: {{ $t('bar') }}</p>
       </template>
     `,
-    options: [{ ignorePattern: '^[-.#:()&]+$' }],
+    options: [{ ignorePattern: '^[-.#:()&]+$' }]
   }, {
     code: `
       <template>
@@ -79,7 +79,7 @@ tester.run('no-raw-text', rule, {
         <p>world</p>
       </template>
     `,
-    options: [{ ignoreText: ['hello', 'world'] }],
+    options: [{ ignoreText: ['hello', 'world'] }]
   }],
 
   invalid: [{
