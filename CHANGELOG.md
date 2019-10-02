@@ -1,3 +1,13 @@
+<a name="0.3.0"></a>
+# [0.3.0](https://github.com/kazupon/eslint-plugin-vue-i18n/compare/v0.2.3...v0.3.0) (2019-10-02)
+
+
+### :star: New Features
+
+* **rule:** No raw text ignore options ([#31](https://github.com/kazupon/eslint-plugin-vue-i18n/issues/31)) by [@stevelacey](https://github.com/stevelacey) ([34b7a25](https://github.com/kazupon/eslint-plugin-vue-i18n/commit/34b7a25)), closes [#31](https://github.com/kazupon/eslint-plugin-vue-i18n/issues/31)
+
+
+
 <a name="0.2.3"></a>
 ## [0.2.3](https://github.com/kazupon/eslint-plugin-vue-i18n/compare/v0.2.2...v0.2.3) (2019-07-22)
 
