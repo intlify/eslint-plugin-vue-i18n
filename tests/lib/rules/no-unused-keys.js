@@ -51,7 +51,7 @@ describe('no-unused-keys', () => {
           .filter(message => message.ruleId === 'vue-i18n/no-unused-keys')
       }).reduce((values, current) => values.concat(current), [])
         .forEach(message => {
-          assert.equal(message.message, `You need to 'localeDir' at 'settings. See the 'eslint-plugin-vue-i18n documentation`)
+          assert.equal(message.message, 'You need to define locales in settings. See the eslint-plugin-vue-i18n documentation')
         })
     })
   })
