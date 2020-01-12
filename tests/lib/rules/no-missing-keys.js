@@ -14,6 +14,13 @@ const settings = {
   }
 }
 
+const messageSettings = {
+  'vue-i18n': {
+    locale: 'en',
+    messages: { en: { hello: 'hello world' }},
+  }
+}
+
 const tester = new RuleTester({
   parser: require.resolve('vue-eslint-parser'),
   parserOptions: { ecmaVersion: 2015 }
@@ -60,6 +67,10 @@ tester.run('no-missing-keys', rule, {
     code: `<template>
       <p v-t="'hello'"></p>
     </template>`
+  }, {
+    // using message settings
+    settings: messageSettings,
+    code: `$t('hello')`
   }],
 
   invalid: [{
@@ -117,6 +128,13 @@ tester.run('no-missing-keys', rule, {
       `'missing.path' does not exist`,
       `'missing.path' does not exist`,
       `'missing.path' does not exist`
+    ]
+  }, {
+    // using message settings
+    settings: messageSettings,
+    code: `$t('missing')`,
+    errors: [
+      `'missing' does not exist`
     ]
   }]
 })
