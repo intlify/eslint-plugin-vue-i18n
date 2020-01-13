@@ -14,10 +14,9 @@ const settings = {
   }
 }
 
-const messageSettings = {
+const settingLocales = {
   'vue-i18n': {
-    locale: 'en',
-    messages: { en: { hello: 'hello world' }},
+    locales: [{ name: 'en', messages: { hello: 'hello world' }}]
   }
 }
 
@@ -69,7 +68,7 @@ tester.run('no-missing-keys', rule, {
     </template>`
   }, {
     // using message settings
-    settings: messageSettings,
+    settings: settingLocales,
     code: `$t('hello')`
   }],
 
@@ -131,7 +130,7 @@ tester.run('no-missing-keys', rule, {
     ]
   }, {
     // using message settings
-    settings: messageSettings,
+    settings: settingLocales,
     code: `$t('missing')`,
     errors: [
       `'missing' does not exist`
