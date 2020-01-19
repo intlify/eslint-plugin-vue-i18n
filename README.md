@@ -13,6 +13,13 @@
   </a>
 </p>
 
+## :loudspeaker: Notice
+eslint-plugin-vue-i18n will soon be transferred to [intlify organaization](https://github.com/intlify). After that, it will be developed and maintained on intlify.
+
+The `eslint-plugin-vue-i18n` that has been released on npm will be released as `@intlify/eslint-plugin-vue-i18n` in near future.
+
+Intlify is a new i18n project kickoff by @kazupon. 😉 
+
 ## :book: Documentation
 
 See [here](https://kazupon.github.io/eslint-plugin-vue-i18n/)
