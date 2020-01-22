@@ -9,7 +9,7 @@ require('../../scripts/update-docs-headers')
 require('../../scripts/update-docs-index')
 
 module.exports = {
-  base: '/eslint-plugin-vue-i18n/',
+  base: '/',
   title: 'eslint-plugin-vue-i18n',
   description: 'ESLint plugin for Vue I18n',
   serviceWorker: true,
