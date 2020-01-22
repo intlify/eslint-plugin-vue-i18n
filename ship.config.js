@@ -35,6 +35,7 @@ module.exports = {
   mergeStrategy: { toSameBranch: ['master'] },
   monorepo: undefined,
   updateChangelog: false,
+  buildCommand: ({ isYarn }) => undefined,
   beforeCommitChanges: ({ nextVersion, exec, dir }) => {
     return new Promise(resolve => {
       const pkg = require('./package.json')
