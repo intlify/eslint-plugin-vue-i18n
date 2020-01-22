@@ -5,7 +5,7 @@
 Use [npm](https://www.npmjs.com/) or a compatible tool.
 
 ```sh
-npm install --save-dev eslint eslint-plugin-vue-i18n
+npm install --save-dev eslint @intlify/eslint-plugin-vue-i18n
 ```
 
 ::: tip Requirements
