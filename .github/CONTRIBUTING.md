@@ -41,12 +41,12 @@
   - Add appropriate test coverage if applicable.
 
 ### Work Step Example
-- Fork the repository from [kazupon/eslint-plugin-vue-i18n](https://github.com/kazupon/eslint-plugin-vue-i18n) !
+- Fork the repository from [@intlify/eslint-plugin-vue-i18n](https://github.com/intlify/eslint-plugin-vue-i18n) !
 - Create your topic branch from `master`: `git branch my-new-topic origin/master`
 - Add codes and pass tests !
 - Commit your changes: `git commit -am 'Add some topic'`
 - Push to the branch: `git push origin my-new-topic`
-- Submit a pull request to `dev` branch of `kazupon/eslint-plugin-vue-i18n` repository !
+- Submit a pull request to `dev` branch of `@intlify/eslint-plugin-vue-i18n` repository !
 
 ## Development Setup
 
