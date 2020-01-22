@@ -1,6 +1,6 @@
 # Introduction
 
-<p align="center"><img width="143px" height="130px" src="/eslint-plugin-vue-i18n/eslint-plugin-vue-i18n.svg" alt="ESLint plugin for Vue I18n logo"></p>
+<p align="center"><img width="143px" height="130px" src="/eslint-plugin-vue-i18n.svg" alt="ESLint plugin for Vue I18n logo"></p>
 
 eslint-plugin-vue-i18n is ESLint plugin of Vue I18n. It easily integrates some localization features to your Vue.js Application.
 
