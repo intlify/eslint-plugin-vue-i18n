@@ -39,7 +39,7 @@
     "eslint-plugin-vue-libs": "^3.0.0 || ^4.0.0",
     "lerna-changelog": "^1.0.0",
     "mocha": "^7.0.0",
-    "nyc": "^13.3.0",
+    "nyc": "^15.0.0",
     "opener": "^1.5.1",
     "rimraf": "^2.6.3",
     "shipjs": "^0.14.0",
