@@ -1,3 +1,13 @@
+
+## v0.4.0 (2020-01-22)
+
+#### :boom: Breaking Change
+* [#39](https://github.com/intlify/eslint-plugin-vue-i18n/pull/39) breaking: re-setup due to repository transfer ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 2
+- [@dependabot-preview[bot]](https://github.com/apps/dependabot-preview)
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
 <a name="0.3.0"></a>
 # [0.3.0](https://github.com/kazupon/eslint-plugin-vue-i18n/compare/v0.2.3...v0.3.0) (2019-10-02)
 
