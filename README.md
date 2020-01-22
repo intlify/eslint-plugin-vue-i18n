@@ -1,6 +1,6 @@
 <p align="center"><img width="143px" height="130px" src="./assets/eslint-plugin-vue-i18n.svg" alt="ESLint plugin for Vue I18n logo"></p>
 
-<h1 align="center">eslint-plugin-vue-i18n</h1>
+<h1 align="center">@intlify/eslint-plugin-vue-i18n</h1>
 <p align="center">
   <a href="https://circleci.com/gh/intlify/eslint-plugin-vue-i18n/tree/master"><img src="https://circleci.com/gh/intlify/eslint-plugin-vue-i18n/tree/master.svg?style=svg" alt="Build Status"></a>
 </p>
@@ -12,13 +12,6 @@
     <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patreon">
   </a>
 </p>
-
-## :loudspeaker: Notice
-eslint-plugin-vue-i18n will soon be transferred to [intlify organaization](https://github.com/intlify). After that, it will be developed and maintained on intlify.
-
-The `eslint-plugin-vue-i18n` that has been released on npm will be released as `@intlify/eslint-plugin-vue-i18n` in near future.
-
-Intlify is a new i18n project kickoff by @kazupon. 😉 
 
 ## :book: Documentation
 
