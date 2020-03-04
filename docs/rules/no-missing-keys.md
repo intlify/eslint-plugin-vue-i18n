@@ -32,7 +32,7 @@ localization codes:
 <template>
   <div class="app">
     <!-- ✗ BAD -->
-    <p>{{ $t('hi) }}</p>
+    <p>{{ $t('hi') }}</p>
     <!-- ✗ BAD -->
     <p v-t="'hi'"></p>
     <!-- ✗ BAD -->
