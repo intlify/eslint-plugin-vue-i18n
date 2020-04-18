@@ -242,6 +242,23 @@ tester.run('no-raw-text', rule, {
   }, {
     code: `
       <template>
+        <v-icon v-text="'mdi-check'" />
+        <v-icon v-text="'not'" />
+        <v-icon v-text="'ok'" />
+        <v-icon v-html="'mdi-check'" />
+        <v-icon v-html="'ok'" />
+      </template>
+    `,
+    options: [{
+      ignorePattern: '^mdi[-]|[-#:()/&]+$',
+      ignoreText: ['ok']
+    }],
+    errors: [{
+      message: `raw text 'not' is used`, line: 4, column: 25
+    }]
+  }, {
+    code: `
+      <template>
         <p>hello</p>
         <p>world</p>
       </template>
