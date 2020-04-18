@@ -233,11 +233,19 @@ tester.run('no-raw-text', rule, {
       <template>
         <p>{{ $t('foo') }}: {{ $t('bar') }}</p>
         <p>hello</p>
+        <p> - </p>
+        <p>@</p>
+        <p>{{ true ? $t('ok') : ' - ' }}</p>
+        <p>{{ true ? $t('ok') : '@' }}</p>
       </template>
     `,
     options: [{ ignorePattern: '^[-.#:()&]+$' }],
     errors: [{
       message: `raw text 'hello' is used`, line: 4
+    }, {
+      message: `raw text '@' is used`, line: 6, column: 12
+    }, {
+      message: `raw text '@' is used`, line: 8, column: 33
     }]
   }, {
     code: `
