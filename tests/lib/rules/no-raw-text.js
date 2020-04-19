@@ -233,11 +233,36 @@ tester.run('no-raw-text', rule, {
       <template>
         <p>{{ $t('foo') }}: {{ $t('bar') }}</p>
         <p>hello</p>
+        <p> - </p>
+        <p>@</p>
+        <p>{{ true ? $t('ok') : ' - ' }}</p>
+        <p>{{ true ? $t('ok') : '@' }}</p>
       </template>
     `,
     options: [{ ignorePattern: '^[-.#:()&]+$' }],
     errors: [{
       message: `raw text 'hello' is used`, line: 4
+    }, {
+      message: `raw text '@' is used`, line: 6, column: 12
+    }, {
+      message: `raw text '@' is used`, line: 8, column: 33
+    }]
+  }, {
+    code: `
+      <template>
+        <v-icon v-text="'mdi-check'" />
+        <v-icon v-text="'not'" />
+        <v-icon v-text="'ok'" />
+        <v-icon v-html="'mdi-check'" />
+        <v-icon v-html="'ok'" />
+      </template>
+    `,
+    options: [{
+      ignorePattern: '^mdi[-]|[-#:()/&]+$',
+      ignoreText: ['ok']
+    }],
+    errors: [{
+      message: `raw text 'not' is used`, line: 4, column: 25
     }]
   }, {
     code: `
