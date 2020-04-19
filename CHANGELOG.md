@@ -1,4 +1,13 @@
 
+## v0.4.1 (2020-04-19)
+
+#### :pencil: Documentation
+* [#52](https://github.com/intlify/eslint-plugin-vue-i18n/pull/52) Add missing close quote to no-missing-keys.md. ([@jlebar](https://github.com/jlebar))
+
+#### Committers: 1
+- Justin Lebar ([@jlebar](https://github.com/jlebar))
+
+
 ## v0.4.0 (2020-01-22)
 
 #### :boom: Breaking Change
