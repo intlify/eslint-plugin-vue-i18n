@@ -2,16 +2,12 @@
 
 <h1 align="center">@intlify/eslint-plugin-vue-i18n</h1>
 <p align="center">
-  <a href="https://circleci.com/gh/intlify/eslint-plugin-vue-i18n/tree/master"><img src="https://circleci.com/gh/intlify/eslint-plugin-vue-i18n/tree/master.svg?style=svg" alt="Build Status"></a>
+  <a href="https://github.com/intlify/eslint-plugin-vue-i18n/actions?query=workflow%3ATest"><img src="https://github.com/intlify/eslint-plugin-vue-i18n/workflows/Test/badge.svg" alt="Test Status"></a>
 </p>
-
-<p align="center">ESLint plugin for Vue I18n</p>
-
 <p align="center">
-  <a href="https://www.patreon.com/kazupon" target="_blank">
-    <img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patreon">
-  </a>
+  <a href="https://www.npmjs.com/package/@intlify/eslint-plugin-vue-i18n"><img src="https://img.shields.io/npm/v/@intlify/eslint-plugin-vue-i18n.svg" alt="NPM"></a>
 </p>
+<p align="center">ESLint plugin for Vue I18n</p>
 
 ## :book: Documentation
 
