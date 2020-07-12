@@ -1,4 +1,13 @@
 
+## v0.5.0 (2020-07-12)
+
+#### :bug: Bug Fixes
+* [#71](https://github.com/intlify/eslint-plugin-vue-i18n/pull/71) Fixed missing namespace in recommended config. ([@ota-meshi](https://github.com/ota-meshi))
+
+#### Committers: 1
+- Yosuke Ota ([@ota-meshi](https://github.com/ota-meshi))
+
+
 ## v0.4.1 (2020-04-19)
 
 #### :pencil: Documentation
