@@ -43,6 +43,7 @@
     "opener": "^1.5.1",
     "rimraf": "^3.0.0",
     "shipjs": "^0.20.0",
+    "vue-github-button": "^1.2.0",
     "vuepress": "^1.5.2"
   },
   "engines": {

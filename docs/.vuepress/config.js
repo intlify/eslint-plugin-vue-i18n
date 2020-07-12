@@ -29,8 +29,14 @@ module.exports = {
       updatePopup: true
     },
     nav: [{
-      text: 'Patreon',
-      link: 'https://www.patreon.com/kazupon'
+      text: 'Support Intlify',
+      items: [{
+        text: 'GitHub Sponsors',
+        link: 'https://github.com/sponsors/kazupon'
+      }, {
+        text: 'Patreon',
+        link: 'https://www.patreon.com/kazupon'
+      }]
     }, {
       text: 'Release Notes',
       link: 'https://github.com/intlify/eslint-plugin-vue-i18n/releases'
