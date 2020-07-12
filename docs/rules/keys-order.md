@@ -1,4 +1,4 @@
-# vue-i18n/keys-order
+# @intlify/vue-i18n/keys-order
 
 > enforce order of localization keys
 
@@ -37,7 +37,7 @@ This rule is useful to provide browsability of localization keys.
 
 ```json
 {
-  "vue-i18n/keys-order": ["error", {
+  "@intlify/vue-i18n/keys-order": ["error", {
     "order": "desc"
   }]
 }

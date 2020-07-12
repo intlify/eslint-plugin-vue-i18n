@@ -26,7 +26,7 @@ for (const rule of rules) {
     )
   } else if (rule.recommended) {
     headerLines.push(
-      '- :star: The `"extends": "plugin:vue-i18n/recommended"` property in a configuration file enables this rule.'
+      '- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` property in a configuration file enables this rule.'
     )
   }
 

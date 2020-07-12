@@ -1,0 +1,12 @@
+{
+  "name": "integration-test-for-config-recommended",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^7.4.0",
+    "@intlify/eslint-plugin-vue-i18n": "file:../.."
+  }
+}

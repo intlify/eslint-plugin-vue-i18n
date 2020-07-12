@@ -83,6 +83,7 @@
     "release:prepare": "shipjs prepare",
     "release:trigger": "shipjs trigger",
     "test": "mocha ./tests/**/*.js",
-    "test:coverage": "nyc mocha ./tests/**/*.js"
+    "test:coverage": "nyc mocha ./tests/**/*.js",
+    "test:integrations": "mocha ./tests-integrations/*.js --timeout 60000"
   }
 }

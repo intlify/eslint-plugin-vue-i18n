@@ -18,8 +18,8 @@ module.exports = {
     ['meta', { name: 'theme-color', content: '#3eaf7c' }]
   ],
   themeConfig: {
-    repo: 'kazupon/eslint-plugin-vue-i18n',
-    docsRepo: 'kazupon/eslint-plugin-vue-i18n',
+    repo: 'intlify/eslint-plugin-vue-i18n',
+    docsRepo: 'intlify/eslint-plugin-vue-i18n',
     docsDir: 'docs',
     docsBranch: 'master',
     editLinks: true,
@@ -33,7 +33,7 @@ module.exports = {
       link: 'https://www.patreon.com/kazupon'
     }, {
       text: 'Release Notes',
-      link: 'https://github.com/kazupon/eslint-plugin-vue-i18n/releases'
+      link: 'https://github.com/intlify/eslint-plugin-vue-i18n/releases'
     }],
     sidebar: {
       '/': [

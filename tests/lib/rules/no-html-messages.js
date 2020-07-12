@@ -14,7 +14,7 @@ describe('no-html-messages', () => {
 
   before(() => {
     Module._resolveFilename = function (id) {
-      if (id === 'eslint-plugin-vue-i18n') {
+      if (id === '@intlify/eslint-plugin-vue-i18n') {
         return resolve(__dirname, '../../../lib/index.js')
       }
       return resolveFilename.apply(this, arguments)
@@ -43,9 +43,9 @@ describe('no-html-messages', () => {
         parserOptions: {
           ecmaVersion: 2015
         },
-        plugins: ['vue-i18n'],
+        plugins: ['@intlify/vue-i18n'],
         rules: {
-          'vue-i18n/no-html-messages': 'error'
+          '@intlify/vue-i18n/no-html-messages': 'error'
         },
         extensions: ['.js', '.vue', '.json']
       })
@@ -69,9 +69,9 @@ describe('no-html-messages', () => {
         parserOptions: {
           ecmaVersion: 2015
         },
-        plugins: ['vue-i18n'],
+        plugins: ['@intlify/vue-i18n'],
         rules: {
-          'vue-i18n/no-html-messages': 'error'
+          '@intlify/vue-i18n/no-html-messages': 'error'
         },
         extensions: ['.js', '.vue', '.json']
       })
@@ -84,7 +84,7 @@ describe('no-html-messages', () => {
         const [result] = messages.results
           .filter(result => result.filePath === fullPath)
         result.messages.forEach(message => {
-          assert.equal(message.ruleId, 'vue-i18n/no-html-messages')
+          assert.equal(message.ruleId, '@intlify/vue-i18n/no-html-messages')
         })
       }
       checkRuleId('../../fixtures/no-html-messages/invalid/en.json')
