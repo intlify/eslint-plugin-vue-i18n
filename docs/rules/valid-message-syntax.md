@@ -1,8 +1,8 @@
-# vue-i18n/valid-message-syntax
+# @intlify/vue-i18n/valid-message-syntax
 
 > disallow invalid message syntax
 
-- :star: The `"extends": "plugin:vue-i18n/recommended"` property in a configuration file enables this rule.
+- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` property in a configuration file enables this rule.
 
 This rule warns invalid message syntax.
 

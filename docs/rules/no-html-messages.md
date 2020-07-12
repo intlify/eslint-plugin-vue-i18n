@@ -1,8 +1,8 @@
-# vue-i18n/no-html-messages
+# @intlify/vue-i18n/no-html-messages
 
 > disallow use HTML localization messages
 
-- :star: The `"extends": "plugin:vue-i18n/recommended"` property in a configuration file enables this rule.
+- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` property in a configuration file enables this rule.
 
 This rule reports in order to reduce the risk of injecting potentially unsafe localization message into the browser leading to supply-chain attack or XSS attack.
 

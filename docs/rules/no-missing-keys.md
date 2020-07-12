@@ -1,8 +1,8 @@
-# vue-i18n/no-missing-keys
+# @intlify/vue-i18n/no-missing-keys
 
 > disallow missing locale message key at localization methods
 
-- :star: The `"extends": "plugin:vue-i18n/recommended"` property in a configuration file enables this rule.
+- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` property in a configuration file enables this rule.
 
 This rule warns locale message key missing if the key does not exist in locale messages.
 

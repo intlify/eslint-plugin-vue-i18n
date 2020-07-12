@@ -29,7 +29,7 @@ module.exports = {
     browser: true,
     es6: true
   },
-  plugins: ['vue-i18n'],
+  plugins: ['@intlify/vue-i18n'],
   rules: {
     ${rules.filter(rule => rule.recommended)
     .map(rule => `'${rule.id}': 'warn',`)

@@ -1,4 +1,4 @@
-# vue-i18n/no-unused-keys
+# @intlify/vue-i18n/no-unused-keys
 
 > disallow unused localization keys
 
@@ -80,7 +80,7 @@ i18n.t('hi')
 
 ```json
 {
-  "vue-i18n/no-unused-keys": ["error", {
+  "@intlify/vue-i18n/no-unused-keys": ["error", {
     "src": ["./src"],
     "extensions": [".js", ".vue"]
   }]

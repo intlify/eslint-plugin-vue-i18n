@@ -1,4 +1,4 @@
-# vue-i18n/no-dynamic-keys
+# @intlify/vue-i18n/no-dynamic-keys
 
 > disallow localization dynamic keys at localization methods
 

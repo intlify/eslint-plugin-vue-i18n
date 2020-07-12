@@ -23,12 +23,12 @@ For example:
 module.export = {
   extends: [
     'eslint:recommended',
-    'plugin:vue-i18n/recommended'
+    'plugin:@intlify/vue-i18n/recommended'
   ],
   rules: {
     // Optional.
-    'vue-i18n/no-dynamic-keys': 'error',
-    'vue-i18n/no-unused-keys': ['error', {
+    '@intlify/vue-i18n/no-dynamic-keys': 'error',
+    '@intlify/vue-i18n/no-unused-keys': ['error', {
       extensions: ['.js', '.vue']
     }]
   },
@@ -73,7 +73,7 @@ The most rules of `eslint-plugin-vue-i18n` require `vue-eslint-parser` to check 
 
 Make sure you have one of the following settings in your **.eslintrc**:
 
-- `"extends": ["plugin:vue-i18n/recommended"]`
+- `"extends": ["plugin:@intlify/vue-i18n/recommended"]`
 
 If you already use other parser (e.g. `"parser": "babel-eslint"`), please move it into `parserOptions`, so it doesn't collide with the `vue-eslint-parser` used by this plugin's configuration:
 

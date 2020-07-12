@@ -1,8 +1,8 @@
-# vue-i18n/no-raw-text
+# @intlify/vue-i18n/no-raw-text
 
 > disallow to string literal in template or JSX
 
-- :star: The `"extends": "plugin:vue-i18n/recommended"` property in a configuration file enables this rule.
+- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` property in a configuration file enables this rule.
 
 This rule warns the usage of string literal.
 
@@ -70,7 +70,7 @@ export default {
 
 ```json
 {
-  "vue-i18n/no-raw-text": ["error", {
+  "@intlify/vue-i18n/no-raw-text": ["error", {
     "ignoreNodes": ["md-icon", "v-icon"],
     "ignorePattern": "^[-#:()&]+$",
     "ignoreText": ["EUR", "HKD", "USD"]

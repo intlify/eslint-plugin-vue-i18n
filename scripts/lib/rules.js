@@ -13,7 +13,7 @@ const rules = readdirSync(resolve(__dirname, '../../lib/rules'))
   .map(name => {
     const meta = require(`../../lib/rules/${name}`).meta
     return {
-      id: `vue-i18n/${name}`,
+      id: `@intlify/vue-i18n/${name}`,
       name,
       category: String(meta.docs.category),
       description: String(meta.docs.description),
