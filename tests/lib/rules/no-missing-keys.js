@@ -6,12 +6,21 @@
 const RuleTester = require('eslint').RuleTester
 const rule = require('../../../lib/rules/no-missing-keys')
 
-const baseDir = './tests/fixtures/no-missing-keys/locales'
+const localeDirs = [
+  './tests/fixtures/no-missing-keys/vue-cli-format/locales/*.json',
+  { pattern: './tests/fixtures/no-missing-keys/constructor-option-format/locales/*.json', localeKey: 'key' }
+]
 
-const settings = {
-  'vue-i18n': {
-    localeDir: `${baseDir}/*.json`
+function buildTestsForLocales (testcases) {
+  const result = []
+  for (const testcase of testcases) {
+    for (const localeDir of localeDirs) {
+      result.push({ ...testcase, settings: {
+        'vue-i18n': { localeDir }
+      }})
+    }
   }
+  return result
 }
 
 const tester = new RuleTester({
@@ -20,103 +29,94 @@ const tester = new RuleTester({
 })
 
 tester.run('no-missing-keys', rule, {
-  valid: [{
+  valid: buildTestsForLocales([{
     // basic key
-    settings,
     code: `$t('hello')`
   }, {
     // nested key
-    settings,
     code: `t('messages.nested.hello')`
   }, {
     // linked key
-    settings,
     code: `$tc('messages.hello.link')`
   }, {
     // hypened key
-    settings,
     code: `tc('hello-dio')`
   }, {
     // key like the message
-    settings,
     code: `$t('hello {name}')`
   }, {
     // instance member
-    settings,
     code: `i18n.t('hello {name}')`
   }, {
     // identifier
-    settings,
     code: `$t(key)`
   }, {
     // using mustaches in template block
-    settings,
     code: `<template>
       <p>{{ $t('hello') }}</p>
     </template>`
   }, {
     // using custom directive in template block
-    settings,
     code: `<template>
       <p v-t="'hello'"></p>
     </template>`
-  }],
+  }]),
 
-  invalid: [{
+  invalid: [...buildTestsForLocales([{
     // basic
-    settings,
     code: `$t('missing')`,
     errors: [
-      `'missing' does not exist`,
-      `'missing' does not exist`
+      `'missing' does not exist in 'en'`,
+      `'missing' does not exist in 'ja'`
     ]
   }, {
     // using mustaches in template block
-    settings,
     code: `<template>
       <p>{{ $t('missing') }}</p>
     </template>`,
     errors: [
-      `'missing' does not exist`,
-      `'missing' does not exist`
+      `'missing' does not exist in 'en'`,
+      `'missing' does not exist in 'ja'`
     ]
   }, {
     // using custom directive in template block
-    settings,
     code: `<template>
       <p v-t="'missing'"></p>
     </template>`,
     errors: [
-      `'missing' does not exist`,
-      `'missing' does not exist`
+      `'missing' does not exist in 'en'`,
+      `'missing' does not exist in 'ja'`
     ]
   }, {
     // using <i18n> functional component in template block
-    settings,
     code: `<template>
       <div id="app">
         <i18n path="missing"/>
       </div>
     </template>`,
     errors: [
-      `'missing' does not exist`,
-      `'missing' does not exist`
+      `'missing' does not exist in 'en'`,
+      `'missing' does not exist in 'ja'`
     ]
   }, {
+    // nested basic
+    code: `$t('missing.path')`,
+    errors: [
+      `'missing' does not exist in 'en'`,
+      `'missing' does not exist in 'ja'`
+    ]
+  }, {
+    // nested missing
+    code: `$t('messages.missing')`,
+    errors: [
+      `'messages.missing' does not exist in 'en'`,
+      `'messages.missing' does not exist in 'ja'`
+    ]
+  }]), {
     // settings.vue-i18n.localeDir' error
     code: `$t('missing')`,
     errors: [
       `You need to set 'localeDir' at 'settings. See the 'eslint-plugin-vue-i18n documentation`
-    ]
-  }, {
-    // nested basic
-    settings,
-    code: `$t('missing.path')`,
-    errors: [
-      `'missing.path' does not exist`,
-      `'missing.path' does not exist`,
-      `'missing.path' does not exist`,
-      `'missing.path' does not exist`
     ]
   }]
 })
