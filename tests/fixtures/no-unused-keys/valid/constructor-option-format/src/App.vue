@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <p v-t="'hello_dio'">{{ $t('messages.hello') }}</p>
+    <p v-t="'hello_dio'">{{ $t('messages.link') }}</p>
   </div>
 </template>
 
