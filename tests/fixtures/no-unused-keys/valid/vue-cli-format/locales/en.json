@@ -1,7 +1,8 @@
 {
   "hello": "hello world",
   "messages": {
-    "hello": "hi DIO!"
+    "hello": "hi DIO!",
+    "link": "@:messages.hello"
   },
   "hello_dio": "hello underscore DIO!",
   "hello {name}": "hello {name}!"

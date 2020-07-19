@@ -2,7 +2,8 @@
   "en": {
     "hello": "hello world",
     "messages": {
-      "hello": "hi DIO!"
+      "hello": "hi DIO!",
+      "link": "@:messages.hello"
     },
     "hello_dio": "hello underscore DIO!",
     "hello {name}": "hello {name}!"
@@ -10,7 +11,8 @@
   "ja": {
     "hello": "ハローワールド",
     "messages": {
-      "hello": "こんにちは、DIO！"
+      "hello": "こんにちは、DIO！",
+      "link": "@:messages.hello"
     },
     "hello_dio": "こんにちは、アンダースコア DIO！",
     "hello {name}": "こんにちは、{name}！"
