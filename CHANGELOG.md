@@ -1,4 +1,16 @@
 
+## v0.6.0 (2020-07-19)
+
+#### :bug: Bug Fixes
+* [#76](https://github.com/intlify/eslint-plugin-vue-i18n/pull/76) Fix false positives for linked keys in no-unused-keys rule ([@ota-meshi](https://github.com/ota-meshi))
+
+#### :zap: Improvement Features
+* [#75](https://github.com/intlify/eslint-plugin-vue-i18n/pull/75) Change "settings['vue-i18n'].localeDir" to can specify object options. ([@ota-meshi](https://github.com/ota-meshi))
+
+#### Committers: 1
+- Yosuke Ota ([@ota-meshi](https://github.com/ota-meshi))
+
+
 ## v0.5.0 (2020-07-12)
 
 #### :bug: Bug Fixes
