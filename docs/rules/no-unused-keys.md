@@ -42,6 +42,25 @@ const i18n = new VueI18n({
 i18n.t('hello')
 ```
 
+For SFC.
+
+```vue
+<i18n>
+{
+  "en": {
+    "hello": "Hello! DIO!",
+    "hi": "Hi! DIO!" // not used in SFC
+  }
+}
+</i18n>
+
+<template>
+  <div class="app">
+    <p>{{ $t('hello') }}</p>
+  </div>
+</template>
+```
+
 :+1: Examples of **correct** code for this rule:
 
 locale messages:

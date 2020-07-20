@@ -15,7 +15,7 @@ You can be detected with this rule the following:
 - `$tc`
 - `tc`
 - `v-t`
-- `<i18n>` 
+- `<i18n>`
 
 :-1: Examples of **incorrect** code for this rule:
 
@@ -91,4 +91,23 @@ const i18n = new VueI18n({
 
 /* ✓ GOOD */
 i18n.t('hello')
+```
+
+For SFC.
+
+```vue
+<i18n>
+{
+  "en": {
+    "hi": "Hi! DIO!"
+  }
+}
+</i18n>
+
+<template>
+  <div class="app">
+    <!-- ✓ GOOD -->
+    <p>{{ $t('hi') }}</p>
+  </div>
+</template>
 ```
