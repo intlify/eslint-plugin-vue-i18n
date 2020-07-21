@@ -4,11 +4,106 @@
 'use strict'
 
 const Module = require('module')
-const { CLIEngine } = require('eslint')
+const { CLIEngine, RuleTester } = require('eslint')
 const { resolve, join } = require('path')
 const assert = require('assert')
 
-describe('no-unused-keys', () => {
+const rule = require('../../../lib/rules/no-unused-keys')
+
+new RuleTester({
+  parser: require.resolve('vue-eslint-parser'),
+  parserOptions: { ecmaVersion: 2015, sourceType: 'module' }
+}).run('no-unused-keys', rule, {
+  valid: [{
+    // sfc supports
+    filename: 'test.vue',
+    code: `
+    <i18n locale="en">
+    {
+      "hello": "hello world",
+      "messages": {
+        "hello": "hi DIO!",
+        "link": "@:messages.hello"
+      },
+      "hello_dio": "hello underscore DIO!",
+      "hello {name}": "hello {name}!"
+    }
+    </i18n>
+    <template>
+      <div id="app">
+        <p v-t="'hello_dio'">{{ $t('messages.link') }}</p>
+      </div>
+    </template>
+    <script>
+    export default {
+      created () {
+        this.$i18n.t('hello {name}', { name: 'DIO' })
+        this.$t('hello')
+      }
+    }
+    </script>`
+  }, {
+    // unuse i18n sfc
+    filename: 'test.vue',
+    code: `
+    <template>
+      <div id="app"></div>
+    </template>
+    <script>
+    export default {
+      created () {
+      }
+    }
+    </script>`
+  }],
+  invalid: [{
+    // sfc supports
+    filename: 'test.vue',
+    code: `
+    <i18n locale="en">
+    {
+      "hello": "hello world",
+      "messages": {
+        "hello": "hi DIO!",
+        "link": "@:message.hello",
+        "nested": {
+          "hello": "hi jojo!"
+        }
+      },
+      "hello_dio": "hello underscore DIO!",
+      "hello {name}": "hello {name}!",
+      "hello-dio": "hello hyphen DIO!"
+    }
+    </i18n>
+    <template>
+      <div id="app">
+        <p v-t="'hello_dio'">{{ $t('messages.link') }}</p>
+      </div>
+    </template>
+    <script>
+    export default {
+      created () {
+        this.$i18n.t('hello {name}', { name: 'DIO' })
+        this.$t('hello')
+      }
+    }
+    </script>`,
+    errors: [{
+      message: "unused 'messages.hello' key'",
+      line: 6
+    },
+    {
+      message: "unused 'messages.nested.hello' key'",
+      line: 9
+    },
+    {
+      message: "unused 'hello-dio' key'",
+      line: 14
+    }]
+  }]
+})
+
+describe('no-unused-keys with fixtures', () => {
   let originalCwd
   const resolveFilename = Module._resolveFilename
 
@@ -51,7 +146,7 @@ describe('no-unused-keys', () => {
           .filter(message => message.ruleId === '@intlify/vue-i18n/no-unused-keys')
       }).reduce((values, current) => values.concat(current), [])
         .forEach(message => {
-          assert.equal(message.message, `You need to 'localeDir' at 'settings. See the 'eslint-plugin-vue-i18n documentation`)
+          assert.equal(message.message, `You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation`)
         })
     })
   })

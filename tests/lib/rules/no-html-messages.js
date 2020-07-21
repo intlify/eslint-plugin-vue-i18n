@@ -4,11 +4,59 @@
 'use strict'
 
 const Module = require('module')
-const { CLIEngine } = require('eslint')
+const { CLIEngine, RuleTester } = require('eslint')
 const { resolve, join } = require('path')
+const fs = require('fs')
 const assert = require('assert')
+const rule = require('../../../lib/rules/no-html-messages')
 
-describe('no-html-messages', () => {
+new RuleTester({
+  parser: require.resolve('vue-eslint-parser'),
+  parserOptions: { ecmaVersion: 2015, sourceType: 'module' }
+}).run('no-html-messages', rule, {
+  valid: [{
+    // sfc supports
+    filename: 'test.vue',
+    code: `<i18n>${fs.readFileSync(require.resolve('../../fixtures/no-html-messages/valid/en.json'), 'utf8').replace(/</g, '&lt;')}</i18n>
+    <template></template><script></script>`
+  }, {
+    // unuse i18n sfc
+    filename: 'test.vue',
+    code: `
+    <template>
+      <div id="app"></div>
+    </template>
+    <script>
+    export default {
+      created () {
+      }
+    }
+    </script>`
+  }],
+  invalid: [{
+    // sfc supports
+    filename: 'test.vue',
+    code: `<i18n>${fs.readFileSync(require.resolve('../../fixtures/no-html-messages/invalid/en.json'), 'utf8').replace(/</g, '&lt;')}</i18n>
+    <template></template><script></script>`,
+    errors: [{
+      message: 'used HTML localization message',
+      line: 3,
+      column: 14
+    },
+    {
+      message: 'used HTML localization message',
+      line: 5,
+      column: 24
+    },
+    {
+      message: 'used HTML localization message',
+      line: 6,
+      column: 22
+    }]
+  }]
+})
+
+describe('no-html-messages with fixtures', () => {
   let originalCwd
   const resolveFilename = Module._resolveFilename
 

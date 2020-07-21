@@ -15,5 +15,6 @@ module.exports = {
     ecmaVersion: 2015
   },
   rules: {
+    'object-shorthand': 'error'
   }
 }
