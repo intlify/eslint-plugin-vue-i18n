@@ -81,7 +81,7 @@ i18n.t('hi')
 ```json
 {
   "@intlify/vue-i18n/no-unused-keys": ["error", {
-    "src": ["./src"],
+    "src": "./src",
     "extensions": [".js", ".vue"]
   }]
 }
