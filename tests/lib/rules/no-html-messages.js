@@ -81,17 +81,17 @@ describe('no-html-messages with fixtures', () => {
     it('should be not detected html messages', () => {
       const linter = new CLIEngine({
         baseConfig: {
+          extends: ['plugin:@intlify/vue-i18n/base'],
           settings: {
             'vue-i18n': {
               localeDir: `./valid/*.json`
             }
           }
         },
-        parser: require.resolve('vue-eslint-parser'),
+        useEslintrc: false,
         parserOptions: {
           ecmaVersion: 2015
         },
-        plugins: ['@intlify/vue-i18n'],
         rules: {
           '@intlify/vue-i18n/no-html-messages': 'error'
         },
@@ -107,17 +107,17 @@ describe('no-html-messages with fixtures', () => {
     it('should be detected html messages', () => {
       const linter = new CLIEngine({
         baseConfig: {
+          extends: ['plugin:@intlify/vue-i18n/base'],
           settings: {
             'vue-i18n': {
               localeDir: `./invalid/*.json`
             }
           }
         },
-        parser: require.resolve('vue-eslint-parser'),
+        useEslintrc: false,
         parserOptions: {
           ecmaVersion: 2015
         },
-        plugins: ['@intlify/vue-i18n'],
         rules: {
           '@intlify/vue-i18n/no-html-messages': 'error'
         },

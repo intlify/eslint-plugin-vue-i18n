@@ -20,7 +20,6 @@ require('./update-recommended-rules')
 for (const pairs of [
   [resolve(__dirname, '../lib/configs')],
   [resolve(__dirname, '../lib/rules')],
-  [resolve(__dirname, '../lib/processors'), '.'],
   [resolve(__dirname, '../lib/utils')]
 ]) {
   const [dirPath, prefix] = pairs

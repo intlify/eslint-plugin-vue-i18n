@@ -17,7 +17,7 @@ writeFileSync(
 'use strict'
 
 module.exports = {
-  parser: require.resolve('vue-eslint-parser'),
+  extends: [require.resolve('./base')],
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',
@@ -29,7 +29,6 @@ module.exports = {
     browser: true,
     es6: true
   },
-  plugins: ['@intlify/vue-i18n'],
   rules: {
     ${rules.filter(rule => rule.recommended)
     .map(rule => `'${rule.id}': 'warn',`)
