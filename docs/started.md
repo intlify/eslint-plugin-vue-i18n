@@ -89,6 +89,7 @@ The most rules of `eslint-plugin-vue-i18n` require `vue-eslint-parser` to check 
 Make sure you have one of the following settings in your **.eslintrc**:
 
 - `"extends": ["plugin:@intlify/vue-i18n/recommended"]`
+- `"extends": ["plugin:@intlify/vue-i18n/base"]`
 
 If you already use other parser (e.g. `"parser": "babel-eslint"`), please move it into `parserOptions`, so it doesn't collide with the `vue-eslint-parser` used by this plugin's configuration:
 
