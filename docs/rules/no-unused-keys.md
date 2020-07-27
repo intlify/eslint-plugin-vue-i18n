@@ -2,6 +2,8 @@
 
 > disallow unused localization keys
 
+- :black_nib:️ The `--fix` option on the [command line](http://eslint.org/docs/user-guide/command-line-interface#fix) can automatically fix some of the problems reported by this rule.
+
 Localization keys that not used anywhere in the code are most likely an error due to incomplete refactoring. Such localization keys take up code size and can lead to confusion by readers.
 
 ## :book: Rule Details
@@ -101,10 +103,12 @@ i18n.t('hi')
 {
   "@intlify/vue-i18n/no-unused-keys": ["error", {
     "src": "./src",
-    "extensions": [".js", ".vue"]
+    "extensions": [".js", ".vue"],
+    "enableFix": false
   }]
 }
 ```
 
 - `src`: specify the source codes directory to be able to lint. If you don't set any options, it set to `process.cwd()` as default.
 - `extensions`: an array to allow specified lintable target file extension. If you don't set any options, it set to `.js` and` .vue` as default.
+- `enableFix`: if `true`, enable automatically remove unused keys on `eslint --fix`. If you don't set any options, it set to `false` as default. (This is an experimental feature.)
