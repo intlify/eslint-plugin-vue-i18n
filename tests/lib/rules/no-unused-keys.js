@@ -663,7 +663,10 @@ describe('no-unused-keys with fixtures', () => {
           sourceType: 'module'
         },
         rules: {
-          '@intlify/vue-i18n/no-unused-keys': ['error', { enableFix: true }]
+          '@intlify/vue-i18n/no-unused-keys': ['error', {
+            src: resolve(__dirname, '../../fixtures/no-unused-keys/invalid/vue-cli-format'),
+            enableFix: true
+          }]
         },
         extensions: ['.js', '.vue', '.json']
       })
@@ -674,7 +677,7 @@ describe('no-unused-keys with fixtures', () => {
       const fixallEn = `{
   "hello": "hello world",
   "messages": {
-    "link": "@:message.hello",
+    "hello": "hi DIO!",
     "nested": {
     }
   },
@@ -688,15 +691,15 @@ describe('no-unused-keys with fixtures', () => {
           output: fixallEn,
           errors: [
             {
-              message: "unused 'messages.hello' key",
-              line: 4,
+              message: "unused 'messages.link' key",
+              line: 5,
               suggestions: [
                 {
-                  desc: "Remove the 'messages.hello' key.",
+                  desc: "Remove the 'messages.link' key.",
                   output: `{
   "hello": "hello world",
   "messages": {
-    "link": "@:message.hello",
+    "hello": "hi DIO!",
     "nested": {
       "hello": "hi jojo!"
     }
@@ -771,7 +774,7 @@ describe('no-unused-keys with fixtures', () => {
       const fixallJa = `{
   "hello": "ハローワールド",
   "messages": {
-    "link": "@:message.hello",
+    "hello": "こんにちは、DIO！",
     "nested": {
     }
   },
@@ -785,15 +788,15 @@ describe('no-unused-keys with fixtures', () => {
           output: fixallJa,
           errors: [
             {
-              message: "unused 'messages.hello' key",
-              line: 4,
+              message: "unused 'messages.link' key",
+              line: 5,
               suggestions: [
                 {
-                  desc: "Remove the 'messages.hello' key.",
+                  desc: "Remove the 'messages.link' key.",
                   output: `{
   "hello": "ハローワールド",
   "messages": {
-    "link": "@:message.hello",
+    "hello": "こんにちは、DIO！",
     "nested": {
       "hello": "こんにちは、ジョジョ!"
     }
@@ -883,7 +886,10 @@ describe('no-unused-keys with fixtures', () => {
           sourceType: 'module'
         },
         rules: {
-          '@intlify/vue-i18n/no-unused-keys': ['error', { enableFix: true }]
+          '@intlify/vue-i18n/no-unused-keys': ['error', {
+            src: resolve(__dirname, '../../fixtures/no-unused-keys/invalid/constructor-option-format'),
+            enableFix: true
+          }]
         },
         extensions: ['.js', '.vue', '.json']
       })
@@ -895,7 +901,7 @@ describe('no-unused-keys with fixtures', () => {
   "en": {
     "hello": "hello world",
     "messages": {
-      "link": "@:message.hello",
+      "hello": "hi DIO!",
       "nested": {
       }
     },
@@ -905,7 +911,7 @@ describe('no-unused-keys with fixtures', () => {
   "ja": {
     "hello": "ハローワールド",
     "messages": {
-      "link": "@:message.hello",
+      "hello": "こんにちは、DIO！",
       "nested": {
       }
     },
@@ -920,16 +926,16 @@ describe('no-unused-keys with fixtures', () => {
           output: fixall,
           errors: [
             {
-              message: "unused 'en.messages.hello' key",
-              line: 5,
+              message: "unused 'en.messages.link' key",
+              line: 6,
               suggestions: [
                 {
-                  desc: "Remove the 'en.messages.hello' key.",
+                  desc: "Remove the 'en.messages.link' key.",
                   output: `{
   "en": {
     "hello": "hello world",
     "messages": {
-      "link": "@:message.hello",
+      "hello": "hi DIO!",
       "nested": {
         "hello": "hi jojo!"
       }
@@ -1043,11 +1049,11 @@ describe('no-unused-keys with fixtures', () => {
               ]
             },
             {
-              message: "unused 'ja.messages.hello' key",
-              line: 18,
+              message: "unused 'ja.messages.link' key",
+              line: 19,
               suggestions: [
                 {
-                  desc: "Remove the 'ja.messages.hello' key.",
+                  desc: "Remove the 'ja.messages.link' key.",
                   output: `{
   "en": {
     "hello": "hello world",
@@ -1065,7 +1071,7 @@ describe('no-unused-keys with fixtures', () => {
   "ja": {
     "hello": "ハローワールド",
     "messages": {
-      "link": "@:message.hello",
+      "hello": "こんにちは、DIO！",
       "nested": {
         "hello": "こんにちは、ジョジョ!"
       }
