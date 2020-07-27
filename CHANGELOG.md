@@ -3,7 +3,7 @@
 
 #### :star: Features
 * [#83](https://github.com/intlify/eslint-plugin-vue-i18n/pull/83) Add `enableFix` option to `@intlify/vue-i18n/no-unused-keys` rule ([@ota-meshi](https://github.com/ota-meshi))
-* [#80](https://github.com/intlify/eslint-plugin-vue-i18n/pull/80) Add support for <i18n> blocks of SFC. ([@ota-meshi](https://github.com/ota-meshi))
+* [#80](https://github.com/intlify/eslint-plugin-vue-i18n/pull/80) Add support for `<i18n>` blocks of SFC. ([@ota-meshi](https://github.com/ota-meshi))
 
 #### Committers: 1
 - Yosuke Ota ([@ota-meshi](https://github.com/ota-meshi))
