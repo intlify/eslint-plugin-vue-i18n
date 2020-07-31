@@ -44,7 +44,7 @@ export default {
 ```js
 export default {
   // ✓ GOOD
-  template: `<p>{{ $('hello') }}</p>`
+  template: `<p>{{ $t('hello') }}</p>`
   // ...
 }
 ```
