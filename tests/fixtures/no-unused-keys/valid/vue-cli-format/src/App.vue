@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     <p v-t="'hello_dio'">{{ $t('messages.link') }}</p>
+    <i18n path="term" tag="label" for="tos">
+      <a :href="url" target="_blank">{{ $t('tos') }}</a>
+    </i18n>
   </div>
 </template>
 
