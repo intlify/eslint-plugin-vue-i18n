@@ -34,10 +34,10 @@ module.export = {
   },
   settings: {
     'vue-i18n': {
-      localeDir: './path/to/locales/*.json' // extention is glob formatting!
+      localeDir: './path/to/locales/*.{json,json5,yaml,yml}}' // extension is glob formatting!
       // or
       // localeDir: {
-      //   pattern: './path/to/locales/*.json', // extention is glob formatting!
+      //   pattern: './path/to/locales/*.{json,json5,yaml,yml}', // extension is glob formatting!
       //   localeKey: 'file' // or 'key'
       // }
     }
@@ -59,13 +59,20 @@ See [the rule list](../rules/)
 
 ### Running ESLint from command line
 
-If you want to run `eslint` from command line, make sure you include the `.vue` and `.json` extension using [the `--ext` option](https://eslint.org/docs/user-guide/configuring#specifying-file-extensions-to-lint) or a glob pattern because ESLint targets only `.js` files by default.
+If you want to run `eslint` from command line, make sure you include the `.vue`, `.json`, `.json5`, `.yaml` and `.yml` extension using [the `--ext` option](https://eslint.org/docs/user-guide/configuring#specifying-file-extensions-to-lint) or a glob pattern because ESLint targets only `.js` files by default.
 
 Examples:
 
 ```bash
 eslint --ext .js,.vue,.json src
 eslint "src/**/*.{js,vue,json}"
+# Specify the extension you use.
+# - use YAML?
+# eslint --ext .js,.vue,.yaml,.yml src
+# eslint "src/**/*.{js,vue,yaml,yml}"
+# - use JSON5?
+# eslint --ext .js,.vue,.json5 src
+# eslint "src/**/*.{js,vue,json5}"
 ```
 
 #### How to use custom parser?

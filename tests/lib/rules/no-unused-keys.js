@@ -86,6 +86,21 @@ new RuleTester({
     }
     </i18n>
     `
+  }, {
+    // yaml supports
+    filename: 'test.vue',
+    code: `
+    <i18n locale="en" lang="yaml">
+      messages:
+        hello: "hi DIO!"
+    </i18n>
+    <template>
+      <div id="app">
+        {{ $t('messages.hello') }}
+      </div>
+    </template>
+    <script>
+    </script>`
   }],
   invalid: [{
     // sfc supports
@@ -567,6 +582,221 @@ new RuleTester({
     <template></template>`
       }]
     }]
+  }, {
+    // yaml supports
+    filename: 'test.vue',
+    code: `
+    <i18n locale="en" lang="yaml">
+      messages:
+        hello: "hi DIO!"
+        unuse: "unuse"
+      unuse-messages:
+        unuse: "unuse"
+    </i18n>
+    <template>
+      <div id="app">
+        {{ $t('messages.hello') }}
+      </div>
+    </template>
+    <script>
+    </script>`,
+    options: [{ enableFix: true }],
+    output: `
+    <i18n locale="en" lang="yaml">
+      messages:
+        hello: "hi DIO!"
+      unuse-messages: {}
+    </i18n>
+    <template>
+      <div id="app">
+        {{ $t('messages.hello') }}
+      </div>
+    </template>
+    <script>
+    </script>`,
+    errors: [{
+      message: "unused 'messages.unuse' key",
+      line: 5,
+      column: 9,
+      suggestions: [{
+        desc: "Remove the 'messages.unuse' key.",
+        output: `
+    <i18n locale="en" lang="yaml">
+      messages:
+        hello: "hi DIO!"
+      unuse-messages:
+        unuse: "unuse"
+    </i18n>
+    <template>
+      <div id="app">
+        {{ $t('messages.hello') }}
+      </div>
+    </template>
+    <script>
+    </script>`
+      }, {
+        desc: 'Remove all unused keys.',
+        output: `
+    <i18n locale="en" lang="yaml">
+      messages:
+        hello: "hi DIO!"
+      unuse-messages: {}
+    </i18n>
+    <template>
+      <div id="app">
+        {{ $t('messages.hello') }}
+      </div>
+    </template>
+    <script>
+    </script>`
+      }]
+    },
+    {
+      message: "unused 'unuse-messages.unuse' key",
+      line: 7,
+      column: 9,
+      suggestions: [{
+        desc: "Remove the 'unuse-messages.unuse' key.",
+        output: `
+    <i18n locale="en" lang="yaml">
+      messages:
+        hello: "hi DIO!"
+        unuse: "unuse"
+      unuse-messages: {}
+    </i18n>
+    <template>
+      <div id="app">
+        {{ $t('messages.hello') }}
+      </div>
+    </template>
+    <script>
+    </script>`
+      }, {
+        desc: 'Remove all unused keys.',
+        output: `
+    <i18n locale="en" lang="yaml">
+      messages:
+        hello: "hi DIO!"
+      unuse-messages: {}
+    </i18n>
+    <template>
+      <div id="app">
+        {{ $t('messages.hello') }}
+      </div>
+    </template>
+    <script>
+    </script>`
+      }]
+    }]
+  }, {
+    filename: 'test.vue',
+    code: `
+    <i18n locale="en" lang="yaml">
+      hello: "hi DIO!"
+      flow-block: {
+        "unuse1": "unuse",
+        "unuse2": "unuse"
+      }
+      flow-seq: [
+        "unuse",
+        "unuse",
+      ]
+      seq-unuse:
+        - "unuse"
+      ? {foo:bar}
+      : value
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      hi: "你好"
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      - "하이"
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {
+      hello: "hi DIO!",
+      unuse: "unuse",
+      "array-unuse": [
+        "unuse"
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`,
+    options: [{ enableFix: true }],
+    output: `
+    <i18n locale="en" lang="yaml">
+${' '.repeat(6)}
+      flow-block: {
+        "unuse2": "unuse"
+      }
+      flow-seq: [
+        "unuse",
+      ]
+      seq-unuse: []
+      ? {foo:bar}
+      : value
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      {}
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      []
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {
+      unuse: "unuse",
+      "array-unuse": [
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`,
+    errors: [
+      {
+        message: "unused 'hello' key",
+        suggestions: [
+          {
+            desc: "Remove the 'hello' key."
+          },
+          {
+            desc: 'Remove all unused keys.',
+            output: `
+    <i18n locale="en" lang="yaml">
+${' '.repeat(6)}
+      flow-block: {}
+      flow-seq: []
+      seq-unuse: []
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      hi: "你好"
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      - "하이"
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {
+      hello: "hi DIO!",
+      unuse: "unuse",
+      "array-unuse": [
+        "unuse"
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`
+          }
+        ]
+      },
+      "unused 'flow-block.unuse1' key",
+      "unused 'flow-block.unuse2' key",
+      "unused 'flow-seq[0]' key",
+      "unused 'flow-seq[1]' key",
+      "unused 'seq-unuse[0]' key",
+      "unused '{foo:bar}' key",
+      "unused 'hi' key",
+      "unused '[0]' key",
+      "unused 'hello' key",
+      "unused 'unuse' key",
+      "unused 'array-unuse[0]' key"
+    ]
   }]
 })
 
@@ -605,7 +835,7 @@ describe('no-unused-keys with fixtures', () => {
         rules: {
           '@intlify/vue-i18n/no-unused-keys': 'error'
         },
-        extensions: ['.js', '.vue', '.json']
+        extensions: ['.js', '.vue', '.json', '.yaml', '.yml']
       })
 
       const messages = linter.executeOnFiles(['.'])
@@ -627,7 +857,7 @@ describe('no-unused-keys with fixtures', () => {
           extends: ['plugin:@intlify/vue-i18n/base'],
           settings: {
             'vue-i18n': {
-              localeDir: `./valid/vue-cli-format/locales/*.json`
+              localeDir: `./valid/vue-cli-format/locales/*.{json,yaml,yml}`
             }
           }
         },
@@ -641,7 +871,7 @@ describe('no-unused-keys with fixtures', () => {
             src: resolve(__dirname, '../../fixtures/no-unused-keys/valid/vue-cli-format')
           }]
         },
-        extensions: ['.js', '.vue', '.json']
+        extensions: ['.js', '.vue', '.json', '.yaml', '.yml']
       })
 
       const messages = linter.executeOnFiles(['.'])
@@ -654,7 +884,7 @@ describe('no-unused-keys with fixtures', () => {
           extends: ['plugin:@intlify/vue-i18n/base'],
           settings: {
             'vue-i18n': {
-              localeDir: { pattern: `./valid/constructor-option-format/locales/*.json`, localeKey: 'key' }
+              localeDir: { pattern: `./valid/constructor-option-format/locales/*.{json,yaml,yml}`, localeKey: 'key' }
             }
           }
         },
@@ -668,7 +898,7 @@ describe('no-unused-keys with fixtures', () => {
             src: resolve(__dirname, '../../fixtures/no-unused-keys/valid/constructor-option-format')
           }]
         },
-        extensions: ['.js', '.vue', '.json']
+        extensions: ['.js', '.vue', '.json', '.yaml', '.yml']
       })
 
       const messages = linter.executeOnFiles(['.'])
@@ -683,7 +913,7 @@ describe('no-unused-keys with fixtures', () => {
           extends: ['plugin:@intlify/vue-i18n/base'],
           settings: {
             'vue-i18n': {
-              localeDir: `./invalid/vue-cli-format/locales/*.json`
+              localeDir: `./invalid/vue-cli-format/locales/*.{json,yaml,yml}`
             }
           }
         },
@@ -698,7 +928,7 @@ describe('no-unused-keys with fixtures', () => {
             enableFix: true
           }]
         },
-        extensions: ['.js', '.vue', '.json']
+        extensions: ['.js', '.vue', '.json', '.yaml', '.yml']
       })
 
       const messages = linter.executeOnFiles(['.'])
@@ -801,40 +1031,32 @@ describe('no-unused-keys with fixtures', () => {
           ]
         }
       )
-      const fixallJa = `{
-  "hello": "ハローワールド",
-  "messages": {
-    "hello": "こんにちは、DIO！",
-    "nested": {
-    }
-  },
-  "hello_dio": "こんにちは、アンダースコア DIO！",
-  "hello {name}": "こんにちは、{name}！"
-}
+      const fixallJa = `hello: "ハローワールド"
+messages:
+  hello: "こんにちは、DIO！"
+  nested: {}
+hello_dio: "こんにちは、アンダースコア DIO！"
+"hello {name}": "こんにちは、{name}！"
 `
       assert.deepStrictEqual(
-        getResult(messages, '../../fixtures/no-unused-keys/invalid/vue-cli-format/locales/ja.json'),
+        getResult(messages, '../../fixtures/no-unused-keys/invalid/vue-cli-format/locales/ja.yaml'),
         {
           output: fixallJa,
           errors: [
             {
               message: "unused 'messages.link' key",
-              line: 5,
+              line: 4,
               suggestions: [
                 {
                   desc: "Remove the 'messages.link' key.",
-                  output: `{
-  "hello": "ハローワールド",
-  "messages": {
-    "hello": "こんにちは、DIO！",
-    "nested": {
-      "hello": "こんにちは、ジョジョ!"
-    }
-  },
-  "hello_dio": "こんにちは、アンダースコア DIO！",
-  "hello {name}": "こんにちは、{name}！",
-  "hello-dio": "こんにちは、ハイフン DIO！"
-}
+                  output: `hello: "ハローワールド"
+messages:
+  hello: "こんにちは、DIO！"
+  nested:
+    hello: "こんにちは、ジョジョ!"
+hello_dio: "こんにちは、アンダースコア DIO！"
+"hello {name}": "こんにちは、{name}！"
+hello-dio: "こんにちは、ハイフン DIO！"
 `
                 },
                 {
@@ -845,22 +1067,18 @@ describe('no-unused-keys with fixtures', () => {
             },
             {
               message: "unused 'messages.nested.hello' key",
-              line: 7,
+              line: 6,
               suggestions: [
                 {
                   desc: "Remove the 'messages.nested.hello' key.",
-                  output: `{
-  "hello": "ハローワールド",
-  "messages": {
-    "hello": "こんにちは、DIO！",
-    "link": "@:message.hello",
-    "nested": {
-    }
-  },
-  "hello_dio": "こんにちは、アンダースコア DIO！",
-  "hello {name}": "こんにちは、{name}！",
-  "hello-dio": "こんにちは、ハイフン DIO！"
-}
+                  output: `hello: "ハローワールド"
+messages:
+  hello: "こんにちは、DIO！"
+  link: "@:message.hello"
+  nested: {}
+hello_dio: "こんにちは、アンダースコア DIO！"
+"hello {name}": "こんにちは、{name}！"
+hello-dio: "こんにちは、ハイフン DIO！"
 `
                 },
                 {
@@ -871,22 +1089,18 @@ describe('no-unused-keys with fixtures', () => {
             },
             {
               message: "unused 'hello-dio' key",
-              line: 12,
+              line: 9,
               suggestions: [
                 {
                   desc: "Remove the 'hello-dio' key.",
-                  output: `{
-  "hello": "ハローワールド",
-  "messages": {
-    "hello": "こんにちは、DIO！",
-    "link": "@:message.hello",
-    "nested": {
-      "hello": "こんにちは、ジョジョ!"
-    }
-  },
-  "hello_dio": "こんにちは、アンダースコア DIO！",
-  "hello {name}": "こんにちは、{name}！"
-}
+                  output: `hello: "ハローワールド"
+messages:
+  hello: "こんにちは、DIO！"
+  link: "@:message.hello"
+  nested:
+    hello: "こんにちは、ジョジョ!"
+hello_dio: "こんにちは、アンダースコア DIO！"
+"hello {name}": "こんにちは、{name}！"
 `
                 },
                 {
@@ -906,7 +1120,7 @@ describe('no-unused-keys with fixtures', () => {
           extends: ['plugin:@intlify/vue-i18n/base'],
           settings: {
             'vue-i18n': {
-              localeDir: { pattern: `./invalid/constructor-option-format/locales/*.json`, localeKey: 'key' }
+              localeDir: { pattern: `./invalid/constructor-option-format/locales/*.{json,yaml,yml}`, localeKey: 'key' }
             }
           }
         },
@@ -921,7 +1135,7 @@ describe('no-unused-keys with fixtures', () => {
             enableFix: true
           }]
         },
-        extensions: ['.js', '.vue', '.json']
+        extensions: ['.js', '.vue', '.json', '.yaml', '.yml']
       })
 
       const messages = linter.executeOnFiles(['.'])
