@@ -71,6 +71,21 @@ new RuleTester({
     }
     </i18n>
     `
+  }, {
+    // <i18n-t> component
+    filename: 'test.vue',
+    code: `
+    <template>
+      <i18n-t path="message_key" tag="p" />
+    </template>
+    <i18n>
+    {
+      "en": {
+        "message_key": "hi"
+      }
+    }
+    </i18n>
+    `
   }],
   invalid: [{
     // sfc supports
