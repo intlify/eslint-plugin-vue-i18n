@@ -135,6 +135,17 @@ tester.run('no-missing-keys', rule, {
       `'missing' does not exist in 'ja'`
     ]
   }, {
+    // using <i18n-t> functional component in template block
+    code: `<template>
+      <div id="app">
+        <i18n-t path="missing"/>
+      </div>
+    </template>`,
+    errors: [
+      `'missing' does not exist in 'en'`,
+      `'missing' does not exist in 'ja'`
+    ]
+  }, {
     // nested basic
     code: `$t('missing.path')`,
     errors: [
