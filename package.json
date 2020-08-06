@@ -33,7 +33,7 @@
     "lodash": "^4.17.11",
     "parse5": "^6.0.0",
     "vue-eslint-parser": "^7.0.0",
-    "yaml-eslint-parser": "^0.0.7"
+    "yaml-eslint-parser": "^0.0.8"
   },
   "devDependencies": {
     "eslint": "^5.15.0 || ^6.0.0 || ^7.0.0",
