@@ -33,7 +33,7 @@ export default {
 ```js
 export default {
   // ✗ BAD
-  render: h => (<p>hello</p>)
+  render: h => <p>hello</p>
   // ...
 }
 ```
@@ -61,7 +61,7 @@ export default {
 ```js
 export default {
   // ✓ GOOD
-  render: h => (<p>{this.$t('hello')}</p>)
+  render: h => <p>{this.$t('hello')}</p>
   // ...
 }
 ```

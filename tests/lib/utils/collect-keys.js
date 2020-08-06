@@ -22,20 +22,33 @@ describe('usedKeysCache', () => {
 
   const filesDir = path.join(__dirname, '../../fixtures/utils/collect-keys/src')
 
-  function collectKeysFromFiles () {
+  function collectKeysFromFiles() {
     return usedKeysCache.collectKeysFromFiles([filesDir], ['.vue', '.js'])
   }
   it('should be refresh with change files.', async () => {
-    const vuePath = path.join(__dirname, '../../fixtures/utils/collect-keys/src/App.vue')
-    const jsPath = path.join(__dirname, '../../fixtures/utils/collect-keys/src/main.js')
+    const vuePath = path.join(
+      __dirname,
+      '../../fixtures/utils/collect-keys/src/App.vue'
+    )
+    const jsPath = path.join(
+      __dirname,
+      '../../fixtures/utils/collect-keys/src/main.js'
+    )
     const bkVue = fs.readFileSync(vuePath, 'utf8')
     try {
-      assert.deepStrictEqual(collectKeysFromFiles(), ['hello_dio', 'messages.link', 'hello {name}'])
-      fs.writeFileSync(vuePath, `<template><div id="app">{{ $t('messages.link') }}</div></template>`)
+      assert.deepStrictEqual(collectKeysFromFiles(), [
+        'hello_dio',
+        'messages.link',
+        'hello {name}'
+      ])
+      fs.writeFileSync(
+        vuePath,
+        `<template><div id="app">{{ $t('messages.link') }}</div></template>`
+      )
       await new Promise(resolve => setTimeout(resolve, 10))
       assert.deepStrictEqual(collectKeysFromFiles(), ['messages.link'])
 
-      fs.writeFileSync(jsPath, 'const $t = () => {}\n$t(\'hello\')\n', 'utf8')
+      fs.writeFileSync(jsPath, "const $t = () => {}\n$t('hello')\n", 'utf8')
       await new Promise(resolve => setTimeout(resolve, 20))
       assert.deepStrictEqual(collectKeysFromFiles(), ['messages.link', 'hello'])
     } finally {

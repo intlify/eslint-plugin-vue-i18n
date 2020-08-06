@@ -14,9 +14,7 @@ module.exports = {
   description: 'ESLint plugin for Vue I18n',
   serviceWorker: true,
   evergreen: true,
-  head: [
-    ['meta', { name: 'theme-color', content: '#3eaf7c' }]
-  ],
+  head: [['meta', { name: 'theme-color', content: '#3eaf7c' }]],
   themeConfig: {
     repo: 'intlify/eslint-plugin-vue-i18n',
     docsRepo: 'intlify/eslint-plugin-vue-i18n',
@@ -28,19 +26,25 @@ module.exports = {
     serviceWorker: {
       updatePopup: true
     },
-    nav: [{
-      text: 'Support Intlify',
-      items: [{
-        text: 'GitHub Sponsors',
-        link: 'https://github.com/sponsors/kazupon'
-      }, {
-        text: 'Patreon',
-        link: 'https://www.patreon.com/kazupon'
-      }]
-    }, {
-      text: 'Release Notes',
-      link: 'https://github.com/intlify/eslint-plugin-vue-i18n/releases'
-    }],
+    nav: [
+      {
+        text: 'Support Intlify',
+        items: [
+          {
+            text: 'GitHub Sponsors',
+            link: 'https://github.com/sponsors/kazupon'
+          },
+          {
+            text: 'Patreon',
+            link: 'https://www.patreon.com/kazupon'
+          }
+        ]
+      },
+      {
+        text: 'Release Notes',
+        link: 'https://github.com/intlify/eslint-plugin-vue-i18n/releases'
+      }
+    ],
     sidebar: {
       '/': [
         '/',

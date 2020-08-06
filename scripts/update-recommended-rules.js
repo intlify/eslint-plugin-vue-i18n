@@ -30,9 +30,10 @@ module.exports = {
     es6: true
   },
   rules: {
-    ${rules.filter(rule => rule.recommended)
-    .map(rule => `'${rule.id}': 'warn',`)
-    .join('\n        ')}
+    ${rules
+      .filter(rule => rule.recommended)
+      .map(rule => `'${rule.id}': 'warn',`)
+      .join('\n        ')}
   },
 }`)
 )

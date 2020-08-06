@@ -108,7 +108,7 @@ const i18n = new VueI18n({
 
 new Vue({
   i18n,
-  data () {
+  data() {
     return {
       bannerURL: 'https://banner.domain.com',
       modalDataURL: 'https://fetch.domain.com'

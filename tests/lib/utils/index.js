@@ -22,10 +22,10 @@ describe('getLocaleMessages', () => {
 
   const localeDir = 'tests/fixtures/utils/get-locale-messages/**/*.json'
   const dummyContext = {
-    getFilename () {
+    getFilename() {
       return 'input.vue'
     },
-    getSourceCode () {
+    getSourceCode() {
       return {
         ast: {}
       }
@@ -37,16 +37,23 @@ describe('getLocaleMessages', () => {
       }
     }
   }
-  function getAllLocaleMessages () {
+  function getAllLocaleMessages() {
     const r = {}
-    for (const localeMessage of getLocaleMessages(dummyContext).localeMessages) {
+    for (const localeMessage of getLocaleMessages(dummyContext)
+      .localeMessages) {
       r[localeMessage.file] = localeMessage.messages
     }
     return r
   }
   it('should be refresh with change files.', async () => {
-    const enJsonPath = path.join(__dirname, '../../fixtures/utils/get-locale-messages/locales/en.json')
-    const jaJsonPath = path.join(__dirname, '../../fixtures/utils/get-locale-messages/locales/ja.json')
+    const enJsonPath = path.join(
+      __dirname,
+      '../../fixtures/utils/get-locale-messages/locales/en.json'
+    )
+    const jaJsonPath = path.join(
+      __dirname,
+      '../../fixtures/utils/get-locale-messages/locales/ja.json'
+    )
     const enJson = require(enJsonPath)
     try {
       assert.deepStrictEqual(getAllLocaleMessages(), {

@@ -12,29 +12,30 @@ const tester = new RuleTester({
 })
 
 tester.run('no-v-html', rule, {
-  valid: [{
-    code: `<template>
+  valid: [
+    {
+      code: `<template>
       <div class="app">
         <i18n path="term" tag="label" for="tos">
           <a :href="url" target="_blank">{{ $t('tos') }}</a>
         </i18n>
       </div>
     </template>`
-  }],
+    }
+  ],
 
-  invalid: [{
-    code: `<template>
+  invalid: [
+    {
+      code: `<template>
       <p v-html="$t('hello')"></p>
     </template>`,
-    errors: [
-      `Using $t on 'v-html' directive can lead to XSS attack.`
-    ]
-  }, {
-    code: `<template>
+      errors: [`Using $t on 'v-html' directive can lead to XSS attack.`]
+    },
+    {
+      code: `<template>
       <p v-html="this.t('hello')"></p>
     </template>`,
-    errors: [
-      `Using t on 'v-html' directive can lead to XSS attack.`
-    ]
-  }]
+      errors: [`Using t on 'v-html' directive can lead to XSS attack.`]
+    }
+  ]
 })
