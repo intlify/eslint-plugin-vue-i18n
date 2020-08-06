@@ -4,6 +4,7 @@
  */
 'use strict'
 
+require('ts-node').register()
 const { withCategories } = require('../../scripts/lib/rules')
 require('../../scripts/update-docs-headers')
 require('../../scripts/update-docs-index')
