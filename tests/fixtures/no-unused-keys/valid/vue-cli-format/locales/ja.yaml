@@ -1,0 +1,7 @@
+hello: "ハローワールド"
+messages:
+  hello: "こんにちは、DIO！"
+  link: "@:messages.hello"
+hello_dio: "こんにちは、アンダースコア DIO！"
+"hello {name}": "こんにちは、{name}！"
+term: "私は xxx の{0}に同意します。"

@@ -53,6 +53,27 @@ new RuleTester({
       line: 6,
       column: 22
     }]
+  },
+  {
+    // sfc supports
+    filename: 'test.vue',
+    code: `<i18n lang="yaml">${fs.readFileSync(require.resolve('../../fixtures/no-html-messages/invalid/en.yaml'), 'utf8').replace(/</g, '&lt;')}</i18n>
+    <template></template><script></script>`,
+    errors: [{
+      message: 'used HTML localization message',
+      line: 2,
+      column: 12
+    },
+    {
+      message: 'used HTML localization message',
+      line: 4,
+      column: 22
+    },
+    {
+      message: 'used HTML localization message',
+      line: 5,
+      column: 20
+    }]
   }]
 })
 
@@ -84,7 +105,7 @@ describe('no-html-messages with fixtures', () => {
           extends: ['plugin:@intlify/vue-i18n/base'],
           settings: {
             'vue-i18n': {
-              localeDir: `./valid/*.json`
+              localeDir: `./valid/*.{json,yaml,yml}`
             }
           }
         },
@@ -95,7 +116,7 @@ describe('no-html-messages with fixtures', () => {
         rules: {
           '@intlify/vue-i18n/no-html-messages': 'error'
         },
-        extensions: ['.js', '.vue', '.json']
+        extensions: ['.js', '.vue', '.json', '.yaml', '.yml']
       })
 
       const messages = linter.executeOnFiles(['.'])
@@ -110,7 +131,7 @@ describe('no-html-messages with fixtures', () => {
           extends: ['plugin:@intlify/vue-i18n/base'],
           settings: {
             'vue-i18n': {
-              localeDir: `./invalid/*.json`
+              localeDir: `./invalid/*.{json,yaml,yml}`
             }
           }
         },
@@ -121,21 +142,23 @@ describe('no-html-messages with fixtures', () => {
         rules: {
           '@intlify/vue-i18n/no-html-messages': 'error'
         },
-        extensions: ['.js', '.vue', '.json']
+        extensions: ['.js', '.vue', '.json', '.yaml', '.yml']
       })
 
       const messages = linter.executeOnFiles(['.'])
-      assert.equal(messages.errorCount, 3)
+      assert.equal(messages.errorCount, 6)
 
       function checkRuleId (path) {
         const fullPath = resolve(__dirname, path)
-        const [result] = messages.results
-          .filter(result => result.filePath === fullPath)
+        const result = messages.results
+          .find(result => result.filePath === fullPath)
+        assert.equal(result.messages.length, 3)
         result.messages.forEach(message => {
           assert.equal(message.ruleId, '@intlify/vue-i18n/no-html-messages')
         })
       }
       checkRuleId('../../fixtures/no-html-messages/invalid/en.json')
+      checkRuleId('../../fixtures/no-html-messages/invalid/en.yaml')
     })
   })
 })

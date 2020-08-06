@@ -8,8 +8,8 @@ const RuleTester = require('eslint').RuleTester
 const rule = require('../../../lib/rules/no-missing-keys')
 
 const localeDirs = [
-  './tests/fixtures/no-missing-keys/vue-cli-format/locales/*.json',
-  { pattern: './tests/fixtures/no-missing-keys/constructor-option-format/locales/*.json', localeKey: 'key' }
+  './tests/fixtures/no-missing-keys/vue-cli-format/locales/*.{json,yaml,yml}',
+  { pattern: './tests/fixtures/no-missing-keys/constructor-option-format/locales/*.{json,yaml,yml}', localeKey: 'key' }
 ]
 
 function buildTestsForLocales (testcases, otherTestcases) {
@@ -86,6 +86,13 @@ tester.run('no-missing-keys', rule, {
     filename: path.join(__dirname, '../../fixtures/no-missing-keys/sfc/src/Test.vue'),
     code: `<i18n src="../locales/json02-en.json" locale="en" />
     <i18n src="../locales/json02-ja.json" locale="ja" />
+    <template>
+      <p v-t="'hello'"></p>
+    </template>`
+  }, {
+    // yaml
+    filename: path.join(__dirname, '../../fixtures/no-missing-keys/sfc/src/Test.vue'),
+    code: `<i18n src="../locales/yaml01.yml" />
     <template>
       <p v-t="'hello'"></p>
     </template>`
@@ -211,6 +218,17 @@ tester.run('no-missing-keys', rule, {
     filename: path.join(__dirname, '../../fixtures/no-missing-keys/sfc/src/Test.vue'),
     code: `<i18n src="../locales/json02-en.json" locale="en" />
     <i18n src="../locales/json02-ja.json" locale="ja" />
+    <template>
+      <p v-t="'missing'"></p>
+    </template>`,
+    errors: [
+      `'missing' does not exist in 'en'`,
+      `'missing' does not exist in 'ja'`
+    ]
+  }, {
+    // yaml
+    filename: path.join(__dirname, '../../fixtures/no-missing-keys/sfc/src/Test.vue'),
+    code: `<i18n src="../locales/yaml01.yml" />
     <template>
       <p v-t="'missing'"></p>
     </template>`,
