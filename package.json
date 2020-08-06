@@ -36,6 +36,16 @@
     "yaml-eslint-parser": "^0.0.8"
   },
   "devDependencies": {
+    "@types/debug": "^4.1.5",
+    "@types/eslint": "^7.2.0",
+    "@types/eslint-scope": "^3.7.0",
+    "@types/js-yaml": "^3.12.5",
+    "@types/json5": "^0.0.30",
+    "@types/lodash": "^4.14.159",
+    "@types/mocha": "^8.0.1",
+    "@types/parse5": "^5.0.3",
+    "@typescript-eslint/eslint-plugin": "^3.8.0",
+    "@typescript-eslint/parser": "^3.8.0",
     "eslint": "^5.15.0 || ^6.0.0 || ^7.0.0",
     "eslint-config-prettier": "^6.11.0",
     "eslint-plugin-markdown": "^1.0.0",
@@ -48,6 +58,8 @@
     "prettier": "^2.0.5",
     "rimraf": "^3.0.0",
     "shipjs": "^0.20.0",
+    "ts-node": "^8.10.2",
+    "typescript": "^3.9.7",
     "vue-github-button": "^1.2.0",
     "vuepress": "^1.5.2"
   },
@@ -55,7 +67,7 @@
     "node": ">=10.13.0 || >=12.0.0 || >= 14.0.0"
   },
   "files": [
-    "lib"
+    "dist"
   ],
   "homepage": "https://github.com/intlify/eslint-plugin-vue-i18n#readme",
   "keywords": [
@@ -70,7 +82,7 @@
     "vuejs"
   ],
   "license": "MIT",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "peerDependencies": {
     "eslint": "^5.0.0 || ^6.0.0 || ^7.0.0"
   },
@@ -79,18 +91,19 @@
     "url": "git+https://github.com/intlify/eslint-plugin-vue-i18n.git"
   },
   "scripts": {
-    "clean": "rimraf .nyc_output coverage docs/.vuepress/dist",
+    "build": "tsc --project ./tsconfig.build.json",
+    "clean": "rimraf .nyc_output coverage dist docs/.vuepress/dist",
     "coverage": "nyc report --reporter lcov && opener coverage/lcov-report/index.html",
     "docs": "vuepress dev docs",
     "docs:build": "vuepress build docs",
-    "generate": "node scripts/update.js",
-    "lint": "eslint lib scripts tests docs/.vuepress --ignore-pattern \"!.*\"",
+    "generate": "ts-node scripts/update.ts",
+    "lint": "eslint --ext js,ts lib scripts tests docs/.vuepress --ignore-pattern \"!.*\"",
     "lint:docs": "eslint --ext js,vue,md docs --ignore-pattern \"!.*\"",
     "release:prepare": "shipjs prepare",
     "release:trigger": "shipjs trigger",
-    "test": "mocha ./tests/**/*.js",
-    "test:debug": "mocha --inspect \"./tests/**/*.js\"",
-    "test:coverage": "nyc mocha ./tests/**/*.js",
+    "test": "mocha --require ts-node/register \"./tests/**/*.ts\"",
+    "test:debug": "mocha --require ts-node/register --inspect \"./tests/**/*.ts\"",
+    "test:coverage": "nyc mocha --require ts-node/register ./tests/**/*.ts",
     "test:integrations": "mocha ./tests-integrations/*.js --timeout 60000"
   }
 }
