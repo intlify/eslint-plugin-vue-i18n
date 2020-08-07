@@ -1,7 +1,7 @@
 {
   "name": "@intlify/eslint-plugin-vue-i18n",
   "description": "ESLint plugin for Vue I18n",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "author": {
     "name": "kazuya kawaguchi",
     "email": "kawakazu80@gmail.com"
