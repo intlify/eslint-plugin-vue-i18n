@@ -7,10 +7,12 @@ module.exports = {
     mocha: true
   },
   extends: [
-    'plugin:vue-libs/recommended'
+    'plugin:vue-libs/recommended',
+    'plugin:prettier/recommended',
+    'prettier',
+    'prettier/vue'
   ],
-  plugins: [
-  ],
+  plugins: [],
   parserOptions: {
     ecmaVersion: 2015
   },

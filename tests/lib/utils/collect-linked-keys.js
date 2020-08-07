@@ -34,7 +34,7 @@ describe('collectLinkedKeys', () => {
     const object = {
       message: {
         dio: 'DIO',
-        linked: 'There\'s a reason, you lost, @:(message.dio).'
+        linked: "There's a reason, you lost, @:(message.dio)."
       }
     }
 
@@ -66,12 +66,7 @@ describe('collectLinkedKeys', () => {
       }
     }
 
-    const expected = [
-      'foo.a',
-      'bar.a',
-      'bar.b.a',
-      'foo.d'
-    ]
+    const expected = ['foo.a', 'bar.a', 'bar.b.a', 'foo.d']
     assert.deepStrictEqual(collectLinkedKeys(object), expected)
   })
 })

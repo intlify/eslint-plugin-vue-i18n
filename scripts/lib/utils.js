@@ -10,21 +10,21 @@ const { basename } = require('path')
 const { CLIEngine } = require('eslint')
 const linter = new CLIEngine({ fix: true })
 
-function format (text) {
+function format(text) {
   const lintResult = linter.executeOnText(text)
   return lintResult.results[0].output || text
 }
 
-function createIndex (dirPath, prefix = '') {
+function createIndex(dirPath, prefix = '') {
   const dirName = basename(dirPath)
   return format(`/** DON'T EDIT THIS FILE; was created by scripts. */
   'use strict'
 
   module.exports = {
     ${readdirSync(dirPath)
-    .map(file => basename(file, '.js'))
-    .map(id => `'${prefix}${id}': require('./${dirName}/${id}'),`)
-    .join('\n    ')}
+      .map(file => basename(file, '.js'))
+      .map(id => `'${prefix}${id}': require('./${dirName}/${id}'),`)
+      .join('\n    ')}
   }
   `)
 }

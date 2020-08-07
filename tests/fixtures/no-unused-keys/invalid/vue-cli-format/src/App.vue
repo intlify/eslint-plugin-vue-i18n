@@ -7,7 +7,7 @@
 <script>
 export default {
   name: 'App',
-  created () {
+  created() {
     this.$i18n.t('hello {name}', { name: 'DIO' })
   }
 }

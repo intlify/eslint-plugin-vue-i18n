@@ -39,7 +39,6 @@ for (const rule of rules) {
 
   writeFileSync(
     filePath,
-    readFileSync(filePath, 'utf8')
-      .replace(PLACE_HOLDER, headerLines.join('\n'))
+    readFileSync(filePath, 'utf8').replace(PLACE_HOLDER, headerLines.join('\n'))
   )
 }

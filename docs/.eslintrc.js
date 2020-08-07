@@ -2,7 +2,5 @@
 
 module.exports = {
   extends: '../.eslintrc.js',
-  plugins: [
-    'markdown'
-  ]
+  plugins: ['markdown']
 }

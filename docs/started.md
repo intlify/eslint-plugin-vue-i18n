@@ -23,14 +23,18 @@ For example:
 module.export = {
   extends: [
     'eslint:recommended',
+    // Recommended
     'plugin:@intlify/vue-i18n/recommended'
   ],
   rules: {
     // Optional.
     '@intlify/vue-i18n/no-dynamic-keys': 'error',
-    '@intlify/vue-i18n/no-unused-keys': ['error', {
-      extensions: ['.js', '.vue']
-    }]
+    '@intlify/vue-i18n/no-unused-keys': [
+      'error',
+      {
+        extensions: ['.js', '.vue']
+      }
+    ]
   },
   settings: {
     'vue-i18n': {

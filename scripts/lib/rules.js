@@ -31,11 +31,7 @@ module.exports.withCategories = [
   /*
   'Stylistic Issues'
   */
-].map(
-  category => ({
-    category,
-    rules: rules.filter(
-      rule => rule.category === category && !rule.deprecated
-    )
-  })
-)
+].map(category => ({
+  category,
+  rules: rules.filter(rule => rule.category === category && !rule.deprecated)
+}))

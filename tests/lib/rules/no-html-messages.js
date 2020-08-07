@@ -14,15 +14,22 @@ new RuleTester({
   parser: require.resolve('vue-eslint-parser'),
   parserOptions: { ecmaVersion: 2015, sourceType: 'module' }
 }).run('no-html-messages', rule, {
-  valid: [{
-    // sfc supports
-    filename: 'test.vue',
-    code: `<i18n>${fs.readFileSync(require.resolve('../../fixtures/no-html-messages/valid/en.json'), 'utf8').replace(/</g, '&lt;')}</i18n>
+  valid: [
+    {
+      // sfc supports
+      filename: 'test.vue',
+      code: `<i18n>${fs
+        .readFileSync(
+          require.resolve('../../fixtures/no-html-messages/valid/en.json'),
+          'utf8'
+        )
+        .replace(/</g, '&lt;')}</i18n>
     <template></template><script></script>`
-  }, {
-    // unuse i18n sfc
-    filename: 'test.vue',
-    code: `
+    },
+    {
+      // unuse i18n sfc
+      filename: 'test.vue',
+      code: `
     <template>
       <div id="app"></div>
     </template>
@@ -32,49 +39,66 @@ new RuleTester({
       }
     }
     </script>`
-  }],
-  invalid: [{
-    // sfc supports
-    filename: 'test.vue',
-    code: `<i18n>${fs.readFileSync(require.resolve('../../fixtures/no-html-messages/invalid/en.json'), 'utf8').replace(/</g, '&lt;')}</i18n>
+    }
+  ],
+  invalid: [
+    {
+      // sfc supports
+      filename: 'test.vue',
+      code: `<i18n>${fs
+        .readFileSync(
+          require.resolve('../../fixtures/no-html-messages/invalid/en.json'),
+          'utf8'
+        )
+        .replace(/</g, '&lt;')}</i18n>
     <template></template><script></script>`,
-    errors: [{
-      message: 'used HTML localization message',
-      line: 3,
-      column: 14
+      errors: [
+        {
+          message: 'used HTML localization message',
+          line: 3,
+          column: 14
+        },
+        {
+          message: 'used HTML localization message',
+          line: 5,
+          column: 24
+        },
+        {
+          message: 'used HTML localization message',
+          line: 6,
+          column: 22
+        }
+      ]
     },
     {
-      message: 'used HTML localization message',
-      line: 5,
-      column: 24
-    },
-    {
-      message: 'used HTML localization message',
-      line: 6,
-      column: 22
-    }]
-  },
-  {
-    // sfc supports
-    filename: 'test.vue',
-    code: `<i18n lang="yaml">${fs.readFileSync(require.resolve('../../fixtures/no-html-messages/invalid/en.yaml'), 'utf8').replace(/</g, '&lt;')}</i18n>
+      // sfc supports
+      filename: 'test.vue',
+      code: `<i18n lang="yaml">${fs
+        .readFileSync(
+          require.resolve('../../fixtures/no-html-messages/invalid/en.yaml'),
+          'utf8'
+        )
+        .replace(/</g, '&lt;')}</i18n>
     <template></template><script></script>`,
-    errors: [{
-      message: 'used HTML localization message',
-      line: 2,
-      column: 12
-    },
-    {
-      message: 'used HTML localization message',
-      line: 4,
-      column: 22
-    },
-    {
-      message: 'used HTML localization message',
-      line: 5,
-      column: 20
-    }]
-  }]
+      errors: [
+        {
+          message: 'used HTML localization message',
+          line: 2,
+          column: 12
+        },
+        {
+          message: 'used HTML localization message',
+          line: 4,
+          column: 22
+        },
+        {
+          message: 'used HTML localization message',
+          line: 5,
+          column: 20
+        }
+      ]
+    }
+  ]
 })
 
 describe('no-html-messages with fixtures', () => {
@@ -148,10 +172,11 @@ describe('no-html-messages with fixtures', () => {
       const messages = linter.executeOnFiles(['.'])
       assert.equal(messages.errorCount, 6)
 
-      function checkRuleId (path) {
+      function checkRuleId(path) {
         const fullPath = resolve(__dirname, path)
-        const result = messages.results
-          .find(result => result.filePath === fullPath)
+        const result = messages.results.find(
+          result => result.filePath === fullPath
+        )
         assert.equal(result.messages.length, 3)
         result.messages.forEach(message => {
           assert.equal(message.ruleId, '@intlify/vue-i18n/no-html-messages')

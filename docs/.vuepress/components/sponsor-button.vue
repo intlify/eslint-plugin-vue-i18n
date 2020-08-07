@@ -1,6 +1,11 @@
 <template>
   <p class="sponsor-button">
-    <github-button href="https://github.com/sponsors/kazupon" data-icon="octicon-heart" data-size="large" aria-label="Sponsor @kazupon on GitHub">
+    <github-button
+      href="https://github.com/sponsors/kazupon"
+      data-icon="octicon-heart"
+      data-size="large"
+      aria-label="Sponsor @kazupon on GitHub"
+    >
       Sponsor on GitHub
     </github-button>
   </p>

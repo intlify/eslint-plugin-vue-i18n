@@ -18,8 +18,9 @@ const tester = new RuleTester({
 })
 
 tester.run('no-raw-text', rule, {
-  valid: [{
-    code: `
+  valid: [
+    {
+      code: `
       <template>
         <div class="app">
           <p class="a1">{{ $t('hello') }}</p>
@@ -27,80 +28,97 @@ tester.run('no-raw-text', rule, {
         </div>
       </template>
     `
-  }, {
-    code: `
+    },
+    {
+      code: `
       <template>
         <comp :value="1" :msg="$t('foo.bar')"/>
         <p>{{ hello }}</p>
       </template>
     `
-  }, {
-    filename: 'test.vue',
-    code: `
+    },
+    {
+      filename: 'test.vue',
+      code: `
       export default {
         template: '<p>{{ $t('hello') }}</p>'
       }
     `
-  }, {
-    code: `
+    },
+    {
+      code: `
       export default {
         render: function (h) {
           return (<p>{this.$t('hello')}</p>)
         }
       }
     `
-  }, {
-    code: `
+    },
+    {
+      code: `
       export default {
         props: {
           template: Object
         }
       }
     `
-  }, {
-    code: `
+    },
+    {
+      code: `
       <template>
         <md-icon>person</md-icon>
         <v-icon>menu</v-icon>
       </template>
     `,
-    options: [{ ignoreNodes: ['md-icon', 'v-icon'] }]
-  }, {
-    code: `
+      options: [{ ignoreNodes: ['md-icon', 'v-icon'] }]
+    },
+    {
+      code: `
       <template>
         <p>{{ $t('foo') }}: {{ $t('bar') }}</p>
       </template>
     `,
-    options: [{ ignorePattern: '^[-.#:()&]+$' }]
-  }, {
-    code: `
+      options: [{ ignorePattern: '^[-.#:()&]+$' }]
+    },
+    {
+      code: `
       <template>
         <p>hello</p>
         <p>world</p>
       </template>
     `,
-    options: [{ ignoreText: ['hello', 'world'] }]
-  }],
+      options: [{ ignoreText: ['hello', 'world'] }]
+    }
+  ],
 
-  invalid: [{
-    // simple template
-    code: `<template><p>hello</p></template>`,
-    errors: [{
-      message: `raw text 'hello' is used`, line: 1
-    }]
-  }, {
-    // included newline or tab or space in simple template
-    code: `
+  invalid: [
+    {
+      // simple template
+      code: `<template><p>hello</p></template>`,
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          line: 1
+        }
+      ]
+    },
+    {
+      // included newline or tab or space in simple template
+      code: `
       <template>
         <p>hello</p>
       </template>
     `,
-    errors: [{
-      message: `raw text 'hello' is used`, line: 3
-    }]
-  }, {
-    // child elements in template
-    code: `
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          line: 3
+        }
+      ]
+    },
+    {
+      // child elements in template
+      code: `
       <template>
         <div class="app">
           <p class="a1">hello</p>
@@ -108,128 +126,185 @@ tester.run('no-raw-text', rule, {
         </div>
       </template>
     `,
-    errors: [{
-      message: `raw text 'hello' is used`, line: 4
-    }, {
-      message: `raw text 'click' is used`, line: 5
-    }, {
-      message: `raw text 'here' is used`, line: 5
-    }, {
-      message: `raw text '!' is used`, line: 5
-    }]
-  }, {
-    // directly specify string literal in mustache
-    code: `
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          line: 4
+        },
+        {
+          message: `raw text 'click' is used`,
+          line: 5
+        },
+        {
+          message: `raw text 'here' is used`,
+          line: 5
+        },
+        {
+          message: `raw text '!' is used`,
+          line: 5
+        }
+      ]
+    },
+    {
+      // directly specify string literal in mustache
+      code: `
       <template>
         <p>{{ 'hello' }}</p>
       </template>
     `,
-    errors: [{
-      message: `raw text 'hello' is used`, line: 3
-    }]
-  }, {
-    // javascript expression specify string literal in mustache
-    code: `
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          line: 3
+        }
+      ]
+    },
+    {
+      // javascript expression specify string literal in mustache
+      code: `
       <template>
         <p>{{ ok ? 'hello' : 'world' }}</p>
       </template>
     `,
-    errors: [{
-      message: `raw text 'hello' is used`, line: 3
-    }, {
-      message: `raw text 'world' is used`, line: 3
-    }]
-  }, {
-    // directly specify string literal in v-text
-    code: `
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          line: 3
+        },
+        {
+          message: `raw text 'world' is used`,
+          line: 3
+        }
+      ]
+    },
+    {
+      // directly specify string literal in v-text
+      code: `
       <template>
         <p v-text="'hello'"></p>
       </template>
     `,
-    errors: [{
-      message: `raw text 'hello' is used`, line: 3
-    }]
-  }, {
-    // directly specify string literal to `template` component option at export default object
-    code: `
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          line: 3
+        }
+      ]
+    },
+    {
+      // directly specify string literal to `template` component option at export default object
+      code: `
       export default {
         template: '<p>hello</p>'
       }
     `,
-    errors: [{
-      message: `raw text 'hello' is used`, line: 3
-    }]
-  }, {
-    // directly specify string literal to `template` component option at variable
-    code: `
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          line: 3
+        }
+      ]
+    },
+    {
+      // directly specify string literal to `template` component option at variable
+      code: `
       const Component = {
         template: '<p>hello</p>'
       }
     `,
-    errors: [{
-      message: `raw text 'hello' is used`, line: 3
-    }]
-  }, {
-    // directly specify string literal to `template` variable
-    code: `
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          line: 3
+        }
+      ]
+    },
+    {
+      // directly specify string literal to `template` variable
+      code: `
       const template = '<p>hello</p>'
       const Component = {
         template
       }
     `,
-    errors: [{
-      message: `raw text 'hello' is used`, line: 2
-    }]
-  }, {
-    // directly specify string literal to `template` variable
-    code: `
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          line: 2
+        }
+      ]
+    },
+    {
+      // directly specify string literal to `template` variable
+      code: `
       const template = '<p>{{ "hello" }}</p>'
       const Component = {
         template
       }
     `,
-    errors: [{
-      message: `raw text 'hello' is used`, line: 2, column: 30
-    }]
-  }, {
-    // javascript expression specify string literal to `template` variable in mustache
-    code: `
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          line: 2,
+          column: 30
+        }
+      ]
+    },
+    {
+      // javascript expression specify string literal to `template` variable in mustache
+      code: `
       const template = '<p>{{ ok ? "hello" : "world" }}</p>'
       const Component = {
         template
       }
     `,
-    errors: [{
-      message: `raw text 'hello' is used`, line: 2, column: 35
-    }, {
-      message: `raw text 'world' is used`, line: 2, column: 45
-    }]
-  }, {
-    // directly specify string literal to JSX with `render`
-    code: `
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          line: 2,
+          column: 35
+        },
+        {
+          message: `raw text 'world' is used`,
+          line: 2,
+          column: 45
+        }
+      ]
+    },
+    {
+      // directly specify string literal to JSX with `render`
+      code: `
       const Component = {
         render () {
           return (<p>hello</p>)
         }
       }
     `,
-    errors: [{
-      message: `raw text 'hello' is used`, line: 4
-    }]
-  }, {
-    code: `
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          line: 4
+        }
+      ]
+    },
+    {
+      code: `
       <template>
         <md-icon>person</md-icon>
         <v-icon>menu</v-icon>
         <p>hello</p>
       </template>
     `,
-    options: [{ ignoreNodes: ['md-icon', 'v-icon'] }],
-    errors: [{
-      message: `raw text 'hello' is used`, line: 5
-    }]
-  }, {
-    code: `
+      options: [{ ignoreNodes: ['md-icon', 'v-icon'] }],
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          line: 5
+        }
+      ]
+    },
+    {
+      code: `
       <template>
         <p>{{ $t('foo') }}: {{ $t('bar') }}</p>
         <p>hello</p>
@@ -239,16 +314,26 @@ tester.run('no-raw-text', rule, {
         <p>{{ true ? $t('ok') : '@' }}</p>
       </template>
     `,
-    options: [{ ignorePattern: '^[-.#:()&]+$' }],
-    errors: [{
-      message: `raw text 'hello' is used`, line: 4
-    }, {
-      message: `raw text '@' is used`, line: 6, column: 12
-    }, {
-      message: `raw text '@' is used`, line: 8, column: 33
-    }]
-  }, {
-    code: `
+      options: [{ ignorePattern: '^[-.#:()&]+$' }],
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          line: 4
+        },
+        {
+          message: `raw text '@' is used`,
+          line: 6,
+          column: 12
+        },
+        {
+          message: `raw text '@' is used`,
+          line: 8,
+          column: 33
+        }
+      ]
+    },
+    {
+      code: `
       <template>
         <v-icon v-text="'mdi-check'" />
         <v-icon v-text="'not'" />
@@ -257,23 +342,34 @@ tester.run('no-raw-text', rule, {
         <v-icon v-html="'ok'" />
       </template>
     `,
-    options: [{
-      ignorePattern: '^mdi[-]|[-#:()/&]+$',
-      ignoreText: ['ok']
-    }],
-    errors: [{
-      message: `raw text 'not' is used`, line: 4, column: 25
-    }]
-  }, {
-    code: `
+      options: [
+        {
+          ignorePattern: '^mdi[-]|[-#:()/&]+$',
+          ignoreText: ['ok']
+        }
+      ],
+      errors: [
+        {
+          message: `raw text 'not' is used`,
+          line: 4,
+          column: 25
+        }
+      ]
+    },
+    {
+      code: `
       <template>
         <p>hello</p>
         <p>world</p>
       </template>
     `,
-    options: [{ ignoreText: ['hello'] }],
-    errors: [{
-      message: `raw text 'world' is used`, line: 4
-    }]
-  }]
+      options: [{ ignoreText: ['hello'] }],
+      errors: [
+        {
+          message: `raw text 'world' is used`,
+          line: 4
+        }
+      ]
+    }
+  ]
 })
