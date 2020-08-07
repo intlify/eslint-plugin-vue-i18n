@@ -1,4 +1,24 @@
 
+## v0.8.0 (2020-08-07)
+
+#### :star: Features
+* [#94](https://github.com/intlify/eslint-plugin-vue-i18n/pull/94) Add support YAML and JSON5 resources. ([@ota-meshi](https://github.com/ota-meshi))
+
+#### :bug: Bug Fixes
+* [#92](https://github.com/intlify/eslint-plugin-vue-i18n/pull/92) Fix false positives of key used in `<i18n>` component in `no-unused-keys` rule. ([@ota-meshi](https://github.com/ota-meshi))
+
+#### :zap: Improvement Features
+* [#93](https://github.com/intlify/eslint-plugin-vue-i18n/pull/93) Change `no-missing-keys` and `no-dynamic-keys` rules to also verify keys used in the `<i18n-t>` component. ([@ota-meshi](https://github.com/ota-meshi))
+* [#87](https://github.com/intlify/eslint-plugin-vue-i18n/pull/87) Change to apply update when resource file is updated. ([@ota-meshi](https://github.com/ota-meshi))
+
+#### :pencil: Documentation
+* [#89](https://github.com/intlify/eslint-plugin-vue-i18n/pull/89) docs: fix $t in example ([@azu](https://github.com/azu))
+
+#### Committers: 2
+- Yosuke Ota ([@ota-meshi](https://github.com/ota-meshi))
+- azu ([@azu](https://github.com/azu))
+
+
 ## v0.7.0 (2020-07-27)
 
 #### :star: Features
