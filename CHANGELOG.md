@@ -1,4 +1,13 @@
 
+## v0.8.1 (2020-08-07)
+
+#### :bug: Bug Fixes
+* [#99](https://github.com/intlify/eslint-plugin-vue-i18n/pull/99) Fix release does not include build files. ([@ota-meshi](https://github.com/ota-meshi))
+
+#### Committers: 1
+- Yosuke Ota ([@ota-meshi](https://github.com/ota-meshi))
+
+
 ## v0.8.0 (2020-08-07)
 
 #### :star: Features
