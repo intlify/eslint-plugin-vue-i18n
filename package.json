@@ -100,6 +100,7 @@
     "lint": "eslint --ext js,ts lib scripts tests docs/.vuepress --ignore-pattern \"!.*\"",
     "lint:docs": "eslint --ext js,vue,md docs --ignore-pattern \"!.*\"",
     "release:prepare": "shipjs prepare",
+    "prerelease:trigger": "yarn build",
     "release:trigger": "shipjs trigger",
     "test": "mocha --require ts-node/register \"./tests/**/*.ts\"",
     "test:debug": "mocha --require ts-node/register --inspect \"./tests/**/*.ts\"",
