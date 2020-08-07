@@ -12,11 +12,27 @@ module.exports = {
     'prettier',
     'prettier/vue'
   ],
-  plugins: [],
+  plugins: ['@typescript-eslint'],
   parserOptions: {
     ecmaVersion: 2015
   },
   rules: {
     'object-shorthand': 'error'
-  }
+  },
+  overrides: [
+    {
+      files: ['*.ts'],
+      extends: [
+        'plugin:@typescript-eslint/recommended',
+        'prettier/@typescript-eslint'
+      ],
+      parser: 'vue-eslint-parser',
+      parserOptions: {
+        parser: '@typescript-eslint/parser'
+      },
+      rules: {
+        '@typescript-eslint/no-non-null-assertion': 'off'
+      }
+    }
+  ]
 }

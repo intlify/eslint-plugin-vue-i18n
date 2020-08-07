@@ -31,4 +31,6 @@ jobs:
       - name: Test
         run: yarn test
       - name: Integration Test
-        run: yarn test:integrations
+        run: |
+          yarn build
+          yarn test:integrations

@@ -1,7 +1,8 @@
 {
     "eslint.options": { "configFile": ".eslintrc.js" },
     "eslint.validate": [
-        "javascript"
+        "javascript",
+        "typescript"
     ],
     "eslint.alwaysShowStatus": true,
     "eslint.packageManager": "yarn",
