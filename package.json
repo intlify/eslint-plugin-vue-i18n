@@ -97,7 +97,7 @@
     "docs": "vuepress dev docs",
     "docs:build": "vuepress build docs",
     "generate": "ts-node scripts/update.ts",
-    "lint": "eslint --ext js,ts lib scripts tests docs/.vuepress --ignore-pattern \"!.*\"",
+    "lint": "eslint --ext js,ts lib scripts tests/lib docs/.vuepress --ignore-pattern \"!.*\"",
     "lint:docs": "eslint --ext js,vue,md docs --ignore-pattern \"!.*\"",
     "release:prepare": "shipjs prepare",
     "release:trigger": "shipjs trigger",

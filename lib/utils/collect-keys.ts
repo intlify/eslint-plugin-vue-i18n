@@ -136,6 +136,8 @@ function collectKeyResourcesFromFiles(fileNames: string[]) {
   debug('collectKeysFromFiles', fileNames)
 
   const cliEngine = new CLIEngine({})
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  cliEngine.addPlugin('@intlify/vue-i18n', require('../index')) // for Test
 
   const results = []
 
