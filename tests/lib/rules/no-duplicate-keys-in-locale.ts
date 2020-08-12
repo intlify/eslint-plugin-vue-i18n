@@ -322,12 +322,12 @@ describe('no-duplicate-keys-in-locale with fixtures', () => {
               },
               {
                 line: 22,
-                message:
-                  "duplicate key 'nest' in 'en'. \"./src/App.vue\" has the same key"
+                message: "duplicate key 'nest'"
               },
               {
                 line: 22,
-                message: "duplicate key 'nest'"
+                message:
+                  "duplicate key 'nest' in 'en'. \"./src/App.vue\" has the same key"
               },
               {
                 line: 23,
@@ -335,12 +335,12 @@ describe('no-duplicate-keys-in-locale with fixtures', () => {
               },
               {
                 line: 25,
-                message:
-                  "duplicate key 'nest' in 'en'. \"./src/App.vue\" has the same key"
+                message: "duplicate key 'nest'"
               },
               {
                 line: 25,
-                message: "duplicate key 'nest'"
+                message:
+                  "duplicate key 'nest' in 'en'. \"./src/App.vue\" has the same key"
               },
               {
                 line: 26,

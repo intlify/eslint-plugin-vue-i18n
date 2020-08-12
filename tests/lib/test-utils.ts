@@ -152,19 +152,29 @@ function getResult(
     plugin.rules[
       ruleName.replace(/^@intlify\/vue-i18n\//u, '') as 'no-unused-keys'
     ]
+  const sortedMessages = [...result.messages].sort(
+    (problemA, problemB) =>
+      problemA.line - problemB.line ||
+      problemA.column - problemB.column ||
+      (problemA.endLine ?? 0) - (problemB.endLine ?? 0) ||
+      (problemA.endColumn ?? 0) - (problemB.endColumn ?? 0) ||
+      compareStr(problemA.ruleId || '', problemB.ruleId || '') ||
+      compareStr(problemA.messageId || '', problemB.messageId || '') ||
+      compareStr(problemA.message, problemB.message)
+  )
   return {
     ...(rule.meta.fixable != null
       ? {
           output: (() => {
             const output = SourceCodeFixer.applyFixes(
               result.source,
-              result.messages
+              sortedMessages
             ).output
             return output === result.source ? null : output
           })()
         }
       : {}),
-    errors: result.messages.map(message => {
+    errors: sortedMessages.map(message => {
       assert.equal(message.ruleId, ruleName)
 
       return {
@@ -186,6 +196,10 @@ function getResult(
       }
     })
   }
+}
+
+function compareStr(a: string, b: string) {
+  return a > b ? 1 : a < b ? -1 : 0
 }
 
 function stringify(obj: unknown) {
