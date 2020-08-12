@@ -56,6 +56,46 @@ export interface YAMLParsed extends Parsed<YAMLAST.YAMLNode> {
   ast: YAMLAST.YAMLProgram
 }
 
+function hasEndTag(
+  element: VAST.VElement
+): element is VAST.VElement & { endTag: VAST.VEndTag } {
+  return !!element.endTag
+}
+
+function getSourceCodeString(
+  context: RuleContext,
+  i18nBlock: VAST.VElement & { endTag: VAST.VEndTag }
+): string {
+  const tokenStore = context.parserServices.getTemplateBodyTokenStore()
+  const tokens = tokenStore.getTokensBetween(
+    i18nBlock.startTag,
+    i18nBlock.endTag
+  )
+  if (
+    tokens.length ||
+    i18nBlock.startTag.range[1] === i18nBlock.endTag.range[0]
+  ) {
+    return tokens.map(t => t.value).join('')
+  }
+  // without <template></template>
+  const df = context.parserServices.getDocumentFragment?.()
+  if (!df) {
+    return ''
+  }
+  const start = i18nBlock.startTag.range[1]
+  const end = i18nBlock.endTag.range[0]
+  let sourceCode = ''
+  for (const token of df.tokens) {
+    if (start <= token.range[0] && token.range[1] <= end) {
+      sourceCode += token.value
+    }
+    if (end <= token.range[0]) {
+      break
+    }
+  }
+  return sourceCode
+}
+
 /**
  * @param {RuleContext} context
  * @param {VElement} i18nBlock
@@ -68,19 +108,14 @@ function parseInI18nBlock<P extends JSONAST.JSONProgram | YAMLAST.YAMLProgram>(
     option: unknown
   ) => { ast: P; visitorKeys: VisitorKeys }
 ) {
-  if (!i18nBlock.endTag) {
+  if (!hasEndTag(i18nBlock)) {
     return null
   }
-  const offsetIndex = i18nBlock.startTag.range[1]
-  const tokenStore = context.parserServices.getTemplateBodyTokenStore()
-  const tokens = tokenStore.getTokensBetween(
-    i18nBlock.startTag,
-    i18nBlock.endTag
-  )
-  const sourceString = tokens.map(t => t.value).join('')
+  const sourceString = getSourceCodeString(context, i18nBlock)
   if (!sourceString.trim()) {
     return null
   }
+  const offsetIndex = i18nBlock.startTag.range[1]
   const sourceCode = context.getSourceCode()
   const locationFixer = new LocationFixer(
     sourceCode,
