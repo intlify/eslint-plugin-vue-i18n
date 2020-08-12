@@ -1,4 +1,5 @@
 /** DON'T EDIT THIS FILE; was created by scripts. */
+import noDuplicateKeysInLocale from './rules/no-duplicate-keys-in-locale'
 import noDynamicKeys from './rules/no-dynamic-keys'
 import noHtmlMessages from './rules/no-html-messages'
 import noMissingKeys from './rules/no-missing-keys'
@@ -7,6 +8,7 @@ import noUnusedKeys from './rules/no-unused-keys'
 import noVHtml from './rules/no-v-html'
 
 export = {
+  'no-duplicate-keys-in-locale': noDuplicateKeysInLocale,
   'no-dynamic-keys': noDynamicKeys,
   'no-html-messages': noHtmlMessages,
   'no-missing-keys': noMissingKeys,

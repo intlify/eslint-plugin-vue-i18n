@@ -103,7 +103,7 @@
     "release:trigger": "shipjs trigger",
     "test": "mocha --require ts-node/register \"./tests/**/*.ts\"",
     "test:debug": "mocha --require ts-node/register --inspect \"./tests/**/*.ts\"",
-    "test:coverage": "nyc mocha --require ts-node/register ./tests/**/*.ts",
+    "test:coverage": "nyc mocha --require ts-node/register \"./tests/**/*.ts\"",
     "test:integrations": "mocha ./tests-integrations/*.js --timeout 60000"
   }
 }

@@ -19,6 +19,7 @@ import type {
   SourceCode,
   Range
 } from '../types'
+import { joinPath } from '../utils/key-path'
 const debug = debugBuilder('eslint-plugin-vue-i18n:no-unused-keys')
 
 type UsedKeys = {
@@ -87,16 +88,13 @@ function create(context: RuleContext): RuleListener {
     usedKeys: UsedKeys,
     {
       skipNode,
-      resolveKeysForNode,
+      resolveKey,
       resolveReportNode,
       buildFixer,
       buildAllFixer
     }: {
       skipNode: (node: N) => boolean
-      resolveKeysForNode: (
-        parentPath: string,
-        node: N
-      ) => { path: string; key: string | number } | null
+      resolveKey: (node: N) => string | number | null
       resolveReportNode: (node: N) => N | null
       buildFixer: (
         node: N
@@ -120,18 +118,18 @@ function create(context: RuleContext): RuleListener {
           return
         }
 
-        const keys = resolveKeysForNode(pathStack.keyPath, node)
-        if (keys == null) {
+        const key = resolveKey(node)
+        if (key == null) {
           return
         }
+        const keyPath = joinPath(pathStack.keyPath, key)
         pathStack = {
           upper: pathStack,
           node,
           usedKeys:
-            (pathStack.usedKeys &&
-              (pathStack.usedKeys[keys.key] as UsedKeys)) ||
+            (pathStack.usedKeys && (pathStack.usedKeys[key] as UsedKeys)) ||
             false,
-          keyPath: keys.path
+          keyPath
         }
         const isUnused = !pathStack.usedKeys
         if (isUnused) {
@@ -142,7 +140,7 @@ function create(context: RuleContext): RuleListener {
           }
           reports.push({
             node: reportNode,
-            keyPath: keys.path
+            keyPath
           })
         }
       },
@@ -203,26 +201,16 @@ function create(context: RuleContext): RuleListener {
         return false
       },
       /**
-       * @param {string} parentPath
        * @param {JSONNode} node
        */
-      resolveKeysForNode(parentPath, node) {
+      resolveKey(node) {
         const parent = node.parent!
         if (parent.type === 'JSONProperty') {
-          const key =
-            parent.key.type === 'JSONLiteral'
-              ? `${parent.key.value}`
-              : parent.key.name
-          return {
-            path: parentPath ? `${parentPath}.${key}` : key,
-            key
-          }
+          return parent.key.type === 'JSONLiteral'
+            ? `${parent.key.value}`
+            : parent.key.name
         } else if (parent.type === 'JSONArrayExpression') {
-          const key = parent.elements.indexOf(node as never)
-          return {
-            path: parentPath ? `${parentPath}[${key}]` : `[${key}]`,
-            key
-          }
+          return parent.elements.indexOf(node as never)
         }
 
         return null
@@ -350,26 +338,18 @@ function create(context: RuleContext): RuleListener {
         return false
       },
       /**
-       * @param {string} parentPath
        * @param {YAMLContent | YAMLWithMeta} node
        */
-      resolveKeysForNode(parentPath, node) {
+      resolveKey(node) {
         const parent = node.parent!
         if (parent.type === 'YAMLPair' && parent.key) {
           const key =
             parent.key.type !== 'YAMLScalar'
               ? sourceCode.getText(parent.key)
               : parent.key.value
-          return {
-            path: parentPath ? `${parentPath}.${key}` : String(key),
-            key: typeof key === 'boolean' || key === null ? String(key) : key
-          }
+          return typeof key === 'boolean' || key === null ? String(key) : key
         } else if (parent.type === 'YAMLSequence') {
-          const key = parent.entries.indexOf(node as never)
-          return {
-            path: parentPath ? `${parentPath}[${key}]` : `[${key}]`,
-            key
-          }
+          return parent.entries.indexOf(node as never)
         }
 
         return null

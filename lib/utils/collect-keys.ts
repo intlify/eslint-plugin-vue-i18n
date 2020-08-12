@@ -232,9 +232,13 @@ export function collectKeysFromAST(
 }
 
 class UsedKeysCache {
-  private _targetFilesLoader: CacheLoader<[string[], string[]], string[]>
+  private _targetFilesLoader: CacheLoader<
+    [string[], string[], string],
+    string[]
+  >
   private _collectKeyResourcesFromFiles: (
-    fileNames: string[]
+    fileNames: string[],
+    cwd: string
   ) => ResourceLoader<string[]>[]
   constructor() {
     this._targetFilesLoader = new CacheLoader((files, extensions) => {
@@ -266,8 +270,9 @@ class UsedKeysCache {
    * @returns {ResourceLoader[]}
    */
   _getKeyResources(files: string[], extensions: string[]) {
-    const fileNames = this._targetFilesLoader.get(files, extensions)
-    return this._collectKeyResourcesFromFiles(fileNames)
+    const cwd = process.cwd()
+    const fileNames = this._targetFilesLoader.get(files, extensions, cwd)
+    return this._collectKeyResourcesFromFiles(fileNames, cwd)
   }
 }
 
