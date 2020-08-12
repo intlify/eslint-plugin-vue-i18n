@@ -1,17 +1,10 @@
 /**
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
-import { CLIEngine, RuleTester } from 'eslint'
-import { resolve, join } from 'path'
-import assert from 'assert'
-import plugin = require('../../../lib/index')
-
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import linter = require('eslint/lib/linter')
+import { RuleTester } from 'eslint'
+import { join } from 'path'
 import rule = require('../../../lib/rules/no-unused-keys')
-import { baseConfigPath } from '../test-utils'
-const { SourceCodeFixer } = linter
+import { testOnFixtures } from '../test-utils'
 
 new RuleTester({
   parser: require.resolve('vue-eslint-parser'),
@@ -922,166 +915,90 @@ ${' '.repeat(6)}
 })
 
 describe('no-unused-keys with fixtures', () => {
-  const cwd = join(__dirname, '../../fixtures/no-unused-keys')
-  let originalCwd: string
-
-  before(() => {
-    originalCwd = process.cwd()
-    process.chdir(cwd)
-  })
-
-  after(() => {
-    process.chdir(originalCwd)
-  })
+  const cwdRoot = join(__dirname, '../../fixtures/no-unused-keys')
 
   describe('errors', () => {
     it('settings.vue-i18n.localeDir', () => {
-      const linter = new CLIEngine({
-        cwd: join(cwd, './valid'),
-        baseConfig: {
-          extends: [baseConfigPath]
+      testOnFixtures(
+        {
+          cwd: join(cwdRoot, './valid'),
+          ruleName: '@intlify/vue-i18n/no-unused-keys'
         },
-        useEslintrc: false,
-        parserOptions: {
-          ecmaVersion: 2015,
-          sourceType: 'module'
-        },
-        rules: {
-          '@intlify/vue-i18n/no-unused-keys': 'error'
-        },
-        extensions: ['.js', '.vue', '.json', '.yaml', '.yml']
-      })
-      linter.addPlugin('@intlify/vue-i18n', plugin)
-
-      const messages = linter.executeOnFiles(['.'])
-      assert.equal(messages.errorCount, 3)
-      messages.results
-        .map(result => {
-          return result.messages.filter(
-            message => message.ruleId === '@intlify/vue-i18n/no-unused-keys'
-          )
-        })
-        .reduce((values, current) => values.concat(current), [])
-        .forEach(message => {
-          assert.equal(
-            message.message,
-            `You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation`
-          )
-        })
+        {
+          'constructor-option-format/locales/index.json': {
+            output: null,
+            errors: [
+              {
+                line: 1,
+                message:
+                  "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+              }
+            ]
+          },
+          'vue-cli-format/locales/en.json': {
+            output: null,
+            errors: [
+              {
+                line: 1,
+                message:
+                  "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+              }
+            ]
+          },
+          'vue-cli-format/locales/ja.yaml': {
+            output: null,
+            errors: [
+              {
+                line: 1,
+                message:
+                  "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+              }
+            ]
+          }
+        }
+      )
     })
   })
 
   describe('valid', () => {
     it('should be not detected unsued keys', () => {
-      const linter = new CLIEngine({
-        cwd: join(cwd, './valid/vue-cli-format'),
-        baseConfig: {
-          extends: [baseConfigPath],
-          settings: {
-            'vue-i18n': {
-              localeDir: `./valid/vue-cli-format/locales/*.{json,yaml,yml}`
-            }
-          }
-        },
-        useEslintrc: false,
-        parserOptions: {
-          ecmaVersion: 2015,
-          sourceType: 'module'
-        },
-        rules: {
-          '@intlify/vue-i18n/no-unused-keys': [
-            'error',
+      testOnFixtures(
+        {
+          cwd: join(cwdRoot, './valid/vue-cli-format'),
+          localeDir: `./locales/*.{json,yaml,yml}`,
+          ruleName: '@intlify/vue-i18n/no-unused-keys',
+          options: [
             {
-              src: resolve(
-                __dirname,
-                '../../fixtures/no-unused-keys/valid/vue-cli-format'
-              )
+              src: '.'
             }
           ]
         },
-        extensions: ['.js', '.vue', '.json', '.yaml', '.yml']
-      })
-      linter.addPlugin('@intlify/vue-i18n', plugin)
-
-      const messages = linter.executeOnFiles(['.'])
-      assert.equal(messages.errorCount, 0)
+        {}
+      )
     })
 
     it('should be not detected unsued keys for constructor-option-format', () => {
-      const linter = new CLIEngine({
-        cwd: join(cwd, './valid/constructor-option-format'),
-        baseConfig: {
-          extends: [baseConfigPath],
-          settings: {
-            'vue-i18n': {
-              localeDir: {
-                pattern: `./valid/constructor-option-format/locales/*.{json,yaml,yml}`,
-                localeKey: 'key'
-              }
-            }
-          }
-        },
-        useEslintrc: false,
-        parserOptions: {
-          ecmaVersion: 2015,
-          sourceType: 'module'
-        },
-        rules: {
-          '@intlify/vue-i18n/no-unused-keys': [
-            'error',
+      testOnFixtures(
+        {
+          cwd: join(cwdRoot, './valid/constructor-option-format'),
+          localeDir: {
+            pattern: `./locales/*.{json,yaml,yml}`,
+            localeKey: 'key'
+          },
+          ruleName: '@intlify/vue-i18n/no-unused-keys',
+          options: [
             {
-              src: resolve(
-                __dirname,
-                '../../fixtures/no-unused-keys/valid/constructor-option-format'
-              )
+              src: '.'
             }
           ]
         },
-        extensions: ['.js', '.vue', '.json', '.yaml', '.yml']
-      })
-      linter.addPlugin('@intlify/vue-i18n', plugin)
-
-      const messages = linter.executeOnFiles(['.'])
-      assert.equal(messages.errorCount, 0)
+        {}
+      )
     })
   })
 
   describe('invalid', () => {
     it('should be detected unsued keys', () => {
-      const linter = new CLIEngine({
-        cwd: join(cwd, './invalid/vue-cli-format'),
-        baseConfig: {
-          extends: [baseConfigPath],
-          settings: {
-            'vue-i18n': {
-              localeDir: `./invalid/vue-cli-format/locales/*.{json,yaml,yml}`
-            }
-          }
-        },
-        useEslintrc: false,
-        parserOptions: {
-          ecmaVersion: 2015,
-          sourceType: 'module'
-        },
-        rules: {
-          '@intlify/vue-i18n/no-unused-keys': [
-            'error',
-            {
-              src: resolve(
-                __dirname,
-                '../../fixtures/no-unused-keys/invalid/vue-cli-format'
-              ),
-              enableFix: true
-            }
-          ]
-        },
-        extensions: ['.js', '.vue', '.json', '.yaml', '.yml']
-      })
-      linter.addPlugin('@intlify/vue-i18n', plugin)
-
-      const messages = linter.executeOnFiles(['.'])
-      assert.equal(messages.errorCount, 6)
-
       const fixallEn = `{
   "hello": "hello world",
   "messages": {
@@ -1093,21 +1010,31 @@ describe('no-unused-keys with fixtures', () => {
   "hello {name}": "hello {name}!"
 }
 `
-      assert.deepStrictEqual(
-        getResult(
-          messages,
-          '../../fixtures/no-unused-keys/invalid/vue-cli-format/locales/en.json'
-        ),
+      const fixallJa = `hello: "ハローワールド"
+messages:
+  hello: "こんにちは、DIO！"
+  nested: {}
+hello_dio: "こんにちは、アンダースコア DIO！"
+"hello {name}": "こんにちは、{name}！"
+`
+      testOnFixtures(
         {
-          output: fixallEn,
-          errors: [
-            {
-              message: "unused 'messages.link' key",
-              line: 5,
-              suggestions: [
-                {
-                  desc: "Remove the 'messages.link' key.",
-                  output: `{
+          cwd: join(cwdRoot, './invalid/vue-cli-format'),
+          localeDir: `./locales/*.{json,yaml,yml}`,
+          ruleName: '@intlify/vue-i18n/no-unused-keys',
+          options: [{ src: '.', enableFix: true }]
+        },
+        {
+          'locales/en.json': {
+            output: fixallEn,
+            errors: [
+              {
+                message: "unused 'messages.link' key",
+                line: 5,
+                suggestions: [
+                  {
+                    desc: "Remove the 'messages.link' key.",
+                    output: `{
   "hello": "hello world",
   "messages": {
     "hello": "hi DIO!",
@@ -1120,20 +1047,20 @@ describe('no-unused-keys with fixtures', () => {
   "hello-dio": "hello hyphen DIO!"
 }
 `
-                },
-                {
-                  desc: 'Remove all unused keys.',
-                  output: fixallEn
-                }
-              ]
-            },
-            {
-              message: "unused 'messages.nested.hello' key",
-              line: 7,
-              suggestions: [
-                {
-                  desc: "Remove the 'messages.nested.hello' key.",
-                  output: `{
+                  },
+                  {
+                    desc: 'Remove all unused keys.',
+                    output: fixallEn
+                  }
+                ]
+              },
+              {
+                message: "unused 'messages.nested.hello' key",
+                line: 7,
+                suggestions: [
+                  {
+                    desc: "Remove the 'messages.nested.hello' key.",
+                    output: `{
   "hello": "hello world",
   "messages": {
     "hello": "hi DIO!",
@@ -1146,20 +1073,20 @@ describe('no-unused-keys with fixtures', () => {
   "hello-dio": "hello hyphen DIO!"
 }
 `
-                },
-                {
-                  desc: 'Remove all unused keys.',
-                  output: fixallEn
-                }
-              ]
-            },
-            {
-              message: "unused 'hello-dio' key",
-              line: 12,
-              suggestions: [
-                {
-                  desc: "Remove the 'hello-dio' key.",
-                  output: `{
+                  },
+                  {
+                    desc: 'Remove all unused keys.',
+                    output: fixallEn
+                  }
+                ]
+              },
+              {
+                message: "unused 'hello-dio' key",
+                line: 12,
+                suggestions: [
+                  {
+                    desc: "Remove the 'hello-dio' key.",
+                    output: `{
   "hello": "hello world",
   "messages": {
     "hello": "hi DIO!",
@@ -1172,38 +1099,25 @@ describe('no-unused-keys with fixtures', () => {
   "hello {name}": "hello {name}!"
 }
 `
-                },
-                {
-                  desc: 'Remove all unused keys.',
-                  output: fixallEn
-                }
-              ]
-            }
-          ]
-        }
-      )
-      const fixallJa = `hello: "ハローワールド"
-messages:
-  hello: "こんにちは、DIO！"
-  nested: {}
-hello_dio: "こんにちは、アンダースコア DIO！"
-"hello {name}": "こんにちは、{name}！"
-`
-      assert.deepStrictEqual(
-        getResult(
-          messages,
-          '../../fixtures/no-unused-keys/invalid/vue-cli-format/locales/ja.yaml'
-        ),
-        {
-          output: fixallJa,
-          errors: [
-            {
-              message: "unused 'messages.link' key",
-              line: 4,
-              suggestions: [
-                {
-                  desc: "Remove the 'messages.link' key.",
-                  output: `hello: "ハローワールド"
+                  },
+                  {
+                    desc: 'Remove all unused keys.',
+                    output: fixallEn
+                  }
+                ]
+              }
+            ]
+          },
+          'locales/ja.yaml': {
+            output: fixallJa,
+            errors: [
+              {
+                message: "unused 'messages.link' key",
+                line: 4,
+                suggestions: [
+                  {
+                    desc: "Remove the 'messages.link' key.",
+                    output: `hello: "ハローワールド"
 messages:
   hello: "こんにちは、DIO！"
   nested:
@@ -1212,20 +1126,20 @@ hello_dio: "こんにちは、アンダースコア DIO！"
 "hello {name}": "こんにちは、{name}！"
 hello-dio: "こんにちは、ハイフン DIO！"
 `
-                },
-                {
-                  desc: 'Remove all unused keys.',
-                  output: fixallJa
-                }
-              ]
-            },
-            {
-              message: "unused 'messages.nested.hello' key",
-              line: 6,
-              suggestions: [
-                {
-                  desc: "Remove the 'messages.nested.hello' key.",
-                  output: `hello: "ハローワールド"
+                  },
+                  {
+                    desc: 'Remove all unused keys.',
+                    output: fixallJa
+                  }
+                ]
+              },
+              {
+                message: "unused 'messages.nested.hello' key",
+                line: 6,
+                suggestions: [
+                  {
+                    desc: "Remove the 'messages.nested.hello' key.",
+                    output: `hello: "ハローワールド"
 messages:
   hello: "こんにちは、DIO！"
   link: "@:message.hello"
@@ -1234,20 +1148,20 @@ hello_dio: "こんにちは、アンダースコア DIO！"
 "hello {name}": "こんにちは、{name}！"
 hello-dio: "こんにちは、ハイフン DIO！"
 `
-                },
-                {
-                  desc: 'Remove all unused keys.',
-                  output: fixallJa
-                }
-              ]
-            },
-            {
-              message: "unused 'hello-dio' key",
-              line: 9,
-              suggestions: [
-                {
-                  desc: "Remove the 'hello-dio' key.",
-                  output: `hello: "ハローワールド"
+                  },
+                  {
+                    desc: 'Remove all unused keys.',
+                    output: fixallJa
+                  }
+                ]
+              },
+              {
+                message: "unused 'hello-dio' key",
+                line: 9,
+                suggestions: [
+                  {
+                    desc: "Remove the 'hello-dio' key.",
+                    output: `hello: "ハローワールド"
 messages:
   hello: "こんにちは、DIO！"
   link: "@:message.hello"
@@ -1256,56 +1170,20 @@ messages:
 hello_dio: "こんにちは、アンダースコア DIO！"
 "hello {name}": "こんにちは、{name}！"
 `
-                },
-                {
-                  desc: 'Remove all unused keys.',
-                  output: fixallJa
-                }
-              ]
-            }
-          ]
+                  },
+                  {
+                    desc: 'Remove all unused keys.',
+                    output: fixallJa
+                  }
+                ]
+              }
+            ]
+          }
         }
       )
     })
 
     it('should be detected unsued keys for constructor-option-format', () => {
-      const linter = new CLIEngine({
-        cwd: join(cwd, './invalid/constructor-option-format'),
-        baseConfig: {
-          extends: [baseConfigPath],
-          settings: {
-            'vue-i18n': {
-              localeDir: {
-                pattern: `./invalid/constructor-option-format/locales/*.{json,yaml,yml}`,
-                localeKey: 'key'
-              }
-            }
-          }
-        },
-        useEslintrc: false,
-        parserOptions: {
-          ecmaVersion: 2015,
-          sourceType: 'module'
-        },
-        rules: {
-          '@intlify/vue-i18n/no-unused-keys': [
-            'error',
-            {
-              src: resolve(
-                __dirname,
-                '../../fixtures/no-unused-keys/invalid/constructor-option-format'
-              ),
-              enableFix: true
-            }
-          ]
-        },
-        extensions: ['.js', '.vue', '.json', '.yaml', '.yml']
-      })
-      linter.addPlugin('@intlify/vue-i18n', plugin)
-
-      const messages = linter.executeOnFiles(['.'])
-      assert.equal(messages.errorCount, 6)
-
       const fixall = `{
   "en": {
     "hello": "hello world",
@@ -1329,21 +1207,27 @@ hello_dio: "こんにちは、アンダースコア DIO！"
   }
 }
 `
-      assert.deepStrictEqual(
-        getResult(
-          messages,
-          '../../fixtures/no-unused-keys/invalid/constructor-option-format/locales/index.json'
-        ),
+      testOnFixtures(
         {
-          output: fixall,
-          errors: [
-            {
-              message: "unused 'en.messages.link' key",
-              line: 6,
-              suggestions: [
-                {
-                  desc: "Remove the 'en.messages.link' key.",
-                  output: `{
+          cwd: join(cwdRoot, './invalid/constructor-option-format'),
+          localeDir: {
+            pattern: `./locales/*.{json,yaml,yml}`,
+            localeKey: 'key'
+          },
+          ruleName: '@intlify/vue-i18n/no-unused-keys',
+          options: [{ src: '.', enableFix: true }]
+        },
+        {
+          'locales/index.json': {
+            output: fixall,
+            errors: [
+              {
+                message: "unused 'en.messages.link' key",
+                line: 6,
+                suggestions: [
+                  {
+                    desc: "Remove the 'en.messages.link' key.",
+                    output: `{
   "en": {
     "hello": "hello world",
     "messages": {
@@ -1371,20 +1255,20 @@ hello_dio: "こんにちは、アンダースコア DIO！"
   }
 }
 `
-                },
-                {
-                  desc: 'Remove all unused keys.',
-                  output: fixall
-                }
-              ]
-            },
-            {
-              message: "unused 'en.messages.nested.hello' key",
-              line: 8,
-              suggestions: [
-                {
-                  desc: "Remove the 'en.messages.nested.hello' key.",
-                  output: `{
+                  },
+                  {
+                    desc: 'Remove all unused keys.',
+                    output: fixall
+                  }
+                ]
+              },
+              {
+                message: "unused 'en.messages.nested.hello' key",
+                line: 8,
+                suggestions: [
+                  {
+                    desc: "Remove the 'en.messages.nested.hello' key.",
+                    output: `{
   "en": {
     "hello": "hello world",
     "messages": {
@@ -1412,20 +1296,20 @@ hello_dio: "こんにちは、アンダースコア DIO！"
   }
 }
 `
-                },
-                {
-                  desc: 'Remove all unused keys.',
-                  output: fixall
-                }
-              ]
-            },
-            {
-              message: "unused 'en.hello-dio' key",
-              line: 13,
-              suggestions: [
-                {
-                  desc: "Remove the 'en.hello-dio' key.",
-                  output: `{
+                  },
+                  {
+                    desc: 'Remove all unused keys.',
+                    output: fixall
+                  }
+                ]
+              },
+              {
+                message: "unused 'en.hello-dio' key",
+                line: 13,
+                suggestions: [
+                  {
+                    desc: "Remove the 'en.hello-dio' key.",
+                    output: `{
   "en": {
     "hello": "hello world",
     "messages": {
@@ -1453,20 +1337,20 @@ hello_dio: "こんにちは、アンダースコア DIO！"
   }
 }
 `
-                },
-                {
-                  desc: 'Remove all unused keys.',
-                  output: fixall
-                }
-              ]
-            },
-            {
-              message: "unused 'ja.messages.link' key",
-              line: 19,
-              suggestions: [
-                {
-                  desc: "Remove the 'ja.messages.link' key.",
-                  output: `{
+                  },
+                  {
+                    desc: 'Remove all unused keys.',
+                    output: fixall
+                  }
+                ]
+              },
+              {
+                message: "unused 'ja.messages.link' key",
+                line: 19,
+                suggestions: [
+                  {
+                    desc: "Remove the 'ja.messages.link' key.",
+                    output: `{
   "en": {
     "hello": "hello world",
     "messages": {
@@ -1494,20 +1378,20 @@ hello_dio: "こんにちは、アンダースコア DIO！"
   }
 }
 `
-                },
-                {
-                  desc: 'Remove all unused keys.',
-                  output: fixall
-                }
-              ]
-            },
-            {
-              message: "unused 'ja.messages.nested.hello' key",
-              line: 21,
-              suggestions: [
-                {
-                  desc: "Remove the 'ja.messages.nested.hello' key.",
-                  output: `{
+                  },
+                  {
+                    desc: 'Remove all unused keys.',
+                    output: fixall
+                  }
+                ]
+              },
+              {
+                message: "unused 'ja.messages.nested.hello' key",
+                line: 21,
+                suggestions: [
+                  {
+                    desc: "Remove the 'ja.messages.nested.hello' key.",
+                    output: `{
   "en": {
     "hello": "hello world",
     "messages": {
@@ -1535,20 +1419,20 @@ hello_dio: "こんにちは、アンダースコア DIO！"
   }
 }
 `
-                },
-                {
-                  desc: 'Remove all unused keys.',
-                  output: fixall
-                }
-              ]
-            },
-            {
-              message: "unused 'ja.hello-dio' key",
-              line: 26,
-              suggestions: [
-                {
-                  desc: "Remove the 'ja.hello-dio' key.",
-                  output: `{
+                  },
+                  {
+                    desc: 'Remove all unused keys.',
+                    output: fixall
+                  }
+                ]
+              },
+              {
+                message: "unused 'ja.hello-dio' key",
+                line: 26,
+                suggestions: [
+                  {
+                    desc: "Remove the 'ja.hello-dio' key.",
+                    output: `{
   "en": {
     "hello": "hello world",
     "messages": {
@@ -1576,97 +1460,44 @@ hello_dio: "こんにちは、アンダースコア DIO！"
   }
 }
 `
-                },
-                {
-                  desc: 'Remove all unused keys.',
-                  output: fixall
-                }
-              ]
-            }
-          ]
+                  },
+                  {
+                    desc: 'Remove all unused keys.',
+                    output: fixall
+                  }
+                ]
+              }
+            ]
+          }
         }
       )
     })
 
     it('should be detected unsued keys with typescript', () => {
-      process.chdir(join(cwd, './invalid/typescript'))
-      const linter = new CLIEngine({
-        cwd: join(cwd, './invalid/typescript'),
-        extensions: ['.js', '.vue', '.json', '.yaml', '.yml', '.ts']
-      })
-      linter.addPlugin('@intlify/vue-i18n', plugin)
-
-      const messages = linter.executeOnFiles(['.'])
-      assert.equal(messages.errorCount, 6)
-
-      assert.deepStrictEqual(
-        getResult(
-          messages,
-          '../../fixtures/no-unused-keys/invalid/typescript/locales/en.json',
-          { messageOnly: true }
-        ),
+      testOnFixtures(
         {
-          errors: [
-            "unused 'messages.link' key",
-            "unused 'messages.nested.hello' key",
-            "unused 'hello-dio' key"
-          ]
-        }
-      )
-
-      assert.deepStrictEqual(
-        getResult(
-          messages,
-          '../../fixtures/no-unused-keys/invalid/typescript/locales/ja.yaml',
-          { messageOnly: true }
-        ),
+          cwd: join(cwdRoot, './invalid/typescript'),
+          ruleName: '@intlify/vue-i18n/no-unused-keys',
+          useEslintrc: true
+        },
         {
-          errors: [
-            "unused 'messages.link' key",
-            "unused 'messages.nested.hello' key",
-            "unused 'hello-dio' key"
-          ]
-        }
+          'locales/en.json': {
+            errors: [
+              "unused 'messages.link' key",
+              "unused 'messages.nested.hello' key",
+              "unused 'hello-dio' key"
+            ]
+          },
+          'locales/ja.yaml': {
+            errors: [
+              "unused 'messages.link' key",
+              "unused 'messages.nested.hello' key",
+              "unused 'hello-dio' key"
+            ]
+          }
+        },
+        { messageOnly: true }
       )
     })
   })
 })
-
-function getResult(
-  messages: CLIEngine.LintReport,
-  path: string,
-  options?: { messageOnly?: boolean }
-) {
-  const fullPath = resolve(__dirname, path)
-  const result = messages.results.find(result => result.filePath === fullPath)!
-  const messageOnly = options?.messageOnly ?? false
-  if (messageOnly) {
-    return {
-      errors: result.messages.map(message => {
-        assert.equal(message.ruleId, '@intlify/vue-i18n/no-unused-keys')
-        return message.message
-      })
-    }
-  }
-  const output = SourceCodeFixer.applyFixes(result.source, result.messages)
-    .output
-  return {
-    output,
-    errors: result.messages.map(message => {
-      assert.equal(message.ruleId, '@intlify/vue-i18n/no-unused-keys')
-
-      return {
-        message: message.message,
-        line: message.line,
-        suggestions: message.suggestions!.map(suggest => {
-          const output = SourceCodeFixer.applyFixes(result.source, [suggest])
-            .output
-          return {
-            desc: suggest.desc,
-            output
-          }
-        })
-      }
-    })
-  }
-}
