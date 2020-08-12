@@ -872,6 +872,51 @@ ${' '.repeat(6)}
         "unused 'unuse' key",
         "unused 'array-unuse[0]' key"
       ]
+    },
+    {
+      // without <template>
+      filename: 'test.vue',
+      code: `
+      <i18n lang="yaml" locale="en">
+      test: Test
+      </i18n>
+      <script>
+      // without <template>
+      export default {
+        render (createElement) {}
+      }
+      </script>`,
+      options: [{ enableFix: true }],
+      output: `
+      <i18n lang="yaml" locale="en">
+      {}
+      </i18n>
+      <script>
+      // without <template>
+      export default {
+        render (createElement) {}
+      }
+      </script>`,
+      errors: [
+        {
+          message: "unused 'test' key",
+          suggestions: [
+            {
+              desc: "Remove the 'test' key.",
+              output: `
+      <i18n lang="yaml" locale="en">
+      {}
+      </i18n>
+      <script>
+      // without <template>
+      export default {
+        render (createElement) {}
+      }
+      </script>`
+            }
+          ]
+        }
+      ]
     }
   ]
 })
