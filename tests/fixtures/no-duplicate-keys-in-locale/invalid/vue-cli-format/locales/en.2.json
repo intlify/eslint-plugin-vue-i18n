@@ -1,0 +1,10 @@
+{
+  "good-bye": "good bye",
+  "messages": {
+    "qux": "qux",
+    "quux": "quux",
+    "corge": "corge",
+    "dupe": "dupe"
+  },
+  "dupe": "dupe"
+}

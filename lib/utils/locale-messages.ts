@@ -84,23 +84,6 @@ export abstract class LocaleMessage {
     return (this._locales = [])
   }
 
-  findMissingPath(locale: string, key: string): string | null {
-    const paths = key.split('.')
-    const length = paths.length
-    let last: I18nLocaleMessageValue = this._getMessagesFromLocale(locale)
-    let i = 0
-    while (i < length) {
-      const value: I18nLocaleMessageValue | undefined =
-        last && typeof last !== 'string' ? last[paths[i]] : undefined
-      if (value == null) {
-        return paths.slice(0, i + 1).join('.')
-      }
-      last = value
-      i++
-    }
-    return null
-  }
-
   /**
    * Check if the message with the given key exists.
    * @param {string} locale The locale name
@@ -120,7 +103,7 @@ export abstract class LocaleMessage {
   getMessage(locale: string, key: string): I18nLocaleMessageValue | null {
     const paths = key.split('.')
     const length = paths.length
-    let last: I18nLocaleMessageValue = this._getMessagesFromLocale(locale)
+    let last: I18nLocaleMessageValue = this.getMessagesFromLocale(locale)
     let i = 0
     while (i < length) {
       const value: I18nLocaleMessageValue | undefined =
@@ -134,12 +117,18 @@ export abstract class LocaleMessage {
     return last ?? null
   }
 
-  _getMessagesFromLocale(locale: string): I18nLocaleMessageDictionary {
+  /**
+   * Gets messages for the given locale.
+   */
+  getMessagesFromLocale(locale: string): I18nLocaleMessageDictionary {
     if (this.localeKey === 'file') {
+      if (!this.locales.includes(locale)) {
+        return {}
+      }
       return this.messages
     }
     if (this.localeKey === 'key') {
-      return this.messages[locale] as I18nLocaleMessageDictionary
+      return (this.messages[locale] || {}) as I18nLocaleMessageDictionary
     }
     return {}
   }
@@ -298,6 +287,16 @@ export class LocaleMessages {
     this.localeMessages = localeMessages
   }
 
+  get locales(): string[] {
+    const locales = new Set<string>()
+    for (const localeMessage of this.localeMessages) {
+      for (const locale of localeMessage.locales) {
+        locales.add(locale)
+      }
+    }
+    return [...locales]
+  }
+
   /**
    * Checks whether it is empty.
    */
@@ -336,14 +335,31 @@ export class LocaleMessages {
    */
   findMissingPaths(key: string): { path: string; locale: string }[] {
     const missings: { path: string; locale: string }[] = []
-    this.localeMessages.forEach(localeMessage => {
-      localeMessage.locales.forEach(locale => {
-        const missingPath = localeMessage.findMissingPath(locale, key)
-        if (missingPath) {
-          missings.push({ path: missingPath, locale })
+    for (const locale of this.locales) {
+      const paths = key.split('.')
+      const length = paths.length
+      let lasts: I18nLocaleMessageValue[] = this.localeMessages.map(lm =>
+        lm.getMessagesFromLocale(locale)
+      )
+      let i = 0
+      while (i < length) {
+        const values: I18nLocaleMessageValue[] = lasts
+          .map(last => {
+            return last && typeof last !== 'string' ? last[paths[i]] : undefined
+          })
+          .filter((val): val is I18nLocaleMessageValue => val != null)
+
+        if (values.length === 0) {
+          missings.push({
+            locale,
+            path: paths.slice(0, i + 1).join('.')
+          })
+          break
         }
-      })
-    })
+        lasts = values
+        i++
+      }
+    }
     return missings.sort(({ locale: localeA }, { locale: localeB }) =>
       localeA > localeB ? 1 : localeA < localeB ? -1 : 0
     )

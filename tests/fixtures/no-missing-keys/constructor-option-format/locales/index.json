@@ -6,7 +6,8 @@
       "link": "@:message.hello",
       "nested": {
         "hello": "hi jojo!"
-      }
+      },
+      "en-only": "en-only"
     },
     "hello_dio": "hello underscore DIO!",
     "hello {name}": "hello {name}!",

@@ -210,6 +210,10 @@ tester.run('no-missing-keys', rule as never, {
           `'messages.missing' does not exist in 'en'`,
           `'messages.missing' does not exist in 'ja'`
         ]
+      },
+      {
+        code: `$t('messages.en-only')`,
+        errors: ["'messages.en-only' does not exist in 'ja'"]
       }
     ],
     [

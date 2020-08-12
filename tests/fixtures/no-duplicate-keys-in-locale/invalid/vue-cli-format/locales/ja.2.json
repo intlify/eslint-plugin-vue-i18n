@@ -1,0 +1,9 @@
+{
+  "good-bye": "さようなら",
+  "messages": {
+    "qux": "qux",
+    "quux": "quux",
+    "corge": "corge"
+  },
+  "dupe": "dupe"
+}

@@ -103,10 +103,11 @@ export function getLocaleMessages(context: RuleContext): LocaleMessages {
 }
 
 class LocaleDirLocaleMessagesCache {
-  private _targetFilesLoader: CacheLoader<[string], string[]>
+  private _targetFilesLoader: CacheLoader<[string, string], string[]>
   private _loadLocaleMessages: (
     files: string[],
-    localeKey: LocaleKeyType
+    localeKey: LocaleKeyType,
+    cwd: string
   ) => FileLocaleMessage[]
   constructor() {
     this._targetFilesLoader = new CacheLoader(pattern => glob.sync(pattern))
@@ -120,17 +121,18 @@ class LocaleDirLocaleMessagesCache {
    * @returns {LocaleMessage[]}
    */
   getLocaleMessagesFromLocaleDir(localeDir: SettingsVueI18nLocaleDir) {
+    const cwd = process.cwd()
     const targetFilesLoader = this._targetFilesLoader
     let files
     let localeKey: LocaleKeyType
     if (typeof localeDir === 'string') {
-      files = targetFilesLoader.get(localeDir)
+      files = targetFilesLoader.get(localeDir, cwd)
       localeKey = 'file'
     } else {
-      files = targetFilesLoader.get(localeDir.pattern)
+      files = targetFilesLoader.get(localeDir.pattern, cwd)
       localeKey = String(localeDir.localeKey ?? 'file') as LocaleKeyType
     }
-    return this._loadLocaleMessages(files, localeKey)
+    return this._loadLocaleMessages(files, localeKey, cwd)
   }
 }
 

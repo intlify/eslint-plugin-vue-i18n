@@ -1,0 +1,10 @@
+{
+  "hello": "hello",
+  "messages": {
+    "foo": "foo",
+    "bar": "bar",
+    "baz": "baz",
+    "dupe": "dupe"
+  },
+  "dupe": "dupe"
+}

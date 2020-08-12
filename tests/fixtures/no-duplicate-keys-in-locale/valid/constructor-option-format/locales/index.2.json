@@ -1,0 +1,18 @@
+{
+  "en": {
+    "good-bye": "good bye",
+    "messages": {
+      "qux": "qux",
+      "quux": "quux",
+      "corge": "corge"
+    }
+  },
+  "ja": {
+    "good-bye": "さようなら",
+    "messages": {
+      "qux": "qux",
+      "quux": "quux",
+      "corge": "corge"
+    }
+  }
+}

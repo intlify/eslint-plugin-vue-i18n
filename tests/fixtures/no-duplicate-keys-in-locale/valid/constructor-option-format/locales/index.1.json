@@ -1,0 +1,18 @@
+{
+  "en": {
+    "hello": "hello",
+    "messages": {
+      "foo": "foo",
+      "bar": "bar",
+      "baz": "baz"
+    }
+  },
+  "ja": {
+    "hello": "こんにちは",
+    "messages": {
+      "foo": "foo",
+      "bar": "bar",
+      "baz": "baz"
+    }
+  }
+}
