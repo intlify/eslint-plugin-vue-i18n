@@ -79,16 +79,28 @@ eslint "src/**/*.{js,vue,json}"
 # eslint "src/**/*.{js,vue,json5}"
 ```
 
-#### How to use custom parser?
+### How to use custom parser?
 
 If you want to use custom parsers such as [babel-eslint](https://www.npmjs.com/package/babel-eslint) or [typescript-eslint-parser](https://www.npmjs.com/package/typescript-eslint-parser), you have to use `parserOptions.parser` option instead of `parser` option. Because this plugin requires [vue-eslint-parser](https://www.npmjs.com/package/vue-eslint-parser) to parse `.vue` files, so this plugin doesn't work if you overwrote `parser` option.
+
+Also, `parserOptions` configured at the top level affect `.json` and `.yaml`. This plugin needs to use special parsers to parse `.json` and `.yaml`, so to correctly parse each extension, use the `overrides` option and overwrite the options again.
 
 ```diff
 - "parser": "babel-eslint",
   "parserOptions": {
 +     "parser": "babel-eslint",
       "sourceType": "module"
-  }
+  },
++ "overrides": [
++     {
++         "files": ["*.json", "*.json5"],
++         "extends": ["plugin:@intlify/vue-i18n/base"],
++     },
++     {
++         "files": ["*.yaml", "*.yml"],
++         "extends": ["plugin:@intlify/vue-i18n/base"],
++     }
++ ]
 ```
 
 ## :question: FAQ

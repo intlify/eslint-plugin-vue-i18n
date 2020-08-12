@@ -892,7 +892,7 @@ describe('no-unused-keys with fixtures', () => {
   describe('errors', () => {
     it('settings.vue-i18n.localeDir', () => {
       const linter = new CLIEngine({
-        cwd,
+        cwd: join(cwd, './valid'),
         baseConfig: {
           extends: [baseConfigPath]
         },
@@ -909,7 +909,7 @@ describe('no-unused-keys with fixtures', () => {
       linter.addPlugin('@intlify/vue-i18n', plugin)
 
       const messages = linter.executeOnFiles(['.'])
-      assert.equal(messages.errorCount, 6)
+      assert.equal(messages.errorCount, 3)
       messages.results
         .map(result => {
           return result.messages.filter(
@@ -929,7 +929,7 @@ describe('no-unused-keys with fixtures', () => {
   describe('valid', () => {
     it('should be not detected unsued keys', () => {
       const linter = new CLIEngine({
-        cwd,
+        cwd: join(cwd, './valid/vue-cli-format'),
         baseConfig: {
           extends: [baseConfigPath],
           settings: {
@@ -964,7 +964,7 @@ describe('no-unused-keys with fixtures', () => {
 
     it('should be not detected unsued keys for constructor-option-format', () => {
       const linter = new CLIEngine({
-        cwd,
+        cwd: join(cwd, './valid/constructor-option-format'),
         baseConfig: {
           extends: [baseConfigPath],
           settings: {
@@ -1004,7 +1004,7 @@ describe('no-unused-keys with fixtures', () => {
   describe('invalid', () => {
     it('should be detected unsued keys', () => {
       const linter = new CLIEngine({
-        cwd,
+        cwd: join(cwd, './invalid/vue-cli-format'),
         baseConfig: {
           extends: [baseConfigPath],
           settings: {
@@ -1225,7 +1225,7 @@ hello_dio: "こんにちは、アンダースコア DIO！"
 
     it('should be detected unsued keys for constructor-option-format', () => {
       const linter = new CLIEngine({
-        cwd,
+        cwd: join(cwd, './invalid/constructor-option-format'),
         baseConfig: {
           extends: [baseConfigPath],
           settings: {
@@ -1542,18 +1542,74 @@ hello_dio: "こんにちは、アンダースコア DIO！"
         }
       )
     })
+
+    it('should be detected unsued keys with typescript', () => {
+      process.chdir(join(cwd, './invalid/typescript'))
+      const linter = new CLIEngine({
+        cwd: join(cwd, './invalid/typescript'),
+        extensions: ['.js', '.vue', '.json', '.yaml', '.yml', '.ts']
+      })
+      linter.addPlugin('@intlify/vue-i18n', plugin)
+
+      const messages = linter.executeOnFiles(['.'])
+      assert.equal(messages.errorCount, 6)
+
+      assert.deepStrictEqual(
+        getResult(
+          messages,
+          '../../fixtures/no-unused-keys/invalid/typescript/locales/en.json',
+          { messageOnly: true }
+        ),
+        {
+          errors: [
+            "unused 'messages.link' key",
+            "unused 'messages.nested.hello' key",
+            "unused 'hello-dio' key"
+          ]
+        }
+      )
+
+      assert.deepStrictEqual(
+        getResult(
+          messages,
+          '../../fixtures/no-unused-keys/invalid/typescript/locales/ja.yaml',
+          { messageOnly: true }
+        ),
+        {
+          errors: [
+            "unused 'messages.link' key",
+            "unused 'messages.nested.hello' key",
+            "unused 'hello-dio' key"
+          ]
+        }
+      )
+    })
   })
 })
 
-function getResult(messages: CLIEngine.LintReport, path: string) {
+function getResult(
+  messages: CLIEngine.LintReport,
+  path: string,
+  options?: { messageOnly?: boolean }
+) {
   const fullPath = resolve(__dirname, path)
   const result = messages.results.find(result => result.filePath === fullPath)!
+  const messageOnly = options?.messageOnly ?? false
+  if (messageOnly) {
+    return {
+      errors: result.messages.map(message => {
+        assert.equal(message.ruleId, '@intlify/vue-i18n/no-unused-keys')
+        return message.message
+      })
+    }
+  }
   const output = SourceCodeFixer.applyFixes(result.source, result.messages)
     .output
   return {
     output,
     errors: result.messages.map(message => {
       assert.equal(message.ruleId, '@intlify/vue-i18n/no-unused-keys')
+
       return {
         message: message.message,
         line: message.line,
