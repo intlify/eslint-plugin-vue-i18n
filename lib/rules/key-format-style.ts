@@ -272,7 +272,7 @@ function create(context: RuleContext): RuleListener {
 
 export = {
   meta: {
-    type: 'problem',
+    type: 'layout',
     docs: {
       description: 'enforce specific casing for localization keys',
       category: 'Best Practices',

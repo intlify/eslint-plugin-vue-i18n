@@ -14,7 +14,7 @@ mixed_Case-key: Perhaps you don't want to use this casing.
 ## :book: Rule Details
 
 This rule reports localization keys other than the specific casing.
-Also, the following localization key definitions is reported as an error, because the casing cannot determine it.
+Also, the following localization key definitions are reported as errors, because the casing cannot determine.
 
 :-1: Examples of **incorrect** code for this rule:
 
