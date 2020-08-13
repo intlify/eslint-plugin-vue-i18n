@@ -257,10 +257,6 @@ function create(context: RuleContext): RuleListener {
             return true
           }
 
-          if (node.type === 'YAMLPair') {
-            yamlKeyNodes.add(node.key)
-            return true
-          }
           if (yamlKeyNodes.has(node)) {
             // within key node
             return true
@@ -269,6 +265,10 @@ function create(context: RuleContext): RuleListener {
           if (yamlKeyNodes.has(parent)) {
             // within key node
             yamlKeyNodes.add(node)
+            return true
+          }
+          if (node.type === 'YAMLPair') {
+            yamlKeyNodes.add(node.key)
             return true
           }
           return false
