@@ -44,6 +44,17 @@ module.export = {
       //   pattern: './path/to/locales/*.{json,json5,yaml,yml}', // extension is glob formatting!
       //   localeKey: 'file' // or 'key'
       // }
+      // or
+      // localeDir: [
+      //   {
+      //     pattern: './path/to/locales1/*.{json,json5,yaml,yml}',
+      //     localeKey: 'file' // or 'key'
+      //   },
+      //   {
+      //     pattern: './path/to/locales2/*.{json,json5,yaml,yml}',
+      //     localeKey: 'file' // or 'key'
+      //   },
+      // ]
     }
   }
 }
@@ -53,13 +64,14 @@ See [the rule list](../rules/)
 
 ### `settings['vue-i18n']`
 
-- `localeDir` ... You can specify a string or an object.
+- `localeDir` ... You can specify a string or an object or an array.
   - String option ... A glob for specifying files that store localization messages of project.
   - Object option
     - `pattern` (`string`) ... A glob for specifying files that store localization messages of project.
     - `localeKey` (`'file' | 'key'`) ... Specifies how to determine the locale for localization messages.
       - `'file'` ... Determine the locale name from the filename. The resource file should only contain messages for that locale. Use this option if you use `vue-cli-plugin-i18n`. This option is also used when String option is specified.
       - `'key'` ...  Determine the locale name from the root key name of the file contents. The value of that key should only contain messages for that locale. Used when the resource file is in the format given to the `messages` option of the `VueI18n` constructor option.
+  - Array option ... An array of String option and Object option. Useful if you have multiple locale directories.
 
 ### Running ESLint from command line
 

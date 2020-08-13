@@ -17,9 +17,15 @@ import type {
   TemplateListener,
   RuleListener,
   LocaleKeyType,
-  SettingsVueI18nLocaleDir
+  SettingsVueI18nLocaleDir,
+  SettingsVueI18nLocaleDirObject,
+  SettingsVueI18nLocaleDirGlob
 } from '../types'
 
+interface LocaleFiles {
+  files: string[]
+  localeKey: LocaleKeyType
+}
 const UNEXPECTED_ERROR_LOCATION = { line: 1, column: 0 }
 /**
  * Register the given visitor to parser services.
@@ -48,16 +54,24 @@ export function defineTemplateBodyVisitor(
   )
 }
 
-/**
- * @param {string[]} files
- * @param {LocaleKeyType} localeKey
- * @returns {LocaleMessage[]}
- */
-function loadLocaleMessages(files: string[], localeKey: LocaleKeyType) {
-  return files.map(file => {
-    const fullpath = resolve(process.cwd(), file)
-    return new FileLocaleMessage({ fullpath, localeKey })
-  })
+function loadLocaleMessages(
+  localeFilesList: LocaleFiles[],
+  cwd: string
+): FileLocaleMessage[] {
+  const results: FileLocaleMessage[] = []
+  const checkDupeMap: { [file: string]: LocaleKeyType[] } = {}
+  for (const { files, localeKey } of localeFilesList) {
+    for (const file of files) {
+      const localeKeys = checkDupeMap[file] || (checkDupeMap[file] = [])
+      if (localeKeys.includes(localeKey)) {
+        continue
+      }
+      localeKeys.push(localeKey)
+      const fullpath = resolve(cwd, file)
+      results.push(new FileLocaleMessage({ fullpath, localeKey }))
+    }
+  }
+  return results
 }
 
 /** @type {Set<RuleContext>} */
@@ -105,16 +119,17 @@ export function getLocaleMessages(context: RuleContext): LocaleMessages {
 class LocaleDirLocaleMessagesCache {
   private _targetFilesLoader: CacheLoader<[string, string], string[]>
   private _loadLocaleMessages: (
-    files: string[],
-    localeKey: LocaleKeyType,
+    localeFilesList: LocaleFiles[],
     cwd: string
   ) => FileLocaleMessage[]
   constructor() {
     this._targetFilesLoader = new CacheLoader(pattern => glob.sync(pattern))
 
-    this._loadLocaleMessages = defineCacheFunction((files, localeKey) => {
-      return loadLocaleMessages(files, localeKey)
-    })
+    this._loadLocaleMessages = defineCacheFunction(
+      (localeFilesList: LocaleFiles[], cwd) => {
+        return loadLocaleMessages(localeFilesList, cwd)
+      }
+    )
   }
   /**
    * @param {SettingsVueI18nLocaleDir} localeDir
@@ -122,17 +137,31 @@ class LocaleDirLocaleMessagesCache {
    */
   getLocaleMessagesFromLocaleDir(localeDir: SettingsVueI18nLocaleDir) {
     const cwd = process.cwd()
-    const targetFilesLoader = this._targetFilesLoader
-    let files
-    let localeKey: LocaleKeyType
-    if (typeof localeDir === 'string') {
-      files = targetFilesLoader.get(localeDir, cwd)
-      localeKey = 'file'
+    let localeFilesList: LocaleFiles[]
+    if (Array.isArray(localeDir)) {
+      localeFilesList = localeDir.map(dir => this._toLocaleFiles(dir, cwd))
     } else {
-      files = targetFilesLoader.get(localeDir.pattern, cwd)
-      localeKey = String(localeDir.localeKey ?? 'file') as LocaleKeyType
+      localeFilesList = [this._toLocaleFiles(localeDir, cwd)]
     }
-    return this._loadLocaleMessages(files, localeKey, cwd)
+    return this._loadLocaleMessages(localeFilesList, cwd)
+  }
+
+  private _toLocaleFiles(
+    localeDir: SettingsVueI18nLocaleDirGlob | SettingsVueI18nLocaleDirObject,
+    cwd: string
+  ): LocaleFiles {
+    const targetFilesLoader = this._targetFilesLoader
+    if (typeof localeDir === 'string') {
+      return {
+        files: targetFilesLoader.get(localeDir, cwd),
+        localeKey: 'file'
+      }
+    } else {
+      return {
+        files: targetFilesLoader.get(localeDir.pattern, cwd),
+        localeKey: String(localeDir.localeKey ?? 'file') as LocaleKeyType
+      }
+    }
   }
 }
 
