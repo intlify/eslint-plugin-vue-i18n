@@ -61,6 +61,18 @@ new RuleTester({
       </i18n>
       <template></template>
       <script></script>`
+    },
+    {
+      filename: 'test.vue',
+      code: `
+      <i18n lang="yaml">
+      en:
+        ? [{foo: {bar: baz}}]
+        : 123
+        foo: {bar: baz}
+      </i18n>
+      <template></template>
+      <script></script>`
     }
   ],
   invalid: [

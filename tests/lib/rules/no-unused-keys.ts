@@ -910,6 +910,17 @@ ${' '.repeat(6)}
           ]
         }
       ]
+    },
+    {
+      filename: 'test.vue',
+      code: `
+    <i18n locale="en" lang="yaml">
+    ? [{foo: bar}]
+    : {foo: bar}
+    </i18n>
+    <template></template>
+    <script></script>`,
+      errors: [`unused '["[{foo: bar}]"].foo' key`]
     }
   ]
 })
