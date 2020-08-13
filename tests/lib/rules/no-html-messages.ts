@@ -1,13 +1,11 @@
 /**
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
-import { CLIEngine, RuleTester } from 'eslint'
-import { resolve, join } from 'path'
+import { RuleTester } from 'eslint'
+import { join } from 'path'
 import fs from 'fs'
-import assert from 'assert'
 import rule = require('../../../lib/rules/no-html-messages')
-import plugin = require('../../../lib/index')
-import { baseConfigPath } from '../test-utils'
+import { testOnFixtures } from '../test-utils'
 
 new RuleTester({
   parser: require.resolve('vue-eslint-parser'),
@@ -101,84 +99,64 @@ new RuleTester({
 })
 
 describe('no-html-messages with fixtures', () => {
-  const cwd = join(__dirname, '../../fixtures/no-html-messages')
-  let originalCwd: string
-
-  before(() => {
-    originalCwd = process.cwd()
-    process.chdir(cwd)
-  })
-
-  after(() => {
-    process.chdir(originalCwd)
-  })
+  const cwdRoot = join(__dirname, '../../fixtures/no-html-messages')
 
   describe('valid', () => {
     it('should be not detected html messages', () => {
-      const linter = new CLIEngine({
-        cwd,
-        baseConfig: {
-          extends: [baseConfigPath],
-          settings: {
-            'vue-i18n': {
-              localeDir: `./valid/*.{json,yaml,yml}`
-            }
-          }
+      testOnFixtures(
+        {
+          cwd: join(cwdRoot, './valid'),
+          localeDir: `*.{json,yaml,yml}`,
+          ruleName: '@intlify/vue-i18n/no-html-messages'
         },
-        useEslintrc: false,
-        parserOptions: {
-          ecmaVersion: 2015
-        },
-        rules: {
-          '@intlify/vue-i18n/no-html-messages': 'error'
-        },
-        extensions: ['.js', '.vue', '.json', '.yaml', '.yml']
-      })
-
-      linter.addPlugin('@intlify/vue-i18n', plugin)
-      const messages = linter.executeOnFiles(['.'])
-      assert.equal(messages.errorCount, 0)
+        {}
+      )
     })
   })
 
   describe('invalid', () => {
     it('should be detected html messages', () => {
-      const linter = new CLIEngine({
-        cwd,
-        baseConfig: {
-          extends: [baseConfigPath],
-          settings: {
-            'vue-i18n': {
-              localeDir: `./invalid/*.{json,yaml,yml}`
-            }
+      testOnFixtures(
+        {
+          cwd: join(cwdRoot, './invalid'),
+          localeDir: `*.{json,yaml,yml}`,
+          ruleName: '@intlify/vue-i18n/no-html-messages'
+        },
+        {
+          'en.json': {
+            errors: [
+              {
+                line: 3,
+                message: 'used HTML localization message'
+              },
+              {
+                line: 5,
+                message: 'used HTML localization message'
+              },
+              {
+                line: 6,
+                message: 'used HTML localization message'
+              }
+            ]
+          },
+          'en.yaml': {
+            errors: [
+              {
+                line: 2,
+                message: 'used HTML localization message'
+              },
+              {
+                line: 4,
+                message: 'used HTML localization message'
+              },
+              {
+                line: 5,
+                message: 'used HTML localization message'
+              }
+            ]
           }
-        },
-        useEslintrc: false,
-        parserOptions: {
-          ecmaVersion: 2015
-        },
-        rules: {
-          '@intlify/vue-i18n/no-html-messages': 'error'
-        },
-        extensions: ['.js', '.vue', '.json', '.yaml', '.yml']
-      })
-      linter.addPlugin('@intlify/vue-i18n', plugin)
-
-      const messages = linter.executeOnFiles(['.'])
-      assert.equal(messages.errorCount, 6)
-
-      function checkRuleId(path: string) {
-        const fullPath = resolve(__dirname, path)
-        const result = messages.results.find(
-          result => result.filePath === fullPath
-        )!
-        assert.equal(result.messages.length, 3)
-        result.messages.forEach(message => {
-          assert.equal(message.ruleId, '@intlify/vue-i18n/no-html-messages')
-        })
-      }
-      checkRuleId('../../fixtures/no-html-messages/invalid/en.json')
-      checkRuleId('../../fixtures/no-html-messages/invalid/en.yaml')
+        }
+      )
     })
   })
 })
