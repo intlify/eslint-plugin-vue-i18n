@@ -131,6 +131,26 @@ describe('no-duplicate-keys-in-locale with fixtures', () => {
         {}
       )
     })
+    it('should be not detected dupe keys for multiple-locales', () => {
+      testOnFixtures(
+        {
+          cwd: join(cwdRoot, './valid/multiple-locales'),
+          localeDir: [
+            `./locales1/*.{json,yaml,yml}`,
+            {
+              pattern: `./locales2/*.{json,yaml,yml}`,
+              localeKey: 'file'
+            },
+            {
+              pattern: `./locales3/*.{json,yaml,yml}`,
+              localeKey: 'key'
+            }
+          ],
+          ruleName: '@intlify/vue-i18n/no-duplicate-keys-in-locale'
+        },
+        {}
+      )
+    })
   })
 
   describe('invalid', () => {
@@ -315,6 +335,126 @@ describe('no-duplicate-keys-in-locale with fixtures', () => {
                 line: 16,
                 message:
                   "duplicate key 'dupe' in 'ja'. \"./locales/index.2.yaml\" has the same key"
+              },
+              {
+                line: 21,
+                message: "duplicate key 'json-dupe'"
+              },
+              {
+                line: 22,
+                message: "duplicate key 'nest'"
+              },
+              {
+                line: 22,
+                message:
+                  "duplicate key 'nest' in 'en'. \"./src/App.vue\" has the same key"
+              },
+              {
+                line: 23,
+                message: "duplicate key 'nest.json-dupe'"
+              },
+              {
+                line: 25,
+                message: "duplicate key 'nest'"
+              },
+              {
+                line: 25,
+                message:
+                  "duplicate key 'nest' in 'en'. \"./src/App.vue\" has the same key"
+              },
+              {
+                line: 26,
+                message: "duplicate key 'nest.json-dupe'"
+              },
+              {
+                line: 28,
+                message: "duplicate key 'json-dupe'"
+              }
+            ]
+          }
+        }
+      )
+    })
+    it('should be detected dupe keys for multiple-locales', () => {
+      testOnFixtures(
+        {
+          cwd: join(cwdRoot, './invalid/multiple-locales'),
+          localeDir: [
+            `./locales1/*.{json,yaml,yml}`,
+            {
+              pattern: `./locales2/*.{json,yaml,yml}`,
+              localeKey: 'file'
+            },
+            {
+              pattern: `./locales3/*.{json,yaml,yml}`,
+              localeKey: 'key'
+            }
+          ],
+          ruleName: '@intlify/vue-i18n/no-duplicate-keys-in-locale'
+        },
+        {
+          'locales1/en.1.json': {
+            errors: [
+              {
+                line: 7,
+                message:
+                  "duplicate key 'messages.dupe' in 'en'. \"./locales2/en.2.json\" has the same key"
+              },
+              {
+                line: 9,
+                message:
+                  "duplicate key 'dupe' in 'en'. \"./locales2/en.2.json\" has the same key"
+              }
+            ]
+          },
+          'locales2/en.2.json': {
+            errors: [
+              {
+                line: 7,
+                message:
+                  "duplicate key 'messages.dupe' in 'en'. \"./locales1/en.1.json\" has the same key"
+              },
+              {
+                line: 9,
+                message:
+                  "duplicate key 'dupe' in 'en'. \"./locales1/en.1.json\" has the same key"
+              }
+            ]
+          },
+          'locales3/index.1.json': {
+            errors: [
+              {
+                line: 9,
+                message:
+                  "duplicate key 'dupe' in 'ja'. \"./locales3/index.2.yaml\" has the same key"
+              }
+            ]
+          },
+          'locales3/index.2.yaml': {
+            errors: [
+              {
+                line: 8,
+                message:
+                  "duplicate key 'dupe' in 'ja'. \"./locales3/index.1.json\" has the same key"
+              }
+            ]
+          },
+          'src/App.vue': {
+            errors: [
+              {
+                line: 13,
+                message:
+                  "duplicate key 'nest' in 'en'. \"./src/App.vue\" has the same key"
+              },
+              {
+                line: 16,
+                message:
+                  "duplicate key 'dupe' in 'ja'. \"./locales3/index.1.json\" has the same key"
+              },
+              {
+                line: 16,
+                message:
+                  "duplicate key 'dupe' in 'ja'. \"./locales3/index.2.yaml\" has the same key"
               },
               {
                 line: 21,

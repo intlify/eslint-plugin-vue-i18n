@@ -1,0 +1,15 @@
+{
+  "ja": {
+    "hello": "ハローワールド",
+    "messages": {
+      "hello": "こんにちは、DIO！",
+      "link": "@:message.hello",
+      "nested": {
+        "hello": "こんにちは、ジョジョ!"
+      }
+    },
+    "hello_dio": "こんにちは、アンダースコア DIO！",
+    "hello {name}": "こんにちは、{name}！",
+    "hello-dio": "こんにちは、ハイフン DIO！"
+  }
+}

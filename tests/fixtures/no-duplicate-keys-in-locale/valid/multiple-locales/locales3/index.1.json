@@ -1,0 +1,10 @@
+{
+  "ja": {
+    "hello": "こんにちは",
+    "messages": {
+      "foo": "foo",
+      "bar": "bar",
+      "baz": "baz"
+    }
+  }
+}
