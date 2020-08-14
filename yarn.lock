@@ -1730,6 +1730,11 @@ acorn@^7.2.0:
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.3.1.tgz#85010754db53c3fbaf3b9ea3e083aa5c5d147ffd"
   integrity sha512-tLc0wSnatxAQHVHUapaHdz72pi9KUyHjq5KyHjGg9Y8Ifdc79pTh2XvI6I1/chZbnM7QtNKzh66ooDogPZSleA==
 
+acorn@^7.3.1:
+  version "7.4.0"
+  resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.4.0.tgz#e1ad486e6c54501634c6c397c5c121daa383607c"
+  integrity sha512-+G7P8jJmCHr+S+cLfQxygbWhXy+8YTVGzAkpEbcLo2mLoL7tij/VG41QSHACSf5QgYRhMZYHuNc6drJaO0Da+w==
+
 add-stream@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/add-stream/-/add-stream-1.0.0.tgz#6a7990437ca736d5e1288db92bd3266d5f5cb2aa"
@@ -4211,12 +4216,13 @@ eslint-config-prettier@^6.11.0:
   dependencies:
     get-stdin "^6.0.0"
 
-eslint-plugin-jsonc@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsonc/-/eslint-plugin-jsonc-0.4.0.tgz#c471f7dc1c8d4c3798ef7eeee67066c14384bb52"
-  integrity sha512-pWSpv2aXBeXAal4hYgn+jfWTwEmypMdPV9AQMs19QLXNPvOoJ23mWMAxCV+aU5xyuH28ME12qeiM1BpeGZxDrg==
+eslint-plugin-jsonc@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsonc/-/eslint-plugin-jsonc-0.5.0.tgz#705bfc82a5d2c27367729364247aea55f0ada15f"
+  integrity sha512-MyDNOGu7mxyq/x3f898Ig7DPGVK6ZnKV0JMGbzSWTZVjSF/If4AR5DRPdhiTvPNca4+02m0V1Z2ew/FZC+AWdA==
   dependencies:
     eslint-utils "^2.1.0"
+    jsonc-eslint-parser "^0.5.2"
     natural-compare "^1.4.0"
 
 eslint-plugin-markdown@^1.0.0:
@@ -4346,6 +4352,15 @@ espree@^4.1.0:
     acorn "^6.0.2"
     acorn-jsx "^5.0.0"
     eslint-visitor-keys "^1.0.0"
+
+"espree@^6.0.0 || ^7.2.0":
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/espree/-/espree-7.2.0.tgz#1c263d5b513dbad0ac30c4991b93ac354e948d69"
+  integrity sha512-H+cQ3+3JYRMEIOl87e7QdHX70ocly5iW4+dttuR8iYSPr/hXKFb+7dBsZ7+u1adC4VrnPlTkv0+OwuPnDop19g==
+  dependencies:
+    acorn "^7.3.1"
+    acorn-jsx "^5.2.0"
+    eslint-visitor-keys "^1.3.0"
 
 espree@^6.1.2:
   version "6.1.2"
@@ -6309,6 +6324,14 @@ json5@^2.1.2, json5@^2.1.3:
   integrity sha512-KXPvOm8K9IJKFM0bmdn8QXh7udDh1g/giieX0NLCaMnb4hEiVFqnop2ImTXCc5e0/oHz3LTqmHGtExn5hfMkOA==
   dependencies:
     minimist "^1.2.5"
+
+jsonc-eslint-parser@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/jsonc-eslint-parser/-/jsonc-eslint-parser-0.5.2.tgz#b195bb21cc81c466724da5c1d4368d25807fb3ac"
+  integrity sha512-TNtw6VVL1dS95FbMQTvv6I6OjaEORW9mH4OdN07VSDt8TAO7G7ZQEfSMf1p0+hC0tKZLtMmU6wZZmpPcupmGrg==
+  dependencies:
+    eslint-visitor-keys "^1.3.0"
+    espree "^6.0.0 || ^7.2.0"
 
 jsonfile@^4.0.0:
   version "4.0.0"
