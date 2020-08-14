@@ -1,6 +1,7 @@
 /** DON'T EDIT THIS FILE; was created by scripts. */
 import * as cacheFunction from './utils/cache-function'
 import * as cacheLoader from './utils/cache-loader'
+import * as casing from './utils/casing'
 import * as collectKeys from './utils/collect-keys'
 import * as collectLinkedKeys from './utils/collect-linked-keys'
 import * as defaultTimeouts from './utils/default-timeouts'
@@ -17,6 +18,7 @@ import * as resourceLoader from './utils/resource-loader'
 export = {
   'cache-function': cacheFunction,
   'cache-loader': cacheLoader,
+  casing,
   'collect-keys': collectKeys,
   'collect-linked-keys': collectLinkedKeys,
   'default-timeouts': defaultTimeouts,
