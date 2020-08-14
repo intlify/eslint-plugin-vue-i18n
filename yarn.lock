@@ -4211,10 +4211,13 @@ eslint-config-prettier@^6.11.0:
   dependencies:
     get-stdin "^6.0.0"
 
-eslint-plugin-jsonc@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-jsonc/-/eslint-plugin-jsonc-0.3.1.tgz#363b3516ce57a4ef49b8149f108837a3151c06a0"
-  integrity sha512-MkvmvKv4WYrxYMds0LjzC+rn+g4EpGIs1xLYeZeULSK/m90CxKPHrsKKnEMyp+bXVTU2WgBV/d8xIpEHTJWbUw==
+eslint-plugin-jsonc@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-jsonc/-/eslint-plugin-jsonc-0.4.0.tgz#c471f7dc1c8d4c3798ef7eeee67066c14384bb52"
+  integrity sha512-pWSpv2aXBeXAal4hYgn+jfWTwEmypMdPV9AQMs19QLXNPvOoJ23mWMAxCV+aU5xyuH28ME12qeiM1BpeGZxDrg==
+  dependencies:
+    eslint-utils "^2.1.0"
+    natural-compare "^1.4.0"
 
 eslint-plugin-markdown@^1.0.0:
   version "1.0.1"
@@ -4271,7 +4274,7 @@ eslint-scope@^5.1.0:
     esrecurse "^4.1.0"
     estraverse "^4.1.1"
 
-eslint-utils@^2.0.0:
+eslint-utils@^2.0.0, eslint-utils@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/eslint-utils/-/eslint-utils-2.1.0.tgz#d2de5e03424e707dc10c74068ddedae708741b27"
   integrity sha512-w94dQYoauyvlDc43XnGB8lU3Zt713vNChgt4EWwhXAP2XkBvndfxF0AgIqKOOasjPIPzj9JqgwkwbCYD0/V3Zg==
