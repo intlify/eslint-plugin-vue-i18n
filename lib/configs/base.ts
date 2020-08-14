@@ -8,7 +8,7 @@ export = {
       // see https://github.com/vuejs/eslint-plugin-vue/pull/1262
       parser: require.resolve('vue-eslint-parser'),
       parserOptions: {
-        parser: require.resolve('eslint-plugin-jsonc')
+        parser: require.resolve('jsonc-eslint-parser')
       }
     },
     {

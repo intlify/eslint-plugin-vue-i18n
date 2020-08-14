@@ -2,12 +2,12 @@
  * @fileoverview parser for <i18n> block
  * @author Yosuke Ota
  */
-import type { AST as JSONAST } from 'eslint-plugin-jsonc'
+import type { AST as JSONAST } from 'jsonc-eslint-parser'
 import type { AST as YAMLAST } from 'yaml-eslint-parser'
 import {
   parseForESLint as parseJsonForESLint,
   getStaticJSONValue
-} from 'eslint-plugin-jsonc'
+} from 'jsonc-eslint-parser'
 import {
   parseForESLint as parseYamlForESLint,
   getStaticYAMLValue
@@ -203,21 +203,14 @@ export function parseJsonInI18nBlock(
   context: RuleContext,
   i18nBlock: VAST.VElement
 ): JSONParsed | null {
-  const result = parseInI18nBlock(
-    context,
-    i18nBlock,
-    (parseJsonForESLint as never) as (
-      code: string,
-      option: unknown
-    ) => { ast: JSONAST.JSONProgram; visitorKeys: VisitorKeys }
-  )
+  const result = parseInI18nBlock(context, i18nBlock, parseJsonForESLint)
   if (result == null) {
     return result
   }
   return {
     lang: 'json',
     getStaticValue(node: JSONAST.JSONNode): I18nLocaleMessageDictionary {
-      return getStaticJSONValue(node as never) as never
+      return getStaticJSONValue(node) as never
     },
     ...result
   }
