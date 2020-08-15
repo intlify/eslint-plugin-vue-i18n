@@ -1,4 +1,4 @@
-import type { AST as JSONAST } from 'eslint-plugin-jsonc'
+import type { AST as JSONAST } from 'jsonc-eslint-parser'
 import type { AST as YAMLAST } from 'yaml-eslint-parser'
 import type { AST as VAST } from 'vue-eslint-parser'
 import type { VueParserServices } from './vue-parser-services'

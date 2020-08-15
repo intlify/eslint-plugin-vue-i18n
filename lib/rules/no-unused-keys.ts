@@ -2,7 +2,7 @@
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
 import type { AST as VAST } from 'vue-eslint-parser'
-import type { AST as JSONAST } from 'eslint-plugin-jsonc'
+import type { AST as JSONAST } from 'jsonc-eslint-parser'
 import type { AST as YAMLAST } from 'yaml-eslint-parser'
 import { extname } from 'path'
 import { collectKeysFromAST, usedKeysCache } from '../utils/collect-keys'

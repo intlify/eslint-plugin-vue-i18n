@@ -6,7 +6,7 @@ import parse5 from 'parse5'
 import { getLocaleMessages } from '../utils/index'
 import debugBuilder from 'debug'
 import type { AST as VAST } from 'vue-eslint-parser'
-import type { AST as JSONAST } from 'eslint-plugin-jsonc'
+import type { AST as JSONAST } from 'jsonc-eslint-parser'
 import type { AST as YAMLAST } from 'yaml-eslint-parser'
 import type { RuleContext, RuleListener } from '../types'
 
