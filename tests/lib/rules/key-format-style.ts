@@ -7,7 +7,7 @@ import rule = require('../../../lib/rules/key-format-style')
 import { SettingsVueI18nLocaleDirObject } from '../../../lib/types'
 
 const vueParser = require.resolve('vue-eslint-parser')
-const jsonParser = require.resolve('eslint-plugin-jsonc')
+const jsonParser = require.resolve('jsonc-eslint-parser')
 const yamlParser = require.resolve('yaml-eslint-parser')
 const fileLocalesRoot = join(__dirname, '../../fixtures/key-format-style/file')
 const keyLocalesRoot = join(__dirname, '../../fixtures/key-format-style/key')
