@@ -1,0 +1,10 @@
+{
+  "hello": "hello world",
+  "messages": {
+    "hello": "hi DIO!",
+    "link": "@:message.hello",
+    "nested": {
+      "hello": "hi jojo!"
+    }
+  }
+}

@@ -12,6 +12,7 @@ export type LocaleKeyType = 'file' | 'key'
 export type SettingsVueI18nLocaleDir =
   | SettingsVueI18nLocaleDirGlob
   | SettingsVueI18nLocaleDirObject
+  | (SettingsVueI18nLocaleDirGlob | SettingsVueI18nLocaleDirObject)[]
 /**
  * A glob for specifying files that store localization messages of project.
  */

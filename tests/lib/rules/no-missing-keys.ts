@@ -11,7 +11,20 @@ const localeDirs = [
     pattern:
       './tests/fixtures/no-missing-keys/constructor-option-format/locales/*.{json,yaml,yml}',
     localeKey: 'key'
-  }
+  },
+  [
+    './tests/fixtures/no-missing-keys/multiple-locales/locales1/*.{json,yaml,yml}',
+    {
+      pattern:
+        './tests/fixtures/no-missing-keys/multiple-locales/locales2/*.{json,yaml,yml}',
+      localeKey: 'key'
+    },
+    {
+      pattern:
+        './tests/fixtures/no-missing-keys/multiple-locales/locales3/*.{json,yaml,yml}',
+      localeKey: 'file'
+    }
+  ]
 ]
 
 function buildTestsForLocales<
