@@ -4,15 +4,14 @@
 #### :star: Features
 * [#114](https://github.com/intlify/eslint-plugin-vue-i18n/pull/114) Add support for multiple locale directories ([@ota-meshi](https://github.com/ota-meshi))
 * [#116](https://github.com/intlify/eslint-plugin-vue-i18n/pull/116) Add `@intlify/vue-i18n/key-format-style` rule ([@ota-meshi](https://github.com/ota-meshi))
-* [#112](https://github.com/intlify/eslint-plugin-vue-i18n/pull/112) Add `no-duplicate-keys-in-locale` rule and change `no-missing-keys` rule to not report if there is one matching key in each locale ([@ota-meshi](https://github.com/ota-meshi))
+* [#112](https://github.com/intlify/eslint-plugin-vue-i18n/pull/112) Add `@intlify/vue-i18n/no-duplicate-keys-in-locale` rule and change `@intlify/vue-i18n/no-missing-keys` rule to not report if there is one matching key in each locale ([@ota-meshi](https://github.com/ota-meshi))
 
 #### :bug: Bug Fixes
-* [#120](https://github.com/intlify/eslint-plugin-vue-i18n/pull/120) Fix type error and testcase error ([@ota-meshi](https://github.com/ota-meshi))
-* [#115](https://github.com/intlify/eslint-plugin-vue-i18n/pull/115) Fix false positives when key contains object in YAML in `no-unused-keys` and `no-duplicate-keys-in-locale` rules. ([@ota-meshi](https://github.com/ota-meshi))
+* [#115](https://github.com/intlify/eslint-plugin-vue-i18n/pull/115) Fix false positives when key contains object in YAML in `no-unused-keys` rule. ([@ota-meshi](https://github.com/ota-meshi))
 * [#111](https://github.com/intlify/eslint-plugin-vue-i18n/pull/111) Fix false negatives in `<i18n>` block without `<template>` in `no-unused-keys` rule. ([@ota-meshi](https://github.com/ota-meshi))
 
 #### :pencil: Documentation
-* [#110](https://github.com/intlify/eslint-plugin-vue-i18n/pull/110) Add TypeScript test case and add TypeScript FAQ to doc. ([@ota-meshi](https://github.com/ota-meshi))
+* [#110](https://github.com/intlify/eslint-plugin-vue-i18n/pull/110) Add TypeScript FAQ. ([@ota-meshi](https://github.com/ota-meshi))
 
 #### Committers: 1
 - Yosuke Ota ([@ota-meshi](https://github.com/ota-meshi))
