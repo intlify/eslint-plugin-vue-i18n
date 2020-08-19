@@ -38,7 +38,7 @@ module.export = {
   },
   settings: {
     'vue-i18n': {
-      localeDir: './path/to/locales/*.{json,json5,yaml,yml}}' // extension is glob formatting!
+      localeDir: './path/to/locales/*.{json,json5,yaml,yml}' // extension is glob formatting!
       // or
       // localeDir: {
       //   pattern: './path/to/locales/*.{json,json5,yaml,yml}', // extension is glob formatting!
