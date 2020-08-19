@@ -22,7 +22,7 @@ Please make sure to read the [Issue Reporting Checklist](https://github.com/intl
 
 ## :muscle: Contribution
 
-Please make sure to read the [Contributing Guide](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/CONTRIBUTING.md) before making a pull request.
+Please make sure to read the [Contributing Guide](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/.github/CONTRIBUTING.md) before making a pull request.
 
 ## :copyright: License
 
