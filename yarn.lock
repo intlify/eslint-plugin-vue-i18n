@@ -6316,10 +6316,10 @@ json5@^2.1.2, json5@^2.1.3:
   dependencies:
     minimist "^1.2.5"
 
-jsonc-eslint-parser@^0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/jsonc-eslint-parser/-/jsonc-eslint-parser-0.5.2.tgz#b195bb21cc81c466724da5c1d4368d25807fb3ac"
-  integrity sha512-TNtw6VVL1dS95FbMQTvv6I6OjaEORW9mH4OdN07VSDt8TAO7G7ZQEfSMf1p0+hC0tKZLtMmU6wZZmpPcupmGrg==
+jsonc-eslint-parser@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/jsonc-eslint-parser/-/jsonc-eslint-parser-0.6.0.tgz#dc28df2a547312521cb34ab45bc731baa7359ef0"
+  integrity sha512-mpo+HBKs8nMxJSmcBksc+d7AEVfHjQHjYjRugSjDoAaesf/VHCevVsqHtlOakfsgHyCZ8s0tOxRsqGt/HVgelw==
   dependencies:
     eslint-visitor-keys "^1.3.0"
     espree "^6.0.0 || ^7.2.0"
