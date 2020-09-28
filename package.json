@@ -57,7 +57,7 @@
     "opener": "^1.5.1",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.0",
-    "shipjs": "^0.21.0",
+    "shipjs": "^0.22.0",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.0",
     "vue-github-button": "^1.2.0",
