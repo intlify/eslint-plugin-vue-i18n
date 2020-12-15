@@ -2,23 +2,18 @@
  * @fileoverview Classes that acquires and manages localization messages
  * @author Yosuke Ota
  */
-import type { AST as JSONAST } from 'jsonc-eslint-parser'
-import type { AST as YAMLAST } from 'yaml-eslint-parser'
 import type { AST as VAST } from 'vue-eslint-parser'
 import type {
   RuleContext,
   I18nLocaleMessageDictionary,
   I18nLocaleMessageValue,
-  SourceCode,
   LocaleKeyType
 } from '../types'
 import { extname } from 'path'
 import fs from 'fs'
 import {
-  parseJsonInI18nBlock,
-  parseYamlInI18nBlock,
-  Visitor,
-  Parsed
+  parseYamlValuesInI18nBlock,
+  parseJsonValuesInI18nBlock
 } from './parsers'
 import { ResourceLoader } from './resource-loader'
 import JSON5 from 'json5'
@@ -85,39 +80,6 @@ export abstract class LocaleMessage {
   }
 
   /**
-   * Check if the message with the given key exists.
-   * @param {string} locale The locale name
-   * @param {string} key The given key to check
-   * @returns {boolean}
-   */
-  hasMessage(locale: string, key: string): boolean {
-    return this.getMessage(locale, key) != null
-  }
-
-  /**
-   * Gets the message for the given key.
-   * @param {string} locale The locale name
-   * @param {string} key The given key
-   * @returns {any} The message for the given key. `null` if the message is missing.
-   */
-  getMessage(locale: string, key: string): I18nLocaleMessageValue | null {
-    const paths = key.split('.')
-    const length = paths.length
-    let last: I18nLocaleMessageValue = this.getMessagesFromLocale(locale)
-    let i = 0
-    while (i < length) {
-      const value: I18nLocaleMessageValue | undefined =
-        last && typeof last !== 'string' ? last[paths[i]] : undefined
-      if (value == null) {
-        return null
-      }
-      last = value
-      i++
-    }
-    return last ?? null
-  }
-
-  /**
    * Gets messages for the given locale.
    */
   getMessagesFromLocale(locale: string): I18nLocaleMessageDictionary {
@@ -135,10 +97,8 @@ export abstract class LocaleMessage {
 }
 
 export class BlockLocaleMessage extends LocaleMessage {
-  private context: RuleContext
   public readonly block: VAST.VElement
   private lang: string
-  private _parsed: Parsed<JSONAST.JSONNode | YAMLAST.YAMLNode> | null = null
   private _messages: I18nLocaleMessageDictionary | null = null
   /**
    * @param {object} arg
@@ -155,7 +115,6 @@ export class BlockLocaleMessage extends LocaleMessage {
     fullpath,
     locales,
     localeKey,
-    context,
     lang = 'json'
   }: {
     block: VAST.VElement
@@ -171,7 +130,6 @@ export class BlockLocaleMessage extends LocaleMessage {
       localeKey
     })
 
-    this.context = context
     this.block = block
     this.lang = lang || 'json'
   }
@@ -180,57 +138,15 @@ export class BlockLocaleMessage extends LocaleMessage {
     if (this._messages) {
       return this._messages
     }
-    const parsed = this._getParsed()
-    if (!parsed) {
-      return {}
-    }
-    return (this._messages = parsed.getStaticValue(parsed.ast))
-  }
-
-  getAST(): JSONAST.JSONProgram | YAMLAST.YAMLProgram | null {
-    const parsed = this._getParsed()
-    if (!parsed) {
-      return null
-    }
-    return parsed.ast
-  }
-  getParserLang(): string | null {
-    const parsed = this._getParsed()
-    if (!parsed) {
-      return null
-    }
-    return parsed.lang
-  }
-  /**
-   * @param {Visitor} visitor
-   */
-  traverseNodes(visitor: Visitor): void {
-    const parsed = this._getParsed()
-    if (!parsed) {
-      return
-    }
-    parsed.traverseNodes(parsed.ast, visitor)
-  }
-  getSourceCode(): SourceCode | null {
-    const parsed = this._getParsed()
-    if (!parsed) {
-      return null
-    }
-    return parsed.getSourceCode()
-  }
-
-  _getParsed(): Parsed<JSONAST.JSONNode | YAMLAST.YAMLNode> | null {
-    if (this._parsed) {
-      return this._parsed
-    }
-
     const { lang } = this
     if (lang === 'json' || lang === 'json5') {
-      return (this._parsed = parseJsonInI18nBlock(this.context, this.block))
+      this._messages = parseJsonValuesInI18nBlock(this.block) || {}
     } else if (lang === 'yaml' || lang === 'yml') {
-      return (this._parsed = parseYamlInI18nBlock(this.context, this.block))
+      this._messages = parseYamlValuesInI18nBlock(this.block) || {}
+    } else {
+      this._messages = {}
     }
-    return null
+    return this._messages
   }
 }
 

@@ -1,11 +1,10 @@
 /**
  * @author Yosuke Ota
  */
-import type { AST as VAST } from 'vue-eslint-parser'
 import type { AST as JSONAST } from 'jsonc-eslint-parser'
 import type { AST as YAMLAST } from 'yaml-eslint-parser'
 import { extname } from 'path'
-import { getLocaleMessages } from '../utils/index'
+import { defineCustomBlocksVisitor, getLocaleMessages } from '../utils/index'
 import debugBuilder from 'debug'
 import type { LocaleMessage } from '../utils/locale-messages'
 import type {
@@ -42,73 +41,72 @@ function create(context: RuleContext): RuleListener {
   const options = (context.options && context.options[0]) || {}
   const ignoreI18nBlock = Boolean(options.ignoreI18nBlock)
 
-  /**
-   * Create node visitor
-   */
-  function createVisitor<N extends JSONAST.JSONNode | YAMLAST.YAMLNode>(
+  function createInitPathStack(
     targetLocaleMessage: LocaleMessage,
-    otherLocaleMessages: LocaleMessage[],
-    {
-      skipNode,
-      resolveKey,
-      resolveReportNode
-    }: {
-      skipNode: (node: N) => boolean
-      resolveKey: (node: N) => string | number | null
-      resolveReportNode: (node: N) => N
-    }
-  ) {
-    let pathStack: PathStack
+    otherLocaleMessages: LocaleMessage[]
+  ): PathStack {
     if (targetLocaleMessage.localeKey === 'file') {
       const locale = targetLocaleMessage.locales[0]
-      pathStack = {
-        keyPath: '',
-        locale,
-        otherDictionaries: otherLocaleMessages.map(lm => {
-          return {
-            dict: lm.getMessagesFromLocale(locale),
-            source: lm
-          }
-        })
-      }
+      return createInitLocalePathStack(locale, otherLocaleMessages)
     } else {
-      pathStack = {
+      return {
         keyPath: '',
         locale: null,
         otherDictionaries: []
       }
     }
+  }
+  function createInitLocalePathStack(
+    locale: string,
+    otherLocaleMessages: LocaleMessage[]
+  ): PathStack {
+    return {
+      keyPath: '',
+      locale,
+      otherDictionaries: otherLocaleMessages.map(lm => {
+        return {
+          dict: lm.getMessagesFromLocale(locale),
+          source: lm
+        }
+      })
+    }
+  }
+
+  function createVerifyContext<N extends JSONAST.JSONNode | YAMLAST.YAMLNode>(
+    targetLocaleMessage: LocaleMessage,
+    otherLocaleMessages: LocaleMessage[]
+  ) {
+    let pathStack = createInitPathStack(
+      targetLocaleMessage,
+      otherLocaleMessages
+    )
     const existsKeyNodes: {
-      [locale: string]: { [key: string]: { node: N; reported: boolean }[] }
+      [locale: string]: { [key: string]: N[] }
     } = {}
     const existsLocaleNodes: {
-      [key: string]: { node: N; reported: boolean }[]
+      [key: string]: N[]
     } = {}
-    return {
-      enterNode(node: N) {
-        if (skipNode(node)) {
-          return
-        }
 
-        const key = resolveKey(node)
-        if (key == null) {
-          return
-        }
+    function pushKey(
+      exists: {
+        [key: string]: (JSONAST.JSONNode | YAMLAST.YAMLNode)[]
+      },
+      key: string,
+      reportNode: JSONAST.JSONNode | YAMLAST.YAMLNode
+    ) {
+      const keyNodes = exists[key] || (exists[key] = [])
+      keyNodes.push(reportNode)
+    }
+    return {
+      enterKey(key: string | number, reportNode: N) {
         if (pathStack.locale == null) {
           // locale is resolved
           const locale = key as string
-          verifyDupeKey(existsLocaleNodes, locale, node)
+          pushKey(existsLocaleNodes, locale, reportNode)
           pathStack = {
             upper: pathStack,
-            node,
-            keyPath: '',
-            locale,
-            otherDictionaries: otherLocaleMessages.map(lm => {
-              return {
-                dict: lm.getMessagesFromLocale(locale),
-                source: lm
-              }
-            })
+            node: reportNode,
+            ...createInitLocalePathStack(locale, otherLocaleMessages)
           }
           return
         }
@@ -124,7 +122,6 @@ function create(context: RuleContext): RuleListener {
         const nextOtherDictionaries: DictData[] = []
         for (const value of keyOtherValues) {
           if (typeof value.value === 'string') {
-            const reportNode = resolveReportNode(node)
             context.report({
               message: `duplicate key '${keyPath}' in '${
                 pathStack.locale
@@ -141,52 +138,47 @@ function create(context: RuleContext): RuleListener {
           }
         }
 
-        verifyDupeKey(
+        pushKey(
           existsKeyNodes[pathStack.locale] ||
             (existsKeyNodes[pathStack.locale] = {}),
           keyPath,
-          node
+          reportNode
         )
 
         pathStack = {
           upper: pathStack,
-          node,
+          node: reportNode,
           keyPath,
           locale: pathStack.locale,
           otherDictionaries: nextOtherDictionaries
         }
       },
-      leaveNode(node: N) {
+      leaveKey(node: N | null) {
         if (pathStack.node === node) {
           pathStack = pathStack.upper!
         }
-      }
-    }
-
-    function verifyDupeKey(
-      exists: {
-        [key: string]: { node: N; reported: boolean }[]
       },
-      key: string,
-      node: N
-    ) {
-      const keyNodes = exists[key] || (exists[key] = [])
-      keyNodes.push({
-        node,
-        reported: false
-      })
-      if (keyNodes.length > 1) {
-        for (const keyNode of keyNodes.filter(e => !e.reported)) {
-          const reportNode = resolveReportNode(keyNode.node)
-          context.report({
-            message: `duplicate key '${key}'`,
-            loc: reportNode.loc
-          })
-          keyNode.reported = true
+      reports() {
+        for (const localeNodes of [
+          existsLocaleNodes,
+          ...Object.values(existsKeyNodes)
+        ]) {
+          for (const key of Object.keys(localeNodes)) {
+            const keyNodes = localeNodes[key]
+            if (keyNodes.length > 1) {
+              for (const keyNode of keyNodes) {
+                context.report({
+                  message: `duplicate key '${key}'`,
+                  loc: keyNode.loc
+                })
+              }
+            }
+          }
         }
       }
     }
   }
+
   /**
    * Create node visitor for JSON
    */
@@ -195,42 +187,37 @@ function create(context: RuleContext): RuleListener {
     targetLocaleMessage: LocaleMessage,
     otherLocaleMessages: LocaleMessage[]
   ) {
-    return createVisitor<JSONAST.JSONNode>(
+    const verifyContext = createVerifyContext(
       targetLocaleMessage,
-      otherLocaleMessages,
-      {
-        skipNode(node) {
-          if (
-            node.type === 'Program' ||
-            node.type === 'JSONExpressionStatement' ||
-            node.type === 'JSONProperty'
-          ) {
-            return true
-          }
-          const parent = node.parent!
-          if (parent.type === 'JSONProperty' && parent.key === node) {
-            return true
-          }
-          return false
-        },
-        resolveKey(node) {
-          const parent = node.parent!
-          if (parent.type === 'JSONProperty') {
-            return parent.key.type === 'JSONLiteral'
-              ? `${parent.key.value}`
-              : parent.key.name
-          } else if (parent.type === 'JSONArrayExpression') {
-            return parent.elements.indexOf(node as never)
-          }
-          return null
-        },
-
-        resolveReportNode(node) {
-          const parent = node.parent!
-          return parent.type === 'JSONProperty' ? parent.key : node
-        }
-      }
+      otherLocaleMessages
     )
+    return {
+      JSONProperty(node: JSONAST.JSONProperty) {
+        const key =
+          node.key.type === 'JSONLiteral' ? `${node.key.value}` : node.key.name
+
+        verifyContext.enterKey(key, node.key)
+      },
+      'JSONProperty:exit'(node: JSONAST.JSONProperty) {
+        verifyContext.leaveKey(node.key)
+      },
+      'JSONArrayExpression > *'(
+        node: JSONAST.JSONArrayExpression['elements'][number] & {
+          parent: JSONAST.JSONArrayExpression
+        }
+      ) {
+        const key = node.parent.elements.indexOf(node)
+        verifyContext.enterKey(key, node)
+      },
+      'JSONArrayExpression > *:exit'(
+        node: JSONAST.JSONArrayExpression['elements'][number]
+      ) {
+        verifyContext.leaveKey(node!)
+      },
+      'Program:exit'() {
+        verifyContext.reports()
+      }
+    }
   }
 
   /**
@@ -241,132 +228,106 @@ function create(context: RuleContext): RuleListener {
     targetLocaleMessage: LocaleMessage,
     otherLocaleMessages: LocaleMessage[]
   ) {
-    const yamlKeyNodes = new Set()
-    return createVisitor<YAMLAST.YAMLNode>(
+    const verifyContext = createVerifyContext(
       targetLocaleMessage,
-      otherLocaleMessages,
-      {
-        skipNode(node) {
-          if (
-            node.type === 'Program' ||
-            node.type === 'YAMLDocument' ||
-            node.type === 'YAMLDirective' ||
-            node.type === 'YAMLAnchor' ||
-            node.type === 'YAMLTag'
-          ) {
-            return true
-          }
-
-          if (yamlKeyNodes.has(node)) {
-            // within key node
-            return true
-          }
-          const parent = node.parent
-          if (yamlKeyNodes.has(parent)) {
-            // within key node
-            yamlKeyNodes.add(node)
-            return true
-          }
-          if (node.type === 'YAMLPair') {
-            yamlKeyNodes.add(node.key)
-            return true
-          }
-          return false
-        },
-        resolveKey(node) {
-          const parent = node.parent!
-          if (parent.type === 'YAMLPair' && parent.key) {
-            const key =
-              parent.key.type !== 'YAMLScalar'
-                ? sourceCode.getText(parent.key)
-                : parent.key.value
-            return typeof key === 'boolean' || key === null ? String(key) : key
-          } else if (parent.type === 'YAMLSequence') {
-            return parent.entries.indexOf(node as never)
-          }
-
-          return null
-        },
-        resolveReportNode(node) {
-          const parent = node.parent!
-          return parent.type === 'YAMLPair' ? parent.key || parent : node
+      otherLocaleMessages
+    )
+    const yamlKeyNodes = new Set<YAMLAST.YAMLContent | YAMLAST.YAMLWithMeta>()
+    function withinKey(node: YAMLAST.YAMLNode) {
+      for (const keyNode of yamlKeyNodes) {
+        if (
+          keyNode.range[0] <= node.range[0] &&
+          node.range[0] < keyNode.range[1]
+        ) {
+          return true
         }
       }
-    )
+      return false
+    }
+    return {
+      YAMLPair(node: YAMLAST.YAMLPair) {
+        if (node.key != null) {
+          if (withinKey(node)) {
+            return
+          }
+          yamlKeyNodes.add(node.key)
+        } else {
+          return
+        }
+
+        const keyValue =
+          node.key.type !== 'YAMLScalar'
+            ? sourceCode.getText(node.key)
+            : node.key.value
+        const key =
+          typeof keyValue === 'boolean' || keyValue === null
+            ? String(keyValue)
+            : keyValue
+
+        verifyContext.enterKey(key, node.key)
+      },
+      'YAMLPair:exit'(node: YAMLAST.YAMLPair) {
+        verifyContext.leaveKey(node.key)
+      },
+      'YAMLSequence > *'(
+        node: YAMLAST.YAMLSequence['entries'][number] & {
+          parent: YAMLAST.YAMLSequence
+        }
+      ) {
+        const key = node.parent.entries.indexOf(node)
+        verifyContext.enterKey(key, node)
+      },
+      'YAMLSequence > *:exit'(node: YAMLAST.YAMLSequence['entries'][number]) {
+        verifyContext.leaveKey(node!)
+      },
+      'Program:exit'() {
+        verifyContext.reports()
+      }
+    }
   }
 
   if (extname(filename) === '.vue') {
-    return {
-      Program() {
-        const documentFragment =
-          context.parserServices.getDocumentFragment &&
-          context.parserServices.getDocumentFragment()
-        /** @type {VElement[]} */
-        const i18nBlocks =
-          (documentFragment &&
-            documentFragment.children.filter(
-              (node): node is VAST.VElement =>
-                node.type === 'VElement' && node.name === 'i18n'
-            )) ||
-          []
-        if (!i18nBlocks.length) {
-          return
-        }
+    return defineCustomBlocksVisitor(
+      context,
+      ctx => {
         const localeMessages = getLocaleMessages(context)
-
-        for (const block of i18nBlocks) {
-          if (
-            block.startTag.attributes.some(
-              attr => !attr.directive && attr.key.name === 'src'
-            )
-          ) {
-            continue
-          }
-
-          const targetLocaleMessage = localeMessages.findBlockLocaleMessage(
-            block
-          )
-          if (!targetLocaleMessage) {
-            continue
-          }
-          const sourceCode = targetLocaleMessage.getSourceCode()
-          if (!sourceCode) {
-            continue
-          }
-
-          const otherLocaleMessages: LocaleMessage[] = ignoreI18nBlock
-            ? []
-            : localeMessages.localeMessages.filter(
-                lm => lm !== targetLocaleMessage
-              )
-          const parserLang = targetLocaleMessage.getParserLang()
-
-          let visitor
-          if (parserLang === 'json') {
-            visitor = createVisitorForJson(
-              sourceCode,
-              targetLocaleMessage,
-              otherLocaleMessages
-            )
-          } else if (parserLang === 'yaml') {
-            visitor = createVisitorForYaml(
-              sourceCode,
-              targetLocaleMessage,
-              otherLocaleMessages
-            )
-          }
-
-          if (visitor == null) {
-            return
-          }
-
-          targetLocaleMessage.traverseNodes({
-            enterNode: visitor.enterNode,
-            leaveNode: visitor.leaveNode
-          })
+        const targetLocaleMessage = localeMessages.findBlockLocaleMessage(
+          ctx.parserServices.customBlock
+        )
+        if (!targetLocaleMessage) {
+          return {}
         }
+        const otherLocaleMessages: LocaleMessage[] = ignoreI18nBlock
+          ? []
+          : localeMessages.localeMessages.filter(
+              lm => lm !== targetLocaleMessage
+            )
+        return createVisitorForJson(
+          ctx.getSourceCode(),
+          targetLocaleMessage,
+          otherLocaleMessages
+        )
+      },
+      ctx => {
+        const localeMessages = getLocaleMessages(context)
+        const targetLocaleMessage = localeMessages.findBlockLocaleMessage(
+          ctx.parserServices.customBlock
+        )
+        if (!targetLocaleMessage) {
+          return {}
+        }
+        const otherLocaleMessages: LocaleMessage[] = ignoreI18nBlock
+          ? []
+          : localeMessages.localeMessages.filter(
+              lm => lm !== targetLocaleMessage
+            )
+        return createVisitorForYaml(
+          ctx.getSourceCode(),
+          targetLocaleMessage,
+          otherLocaleMessages
+        )
       }
-    }
+    )
   } else if (context.parserServices.isJSON || context.parserServices.isYAML) {
     const localeMessages = getLocaleMessages(context)
     const targetLocaleMessage = localeMessages.findExistLocaleMessage(filename)
@@ -381,27 +342,17 @@ function create(context: RuleContext): RuleListener {
     )
 
     if (context.parserServices.isJSON) {
-      const { enterNode, leaveNode } = createVisitorForJson(
+      return createVisitorForJson(
         sourceCode,
         targetLocaleMessage,
         otherLocaleMessages
       )
-
-      return {
-        '[type=/^JSON/]': enterNode,
-        '[type=/^JSON/]:exit': leaveNode
-      }
     } else if (context.parserServices.isYAML) {
-      const { enterNode, leaveNode } = createVisitorForYaml(
+      return createVisitorForYaml(
         sourceCode,
         targetLocaleMessage,
         otherLocaleMessages
       )
-
-      return {
-        '[type=/^YAML/]': enterNode,
-        '[type=/^YAML/]:exit': leaveNode
-      }
     }
     return {}
   } else {
