@@ -7,7 +7,7 @@ import type { AST as YAMLAST } from 'yaml-eslint-parser'
 import { extname } from 'path'
 import { collectKeysFromAST, usedKeysCache } from '../utils/collect-keys'
 import { collectLinkedKeys } from '../utils/collect-linked-keys'
-import { getLocaleMessages } from '../utils/index'
+import { defineCustomBlocksVisitor, getLocaleMessages } from '../utils/index'
 import debugBuilder from 'debug'
 import type { LocaleMessage } from '../utils/locale-messages'
 import type {
@@ -74,28 +74,12 @@ function create(context: RuleContext): RuleListener {
   const options = (context.options && context.options[0]) || {}
   const enableFix = options.enableFix
 
-  /**
-   * Create node visitor
-   * @param {UsedKeys} usedKeys
-   * @param {object} option
-   * @param { (node: JSONNode | YAMLNode) => boolean } option.skipNode
-   * @param { (parentPath: string, node: JSONNode | YAMLNode) => {path: string, key: string | number} | null } option.resolveKeysForNode
-   * @param { (node: JSONNode | YAMLNode) => JSONNode | YAMLNode | null } option.resolveReportNode
-   * @param { (node: JSONNode | YAMLNode) => null | ((fixer: RuleFixer) => null | Fix | Fix[] | IterableIterator<Fix>) } option.buildFixer
-   * @param { (node: JSONNode[] | YAMLNode[]) => ((fixer: RuleFixer) => null | Fix | Fix[] | IterableIterator<Fix>) } option.buildAllFixer
-   */
-  function createVisitor<N extends JSONAST.JSONNode | YAMLAST.YAMLNode>(
+  function createVerifyContext<N extends JSONAST.JSONNode | YAMLAST.YAMLNode>(
     usedKeys: UsedKeys,
     {
-      skipNode,
-      resolveKey,
-      resolveReportNode,
       buildFixer,
       buildAllFixer
     }: {
-      skipNode: (node: N) => boolean
-      resolveKey: (node: N) => string | number | null
-      resolveReportNode: (node: N) => N | null
       buildFixer: (
         node: N
       ) =>
@@ -110,22 +94,11 @@ function create(context: RuleContext): RuleListener {
     let pathStack: PathStack = { usedKeys, keyPath: '' }
     const reports: { node: N; keyPath: string }[] = []
     return {
-      /**
-       * @param {JSONNode | YAMLNode} node
-       */
-      enterNode(node: N) {
-        if (skipNode(node)) {
-          return
-        }
-
-        const key = resolveKey(node)
-        if (key == null) {
-          return
-        }
+      enterKey(key: string | number, reportNode: N, ignoreReport: boolean) {
         const keyPath = joinPath(pathStack.keyPath, key)
         pathStack = {
           upper: pathStack,
-          node,
+          node: reportNode,
           usedKeys:
             (pathStack.usedKeys && (pathStack.usedKeys[key] as UsedKeys)) ||
             false,
@@ -133,22 +106,18 @@ function create(context: RuleContext): RuleListener {
         }
         const isUnused = !pathStack.usedKeys
         if (isUnused) {
-          const reportNode = resolveReportNode(node)
-          if (reportNode == null) {
-            // ignore
-            return
-          }
-          reports.push({
-            node: reportNode,
-            keyPath
-          })
+          if (!ignoreReport)
+            reports.push({
+              node: reportNode,
+              keyPath
+            })
         }
       },
       /**
        * @param {JSONNode | YAMLNode} node
        */
-      leaveNode(node: N) {
-        if (pathStack.node === node) {
+      leaveKey(reportNode: N | null) {
+        if (pathStack.node === reportNode) {
           pathStack = pathStack.upper!
         }
       },
@@ -182,71 +151,49 @@ function create(context: RuleContext): RuleListener {
    * @param {UsedKeys} usedKeys
    */
   function createVisitorForJson(sourceCode: SourceCode, usedKeys: UsedKeys) {
-    return createVisitor<JSONAST.JSONNode>(usedKeys, {
-      /**
-       * @param {JSONNode} node
-       */
-      skipNode(node) {
-        if (
-          node.type === 'Program' ||
-          node.type === 'JSONExpressionStatement' ||
-          node.type === 'JSONProperty'
-        ) {
-          return true
-        }
-        const parent = node.parent!
-        if (parent.type === 'JSONProperty' && parent.key === node) {
-          return true
-        }
-        return false
-      },
-      /**
-       * @param {JSONNode} node
-       */
-      resolveKey(node) {
-        const parent = node.parent!
-        if (parent.type === 'JSONProperty') {
-          return parent.key.type === 'JSONLiteral'
-            ? `${parent.key.value}`
-            : parent.key.name
-        } else if (parent.type === 'JSONArrayExpression') {
-          return parent.elements.indexOf(node as never)
-        }
-
-        return null
-      },
-
-      /**
-       * @param {JSONNode} node
-       */
-      resolveReportNode(node) {
-        if (
-          node.type === 'JSONObjectExpression' ||
-          node.type === 'JSONArrayExpression'
-        ) {
-          // ignore report
-          return null
-        }
-        const parent = node.parent!
-        return parent.type === 'JSONProperty' ? parent.key : node
-      },
-
-      /**
-       * @param {JSONNode} node
-       */
-      buildFixer(node) {
+    const verifyContext = createVerifyContext(usedKeys, {
+      buildFixer(node: JSONAST.JSONNode) {
         return fixer => fixer.removeRange(fixRemoveRange(node))
       },
-
-      /**
-       * @param {JSONNode[]} node
-       */
-      buildAllFixer(nodes) {
+      buildAllFixer(nodes: JSONAST.JSONNode[]) {
         return function* (fixer) {
           yield* fixAllRemoveKeys(fixer, nodes)
         }
       }
     })
+    function isIgnore(node: JSONAST.JSONExpression) {
+      return (
+        node.type === 'JSONArrayExpression' ||
+        node.type === 'JSONObjectExpression'
+      )
+    }
+    return {
+      JSONProperty(node: JSONAST.JSONProperty) {
+        const key =
+          node.key.type === 'JSONLiteral' ? `${node.key.value}` : node.key.name
+
+        verifyContext.enterKey(key, node.key, isIgnore(node.value))
+      },
+      'JSONProperty:exit'(node: JSONAST.JSONProperty) {
+        verifyContext.leaveKey(node.key)
+      },
+      'JSONArrayExpression > *'(
+        node: JSONAST.JSONArrayExpression['elements'][number] & {
+          parent: JSONAST.JSONArrayExpression
+        }
+      ) {
+        const key = node.parent.elements.indexOf(node)
+        verifyContext.enterKey(key, node, isIgnore(node))
+      },
+      'JSONArrayExpression > *:exit'(
+        node: JSONAST.JSONArrayExpression['elements'][number]
+      ) {
+        verifyContext.leaveKey(node!)
+      },
+      'Program:exit'() {
+        verifyContext.reports()
+      }
+    }
 
     function* fixAllRemoveKeys(fixer: RuleFixer, nodes: JSONAST.JSONNode[]) {
       const ranges = nodes.map(node => fixRemoveRange(node))
@@ -301,76 +248,10 @@ function create(context: RuleContext): RuleListener {
 
   /**
    * Create node visitor for YAML
-   * @param {SourceCode} sourceCode
-   * @param {UsedKeys} usedKeys
    */
   function createVisitorForYaml(sourceCode: SourceCode, usedKeys: UsedKeys) {
-    const yamlKeyNodes = new Set()
-    return createVisitor<YAMLAST.YAMLNode>(usedKeys, {
-      /**
-       * @param {YAMLNode} node
-       */
-      skipNode(node) {
-        if (
-          node.type === 'Program' ||
-          node.type === 'YAMLDocument' ||
-          node.type === 'YAMLDirective' ||
-          node.type === 'YAMLAnchor' ||
-          node.type === 'YAMLTag'
-        ) {
-          return true
-        }
-
-        if (yamlKeyNodes.has(node)) {
-          // within key node
-          return true
-        }
-        const parent = node.parent
-        if (yamlKeyNodes.has(parent)) {
-          // within key node
-          yamlKeyNodes.add(node)
-          return true
-        }
-        if (node.type === 'YAMLPair') {
-          yamlKeyNodes.add(node.key)
-          return true
-        }
-        return false
-      },
-      /**
-       * @param {YAMLContent | YAMLWithMeta} node
-       */
-      resolveKey(node) {
-        const parent = node.parent!
-        if (parent.type === 'YAMLPair' && parent.key) {
-          const key =
-            parent.key.type !== 'YAMLScalar'
-              ? sourceCode.getText(parent.key)
-              : parent.key.value
-          return typeof key === 'boolean' || key === null ? String(key) : key
-        } else if (parent.type === 'YAMLSequence') {
-          return parent.entries.indexOf(node as never)
-        }
-
-        return null
-      },
-
-      /**
-       * @param {YAMLContent | YAMLWithMeta} node
-       */
-      resolveReportNode(node) {
-        if (node.type === 'YAMLMapping' || node.type === 'YAMLSequence') {
-          // ignore report
-          return null
-        }
-        const parent = node.parent!
-        return parent.type === 'YAMLPair' ? parent.key : node
-      },
-
-      /**
-       * @param {YAMLNode} node
-       */
-      buildFixer(node) {
+    const verifyContext = createVerifyContext(usedKeys, {
+      buildFixer(node: YAMLAST.YAMLNode) {
         return function* (fixer) {
           const parentToCheck = node.parent!
           const removeNode =
@@ -387,11 +268,7 @@ function create(context: RuleContext): RuleListener {
           }
         }
       },
-
-      /**
-       * @param {YAMLNode[]} node
-       */
-      buildAllFixer(nodes) {
+      buildAllFixer(nodes: YAMLAST.YAMLNode[]) {
         return function* (fixer) {
           const removed = new Set()
           /** @type {YAMLNode[]} */
@@ -460,7 +337,63 @@ function create(context: RuleContext): RuleListener {
         }
       }
     })
+    const yamlKeyNodes = new Set<YAMLAST.YAMLContent | YAMLAST.YAMLWithMeta>()
+    function withinKey(node: YAMLAST.YAMLNode) {
+      for (const keyNode of yamlKeyNodes) {
+        if (
+          keyNode.range[0] <= node.range[0] &&
+          node.range[0] < keyNode.range[1]
+        ) {
+          return true
+        }
+      }
+      return false
+    }
+    function isIgnore(node: YAMLAST.YAMLContent | YAMLAST.YAMLWithMeta | null) {
+      return Boolean(
+        node && (node.type === 'YAMLMapping' || node.type === 'YAMLSequence')
+      )
+    }
+    return {
+      YAMLPair(node: YAMLAST.YAMLPair) {
+        if (node.key != null) {
+          if (withinKey(node)) {
+            return
+          }
+          yamlKeyNodes.add(node.key)
+        } else {
+          return
+        }
 
+        const keyValue =
+          node.key.type !== 'YAMLScalar'
+            ? sourceCode.getText(node.key)
+            : node.key.value
+        const key =
+          typeof keyValue === 'boolean' || keyValue === null
+            ? String(keyValue)
+            : keyValue
+
+        verifyContext.enterKey(key, node.key, isIgnore(node.value))
+      },
+      'YAMLPair:exit'(node: YAMLAST.YAMLPair) {
+        verifyContext.leaveKey(node.key)
+      },
+      'YAMLSequence > *'(
+        node: YAMLAST.YAMLSequence['entries'][number] & {
+          parent: YAMLAST.YAMLSequence
+        }
+      ) {
+        const key = node.parent.entries.indexOf(node)
+        verifyContext.enterKey(key, node, isIgnore(node))
+      },
+      'YAMLSequence > *:exit'(node: YAMLAST.YAMLSequence['entries'][number]) {
+        verifyContext.leaveKey(node!)
+      },
+      'Program:exit'() {
+        verifyContext.reports()
+      }
+    }
     /**
      * @param {RuleFixer} fixer
      * @param {YAMLNode} removeNode
@@ -548,75 +481,49 @@ function create(context: RuleContext): RuleListener {
   }
 
   if (extname(filename) === '.vue') {
-    return {
-      Program(node: VAST.ESLintProgram) {
-        const documentFragment =
-          context.parserServices.getDocumentFragment &&
-          context.parserServices.getDocumentFragment()
-        /** @type {VElement[]} */
-        const i18nBlocks =
-          (documentFragment &&
-            documentFragment.children.filter(
-              (node): node is VAST.VElement =>
-                node.type === 'VElement' && node.name === 'i18n'
-            )) ||
-          []
-        if (!i18nBlocks.length) {
-          return
-        }
+    return defineCustomBlocksVisitor(
+      context,
+      ctx => {
         const localeMessages = getLocaleMessages(context)
         const usedLocaleMessageKeys = collectKeysFromAST(
-          node,
+          context.getSourceCode().ast as VAST.ESLintProgram,
           context.getSourceCode().visitorKeys
         )
-
-        for (const block of i18nBlocks) {
-          if (
-            block.startTag.attributes.some(
-              attr => !attr.directive && attr.key.name === 'src'
-            )
-          ) {
-            continue
-          }
-
-          const targetLocaleMessage = localeMessages.findBlockLocaleMessage(
-            block
-          )
-          if (!targetLocaleMessage) {
-            continue
-          }
-          const sourceCode = targetLocaleMessage.getSourceCode()
-          if (!sourceCode) {
-            continue
-          }
-          const usedKeys = getUsedKeysMap(
-            targetLocaleMessage,
-            targetLocaleMessage.messages,
-            usedLocaleMessageKeys
-          )
-
-          const parserLang = targetLocaleMessage.getParserLang()
-
-          let visitor
-          if (parserLang === 'json') {
-            visitor = createVisitorForJson(sourceCode, usedKeys)
-          } else if (parserLang === 'yaml') {
-            visitor = createVisitorForYaml(sourceCode, usedKeys)
-          }
-
-          if (visitor == null) {
-            return
-          }
-
-          targetLocaleMessage.traverseNodes({
-            enterNode: visitor.enterNode,
-            leaveNode: visitor.leaveNode
-          })
-
-          visitor.reports()
+        const targetLocaleMessage = localeMessages.findBlockLocaleMessage(
+          ctx.parserServices.customBlock
+        )
+        if (!targetLocaleMessage) {
+          return {}
         }
+        const usedKeys = getUsedKeysMap(
+          targetLocaleMessage,
+          targetLocaleMessage.messages,
+          usedLocaleMessageKeys
+        )
+
+        return createVisitorForJson(ctx.getSourceCode(), usedKeys)
+      },
+      ctx => {
+        const localeMessages = getLocaleMessages(context)
+        const usedLocaleMessageKeys = collectKeysFromAST(
+          context.getSourceCode().ast as VAST.ESLintProgram,
+          context.getSourceCode().visitorKeys
+        )
+        const targetLocaleMessage = localeMessages.findBlockLocaleMessage(
+          ctx.parserServices.customBlock
+        )
+        if (!targetLocaleMessage) {
+          return {}
+        }
+        const usedKeys = getUsedKeysMap(
+          targetLocaleMessage,
+          targetLocaleMessage.messages,
+          usedLocaleMessageKeys
+        )
+
+        return createVisitorForYaml(ctx.getSourceCode(), usedKeys)
       }
-    }
+    )
   } else if (context.parserServices.isJSON || context.parserServices.isYAML) {
     const localeMessages = getLocaleMessages(context)
     const targetLocaleMessage = localeMessages.findExistLocaleMessage(filename)
@@ -639,31 +546,9 @@ function create(context: RuleContext): RuleListener {
       usedLocaleMessageKeys
     )
     if (context.parserServices.isJSON) {
-      const { enterNode, leaveNode, reports } = createVisitorForJson(
-        sourceCode,
-        usedKeys
-      )
-
-      return {
-        '[type=/^JSON/]': enterNode,
-        '[type=/^JSON/]:exit': leaveNode,
-        'Program:exit'() {
-          reports()
-        }
-      }
+      return createVisitorForJson(sourceCode, usedKeys)
     } else if (context.parserServices.isYAML) {
-      const { enterNode, leaveNode, reports } = createVisitorForYaml(
-        sourceCode,
-        usedKeys
-      )
-
-      return {
-        '[type=/^YAML/]': enterNode,
-        '[type=/^YAML/]:exit': leaveNode,
-        'Program:exit'() {
-          reports()
-        }
-      }
+      return createVisitorForYaml(sourceCode, usedKeys)
     }
     return {}
   } else {

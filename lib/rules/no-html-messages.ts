@@ -3,9 +3,8 @@
  */
 import { extname } from 'path'
 import parse5 from 'parse5'
-import { getLocaleMessages } from '../utils/index'
+import { defineCustomBlocksVisitor, getLocaleMessages } from '../utils/index'
 import debugBuilder from 'debug'
-import type { AST as VAST } from 'vue-eslint-parser'
 import type { AST as JSONAST } from 'jsonc-eslint-parser'
 import type { AST as YAMLAST } from 'yaml-eslint-parser'
 import type { RuleContext, RuleListener } from '../types'
@@ -86,54 +85,19 @@ function create(context: RuleContext): RuleListener {
   }
 
   if (extname(filename) === '.vue') {
-    return {
-      Program() {
-        const documentFragment =
-          context.parserServices.getDocumentFragment &&
-          context.parserServices.getDocumentFragment()
-        /** @type {VElement[]} */
-        const i18nBlocks =
-          (documentFragment &&
-            documentFragment.children.filter(
-              (node): node is VAST.VElement =>
-                node.type === 'VElement' && node.name === 'i18n'
-            )) ||
-          []
-        if (!i18nBlocks.length) {
-          return
+    return defineCustomBlocksVisitor(
+      context,
+      () => {
+        return {
+          JSONLiteral: verifyJSONLiteral
         }
-        const localeMessages = getLocaleMessages(context)
-
-        for (const block of i18nBlocks) {
-          if (
-            block.startTag.attributes.some(
-              attr => !attr.directive && attr.key.name === 'src'
-            )
-          ) {
-            continue
-          }
-
-          const targetLocaleMessage = localeMessages.findBlockLocaleMessage(
-            block
-          )
-          if (!targetLocaleMessage) {
-            continue
-          }
-          targetLocaleMessage.traverseNodes({
-            enterNode(node) {
-              if (node.type === 'JSONLiteral') {
-                verifyJSONLiteral(node)
-              } else if (node.type === 'YAMLScalar') {
-                verifyYAMLScalar(node)
-              }
-            },
-            leaveNode() {
-              // noop
-            }
-          })
+      },
+      () => {
+        return {
+          YAMLScalar: verifyYAMLScalar
         }
       }
-    }
+    )
   } else if (context.parserServices.isJSON) {
     if (!getLocaleMessages(context).findExistLocaleMessage(filename)) {
       return {}

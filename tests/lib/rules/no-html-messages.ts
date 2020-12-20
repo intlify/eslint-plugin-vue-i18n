@@ -15,12 +15,10 @@ new RuleTester({
     {
       // sfc supports
       filename: 'test.vue',
-      code: `<i18n>${fs
-        .readFileSync(
-          require.resolve('../../fixtures/no-html-messages/valid/en.json'),
-          'utf8'
-        )
-        .replace(/</g, '&lt;')}</i18n>
+      code: `<i18n>${fs.readFileSync(
+        require.resolve('../../fixtures/no-html-messages/valid/en.json'),
+        'utf8'
+      )}</i18n>
     <template></template><script></script>`
     },
     {
@@ -42,12 +40,10 @@ new RuleTester({
     {
       // sfc supports
       filename: 'test.vue',
-      code: `<i18n>${fs
-        .readFileSync(
-          require.resolve('../../fixtures/no-html-messages/invalid/en.json'),
-          'utf8'
-        )
-        .replace(/</g, '&lt;')}</i18n>
+      code: `<i18n>${fs.readFileSync(
+        require.resolve('../../fixtures/no-html-messages/invalid/en.json'),
+        'utf8'
+      )}</i18n>
     <template></template><script></script>`,
       errors: [
         {
@@ -70,12 +66,10 @@ new RuleTester({
     {
       // sfc supports
       filename: 'test.vue',
-      code: `<i18n lang="yaml">${fs
-        .readFileSync(
-          require.resolve('../../fixtures/no-html-messages/invalid/en.yaml'),
-          'utf8'
-        )
-        .replace(/</g, '&lt;')}</i18n>
+      code: `<i18n lang="yaml">${fs.readFileSync(
+        require.resolve('../../fixtures/no-html-messages/invalid/en.yaml'),
+        'utf8'
+      )}</i18n>
     <template></template><script></script>`,
       errors: [
         {

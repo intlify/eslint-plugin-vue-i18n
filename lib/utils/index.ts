@@ -19,8 +19,11 @@ import type {
   LocaleKeyType,
   SettingsVueI18nLocaleDir,
   SettingsVueI18nLocaleDirObject,
-  SettingsVueI18nLocaleDirGlob
+  SettingsVueI18nLocaleDirGlob,
+  CustomBlockVisitorFactory
 } from '../types'
+import * as jsoncESLintParser from 'jsonc-eslint-parser'
+import * as yamlESLintParser from 'yaml-eslint-parser'
 
 interface LocaleFiles {
   files: string[]
@@ -239,4 +242,65 @@ function getLocaleMessagesFromI18nBlocks(
     .filter(e => e)
   i18nBlockLocaleMessages.set(sourceCode.ast, localeMessages)
   return localeMessages
+}
+
+export function defineCustomBlocksVisitor(
+  context: RuleContext,
+  jsonRule: CustomBlockVisitorFactory,
+  yamlRule: CustomBlockVisitorFactory
+): RuleListener {
+  if (!context.parserServices.defineCustomBlocksVisitor) {
+    return {}
+  }
+  const jsonVisitor = context.parserServices.defineCustomBlocksVisitor(
+    context,
+    jsoncESLintParser,
+    {
+      target(lang: string | null, block: VAST.VElement): boolean {
+        if (block.name !== 'i18n') {
+          return false
+        }
+        return !lang || lang === 'json' || lang === 'json5'
+      },
+      create: jsonRule
+    }
+  )
+  const yamlVisitor = context.parserServices.defineCustomBlocksVisitor(
+    context,
+    yamlESLintParser,
+    {
+      target(lang: string | null, block: VAST.VElement): boolean {
+        if (block.name !== 'i18n') {
+          return false
+        }
+        return lang === 'yaml' || lang === 'yml'
+      },
+      create: yamlRule
+    }
+  )
+
+  return compositingVisitors(jsonVisitor, yamlVisitor)
+}
+
+function compositingVisitors(
+  visitor: RuleListener,
+  ...visitors: RuleListener[]
+) {
+  for (const v of visitors) {
+    for (const key in v) {
+      if (visitor[key]) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const o = visitor[key] as any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        visitor[key] = (...args: any[]) => {
+          o(...args)
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          ;(v[key] as any)(...args)
+        }
+      } else {
+        visitor[key] = v[key]
+      }
+    }
+  }
+  return visitor
 }
