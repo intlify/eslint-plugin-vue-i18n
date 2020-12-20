@@ -430,7 +430,7 @@ function create(context: RuleContext): RuleListener {
                 yield* fixForBlock(fixer, removeNode)
               }
             } else if (parent.type === 'YAMLSequence') {
-              if (parent.entries.every(p => removeNodes.includes(p))) {
+              if (parent.entries.every(p => p && removeNodes.includes(p))) {
                 // all remove
                 const before = sourceCode.getTokenBefore(parent)
                 if (before) {
