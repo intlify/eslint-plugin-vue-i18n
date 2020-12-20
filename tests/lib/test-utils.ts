@@ -7,7 +7,7 @@ import { CLIEngine } from 'eslint'
 import linter = require('eslint/lib/linter')
 import base = require('../../lib/configs/base')
 import plugin = require('../../lib/index')
-import { SettingsVueI18nLocaleDir } from '../../lib/types'
+import type { SettingsVueI18nLocaleDir } from '../../lib/types'
 const { SourceCodeFixer } = linter
 
 function buildBaseConfigPath() {

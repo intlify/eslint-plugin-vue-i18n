@@ -3,7 +3,8 @@
  * @author Yosuke Ota
  */
 
-import { CacheLoader, LoadData } from './cache-loader'
+import type { LoadData } from './cache-loader'
+import { CacheLoader } from './cache-loader'
 
 /**
  * This function returns a function that returns the result value that was called for the given function.

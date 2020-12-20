@@ -1,4 +1,4 @@
-import { MaybeNode } from './eslint'
+import type { MaybeNode } from './eslint'
 
 export interface JSXText extends MaybeNode {
   type: 'JSXText'

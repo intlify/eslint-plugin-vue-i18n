@@ -4,7 +4,7 @@
 import { join } from 'path'
 import { RuleTester } from 'eslint'
 import rule = require('../../../lib/rules/key-format-style')
-import { SettingsVueI18nLocaleDirObject } from '../../../lib/types'
+import type { SettingsVueI18nLocaleDirObject } from '../../../lib/types'
 
 const vueParser = require.resolve('vue-eslint-parser')
 const jsonParser = require.resolve('jsonc-eslint-parser')
