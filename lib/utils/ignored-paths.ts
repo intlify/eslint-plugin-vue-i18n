@@ -7,7 +7,8 @@
 import { existsSync, statSync, readFileSync } from 'fs'
 import { resolve, dirname, relative, sep } from 'path'
 import { getRelativePath } from './path-utils'
-import ignore, { Ignore } from 'ignore'
+import type { Ignore } from 'ignore'
+import ignore from 'ignore'
 import debugBuilder from 'debug'
 const debug = debugBuilder('eslint-plugin-vue-i18n:ignored-paths')
 

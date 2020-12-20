@@ -3,7 +3,7 @@ import type { AST as YAMLAST } from 'yaml-eslint-parser'
 import type { AST as VAST } from 'vue-eslint-parser'
 import type { VueParserServices } from './vue-parser-services'
 import type { TokenStore } from './types'
-import { SettingsVueI18nLocaleDir } from './settings'
+import type { SettingsVueI18nLocaleDir } from './settings'
 
 export interface Position {
   /** >= 1 */

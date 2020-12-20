@@ -5,7 +5,8 @@
  */
 import { writeFileSync } from 'fs'
 import { resolve } from 'path'
-import { withCategories, RuleInfo } from './lib/rules'
+import type { RuleInfo } from './lib/rules'
+import { withCategories } from './lib/rules'
 
 function toTableRow(rule: RuleInfo) {
   const mark = `${rule.recommended ? ':star:' : ''}${

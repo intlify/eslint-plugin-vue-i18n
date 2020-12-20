@@ -2,7 +2,7 @@ import type { Rule } from 'eslint'
 import type { RuleContext } from './eslint'
 import type { AST as VAST } from 'vue-eslint-parser'
 import type { TokenStore } from './types'
-import { VElement } from 'vue-eslint-parser/ast'
+import type { VElement } from 'vue-eslint-parser/ast'
 
 export interface TemplateListener {
   [key: string]: ((node: never) => void) | undefined

@@ -5,7 +5,8 @@
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
 
-import { GlobSync as Sync, IOptions, IGlobBase } from 'glob'
+import type { IOptions, IGlobBase } from 'glob'
+import { GlobSync as Sync } from 'glob'
 import { inherits } from 'util'
 
 const IGNORE = Symbol('ignore')
