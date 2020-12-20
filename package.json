@@ -32,7 +32,7 @@
     "lodash": "^4.17.11",
     "parse5": "^6.0.0",
     "vue-eslint-parser": "^7.3.0",
-    "yaml-eslint-parser": "^0.0.8"
+    "yaml-eslint-parser": "^0.2.0"
   },
   "devDependencies": {
     "@types/debug": "^4.1.5",
@@ -47,7 +47,7 @@
     "@typescript-eslint/eslint-plugin": "^4.10.0",
     "@typescript-eslint/parser": "^4.10.0",
     "eslint": "^5.15.0 || ^6.0.0 || ^7.0.0",
-    "eslint-config-prettier": "^6.11.0",
+    "eslint-config-prettier": "^7.0.0",
     "eslint-plugin-markdown": "^1.0.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-vue-libs": "^3.0.0 || ^4.0.0",
