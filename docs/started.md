@@ -115,6 +115,12 @@ Also, `parserOptions` configured at the top level affect `.json` and `.yaml`. Th
 + ]
 ```
 
+### More lint on JSON and YAML in `<i18n>` block
+
+You can install [eslint-plugin-jsonc](https://ota-meshi.github.io/eslint-plugin-jsonc/) and [eslint-plugin-yml](https://ota-meshi.github.io/eslint-plugin-yml/). These 2 plugins support Vue custom blocks.
+
+You can also use [jsonc/vue-custom-block/no-parsing-error](https://ota-meshi.github.io/eslint-plugin-jsonc/rules/vue-custom-block/no-parsing-error.html) and [yml/vue-custom-block/no-parsing-error](https://ota-meshi.github.io/eslint-plugin-yml/rules/vue-custom-block/no-parsing-error.html) rules to find JSON and YAML parsing errors.
+
 ## :question: FAQ
 
 ### What is the "Use the latest vue-eslint-parser" error?
