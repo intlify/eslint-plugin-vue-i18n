@@ -195,12 +195,12 @@ function parseAST(code: string, errors: CompileError[]): ResourceNode {
       const placeholderEndOffset = endOffset + keyValue.length + 1
 
       let node: NamedNode | ListNode | null = null
-      if (keyValue.trim()) {
-        const numValue = Number(keyValue.trim())
-        if (isFinite(numValue) && Number.isInteger(numValue)) {
+      const trimmedKeyValue = keyValue.trim()
+      if (trimmedKeyValue) {
+        if (/^-?\d+$/u.test(trimmedKeyValue)) {
           const listNode: ListNode = {
             type: NodeTypes.List,
-            index: numValue,
+            index: Number(trimmedKeyValue),
             ...ctx.getNodeLoc(endOffset - 1, placeholderEndOffset)
           }
           node = listNode
@@ -208,7 +208,7 @@ function parseAST(code: string, errors: CompileError[]): ResourceNode {
         if (!node) {
           const namedNode: NamedNode = {
             type: NodeTypes.Named,
-            key: keyValue.trim(),
+            key: trimmedKeyValue,
             ...ctx.getNodeLoc(endOffset - 1, placeholderEndOffset)
           }
           if (!/^[a-zA-Z][a-zA-Z0-9_$]*$/.test(namedNode.key)) {
@@ -297,7 +297,8 @@ function parseLiked(ctx: CodeContext, errors: CompileError[]) {
     ctx.setOffset(ctx.offset + 1)
     paren = true
   }
-  const keyValue = /^[\w\-_.]*/u.exec(ctx.buff)![0]
+  // see https://github.com/kazupon/vue-i18n/blob/96a676cca51b592f3f8718b149ef26b3c8e70a64/src/index.js#L28
+  const keyValue = /^[\w\-_|.]*/u.exec(ctx.buff)![0]
   const keyEndOffset = ctx.offset + keyValue.length
   const key: LinkedKeyNode = {
     type: NodeTypes.LinkedKey,
