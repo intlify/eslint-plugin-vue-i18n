@@ -2,13 +2,12 @@
  * @fileoverview Collect the keys used by the linked messages.
  * @author Yosuke Ota
  */
-// Note: If vue-i18n@next parser is separated from vue plugin, change it to use that.
-
+import type { ResourceNode } from '@intlify/message-compiler'
+import { NodeTypes } from '@intlify/message-compiler'
+import { traverseNode } from './message-compiler/traverser'
 import type { I18nLocaleMessageDictionary } from '../types'
-
-const linkKeyMatcher = /(?:@(?:\.[a-z]+)?:(?:[\w\-_|.]+|\([\w\-_|.]+\)))/g
-const linkKeyPrefixMatcher = /^@(?:\.([a-z]+))?:/
-const bracketsMatcher = /[()]/g
+import { parse } from './message-compiler/parser'
+import { parse as parseForV8 } from './message-compiler/parser-v8'
 
 /**
  * Extract the keys used by the linked messages.
@@ -25,21 +24,8 @@ function* extractUsedKeysFromLinks(
     if (typeof value === 'object') {
       yield* extractUsedKeysFromLinks(value)
     } else if (typeof value === 'string') {
-      if (value.indexOf('@:') >= 0 || value.indexOf('@.') >= 0) {
-        // see https://github.com/kazupon/vue-i18n/blob/c07d1914dcac186291b658a8b9627732010f6848/src/index.js#L435
-        const matches = value.match(linkKeyMatcher)!
-        for (const idx in matches) {
-          const link = matches[idx]
-          const linkKeyPrefixMatches = link.match(linkKeyPrefixMatcher)!
-          const [linkPrefix] = linkKeyPrefixMatches
-
-          // Remove the leading @:, @.case: and the brackets
-          const linkPlaceholder = link
-            .replace(linkPrefix, '')
-            .replace(bracketsMatcher, '')
-          yield linkPlaceholder
-        }
-      }
+      yield* extractUsedKeysFromAST(parse(value).ast)
+      yield* extractUsedKeysFromAST(parseForV8(value).ast)
     }
   }
 }
@@ -52,5 +38,21 @@ function* extractUsedKeysFromLinks(
 export function collectLinkedKeys(
   object: I18nLocaleMessageDictionary
 ): string[] {
-  return [...new Set<string>(extractUsedKeysFromLinks(object))]
+  return [...new Set<string>(extractUsedKeysFromLinks(object))].filter(s => !!s)
+}
+
+function extractUsedKeysFromAST(ast: ResourceNode): Set<string> {
+  const keys = new Set<string>()
+  traverseNode(ast, node => {
+    if (node.type === NodeTypes.Linked) {
+      if (node.key.type === NodeTypes.LinkedKey) {
+        keys.add(node.key.value)
+      } else if (node.key.type === NodeTypes.Literal) {
+        keys.add(node.key.value)
+      } else if (node.key.type === NodeTypes.List) {
+        keys.add(String(node.key.index))
+      }
+    }
+  })
+  return keys
 }

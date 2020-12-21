@@ -39,6 +39,18 @@ describe('collectLinkedKeys', () => {
     const expected = ['message.dio']
     assert.deepStrictEqual(collectLinkedKeys(object), expected)
   })
+  it('should be get the keys used in the linked message for v9.', () => {
+    const object = {
+      message: {
+        dio: 'DIO',
+        linked: "There's a reason, you lost, @:{'message.dio'}.",
+        list_linked: 'hi @:{42}!'
+      }
+    }
+
+    const expected = ['message.dio', '42']
+    assert.deepStrictEqual(collectLinkedKeys(object), expected)
+  })
 
   it('should be get the keys used in the linked message.', () => {
     const object = {
