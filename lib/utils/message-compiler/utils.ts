@@ -1,26 +1,26 @@
 import type { RuleContext } from '../../types'
 import semver from 'semver'
 
-export type MessageSyntaxVersions = { v8: boolean; v9: boolean }
+export type MessageSyntaxVersions = {
+  v8: boolean
+  v9: boolean
+  isNotSet: boolean
+}
 
 export function getMessageSyntaxVersions(
   context: RuleContext
 ): MessageSyntaxVersions {
-  return {
-    v8: intersectsMessageSyntaxVersion(context, '^8.0.0'),
-    v9: intersectsMessageSyntaxVersion(context, '>=9.0.0-0')
-  }
-}
-export function intersectsMessageSyntaxVersion(
-  context: RuleContext,
-  version: string
-): boolean {
   const { settings } = context
   const messageSyntaxVersion =
     settings['vue-i18n'] && settings['vue-i18n'].messageSyntaxVersion
 
   if (!messageSyntaxVersion) {
-    return true
+    return { v8: true, v9: true, isNotSet: true }
   }
-  return semver.intersects(messageSyntaxVersion, version)
+  const range = new semver.Range(messageSyntaxVersion)
+  return {
+    v8: semver.intersects(range, '^8.0.0 || <=8.0.0'),
+    v9: semver.intersects(range, '>=9.0.0-0'),
+    isNotSet: true
+  }
 }
