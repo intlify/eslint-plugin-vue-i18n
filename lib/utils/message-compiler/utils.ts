@@ -21,6 +21,6 @@ export function getMessageSyntaxVersions(
   return {
     v8: semver.intersects(range, '^8.0.0 || <=8.0.0'),
     v9: semver.intersects(range, '>=9.0.0-0'),
-    isNotSet: true
+    isNotSet: false
   }
 }
