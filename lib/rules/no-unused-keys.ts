@@ -17,7 +17,8 @@ import type {
   RuleFixer,
   Fix,
   SourceCode,
-  Range
+  Range,
+  CustomBlockVisitorFactory
 } from '../types'
 import { joinPath } from '../utils/key-path'
 const debug = debugBuilder('eslint-plugin-vue-i18n:no-unused-keys')
@@ -46,12 +47,13 @@ function isDef<V>(v: V | null | undefined): v is V {
 function getUsedKeysMap(
   targetLocaleMessage: LocaleMessage,
   values: I18nLocaleMessageDictionary,
-  usedkeys: string[]
+  usedkeys: string[],
+  context: RuleContext
 ): UsedKeys {
   /** @type {UsedKeys} */
   const usedKeysMap: UsedKeys = {}
 
-  for (const key of [...usedkeys, ...collectLinkedKeys(values)]) {
+  for (const key of [...usedkeys, ...collectLinkedKeys(values, context)]) {
     const paths = key.split('.')
     let map = usedKeysMap
     while (paths.length) {
@@ -481,48 +483,38 @@ function create(context: RuleContext): RuleListener {
   }
 
   if (extname(filename) === '.vue') {
+    const createCustomBlockRule = (
+      createVisitor: (
+        sourceCode: SourceCode,
+        usedKeys: UsedKeys
+      ) => RuleListener
+    ): CustomBlockVisitorFactory => {
+      return ctx => {
+        const localeMessages = getLocaleMessages(context)
+        const usedLocaleMessageKeys = collectKeysFromAST(
+          context.getSourceCode().ast as VAST.ESLintProgram,
+          context.getSourceCode().visitorKeys
+        )
+        const targetLocaleMessage = localeMessages.findBlockLocaleMessage(
+          ctx.parserServices.customBlock
+        )
+        if (!targetLocaleMessage) {
+          return {}
+        }
+        const usedKeys = getUsedKeysMap(
+          targetLocaleMessage,
+          targetLocaleMessage.messages,
+          usedLocaleMessageKeys,
+          context
+        )
+
+        return createVisitor(ctx.getSourceCode(), usedKeys)
+      }
+    }
     return defineCustomBlocksVisitor(
       context,
-      ctx => {
-        const localeMessages = getLocaleMessages(context)
-        const usedLocaleMessageKeys = collectKeysFromAST(
-          context.getSourceCode().ast as VAST.ESLintProgram,
-          context.getSourceCode().visitorKeys
-        )
-        const targetLocaleMessage = localeMessages.findBlockLocaleMessage(
-          ctx.parserServices.customBlock
-        )
-        if (!targetLocaleMessage) {
-          return {}
-        }
-        const usedKeys = getUsedKeysMap(
-          targetLocaleMessage,
-          targetLocaleMessage.messages,
-          usedLocaleMessageKeys
-        )
-
-        return createVisitorForJson(ctx.getSourceCode(), usedKeys)
-      },
-      ctx => {
-        const localeMessages = getLocaleMessages(context)
-        const usedLocaleMessageKeys = collectKeysFromAST(
-          context.getSourceCode().ast as VAST.ESLintProgram,
-          context.getSourceCode().visitorKeys
-        )
-        const targetLocaleMessage = localeMessages.findBlockLocaleMessage(
-          ctx.parserServices.customBlock
-        )
-        if (!targetLocaleMessage) {
-          return {}
-        }
-        const usedKeys = getUsedKeysMap(
-          targetLocaleMessage,
-          targetLocaleMessage.messages,
-          usedLocaleMessageKeys
-        )
-
-        return createVisitorForYaml(ctx.getSourceCode(), usedKeys)
-      }
+      createCustomBlockRule(createVisitorForJson),
+      createCustomBlockRule(createVisitorForYaml)
     )
   } else if (context.parserServices.isJSON || context.parserServices.isYAML) {
     const localeMessages = getLocaleMessages(context)
@@ -543,7 +535,8 @@ function create(context: RuleContext): RuleListener {
     const usedKeys = getUsedKeysMap(
       targetLocaleMessage,
       targetLocaleMessage.messages,
-      usedLocaleMessageKeys
+      usedLocaleMessageKeys,
+      context
     )
     if (context.parserServices.isJSON) {
       return createVisitorForJson(sourceCode, usedKeys)
