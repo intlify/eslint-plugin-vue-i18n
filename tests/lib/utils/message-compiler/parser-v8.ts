@@ -12,6 +12,7 @@ describe('parser-v8', () => {
       'message',
       'Hello World!',
       'Hello {target}!',
+      'Hello %{target}!',
       'Hello { target }!',
       'Hello @:link',
       'Hello @.lower:link',

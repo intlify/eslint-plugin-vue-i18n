@@ -130,7 +130,7 @@ const errorMessages: Record<string, string> = {
 
 function parseAST(code: string, errors: CompileError[]): ResourceNode {
   const ctx = new CodeContext(code)
-  const regexp = /\{|@[\.:]|\s*\|\s*/u
+  const regexp = /%?\{|@[\.:]|\s*\|\s*/u
   let re
   const node: ResourceNode = {
     type: NodeTypes.Resource,
@@ -180,7 +180,7 @@ function parseAST(code: string, errors: CompileError[]): ResourceNode {
       ctx.setOffset(endOffset)
       continue
     }
-    if (key === '{') {
+    if (key === '{' || key === '%{') {
       const endIndex = ctx.code.indexOf('}', endOffset)
       let keyValue: string
       if (endIndex > -1) {
