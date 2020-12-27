@@ -17,7 +17,8 @@ module.exports = {
     ecmaVersion: 2015
   },
   rules: {
-    'object-shorthand': 'error'
+    'object-shorthand': 'error',
+    'no-debugger': 'error'
   },
   overrides: [
     {

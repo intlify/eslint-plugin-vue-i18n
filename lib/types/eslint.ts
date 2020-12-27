@@ -32,6 +32,7 @@ export interface RuleContext {
   settings: {
     'vue-i18n'?: {
       localeDir?: SettingsVueI18nLocaleDir
+      messageSyntaxVersion?: string
     }
   }
   parserPath: string
