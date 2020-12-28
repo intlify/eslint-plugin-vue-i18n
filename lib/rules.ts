@@ -3,6 +3,7 @@ import keyFormatStyle from './rules/key-format-style'
 import noDuplicateKeysInLocale from './rules/no-duplicate-keys-in-locale'
 import noDynamicKeys from './rules/no-dynamic-keys'
 import noHtmlMessages from './rules/no-html-messages'
+import noMissingKeysInOtherLocales from './rules/no-missing-keys-in-other-locales'
 import noMissingKeys from './rules/no-missing-keys'
 import noRawText from './rules/no-raw-text'
 import noUnusedKeys from './rules/no-unused-keys'
@@ -13,6 +14,7 @@ export = {
   'no-duplicate-keys-in-locale': noDuplicateKeysInLocale,
   'no-dynamic-keys': noDynamicKeys,
   'no-html-messages': noHtmlMessages,
+  'no-missing-keys-in-other-locales': noMissingKeysInOtherLocales,
   'no-missing-keys': noMissingKeys,
   'no-raw-text': noRawText,
   'no-unused-keys': noUnusedKeys,

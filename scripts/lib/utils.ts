@@ -3,8 +3,8 @@
  * @author kazuya kawaguchi (a.k.a. kazupon)
  * Forked by https://github.com/mysticatea/eslint-plugin-eslint-comments/tree/master/scripts/lib/utils.js
  */
-import { readdirSync } from 'fs'
-import { basename, extname } from 'path'
+import { readdirSync, existsSync } from 'fs'
+import { basename, extname, join } from 'path'
 import { CLIEngine } from 'eslint'
 const linter = new CLIEngine({ fix: true })
 
@@ -22,9 +22,12 @@ function camelCase(str: string) {
 
 function createIndex(dirPath: string, prefix = '', all = false): string {
   const dirName = basename(dirPath)
-  const tsFiles = readdirSync(dirPath).map(file =>
-    basename(file, extname(file))
-  )
+  const tsFiles = readdirSync(dirPath)
+    .filter(
+      file =>
+        file.endsWith('.ts') || existsSync(join(dirPath, file, 'index.ts'))
+    )
+    .map(file => basename(file, extname(file)))
   return format(
     `/** DON'T EDIT THIS FILE; was created by scripts. */
 ${tsFiles

@@ -1,0 +1,22 @@
+{
+  "en": {
+    "hello": "Hello!",
+    "goodbye": "Goodbye!",
+    "nest": {
+      "hello": "Hello!",
+      "goodbye": "Goodbye!"
+    },
+    "only-en": {
+      "hello": "Hello!",
+      "goodbye": "Goodbye!"
+    }
+  },
+  "ja": {
+    "hello": "こんにちは!",
+    "goodbye": "さようなら!",
+    "nest": {
+      "hello": "こんにちは!",
+      "goodbye": "さようなら!"
+    }
+  }
+}

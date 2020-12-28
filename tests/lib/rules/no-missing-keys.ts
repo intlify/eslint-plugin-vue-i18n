@@ -91,6 +91,9 @@ tester.run('no-missing-keys', rule as never, {
         code: `<template>
       <p v-t="'hello'"></p>
     </template>`
+      },
+      {
+        code: `$t('messages.en-only')`
       }
     ],
     [
@@ -105,6 +108,14 @@ tester.run('no-missing-keys', rule as never, {
         // sfc with locale
         code: `<i18n locale="en">{"hello": "hello"}</i18n>
     <i18n locale="ja">{"hello": "こんにちは"}</i18n>
+    <template>
+      <p v-t="'hello'"></p>
+    </template>`
+      },
+      {
+        // sfc with locale
+        code: `<i18n locale="en">{"hello": "hello"}</i18n>
+    <i18n locale="ja">{"he": "こんにちは"}</i18n>
     <template>
       <p v-t="'hello'"></p>
     </template>`
@@ -159,30 +170,21 @@ tester.run('no-missing-keys', rule as never, {
       {
         // basic
         code: `$t('missing')`,
-        errors: [
-          `'missing' does not exist in 'en'`,
-          `'missing' does not exist in 'ja'`
-        ]
+        errors: [`'missing' does not exist in localization message resources`]
       },
       {
         // using mustaches in template block
         code: `<template>
       <p>{{ $t('missing') }}</p>
     </template>`,
-        errors: [
-          `'missing' does not exist in 'en'`,
-          `'missing' does not exist in 'ja'`
-        ]
+        errors: [`'missing' does not exist in localization message resources`]
       },
       {
         // using custom directive in template block
         code: `<template>
       <p v-t="'missing'"></p>
     </template>`,
-        errors: [
-          `'missing' does not exist in 'en'`,
-          `'missing' does not exist in 'ja'`
-        ]
+        errors: [`'missing' does not exist in localization message resources`]
       },
       {
         // using <i18n> functional component in template block
@@ -191,10 +193,7 @@ tester.run('no-missing-keys', rule as never, {
         <i18n path="missing"/>
       </div>
     </template>`,
-        errors: [
-          `'missing' does not exist in 'en'`,
-          `'missing' does not exist in 'ja'`
-        ]
+        errors: [`'missing' does not exist in localization message resources`]
       },
       {
         // using <i18n-t> functional component in template block
@@ -203,30 +202,19 @@ tester.run('no-missing-keys', rule as never, {
         <i18n-t path="missing"/>
       </div>
     </template>`,
-        errors: [
-          `'missing' does not exist in 'en'`,
-          `'missing' does not exist in 'ja'`
-        ]
+        errors: [`'missing' does not exist in localization message resources`]
       },
       {
         // nested basic
         code: `$t('missing.path')`,
-        errors: [
-          `'missing' does not exist in 'en'`,
-          `'missing' does not exist in 'ja'`
-        ]
+        errors: [`'missing' does not exist in localization message resources`]
       },
       {
         // nested missing
         code: `$t('messages.missing')`,
         errors: [
-          `'messages.missing' does not exist in 'en'`,
-          `'messages.missing' does not exist in 'ja'`
+          `'messages.missing' does not exist in localization message resources`
         ]
-      },
-      {
-        code: `$t('messages.en-only')`,
-        errors: ["'messages.en-only' does not exist in 'ja'"]
       }
     ],
     [
@@ -243,7 +231,7 @@ tester.run('no-missing-keys', rule as never, {
     <template>
       <p v-t="'missing'"></p>
     </template>`,
-        errors: [`'missing' does not exist in 'en'`]
+        errors: [`'missing' does not exist in localization message resources`]
       },
       {
         // sfc with locale
@@ -252,19 +240,7 @@ tester.run('no-missing-keys', rule as never, {
     <template>
       <p v-t="'missing'"></p>
     </template>`,
-        errors: [
-          `'missing' does not exist in 'en'`,
-          `'missing' does not exist in 'ja'`
-        ]
-      },
-      {
-        // sfc with locale
-        code: `<i18n locale="en">{"hello": "hello"}</i18n>
-    <i18n locale="ja">{"he": "こんにちは"}</i18n>
-    <template>
-      <p v-t="'hello'"></p>
-    </template>`,
-        errors: [`'hello' does not exist in 'ja'`]
+        errors: [`'missing' does not exist in localization message resources`]
       },
       {
         // sfc with src
@@ -276,10 +252,7 @@ tester.run('no-missing-keys', rule as never, {
     <template>
       <p v-t="'missing'"></p>
     </template>`,
-        errors: [
-          `'missing' does not exist in 'en'`,
-          `'missing' does not exist in 'ja'`
-        ]
+        errors: [`'missing' does not exist in localization message resources`]
       },
       {
         // sfc with src and locale
@@ -292,10 +265,7 @@ tester.run('no-missing-keys', rule as never, {
     <template>
       <p v-t="'missing'"></p>
     </template>`,
-        errors: [
-          `'missing' does not exist in 'en'`,
-          `'missing' does not exist in 'ja'`
-        ]
+        errors: [`'missing' does not exist in localization message resources`]
       },
       {
         // yaml
@@ -307,10 +277,7 @@ tester.run('no-missing-keys', rule as never, {
     <template>
       <p v-t="'missing'"></p>
     </template>`,
-        errors: [
-          `'missing' does not exist in 'en'`,
-          `'missing' does not exist in 'ja'`
-        ]
+        errors: [`'missing' does not exist in localization message resources`]
       }
     ]
   )
