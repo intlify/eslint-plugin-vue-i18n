@@ -29,7 +29,7 @@ type UsedKeys = {
 }
 interface PathStack {
   usedKeys: UsedKeys
-  keyPath: string
+  keyPath: (string | number)[]
   node?: JSONAST.JSONNode | YAMLAST.YAMLNode
   upper?: PathStack
 }
@@ -93,11 +93,11 @@ function create(context: RuleContext): RuleListener {
     }
   ) {
     /** @type {PathStack} */
-    let pathStack: PathStack = { usedKeys, keyPath: '' }
-    const reports: { node: N; keyPath: string }[] = []
+    let pathStack: PathStack = { usedKeys, keyPath: [] }
+    const reports: { node: N; keyPath: (string | number)[] }[] = []
     return {
       enterKey(key: string | number, reportNode: N, ignoreReport: boolean) {
-        const keyPath = joinPath(pathStack.keyPath, key)
+        const keyPath = [...pathStack.keyPath, key]
         pathStack = {
           upper: pathStack,
           node: reportNode,
@@ -125,14 +125,15 @@ function create(context: RuleContext): RuleListener {
       },
       reports() {
         for (const { node, keyPath } of reports) {
+          const keyPathStr = joinPath(...keyPath)
           const fix = buildFixer(node)
           context.report({
-            message: `unused '${keyPath}' key`,
+            message: `unused '${keyPathStr}' key`,
             loc: node.loc,
             fix: enableFix ? fix : null,
             suggest: [
               {
-                desc: `Remove the '${keyPath}' key.`,
+                desc: `Remove the '${keyPathStr}' key.`,
                 fix
               },
               reports.length > 1
