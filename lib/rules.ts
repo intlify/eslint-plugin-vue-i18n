@@ -7,6 +7,7 @@ import noMissingKeys from './rules/no-missing-keys'
 import noRawText from './rules/no-raw-text'
 import noUnusedKeys from './rules/no-unused-keys'
 import noVHtml from './rules/no-v-html'
+import preferLinkedKeyWithParen from './rules/prefer-linked-key-with-paren'
 
 export = {
   'key-format-style': keyFormatStyle,
@@ -16,5 +17,6 @@ export = {
   'no-missing-keys': noMissingKeys,
   'no-raw-text': noRawText,
   'no-unused-keys': noUnusedKeys,
-  'no-v-html': noVHtml
+  'no-v-html': noVHtml,
+  'prefer-linked-key-with-paren': preferLinkedKeyWithParen
 }
