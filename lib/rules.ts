@@ -8,6 +8,7 @@ import noRawText from './rules/no-raw-text'
 import noUnusedKeys from './rules/no-unused-keys'
 import noVHtml from './rules/no-v-html'
 import preferLinkedKeyWithParen from './rules/prefer-linked-key-with-paren'
+import validMessageSyntax from './rules/valid-message-syntax'
 
 export = {
   'key-format-style': keyFormatStyle,
@@ -18,5 +19,6 @@ export = {
   'no-raw-text': noRawText,
   'no-unused-keys': noUnusedKeys,
   'no-v-html': noVHtml,
-  'prefer-linked-key-with-paren': preferLinkedKeyWithParen
+  'prefer-linked-key-with-paren': preferLinkedKeyWithParen,
+  'valid-message-syntax': validMessageSyntax
 }

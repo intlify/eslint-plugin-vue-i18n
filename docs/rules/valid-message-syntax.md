@@ -2,8 +2,6 @@
 
 > disallow invalid message syntax
 
-- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` property in a configuration file enables this rule.
-
 This rule warns invalid message syntax.
 
 This rule is useful localization leaks with incorrect message syntax.
@@ -17,10 +15,8 @@ This rule is useful localization leaks with incorrect message syntax.
 {
   "list-hello": "Hello! {{0}}",
   "named-hello": "Hello! {{name}}",
-  "linked-hello": "ref:list-hello"
 }
 ```
-
 
 :+1: Examples of **correct** code for this rule:
 

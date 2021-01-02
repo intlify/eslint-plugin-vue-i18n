@@ -965,24 +965,24 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@intlify/message-compiler@^9.0.0-beta.15":
-  version "9.0.0-beta.15"
-  resolved "https://registry.yarnpkg.com/@intlify/message-compiler/-/message-compiler-9.0.0-beta.15.tgz#8529070003a19036c45c2dce239afbac2e61f07b"
-  integrity sha512-N1bh5dxLIrBNGM99O1/Uxvyb1IYmHl+sYcae88BKB2T5pvOSDC18Oa52pLjM0PMDFpKbQN+m/SGgiRPPRkp0nQ==
+"@intlify/message-compiler@^9.0.0-beta.16":
+  version "9.0.0-beta.16"
+  resolved "https://registry.yarnpkg.com/@intlify/message-compiler/-/message-compiler-9.0.0-beta.16.tgz#359993251a303f148b3a325eca055cdbaf0cd95f"
+  integrity sha512-dE4UZsbVl5TKogYdfrJ6nQKdin1R4XMKVBVa9dE1A8HVvVHBSLy6iQiYpcw8TwcEHIa+rFjuuHuh+IdN3eCw+g==
   dependencies:
-    "@intlify/message-resolver" "9.0.0-beta.15"
-    "@intlify/shared" "9.0.0-beta.15"
+    "@intlify/message-resolver" "9.0.0-beta.16"
+    "@intlify/shared" "9.0.0-beta.16"
     source-map "0.6.1"
 
-"@intlify/message-resolver@9.0.0-beta.15":
-  version "9.0.0-beta.15"
-  resolved "https://registry.yarnpkg.com/@intlify/message-resolver/-/message-resolver-9.0.0-beta.15.tgz#ac1bf84923e76bd4356daf8c2e36530601fc49a5"
-  integrity sha512-i64xy281nzNJbFSruc0EgFKJKSvXI/1bhYliWq0qtYi6Mv2sIXb4+arOB69YYYBKuDDNLBjSCNCuCmab62sP0A==
+"@intlify/message-resolver@9.0.0-beta.16":
+  version "9.0.0-beta.16"
+  resolved "https://registry.yarnpkg.com/@intlify/message-resolver/-/message-resolver-9.0.0-beta.16.tgz#f8960344201050d17560f8d01f63e3cd0b9bf59c"
+  integrity sha512-xwjsFuDDYEv7g1KE5QZRbrPgfsrNsDhYLtNYR7Tn4inzbmB6ipak2UlDzDcQGLieSFbe1WwAoNL0IXy4sUKboQ==
 
-"@intlify/shared@9.0.0-beta.15":
-  version "9.0.0-beta.15"
-  resolved "https://registry.yarnpkg.com/@intlify/shared/-/shared-9.0.0-beta.15.tgz#beab8c49e0efd5cd5c4b9add2b71b9395e7cc7a1"
-  integrity sha512-f7qkzA8tUdGD5T7xUoNSiYA/qvPJSwu5DKt6xCrpitF2Ol+0QTLuk6jyZq81WKwo38DrTD/wjaM6STX/pF5zJg==
+"@intlify/shared@9.0.0-beta.16":
+  version "9.0.0-beta.16"
+  resolved "https://registry.yarnpkg.com/@intlify/shared/-/shared-9.0.0-beta.16.tgz#51a80ca4705c93cb14c8f06398dfc550df09d67d"
+  integrity sha512-A7GSOovcZn/NMoAmDc8FG9uRcFv6iygriK8+C6HFeOnMQ9X+T9f5A9bPtXhCOCiRpQm9SUtGqXedxO5Y8rz9/A==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.0.0"
@@ -6299,10 +6299,10 @@ json5@^2.1.2, json5@^2.1.3:
   dependencies:
     minimist "^1.2.5"
 
-jsonc-eslint-parser@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/jsonc-eslint-parser/-/jsonc-eslint-parser-0.6.0.tgz#dc28df2a547312521cb34ab45bc731baa7359ef0"
-  integrity sha512-mpo+HBKs8nMxJSmcBksc+d7AEVfHjQHjYjRugSjDoAaesf/VHCevVsqHtlOakfsgHyCZ8s0tOxRsqGt/HVgelw==
+jsonc-eslint-parser@^0.6.2:
+  version "0.6.2"
+  resolved "https://registry.yarnpkg.com/jsonc-eslint-parser/-/jsonc-eslint-parser-0.6.2.tgz#f538179902f1c2edcb710507194b5333294b7079"
+  integrity sha512-8WlcrtXwiio5/E1J1cpaeBW5jFTHMcFLmlqOhQTbta0kn5hiOM/B56tky/ZJQP7SyHhpVj3zDvaXkVyedYi/LA==
   dependencies:
     eslint-visitor-keys "^1.3.0"
     espree "^6.0.0 || ^7.2.0"

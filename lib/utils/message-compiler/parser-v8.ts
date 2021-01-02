@@ -103,10 +103,8 @@ class CodeContext {
   }
   createCompileError(message: string, offset: number) {
     const loc = this.getLocFromIndex(offset)
-    const error: CompileError = new SyntaxError(
-      errorMessages[message] || message
-    ) as never
-    error.code = errorCodes[message] || errorCodes.UNEXPECTED_LEXICAL_ANALYSIS
+    const error: CompileError = new SyntaxError(message) as never
+    error.code = 42
     error.location = {
       start: { ...loc, offset },
       end: { ...loc, offset }
@@ -114,18 +112,6 @@ class CodeContext {
     error.domain = 'parser'
     return error
   }
-}
-
-const errorCodes: Record<string, number> = {
-  UNTERMINATED_CLOSING_BRACE: 6,
-  EMPTY_PLACEHOLDER: 7,
-  UNEXPECTED_LEXICAL_ANALYSIS: 11
-}
-
-const errorMessages: Record<string, string> = {
-  UNTERMINATED_CLOSING_BRACE: `Unterminated closing brace`,
-  EMPTY_PLACEHOLDER: `Empty placeholder`,
-  UNEXPECTED_LEXICAL_ANALYSIS: `Unexpected lexical analysis in token: '{0}'`
 }
 
 function parseAST(code: string, errors: CompileError[]): ResourceNode {
@@ -187,7 +173,7 @@ function parseAST(code: string, errors: CompileError[]): ResourceNode {
         keyValue = ctx.code.slice(endOffset, endIndex)
       } else {
         errors.push(
-          ctx.createCompileError('UNTERMINATED_CLOSING_BRACE', endOffset)
+          ctx.createCompileError('Unterminated closing brace', endOffset)
         )
         keyValue = ctx.code.slice(endOffset)
       }
@@ -197,11 +183,28 @@ function parseAST(code: string, errors: CompileError[]): ResourceNode {
       let node: NamedNode | ListNode | null = null
       const trimmedKeyValue = keyValue.trim()
       if (trimmedKeyValue) {
+        if (trimmedKeyValue !== keyValue) {
+          errors.push(
+            ctx.createCompileError(
+              'Unexpected space before or after the placeholder key',
+              endOffset
+            )
+          )
+        }
         if (/^-?\d+$/u.test(trimmedKeyValue)) {
+          const num = Number(trimmedKeyValue)
           const listNode: ListNode = {
             type: NodeTypes.List,
-            index: Number(trimmedKeyValue),
+            index: num,
             ...ctx.getNodeLoc(endOffset - 1, placeholderEndOffset)
+          }
+          if (num < 0) {
+            errors.push(
+              ctx.createCompileError(
+                'Unexpected minus placeholder index',
+                endOffset
+              )
+            )
           }
           node = listNode
         }
@@ -222,7 +225,7 @@ function parseAST(code: string, errors: CompileError[]): ResourceNode {
         messageNode.items.push(node)
       } else {
         errors.push(
-          ctx.createCompileError('EMPTY_PLACEHOLDER', placeholderEndOffset - 1)
+          ctx.createCompileError('Empty placeholder', placeholderEndOffset - 1)
         )
       }
 

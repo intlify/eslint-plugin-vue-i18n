@@ -32,7 +32,6 @@ export const errorsFixtures: {
       errors: [
         {
           message: 'Expected linked key value',
-          code: 11,
           location: [2, 2]
         }
       ]
@@ -73,12 +72,10 @@ export const errorsFixtures: {
       errors: [
         {
           message: 'Expected linked modifier value',
-          code: 11,
           location: [1, 1]
         },
         {
           message: 'Expected linked key value',
-          code: 11,
           location: [2, 2]
         }
       ]
@@ -119,12 +116,10 @@ export const errorsFixtures: {
       errors: [
         {
           message: 'Expected linked modifier value',
-          code: 11,
           location: [1, 1]
         },
         {
           message: 'Expected linked key value',
-          code: 11,
           location: [3, 3]
         }
       ]
@@ -165,7 +160,6 @@ export const errorsFixtures: {
       errors: [
         {
           message: 'Expected linked key value',
-          code: 11,
           location: [6, 6]
         }
       ]
@@ -206,7 +200,6 @@ export const errorsFixtures: {
       errors: [
         {
           message: 'Expected linked key value',
-          code: 11,
           location: [5, 5]
         }
       ]
@@ -242,7 +235,6 @@ export const errorsFixtures: {
       errors: [
         {
           message: 'Expected linked key value',
-          code: 11,
           location: [2, 2]
         }
       ]
@@ -278,7 +270,6 @@ export const errorsFixtures: {
       errors: [
         {
           message: 'Expected linked key value',
-          code: 11,
           location: [3, 3]
         }
       ]
@@ -344,7 +335,6 @@ export const errorsFixtures: {
       errors: [
         {
           message: 'Unterminated closing paren',
-          code: 11,
           location: [31, 31]
         }
       ]
@@ -376,7 +366,10 @@ export const errorsFixtures: {
       errors: [
         {
           message: 'Unterminated closing brace',
-          code: 6,
+          location: [15, 15]
+        },
+        {
+          message: 'Unexpected space before or after the placeholder key',
           location: [15, 15]
         }
       ]
@@ -408,7 +401,6 @@ export const errorsFixtures: {
       errors: [
         {
           message: 'Unexpected placeholder key',
-          code: 11,
           location: [19, 19]
         }
       ]
@@ -439,9 +431,43 @@ export const errorsFixtures: {
       },
       errors: [
         {
-          message: 'Unexpected placeholder key',
-          code: 11,
+          message: 'Unexpected space before or after the placeholder key',
           location: [19, 19]
+        },
+        {
+          message: 'Unexpected placeholder key',
+          location: [19, 19]
+        }
+      ]
+    }
+  },
+  {
+    code: 'spaced placeholder { foo }',
+    expected: {
+      ast: {
+        type: 'Resource',
+        body: {
+          type: 'Message',
+          items: [
+            {
+              type: 'Text',
+              value: 'spaced placeholder ',
+              loc: [0, 19]
+            },
+            {
+              type: 'Named',
+              key: 'foo',
+              loc: [19, 26]
+            }
+          ],
+          loc: [0, 26]
+        },
+        loc: [0, 26]
+      },
+      errors: [
+        {
+          message: 'Unexpected space before or after the placeholder key',
+          location: [20, 20]
         }
       ]
     }
