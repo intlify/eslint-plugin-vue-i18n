@@ -13,21 +13,42 @@ describe('parser-v8', () => {
       'Hello World!',
       'Hello {target}!',
       'Hello %{target}!',
-      'Hello { target }!',
+      {
+        code: 'Hello { target }!',
+        errors: ['Unexpected space before or after the placeholder key']
+      },
       'Hello @:link',
       'Hello @.lower:link',
       'car | cars',
       'no apples | one apple | {count} apples',
       'no apples |\n one apple |\n {count} apples',
       'empty placeholder {     }',
-      'number placeholder {  42   }',
-      'number placeholder {  -42   }'
+      'empty placeholder {}',
+      'number placeholder {42}',
+      {
+        code: 'number placeholder {  42   }',
+        errors: ['Unexpected space before or after the placeholder key']
+      },
+      {
+        code: 'number placeholder {  -42   }',
+        errors: [
+          'Unexpected space before or after the placeholder key',
+          'Unexpected minus placeholder index'
+        ]
+      }
     ]
-    for (const code of list) {
+    for (const e of list) {
+      const code = typeof e === 'string' ? e : e.code
+      const errors = typeof e === 'string' ? null : e.errors
       describe(JSON.stringify(code), () => {
         it('should be equals', () => {
           const v8 = normalize(parse(code))
           const v9 = normalize(parseForV9(code))
+          if (errors) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            v8.errors = v8.errors.map((e: any) => e.message)
+            v9.errors = errors
+          }
           assert.deepStrictEqual(v8, v9)
         })
       })
@@ -67,7 +88,8 @@ function normalize(obj: any) {
         return {
           // @ts-expect-error -- ignore
           message: value.message,
-          ...value
+          ...value,
+          code: undefined
         }
       }
       return value
@@ -96,7 +118,8 @@ function simply(obj: any) {
         return {
           // @ts-expect-error -- ignore
           message: value.message,
-          ...value
+          ...value,
+          code: undefined
         }
       }
       return value

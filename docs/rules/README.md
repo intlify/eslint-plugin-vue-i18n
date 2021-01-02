@@ -11,6 +11,7 @@
 | [@intlify/vue-i18n/<wbr>no-missing-keys](./no-missing-keys.html) | disallow missing locale message key at localization methods | :star: |
 | [@intlify/vue-i18n/<wbr>no-raw-text](./no-raw-text.html) | disallow to string literal in template or JSX | :star: |
 | [@intlify/vue-i18n/<wbr>no-v-html](./no-v-html.html) | disallow use of localization methods on v-html to prevent XSS attack | :star: |
+| [@intlify/vue-i18n/<wbr>valid-message-syntax](./valid-message-syntax.html) | disallow invalid message syntax |  |
 
 ## Best Practices
 

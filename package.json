@@ -24,17 +24,17 @@
     }
   },
   "dependencies": {
-    "@intlify/message-compiler": "^9.0.0-beta.15",
+    "@intlify/message-compiler": "^9.0.0-beta.16",
     "glob": "^7.1.3",
     "ignore": "^5.0.5",
     "js-yaml": "^3.14.0",
     "json5": "^2.1.3",
-    "jsonc-eslint-parser": "^0.6.0",
+    "jsonc-eslint-parser": "^0.6.2",
     "lodash": "^4.17.11",
     "parse5": "^6.0.0",
     "semver": "^7.3.4",
     "vue-eslint-parser": "^7.3.0",
-    "yaml-eslint-parser": "^0.2.0"
+    "yaml-eslint-parser": "^0.2.1"
   },
   "devDependencies": {
     "@types/debug": "^4.1.5",
