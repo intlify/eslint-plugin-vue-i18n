@@ -54,8 +54,10 @@
     "eslint-plugin-markdown": "^1.0.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-vue-libs": "^3.0.0 || ^4.0.0",
+    "eslint4b": "^7.16.0",
     "lerna-changelog": "^1.0.0",
     "mocha": "^8.0.0",
+    "monaco-editor": "^0.21.2",
     "nyc": "^15.0.0",
     "opener": "^1.5.1",
     "prettier": "^2.0.5",
@@ -63,6 +65,7 @@
     "shipjs": "^0.23.0",
     "ts-node": "^9.0.0",
     "typescript": "^4.0.0",
+    "vue-eslint-editor": "^1.1.0",
     "vue-github-button": "^1.2.0",
     "vuepress": "^1.5.2"
   },

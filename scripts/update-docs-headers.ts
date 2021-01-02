@@ -41,6 +41,21 @@ for (const rule of rules) {
 
   writeFileSync(
     filePath,
-    readFileSync(filePath, 'utf8').replace(PLACE_HOLDER, headerLines.join('\n'))
+    readFileSync(filePath, 'utf8')
+      .replace(PLACE_HOLDER, headerLines.join('\n'))
+      .replace(/<eslint-code-block(.*?)>/gs, (_ignore, attrs) => {
+        attrs = attrs.replace(/\bfix\b/g, '').trim()
+        return `<eslint-code-block${rule.fixable ? ' fix' : ''}${
+          attrs ? ` ${attrs}` : ''
+        }>`
+      })
+      .replace(
+        /\n+(<(?:eslint-code-block|resource-group)([\s\S]*?)>)\n+/gm,
+        '\n\n$1\n\n'
+      )
+      .replace(
+        /\n+<\/(eslint-code-block|resource-group)\s*>\n+/gm,
+        '\n\n</$1>\n\n'
+      )
   )
 }

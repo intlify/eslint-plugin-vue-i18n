@@ -12,7 +12,11 @@ This rule is useful to provide browsability of localization keys.
 
 :-1: Examples of **incorrect** code for this rule:
 
-```json
+<eslint-code-block fix language="json">
+
+```json5
+/* eslint @intlify/vue-i18n/keys-order: 'error' */
+
 // ✗ BAD
 {
   "message3": "hi!",
@@ -21,10 +25,15 @@ This rule is useful to provide browsability of localization keys.
 }
 ```
 
+</eslint-code-block>
 
 :+1: Examples of **correct** code for this rule:
 
-```json
+<eslint-code-block fix language="json">
+
+```json5
+/* eslint @intlify/vue-i18n/keys-order: 'error' */
+
 // ✓ GOOD
 {
   "message1": "hello!",
@@ -32,6 +41,8 @@ This rule is useful to provide browsability of localization keys.
   "message3": "hi!"
 }
 ```
+
+</eslint-code-block>
 
 ## Options
 

@@ -12,29 +12,48 @@ This rule enforces the linked message key to be enclosed in parentheses.
 
 locale messages:
 
-```json
+<eslint-code-block fix language="json">
+
+```json5
+/* eslint @intlify/vue-i18n/prefer-linked-key-with-paren: 'error' */
 {
-  "hello": "Hello @:world.",
+  /* ✗ BAD */
+  "hello": "Hello @:world",
   "world": "world"
 }
 ```
+
+</eslint-code-block>
 
 :+1: Examples of **correct** code for this rule:
 
 locale messages (for vue-i18n v9+):
 
-```json
+<eslint-code-block fix message-syntax-version="^9" language="json">
+
+```json5
+/* eslint @intlify/vue-i18n/prefer-linked-key-with-paren: 'error' */
 {
-  "hello": "Hello @:{'world'}.",
+  /* ✓ GOOD */
+  "hello": "Hello @:{'world'}",
   "world": "world"
 }
 ```
+
+</eslint-code-block>
 
 locale messages (for vue-i18n v8):
 
-```json
+<eslint-code-block fix message-syntax-version="^8" language="json">
+
+```json5
+/* eslint @intlify/vue-i18n/prefer-linked-key-with-paren: 'error' */
 {
-  "hello": "Hello @:(world).",
+  /* ✓ GOOD */
+  "hello": "Hello @:(world)",
   "world": "world"
 }
 ```
+
+</eslint-code-block>
+

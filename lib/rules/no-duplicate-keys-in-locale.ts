@@ -31,7 +31,7 @@ interface PathStack {
 
 function getMessageFilepath(fullPath: string) {
   if (fullPath.startsWith(process.cwd())) {
-    return fullPath.replace(process.cwd(), '.')
+    return fullPath.replace(process.cwd() + '/', './')
   }
   return fullPath
 }

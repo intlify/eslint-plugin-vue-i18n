@@ -18,6 +18,7 @@ You can be detected with this rule the following:
 :-1: Examples of **incorrect** code for this rule:
 
 locale messages:
+
 ```json
 {
   "term": "<p>I accept xxx <a href=\"\/term\">Terms of Service Agreement</a></p>"
@@ -26,7 +27,10 @@ locale messages:
 
 localization codes:
 
+<eslint-code-block>
+
 ```vue
+<script>/* eslint @intlify/vue-i18n/no-v-html: 'error' */</script>
 <template>
   <div class="app">
     <!-- ✗ BAD -->
@@ -35,9 +39,12 @@ localization codes:
 </template>
 ```
 
+</eslint-code-block>
+
 :+1: Examples of **correct** code for this rule:
 
 locale messages:
+
 ```json
 {
   "tos": "Term of Service",
@@ -47,7 +54,10 @@ locale messages:
 
 localization codes:
 
+<eslint-code-block>
+
 ```vue
+<script>/* eslint @intlify/vue-i18n/no-v-html: 'error' */</script>
 <template>
   <div class="app">
     <!-- ✗ GOOD -->
@@ -57,6 +67,8 @@ localization codes:
   </div>
 </template>
 ```
+
+</eslint-code-block>
 
 ## :mute: When Not To Use It
 

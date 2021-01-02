@@ -13,7 +13,13 @@ This rule encourage i18n in about the application needs to be localized.
 :-1: Examples of **incorrect** code for this rule:
 
 `template` option:
+
+<eslint-code-block language="javascript">
+
+<!-- eslint-skip -->
+
 ```js
+/* eslint @intlify/vue-i18n/no-raw-text: 'error' */
 export default {
   // ✗ BAD
   template: '<p>hello</p>'
@@ -21,16 +27,30 @@ export default {
 }
 ```
 
+</eslint-code-block>
+
 `template` block of single-file components:
+
+<eslint-code-block>
+
 ```vue
+<script>/* eslint @intlify/vue-i18n/no-raw-text: 'error' */</script>
 <template>
   <!-- ✗ BAD -->
   <p>hello</p>
 </template>
 ```
 
+</eslint-code-block>
+
 `JSX`:
+
+<eslint-code-block language="javascript">
+
+<!-- eslint-skip -->
+
 ```js
+/* eslint @intlify/vue-i18n/no-raw-text: 'error' */
 export default {
   // ✗ BAD
   render: h => <p>hello</p>
@@ -38,33 +58,57 @@ export default {
 }
 ```
 
+</eslint-code-block>
+
 :+1: Examples of **correct** code for this rule:
 
 `template` option:
+
+<eslint-code-block language="javascript">
+
+<!-- eslint-skip -->
+
 ```js
+/* eslint @intlify/vue-i18n/no-raw-text: 'error' */
 export default {
   // ✓ GOOD
-  template: `<p>{{ $t('hello') }}</p>`
+  template: `<p>{{ \$t('hello') }}</p>`
   // ...
 }
 ```
 
+</eslint-code-block>
+
 `template` block of single-file components:
+
+<eslint-code-block>
+
 ```vue
+<script>/* eslint @intlify/vue-i18n/no-raw-text: 'error' */</script>
 <template>
   <!-- ✓ GOOD -->
   <p>{{ $t('hello') }}</p>
 </template>
 ```
 
+</eslint-code-block>
+
 `JSX`:
+
+<eslint-code-block language="javascript">
+
+<!-- eslint-skip -->
+
 ```js
+/* eslint @intlify/vue-i18n/no-raw-text: 'error' */
 export default {
   // ✓ GOOD
   render: h => <p>{this.$t('hello')}</p>
   // ...
 }
 ```
+
+</eslint-code-block>
 
 ## :gear: Options
 

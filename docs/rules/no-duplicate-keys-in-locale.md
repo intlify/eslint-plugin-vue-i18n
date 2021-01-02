@@ -14,7 +14,13 @@ locale messages:
 
 - `en.1.json`
 
+<resource-group>
+
+<eslint-code-block language="json" filename="en.1.json">
+
 ```json5
+/* eslint @intlify/vue-i18n/no-duplicate-keys-in-locale: 'error' */
+
 // ✗ BAD
 {
   "hello": "Hello! DIO!", // duplicate.
@@ -23,14 +29,24 @@ locale messages:
 }
 ```
 
+</eslint-code-block>
+
 - `en.2.json`
 
+<eslint-code-block language="json" filename="en.2.json">
+
 ```json5
+/* eslint @intlify/vue-i18n/no-duplicate-keys-in-locale: 'error' */
+
 // ✗ BAD
 {
   "good-bye": "Good bye! DIO!" // This same key exists in `en.1.json`.
 }
 ```
+
+</eslint-code-block>
+
+</resource-group>
 
 :+1: Examples of **correct** code for this rule:
 
@@ -38,7 +54,13 @@ locale messages:
 
 - `en.1.json`
 
+<resource-group>
+
+<eslint-code-block language="json" filename="en.1.json">
+
 ```json5
+/* eslint @intlify/vue-i18n/no-duplicate-keys-in-locale: 'error' */
+
 // ✓ GOOD
 {
   "hello": "Hello! DIO!",
@@ -46,14 +68,24 @@ locale messages:
 }
 ```
 
+</eslint-code-block>
+
 - `en.2.json`
 
+<eslint-code-block language="json" filename="en.2.json">
+
 ```json5
+/* eslint @intlify/vue-i18n/no-duplicate-keys-in-locale: 'error' */
+
 // ✓ GOOD
 {
-  "good-bye": "Good bye! DIO!" // This same key exists in `en.1.json`.
+  "good-bye": "Good bye! DIO!"
 }
 ```
+
+</eslint-code-block>
+
+</resource-group>
 
 ## :gear: Options
 
@@ -66,3 +98,7 @@ locale messages:
 ```
 
 - `ignoreI18nBlock`: If `true`, do not report key duplication between `<i18n>` blocks and other files, it set to `false` as default.
+
+## :couple: Related Rules
+
+- [@intlify/vue-i18n/no-missing-keys-in-other-locales](./no-missing-keys-in-other-locales.md)

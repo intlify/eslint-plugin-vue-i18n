@@ -5,11 +5,28 @@
 'use strict'
 
 require('ts-node').register()
+const path = require('path')
 const { withCategories } = require('../../scripts/lib/rules')
 require('../../scripts/update-docs-headers')
 require('../../scripts/update-docs-index')
 
 module.exports = {
+  configureWebpack(_config, _isServer) {
+    return {
+      resolve: {
+        alias: {
+          module: require.resolve('./shim/module'),
+          glob: require.resolve('./shim/glob'),
+          eslint: path.resolve(__dirname, './shim/eslint'),
+          fs: require.resolve('./shim/fs'),
+          [path.resolve(
+            __dirname,
+            '../../dist/utils/glob-utils'
+          )]: require.resolve('./shim/eslint-plugin-vue-i18n/utils/glob-utils')
+        }
+      }
+    }
+  },
   base: '/',
   title: 'eslint-plugin-vue-i18n',
   description: 'ESLint plugin for Vue I18n',

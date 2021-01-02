@@ -13,7 +13,12 @@ This rule is aimed at eliminating HTML localization messages.
 :-1: Examples of **incorrect** code for this rule:
 
 locale messages:
+
+<eslint-code-block language="json">
+
 ```json
+/* eslint @intlify/vue-i18n/no-html-messages: 'error' */
+
 // ✗ BAD
 {
   "hello": "Hello! DIO!",
@@ -24,6 +29,8 @@ locale messages:
   }
 }
 ```
+
+</eslint-code-block>
 
 In localization codes of application:
 
@@ -59,7 +66,12 @@ new Vue({
 :+1: Examples of **correct** code for this rule:
 
 locale messages:
+
+<eslint-code-block language="json">
+
 ```json
+/* eslint @intlify/vue-i18n/no-html-messages: 'error' */
+
 // ✓ GOOD
 {
   "hello": "Hello! DIO!",
@@ -70,6 +82,8 @@ locale messages:
   }
 }
 ```
+
+</eslint-code-block>
 
 In localization codes of application:
 
@@ -121,6 +135,10 @@ new Vue({
 ## :mute: When Not To Use It
 
 If you are certain the localization message is trusted, you can disable this rule.
+
+## :couple: Related Rules
+
+- [@intlify/vue-i18n/valid-message-syntax](./valid-message-syntax.md)
 
 ## :books: Further reading
 

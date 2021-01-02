@@ -175,13 +175,13 @@ export class FileLocaleMessage extends LocaleMessage {
     })
     this._resource = new ResourceLoader(fullpath, fileName => {
       const ext = extname(fileName).toLowerCase()
-      if (ext === '.json' || ext === '.js') {
+      if (ext === '.js') {
         const key = require.resolve(fileName)
         delete require.cache[key]
         return require(fileName)
       } else if (ext === '.yaml' || ext === '.yml') {
         return yaml.safeLoad(fs.readFileSync(fileName, 'utf8'))
-      } else if (ext === '.json5') {
+      } else if (ext === '.json' || ext === '.json5') {
         return JSON5.parse(fs.readFileSync(fileName, 'utf8'))
       }
     })

@@ -10,21 +10,37 @@ This rule is useful localization leaks with incorrect message syntax.
 
 :-1: Examples of **incorrect** code for this rule:
 
-```json
-// ✗ BAD
+<eslint-code-block language="json">
+
+```json5
+/* eslint @intlify/vue-i18n/valid-message-syntax: 'error' */
+
+/* ✗ BAD */
 {
   "list-hello": "Hello! {{0}}",
   "named-hello": "Hello! {{name}}",
 }
 ```
 
+</eslint-code-block>
+
 :+1: Examples of **correct** code for this rule:
 
-```json
-// ✓ GOOD
+<eslint-code-block language="json">
+
+```json5
+/* eslint @intlify/vue-i18n/valid-message-syntax: 'error' */
+
+/* ✓ GOOD */
 {
   "list-hello": "Hello! {0}",
   "named-hello": "Hello! {name}",
   "linked-hello": "@:list-hello"
 }
 ```
+
+</eslint-code-block>
+
+## :couple: Related Rules
+
+- [@intlify/vue-i18n/no-html-messages](./no-html-messages.md)
