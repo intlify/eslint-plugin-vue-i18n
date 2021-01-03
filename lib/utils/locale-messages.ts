@@ -18,6 +18,7 @@ import {
 import { ResourceLoader } from './resource-loader'
 import JSON5 from 'json5'
 import yaml from 'js-yaml'
+import { joinPath } from './key-path'
 
 /**
  * The localization message class
@@ -246,11 +247,11 @@ export class LocaleMessages {
   }
 
   /**
-   * Finds the paths that does not exist in the localization message resources.
+   * Finds the path that does not exist in the localization message resources.
    * @param {string} key
    */
-  findMissingPaths(key: string): { path: string; locale: string }[] {
-    const missings: { path: string; locale: string }[] = []
+  findMissingPath(key: string): string | null {
+    let missingPath: string[] = []
     for (const locale of this.locales) {
       const paths = key.split('.')
       const length = paths.length
@@ -258,6 +259,7 @@ export class LocaleMessages {
         lm.getMessagesFromLocale(locale)
       )
       let i = 0
+      let missing = false
       while (i < length) {
         const values: I18nLocaleMessageValue[] = lasts
           .map(last => {
@@ -266,18 +268,20 @@ export class LocaleMessages {
           .filter((val): val is I18nLocaleMessageValue => val != null)
 
         if (values.length === 0) {
-          missings.push({
-            locale,
-            path: paths.slice(0, i + 1).join('.')
-          })
+          if (missingPath.length <= i) {
+            missingPath = paths.slice(0, i + 1)
+          }
+          missing = true
           break
         }
         lasts = values
         i++
       }
+      if (!missing) {
+        return null
+      }
     }
-    return missings.sort(({ locale: localeA }, { locale: localeB }) =>
-      localeA > localeB ? 1 : localeA < localeB ? -1 : 0
-    )
+
+    return joinPath(...missingPath)
   }
 }

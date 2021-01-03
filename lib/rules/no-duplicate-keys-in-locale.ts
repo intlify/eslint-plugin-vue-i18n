@@ -23,7 +23,7 @@ interface DictData {
 
 interface PathStack {
   otherDictionaries: DictData[]
-  keyPath: string
+  keyPath: (string | number)[]
   locale: string | null
   node?: JSONAST.JSONNode | YAMLAST.YAMLNode
   upper?: PathStack
@@ -50,7 +50,7 @@ function create(context: RuleContext): RuleListener {
       return createInitLocalePathStack(locale, otherLocaleMessages)
     } else {
       return {
-        keyPath: '',
+        keyPath: [],
         locale: null,
         otherDictionaries: []
       }
@@ -61,7 +61,7 @@ function create(context: RuleContext): RuleListener {
     otherLocaleMessages: LocaleMessage[]
   ): PathStack {
     return {
-      keyPath: '',
+      keyPath: [],
       locale,
       otherDictionaries: otherLocaleMessages.map(lm => {
         return {
@@ -118,12 +118,13 @@ function create(context: RuleContext): RuleListener {
               source: dict.source
             }
           })
-        const keyPath = joinPath(pathStack.keyPath, key)
+        const keyPath = [...pathStack.keyPath, key]
+        const keyPathStr = joinPath(...keyPath)
         const nextOtherDictionaries: DictData[] = []
         for (const value of keyOtherValues) {
           if (typeof value.value === 'string') {
             context.report({
-              message: `duplicate key '${keyPath}' in '${
+              message: `duplicate key '${keyPathStr}' in '${
                 pathStack.locale
               }'. "${getMessageFilepath(
                 value.source.fullpath
@@ -141,7 +142,7 @@ function create(context: RuleContext): RuleListener {
         pushKey(
           existsKeyNodes[pathStack.locale] ||
             (existsKeyNodes[pathStack.locale] = {}),
-          keyPath,
+          keyPathStr,
           reportNode
         )
 

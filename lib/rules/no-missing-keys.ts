@@ -57,11 +57,13 @@ function checkDirective(context: RuleContext, node: VAST.VDirective) {
       // TODO: should be error
       return
     }
-    const missings = localeMessages.findMissingPaths(String(key))
-    if (missings.length) {
-      missings.forEach(data =>
-        context.report({ node, messageId: 'missing', data })
-      )
+    const missingPath = localeMessages.findMissingPath(String(key))
+    if (missingPath) {
+      context.report({
+        node,
+        messageId: 'missing',
+        data: { path: missingPath }
+      })
     }
   }
 }
@@ -77,11 +79,13 @@ function checkComponent(context: RuleContext, node: VAST.VAttribute) {
       // TODO: should be error
       return
     }
-    const missings = localeMessages.findMissingPaths(key)
-    if (missings.length) {
-      missings.forEach(data =>
-        context.report({ node, messageId: 'missing', data })
-      )
+    const missingPath = localeMessages.findMissingPath(key)
+    if (missingPath) {
+      context.report({
+        node,
+        messageId: 'missing',
+        data: { path: missingPath }
+      })
     }
   }
 }
@@ -121,11 +125,9 @@ function checkCallExpression(
     return
   }
 
-  const missings = localeMessages.findMissingPaths(String(key))
-  if (missings.length) {
-    missings.forEach(data =>
-      context.report({ node, messageId: 'missing', data })
-    )
+  const missingPath = localeMessages.findMissingPath(String(key))
+  if (missingPath) {
+    context.report({ node, messageId: 'missing', data: { path: missingPath } })
   }
 }
 
@@ -141,7 +143,7 @@ export = {
     fixable: null,
     schema: [],
     messages: {
-      missing: "'{{path}}' does not exist in '{{locale}}'"
+      missing: "'{{path}}' does not exist in localization message resources"
     }
   },
   create

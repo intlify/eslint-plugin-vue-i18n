@@ -2,8 +2,8 @@
  * @fileoverview Utility for localization keys
  * @author Yosuke Ota
  */
-export function joinPath(base: string, ...paths: (string | number)[]): string {
-  let result = base
+export function joinPath(...paths: (string | number)[]): string {
+  let result = ''
   for (const p of paths) {
     if (typeof p === 'number') {
       result += `[${p}]`

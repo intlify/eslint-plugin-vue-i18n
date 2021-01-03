@@ -1,0 +1,10 @@
+{
+  "nest": {
+    "hello": "Hello!",
+    "goodbye": "Goodbye!"
+  },
+  "only-en": {
+    "hello": "Hello!",
+    "goodbye": "Goodbye!"
+  }
+}
