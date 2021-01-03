@@ -23,3 +23,9 @@
 | [@intlify/vue-i18n/<wbr>no-missing-keys-in-other-locales](./no-missing-keys-in-other-locales.html) | disallow missing locale message keys in other locales |  |
 | [@intlify/vue-i18n/<wbr>no-unused-keys](./no-unused-keys.html) | disallow unused localization keys | :black_nib: |
 
+## Stylistic Issues
+
+| Rule ID | Description |    |
+|:--------|:------------|:---|
+| [@intlify/vue-i18n/<wbr>prefer-linked-key-with-paren](./prefer-linked-key-with-paren.html) | enforce linked key to be enclosed in parentheses | :black_nib: |
+

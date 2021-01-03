@@ -37,10 +37,8 @@ const rules: RuleInfo[] = readdirSync(resolve(__dirname, '../../lib/rules'))
 export default rules
 export const withCategories = [
   'Recommended',
-  'Best Practices'
-  /*
+  'Best Practices',
   'Stylistic Issues'
-  */
 ].map(category => ({
   category,
   rules: rules.filter(rule => rule.category === category && !rule.deprecated)
