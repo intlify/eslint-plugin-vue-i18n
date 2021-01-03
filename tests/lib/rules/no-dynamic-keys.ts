@@ -46,6 +46,17 @@ tester.run('no-dynamic-keys', rule as never, {
       code: `<template>
       <p v-t="'hello'"></p>
     </template>`
+    },
+    {
+      code: `
+      <template>
+        <p>{{ $t(\`foo\`) }}</p>
+        <i18n :path="\`foo\`"/>
+        <p v-t="\`foo\`"></p>
+      </template>
+      <script>
+      i18n.t(\`foo\`)
+      </script>`
     }
   ],
 
@@ -82,6 +93,40 @@ tester.run('no-dynamic-keys', rule as never, {
       <p v-t="missing"></p>
     </template>`,
       errors: [`'missing' dynamic key is used'`]
+    },
+    {
+      code: `
+      <template>
+        <p>{{ $t(foo.dynamic) }}</p>
+        <i18n :path="foo.dynamic"/>
+        <p v-t="foo.dynamic"></p>
+      </template>
+      <script>
+      i18n.t(foo.dynamic)
+      </script>`,
+      errors: [
+        "'foo.dynamic' dynamic key is used'",
+        "'foo.dynamic' dynamic key is used'",
+        "'foo.dynamic' dynamic key is used'",
+        "'foo.dynamic' dynamic key is used'"
+      ]
+    },
+    {
+      code: `
+      <template>
+        <p>{{ $t(foo()) }}</p>
+        <i18n :path="foo()"/>
+        <p v-t="foo()"></p>
+      </template>
+      <script>
+      i18n.t(foo())
+      </script>`,
+      errors: [
+        "'foo()' dynamic key is used'",
+        "'foo()' dynamic key is used'",
+        "'foo()' dynamic key is used'",
+        "'foo()' dynamic key is used'"
+      ]
     }
   ]
 })

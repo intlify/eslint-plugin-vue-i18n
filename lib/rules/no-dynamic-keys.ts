@@ -5,14 +5,53 @@ import { defineTemplateBodyVisitor } from '../utils/index'
 import type { RuleContext, RuleListener } from '../types'
 import type { AST as VAST } from 'vue-eslint-parser'
 
+function isStatic(
+  node:
+    | VAST.ESLintExpression
+    | VAST.ESLintSpreadElement
+    | VAST.VFilterSequenceExpression
+    | VAST.VForExpression
+    | VAST.VOnExpression
+    | VAST.VSlotScopeExpression
+): boolean {
+  if (node.type === 'Literal') {
+    return true
+  }
+  if (node.type === 'TemplateLiteral' && node.expressions.length === 0) {
+    return true
+  }
+  return false
+}
+
+function getNodeName(context: RuleContext, node: VAST.Node): string {
+  if (node.type === 'Identifier') {
+    return node.name
+  }
+  const sourceCode = context.getSourceCode()
+  if (
+    sourceCode.ast.range[0] <= node.range[0] &&
+    node.range[1] <= sourceCode.ast.range[1]
+  ) {
+    return sourceCode
+      .getTokens(node)
+      .map(t => t.value)
+      .join('')
+  }
+  const tokenStore = context.parserServices.getTemplateBodyTokenStore()
+  return tokenStore
+    .getTokens(node)
+    .map(t => t.value)
+    .join('')
+}
+
 function checkDirective(context: RuleContext, node: VAST.VDirective) {
   if (
     node.value &&
     node.value.type === 'VExpressionContainer' &&
     node.value.expression &&
-    node.value.expression.type === 'Identifier'
+    !isStatic(node.value.expression)
   ) {
-    const name = node.value.expression.name
+    const name = getNodeName(context, node.value.expression)
     context.report({
       node,
       message: `'${name}' dynamic key is used'`
@@ -21,19 +60,18 @@ function checkDirective(context: RuleContext, node: VAST.VDirective) {
 }
 
 function checkComponent(context: RuleContext, node: VAST.VDirectiveKey) {
-  const parent: VAST.VDirective = node.parent as never // typebug?
   if (
     node.name.type === 'VIdentifier' &&
     node.name.name === 'bind' &&
     node.argument &&
     node.argument.type === 'VIdentifier' &&
     node.argument.name === 'path' &&
-    parent.value &&
-    parent.value.type === 'VExpressionContainer' &&
-    parent.value.expression &&
-    parent.value.expression.type === 'Identifier'
+    node.parent.value &&
+    node.parent.value.type === 'VExpressionContainer' &&
+    node.parent.value.expression &&
+    !isStatic(node.parent.value.expression)
   ) {
-    const name = parent.value.expression.name
+    const name = getNodeName(context, node.parent.value.expression)
     context.report({
       node,
       message: `'${name}' dynamic key is used'`
@@ -61,8 +99,8 @@ function checkCallExpression(
   }
 
   const [keyNode] = node.arguments
-  if (keyNode.type === 'Identifier') {
-    const name = keyNode.name
+  if (!isStatic(keyNode)) {
+    const name = getNodeName(context, keyNode)
     context.report({
       node,
       message: `'${name}' dynamic key is used'`
