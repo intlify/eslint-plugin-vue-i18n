@@ -5,10 +5,11 @@ https://github.com/highlightjs/highlight.js/issues/2877
 ## v0.10.0 (2021-01-04)
 
 #### :star: Features
-* [#149](https://github.com/intlify/eslint-plugin-vue-i18n/pull/149) Add prefer-linked-key-with-paren rule ([@ota-meshi](https://github.com/ota-meshi))
-* [#148](https://github.com/intlify/eslint-plugin-vue-i18n/pull/148) Add `no-missing-keys-in-other-locales` rule and change `no-missing-keys` rule to not report if there is one matching key ([@ota-meshi](https://github.com/ota-meshi))
-* [#147](https://github.com/intlify/eslint-plugin-vue-i18n/pull/147) Add valid-message-syntax rule ([@ota-meshi](https://github.com/ota-meshi))
-* [#145](https://github.com/intlify/eslint-plugin-vue-i18n/pull/145) Use `@intlify/message-compiler` and supports vue-i18n v9 message format ([@ota-meshi](https://github.com/ota-meshi))
+* [#149](https://github.com/intlify/eslint-plugin-vue-i18n/pull/149) Add `prefer-linked-key-with-paren` rule ([@ota-meshi](https://github.com/ota-meshi))
+* [#148](https://github.com/intlify/eslint-plugin-vue-i18n/pull/148) Add `no-missing-keys-in-other-locales` rule  ([@ota-meshi](https://github.com/ota-meshi))
+* [#148](https://github.com/intlify/eslint-plugin-vue-i18n/pull/148) Change `no-missing-keys` rule to not report if there is one matching key ([@ota-meshi](https://github.com/ota-meshi))
+* [#147](https://github.com/intlify/eslint-plugin-vue-i18n/pull/147) Add `valid-message-syntax` rule ([@ota-meshi](https://github.com/ota-meshi))
+* [#145](https://github.com/intlify/eslint-plugin-vue-i18n/pull/145) Supports vue-i18n v9 message format ([@ota-meshi](https://github.com/ota-meshi))
 
 #### :bug: Bug Fixes
 * [#150](https://github.com/intlify/eslint-plugin-vue-i18n/pull/150) Fix false negatives for member expression in `no-dynamic-keys` rule ([@ota-meshi](https://github.com/ota-meshi))
@@ -16,7 +17,7 @@ https://github.com/highlightjs/highlight.js/issues/2877
 #### :pencil: Documentation
 * [#153](https://github.com/intlify/eslint-plugin-vue-i18n/pull/153) Replace documentation example with `vue-eslint-editor` ([@ota-meshi](https://github.com/ota-meshi))
 * [#144](https://github.com/intlify/eslint-plugin-vue-i18n/pull/144) Chores: Add to documentation that eslint-plugin-jsonc and eslint-plugin-yml can be used ([@ota-meshi](https://github.com/ota-meshi))
-* [#122](https://github.com/intlify/eslint-plugin-vue-i18n/pull/122) docs: Fix typo and dead link ([@mfmfuyu](https://github.com/mfmfuyu))
+* [#122](https://github.com/intlify/eslint-plugin-vue-i18n/pull/122) Docs: Fix typo and dead link ([@mfmfuyu](https://github.com/mfmfuyu))
 
 #### Committers: 2
 - Yosuke Ota ([@ota-meshi](https://github.com/ota-meshi))
