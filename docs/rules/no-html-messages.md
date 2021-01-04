@@ -1,5 +1,5 @@
 ---
-title: @intlify/vue-i18n/no-html-messages
+title: "@intlify/vue-i18n/no-html-messages"
 description: disallow use HTML localization messages
 ---
 # @intlify/vue-i18n/no-html-messages

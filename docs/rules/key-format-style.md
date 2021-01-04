@@ -1,5 +1,5 @@
 ---
-title: @intlify/vue-i18n/key-format-style
+title: "@intlify/vue-i18n/key-format-style"
 description: enforce specific casing for localization keys
 ---
 # @intlify/vue-i18n/key-format-style

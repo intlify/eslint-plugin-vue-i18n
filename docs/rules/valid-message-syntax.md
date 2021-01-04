@@ -1,5 +1,5 @@
 ---
-title: @intlify/vue-i18n/valid-message-syntax
+title: "@intlify/vue-i18n/valid-message-syntax"
 description: disallow invalid message syntax
 ---
 # @intlify/vue-i18n/valid-message-syntax

@@ -1,5 +1,5 @@
 ---
-title: @intlify/vue-i18n/no-unused-keys
+title: "@intlify/vue-i18n/no-unused-keys"
 description: disallow unused localization keys
 ---
 # @intlify/vue-i18n/no-unused-keys

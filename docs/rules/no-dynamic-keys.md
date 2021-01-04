@@ -1,5 +1,5 @@
 ---
-title: @intlify/vue-i18n/no-dynamic-keys
+title: "@intlify/vue-i18n/no-dynamic-keys"
 description: disallow localization dynamic keys at localization methods
 ---
 # @intlify/vue-i18n/no-dynamic-keys

@@ -1,5 +1,5 @@
 ---
-title: @intlify/vue-i18n/no-raw-text
+title: "@intlify/vue-i18n/no-raw-text"
 description: disallow to string literal in template or JSX
 ---
 # @intlify/vue-i18n/no-raw-text

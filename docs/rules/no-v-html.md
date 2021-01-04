@@ -1,5 +1,5 @@
 ---
-title: @intlify/vue-i18n/no-v-html
+title: "@intlify/vue-i18n/no-v-html"
 description: disallow use of localization methods on v-html to prevent XSS attack
 ---
 # @intlify/vue-i18n/no-v-html

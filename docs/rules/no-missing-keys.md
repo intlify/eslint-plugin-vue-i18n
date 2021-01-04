@@ -1,5 +1,5 @@
 ---
-title: @intlify/vue-i18n/no-missing-keys
+title: "@intlify/vue-i18n/no-missing-keys"
 description: disallow missing locale message key at localization methods
 ---
 # @intlify/vue-i18n/no-missing-keys

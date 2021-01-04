@@ -7,7 +7,7 @@
 require('ts-node').register()
 const path = require('path')
 const { withCategories } = require('../../scripts/lib/rules')
-require('../../scripts/update-docs-headers')
+require('../../scripts/update-rule-docs')
 require('../../scripts/update-docs-index')
 
 module.exports = {

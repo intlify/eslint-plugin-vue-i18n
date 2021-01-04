@@ -45,7 +45,7 @@ class DocFile {
     const fileIntro = {
       // pageClass: 'rule-details',
       // sidebarDepth: 0,
-      title: rule.id,
+      title: `"${rule.id}"`,
       description: rule.description,
       ...(this.since ? { since: this.since } : {})
     }
