@@ -1,6 +1,7 @@
 ---
 title: "@intlify/vue-i18n/key-format-style"
 description: enforce specific casing for localization keys
+since: v0.9.0
 ---
 # @intlify/vue-i18n/key-format-style
 
@@ -150,6 +151,10 @@ app-title: I18N Management System
 ```
 
 </eslint-code-block>
+
+## :rocket: Version
+
+This rule was introduced in `@intlify/eslint-plugin-vue-i18n` v0.9.0
 
 ## :mag: Implementation
 

@@ -1,6 +1,7 @@
 ---
 title: "@intlify/vue-i18n/no-dynamic-keys"
 description: disallow localization dynamic keys at localization methods
+since: v0.1.0
 ---
 # @intlify/vue-i18n/no-dynamic-keys
 
@@ -138,6 +139,10 @@ i18n.t('hello')
 ```
 
 </eslint-code-block>
+
+## :rocket: Version
+
+This rule was introduced in `@intlify/eslint-plugin-vue-i18n` v0.1.0
 
 ## :mag: Implementation
 

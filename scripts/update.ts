@@ -8,7 +8,8 @@ import { resolve } from 'path'
 import { createIndex } from './lib/utils'
 
 // docs.
-import './update-rule-docs'
+import { updateRuleDocs } from './update-rule-docs'
+updateRuleDocs()
 import './update-docs-index'
 
 // recommended rules.

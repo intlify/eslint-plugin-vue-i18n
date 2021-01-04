@@ -1,6 +1,7 @@
 ---
 title: "@intlify/vue-i18n/no-unused-keys"
 description: disallow unused localization keys
+since: v0.1.0
 ---
 # @intlify/vue-i18n/no-unused-keys
 
@@ -163,6 +164,10 @@ i18n.t('hi')
 ## :couple: Related Rules
 
 - [@intlify/vue-i18n/no-missing-keys-in-other-locales](./no-missing-keys-in-other-locales.md)
+
+## :rocket: Version
+
+This rule was introduced in `@intlify/eslint-plugin-vue-i18n` v0.1.0
 
 ## :mag: Implementation
 

@@ -1,6 +1,7 @@
 ---
 title: "@intlify/vue-i18n/no-missing-keys"
 description: disallow missing locale message key at localization methods
+since: v0.1.0
 ---
 # @intlify/vue-i18n/no-missing-keys
 
@@ -168,6 +169,10 @@ For SFC.
 
 - [@intlify/vue-i18n/no-missing-keys-in-other-locales](./no-missing-keys-in-other-locales.md)
 - [@intlify/vue-i18n/no-unused-keys](./no-unused-keys.md)
+
+## :rocket: Version
+
+This rule was introduced in `@intlify/eslint-plugin-vue-i18n` v0.1.0
 
 ## :mag: Implementation
 
