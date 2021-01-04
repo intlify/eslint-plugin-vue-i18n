@@ -1,7 +1,9 @@
+require('ts-node').register()
 const execa = require(require.resolve('execa'))
 const { promisify } = require('util')
 const fs = require('fs')
 const path = require('path')
+const { updateRuleDocs } = require('./scripts/update-rule-docs')
 const read = promisify(fs.readFile)
 const write = fs.writeFileSync
 
@@ -40,6 +42,7 @@ module.exports = {
   monorepo: undefined,
   updateChangelog: false,
   beforeCommitChanges: ({ nextVersion, exec, dir }) => {
+    updateRuleDocs({ nextVersion })
     return new Promise(resolve => {
       const pkg = require('./package.json')
       commitChangelog(pkg.version, nextVersion).then(resolve)

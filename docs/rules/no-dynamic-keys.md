@@ -1,3 +1,8 @@
+---
+title: "@intlify/vue-i18n/no-dynamic-keys"
+description: disallow localization dynamic keys at localization methods
+since: v0.1.0
+---
 # @intlify/vue-i18n/no-dynamic-keys
 
 > disallow localization dynamic keys at localization methods
@@ -20,6 +25,7 @@ You can be detected with this rule the following:
 :-1: Examples of **incorrect** code for this rule:
 
 locale messages:
+
 ```json
 {
   "hello": "Hello! DIO!"
@@ -28,7 +34,10 @@ locale messages:
 
 localization codes:
 
+<eslint-code-block>
+
 ```vue
+<script>/* eslint @intlify/vue-i18n/no-dynamic-keys: 'error' */</script>
 <template>
   <div class="app">
     <!-- ✗ BAD -->
@@ -41,7 +50,14 @@ localization codes:
 </template>
 ```
 
+</eslint-code-block>
+
+<eslint-code-block language='javascript'>
+
+<!-- eslint-skip -->
+
 ```js
+/* eslint @intlify/vue-i18n/no-dynamic-keys: 'error' */
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 
@@ -63,9 +79,12 @@ const app = new Vue({
 i18n.t(app.msg)
 ```
 
+</eslint-code-block>
+
 :+1: Examples of **correct** code for this rule:
 
 locale messages:
+
 ```json
 {
   "hello": "Hello! DIO!"
@@ -74,7 +93,10 @@ locale messages:
 
 localization codes:
 
+<eslint-code-block>
+
 ```vue
+<script>/* eslint @intlify/vue-i18n/no-dynamic-keys: 'error' */</script>
 <template>
   <div class="app">
     <!-- ✓ GOOD -->
@@ -87,7 +109,14 @@ localization codes:
 </template>
 ```
 
+</eslint-code-block>
+
+<eslint-code-block language='javascript'>
+
+<!-- eslint-skip -->
+
 ```js
+/* eslint @intlify/vue-i18n/no-dynamic-keys: 'error' */
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 
@@ -108,3 +137,14 @@ new Vue({
 /* ✓ GOOD */
 i18n.t('hello')
 ```
+
+</eslint-code-block>
+
+## :rocket: Version
+
+This rule was introduced in `@intlify/eslint-plugin-vue-i18n` v0.1.0
+
+## :mag: Implementation
+
+- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/lib/rules/no-dynamic-keys.ts)
+- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n/tree/master/tests/lib/rules/no-dynamic-keys.ts)

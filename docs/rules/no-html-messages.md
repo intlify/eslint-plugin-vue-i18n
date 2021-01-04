@@ -1,3 +1,8 @@
+---
+title: "@intlify/vue-i18n/no-html-messages"
+description: disallow use HTML localization messages
+since: v0.1.0
+---
 # @intlify/vue-i18n/no-html-messages
 
 > disallow use HTML localization messages
@@ -13,7 +18,12 @@ This rule is aimed at eliminating HTML localization messages.
 :-1: Examples of **incorrect** code for this rule:
 
 locale messages:
+
+<eslint-code-block language="json">
+
 ```json
+/* eslint @intlify/vue-i18n/no-html-messages: 'error' */
+
 // ✗ BAD
 {
   "hello": "Hello! DIO!",
@@ -24,6 +34,8 @@ locale messages:
   }
 }
 ```
+
+</eslint-code-block>
 
 In localization codes of application:
 
@@ -59,7 +71,12 @@ new Vue({
 :+1: Examples of **correct** code for this rule:
 
 locale messages:
+
+<eslint-code-block language="json">
+
 ```json
+/* eslint @intlify/vue-i18n/no-html-messages: 'error' */
+
 // ✓ GOOD
 {
   "hello": "Hello! DIO!",
@@ -70,6 +87,8 @@ locale messages:
   }
 }
 ```
+
+</eslint-code-block>
 
 In localization codes of application:
 
@@ -122,7 +141,20 @@ new Vue({
 
 If you are certain the localization message is trusted, you can disable this rule.
 
+## :couple: Related Rules
+
+- [@intlify/vue-i18n/valid-message-syntax](./valid-message-syntax.md)
+
 ## :books: Further reading
 
 - [XSS in Vue.js](https://blog.sqreen.io/xss-in-vue-js/)
 - [Analysis of a Supply Chain Attack](https://medium.com/@hkparker/analysis-of-a-supply-chain-attack-2bd8fa8286ac)
+
+## :rocket: Version
+
+This rule was introduced in `@intlify/eslint-plugin-vue-i18n` v0.1.0
+
+## :mag: Implementation
+
+- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/lib/rules/no-html-messages.ts)
+- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n/tree/master/tests/lib/rules/no-html-messages.ts)

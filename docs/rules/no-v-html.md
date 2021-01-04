@@ -1,3 +1,8 @@
+---
+title: "@intlify/vue-i18n/no-v-html"
+description: disallow use of localization methods on v-html to prevent XSS attack
+since: v0.1.0
+---
 # @intlify/vue-i18n/no-v-html
 
 > disallow use of localization methods on v-html to prevent XSS attack
@@ -18,6 +23,7 @@ You can be detected with this rule the following:
 :-1: Examples of **incorrect** code for this rule:
 
 locale messages:
+
 ```json
 {
   "term": "<p>I accept xxx <a href=\"\/term\">Terms of Service Agreement</a></p>"
@@ -26,7 +32,10 @@ locale messages:
 
 localization codes:
 
+<eslint-code-block>
+
 ```vue
+<script>/* eslint @intlify/vue-i18n/no-v-html: 'error' */</script>
 <template>
   <div class="app">
     <!-- ✗ BAD -->
@@ -35,9 +44,12 @@ localization codes:
 </template>
 ```
 
+</eslint-code-block>
+
 :+1: Examples of **correct** code for this rule:
 
 locale messages:
+
 ```json
 {
   "tos": "Term of Service",
@@ -47,7 +59,10 @@ locale messages:
 
 localization codes:
 
+<eslint-code-block>
+
 ```vue
+<script>/* eslint @intlify/vue-i18n/no-v-html: 'error' */</script>
 <template>
   <div class="app">
     <!-- ✗ GOOD -->
@@ -58,6 +73,8 @@ localization codes:
 </template>
 ```
 
+</eslint-code-block>
+
 ## :mute: When Not To Use It
 
 If you are certain the content passed to `v-html` is trusted HTML you can disable this rule.
@@ -65,3 +82,12 @@ If you are certain the content passed to `v-html` is trusted HTML you can disabl
 ## :books: Further reading
 
 - [XSS in Vue.js](https://blog.sqreen.io/xss-in-vue-js/)
+
+## :rocket: Version
+
+This rule was introduced in `@intlify/eslint-plugin-vue-i18n` v0.1.0
+
+## :mag: Implementation
+
+- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/lib/rules/no-v-html.ts)
+- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n/tree/master/tests/lib/rules/no-v-html.ts)

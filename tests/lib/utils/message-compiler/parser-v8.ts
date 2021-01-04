@@ -75,7 +75,7 @@ describe('parser-v8', () => {
   })
 })
 
-function normalize(obj: any) {
+function normalize(obj: unknown) {
   return JSON.parse(
     JSON.stringify(obj, (key, value) => {
       if (key === 'source' || key === 'domain') {
@@ -96,7 +96,7 @@ function normalize(obj: any) {
     })
   )
 }
-function simply(obj: any) {
+function simply(obj: unknown) {
   return JSON.parse(
     JSON.stringify(obj, (key, value) => {
       if (key === 'domain') {
