@@ -1,3 +1,7 @@
+---
+title: @intlify/vue-i18n/no-duplicate-keys-in-locale
+description: disallow duplicate localization keys within the same locale
+---
 # @intlify/vue-i18n/no-duplicate-keys-in-locale
 
 > disallow duplicate localization keys within the same locale
@@ -102,3 +106,8 @@ locale messages:
 ## :couple: Related Rules
 
 - [@intlify/vue-i18n/no-missing-keys-in-other-locales](./no-missing-keys-in-other-locales.md)
+
+## :mag: Implementation
+
+- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/lib/rules/no-duplicate-keys-in-locale.ts)
+- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n/tree/master/tests/lib/rules/no-duplicate-keys-in-locale.ts)

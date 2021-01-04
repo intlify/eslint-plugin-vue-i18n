@@ -1,3 +1,7 @@
+---
+title: @intlify/vue-i18n/no-missing-keys-in-other-locales
+description: disallow missing locale message keys in other locales
+---
 # @intlify/vue-i18n/no-missing-keys-in-other-locales
 
 > disallow missing locale message keys in other locales
@@ -80,3 +84,8 @@ locale messages:
 
 - [@intlify/vue-i18n/no-duplicate-keys-in-locale](./no-duplicate-keys-in-locale.md)
 - [@intlify/vue-i18n/no-missing-keys](./no-missing-keys.md)
+
+## :mag: Implementation
+
+- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/lib/rules/no-missing-keys-in-other-locales.ts)
+- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n/tree/master/tests/lib/rules/no-missing-keys-in-other-locales.ts)

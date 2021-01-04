@@ -1,3 +1,7 @@
+---
+title: @intlify/vue-i18n/prefer-linked-key-with-paren
+description: enforce linked key to be enclosed in parentheses
+---
 # @intlify/vue-i18n/prefer-linked-key-with-paren
 
 > enforce linked key to be enclosed in parentheses
@@ -57,3 +61,7 @@ locale messages (for vue-i18n v8):
 
 </eslint-code-block>
 
+## :mag: Implementation
+
+- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/lib/rules/prefer-linked-key-with-paren.ts)
+- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n/tree/master/tests/lib/rules/prefer-linked-key-with-paren.ts)

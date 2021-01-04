@@ -1,3 +1,7 @@
+---
+title: @intlify/vue-i18n/no-html-messages
+description: disallow use HTML localization messages
+---
 # @intlify/vue-i18n/no-html-messages
 
 > disallow use HTML localization messages
@@ -144,3 +148,8 @@ If you are certain the localization message is trusted, you can disable this rul
 
 - [XSS in Vue.js](https://blog.sqreen.io/xss-in-vue-js/)
 - [Analysis of a Supply Chain Attack](https://medium.com/@hkparker/analysis-of-a-supply-chain-attack-2bd8fa8286ac)
+
+## :mag: Implementation
+
+- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/lib/rules/no-html-messages.ts)
+- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n/tree/master/tests/lib/rules/no-html-messages.ts)

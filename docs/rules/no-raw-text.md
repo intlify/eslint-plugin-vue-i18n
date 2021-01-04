@@ -1,3 +1,7 @@
+---
+title: @intlify/vue-i18n/no-raw-text
+description: disallow to string literal in template or JSX
+---
 # @intlify/vue-i18n/no-raw-text
 
 > disallow to string literal in template or JSX
@@ -125,3 +129,8 @@ export default {
 - `ignoreNodes`: specify nodes to ignore such as icon components
 - `ignorePattern`: specify a regexp pattern that matches strings to ignore
 - `ignoreText`: specify an array of strings to ignore
+
+## :mag: Implementation
+
+- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/lib/rules/no-raw-text.ts)
+- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n/tree/master/tests/lib/rules/no-raw-text.ts)

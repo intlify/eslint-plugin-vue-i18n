@@ -174,10 +174,16 @@ export default {
       setFileContents(
         this.$resourceGroup ? this.$resourceGroup.getFileContents() : {}
       )
+    },
+    lint() {
+      this.$refs.editor.lint()
     }
   },
 
   async mounted() {
+    if (this.$resourceGroup) {
+      this.$resourceGroup.addEditor(this)
+    }
     this.code = `${this.computeCodeFromSlot(this.$slots.default).trim()}\n`
     this.$refs.editor.$watch('monaco', monaco => {
       monaco.languages.register({ id: 'yaml' })

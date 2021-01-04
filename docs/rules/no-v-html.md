@@ -1,3 +1,7 @@
+---
+title: @intlify/vue-i18n/no-v-html
+description: disallow use of localization methods on v-html to prevent XSS attack
+---
 # @intlify/vue-i18n/no-v-html
 
 > disallow use of localization methods on v-html to prevent XSS attack
@@ -77,3 +81,8 @@ If you are certain the content passed to `v-html` is trusted HTML you can disabl
 ## :books: Further reading
 
 - [XSS in Vue.js](https://blog.sqreen.io/xss-in-vue-js/)
+
+## :mag: Implementation
+
+- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/lib/rules/no-v-html.ts)
+- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n/tree/master/tests/lib/rules/no-v-html.ts)
