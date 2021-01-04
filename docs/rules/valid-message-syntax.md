@@ -1,6 +1,7 @@
 ---
 title: "@intlify/vue-i18n/valid-message-syntax"
 description: disallow invalid message syntax
+since: v0.10.0
 ---
 # @intlify/vue-i18n/valid-message-syntax
 
@@ -48,6 +49,10 @@ This rule is useful localization leaks with incorrect message syntax.
 ## :couple: Related Rules
 
 - [@intlify/vue-i18n/no-html-messages](./no-html-messages.md)
+
+## :rocket: Version
+
+This rule was introduced in `@intlify/eslint-plugin-vue-i18n` v0.10.0
 
 ## :mag: Implementation
 
