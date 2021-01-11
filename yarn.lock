@@ -6567,11 +6567,6 @@ levn@^0.4.1:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
 
-lines-and-columns@^1.1.6:
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.1.6.tgz#1c00c743b433cd0a4e80758f7b64a57440d9ff00"
-  integrity sha1-HADHQ7QzzQpOgHWPe2SldEDZ/wA=
-
 linkify-it@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/linkify-it/-/linkify-it-2.2.0.tgz#e3b54697e78bf915c70a38acd78fd09e0058b1cf"
@@ -11314,22 +11309,13 @@ yallist@^4.0.0:
   resolved "https://registry.yarnpkg.com/yallist/-/yallist-4.0.0.tgz#9bb92790d9c0effec63be73519e11a35019a3a72"
   integrity sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
 
-yaml-eslint-parser@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/yaml-eslint-parser/-/yaml-eslint-parser-0.2.1.tgz#23fdc05b4d60d09871c333388ac4fd75cefcffdb"
-  integrity sha512-haXfbmQV9PHFnFo7vjZ/c2uHvKjIznItJ07+g6xVvyWVvgiEtD37QM1oQ5uCf4uJtCZaDNMvLLUCvulhxnTA9w==
+yaml-eslint-parser@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/yaml-eslint-parser/-/yaml-eslint-parser-0.3.0.tgz#7958039a5c418379dcc5ab4d2f4c19ade1ff338f"
+  integrity sha512-2nXnz3+gcOLFIV6zdsPA5Sq7sbR62HQ0u3dd3cRzeXpbkfiDVa7Ne0/3zEykTztFk05AkAao6T8EJ52Xq27J1A==
   dependencies:
     eslint-visitor-keys "^1.3.0"
-    yaml "^1.10.0"
-    yaml-unist-parser "^1.2.1"
-
-yaml-unist-parser@^1.2.1:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/yaml-unist-parser/-/yaml-unist-parser-1.3.0.tgz#f64f1af96171fe4d7eb462e94225d42a6009b60e"
-  integrity sha512-kF1OS6fi9BzqX+vVC5hp+R5mmrHLH4f19Nx8fAwb08VqUwgFDBPOOu24VZO06nSOur13CGUTgHuaw5RIzpRnCw==
-  dependencies:
-    lines-and-columns "^1.1.6"
-    tslib "^1.10.0"
+    lodash "^4.17.20"
     yaml "^1.10.0"
 
 yaml@^1.10.0:
