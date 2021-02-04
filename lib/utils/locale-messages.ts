@@ -180,7 +180,7 @@ export class FileLocaleMessage extends LocaleMessage {
         delete require.cache[key]
         return require(fileName)
       } else if (ext === '.yaml' || ext === '.yml') {
-        return yaml.safeLoad(fs.readFileSync(fileName, 'utf8'))
+        return yaml.load(fs.readFileSync(fileName, 'utf8'))
       } else if (ext === '.json' || ext === '.json5') {
         return JSON5.parse(fs.readFileSync(fileName, 'utf8'))
       }
