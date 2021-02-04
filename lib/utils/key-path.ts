@@ -1,3 +1,5 @@
+import { parse } from '@intlify/message-resolver'
+
 /**
  * @fileoverview Utility for localization keys
  * @author Yosuke Ota
@@ -16,4 +18,8 @@ export function joinPath(...paths: (string | number)[]): string {
     }
   }
   return result
+}
+
+export function parsePath(path: string): string[] {
+  return parse(path) || []
 }
