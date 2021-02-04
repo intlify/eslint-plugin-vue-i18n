@@ -51,5 +51,5 @@ export function parseJsonValuesInI18nBlock(
 export function parseYamlValuesInI18nBlock(
   i18nBlock: VAST.VElement
 ): I18nLocaleMessageDictionary | null {
-  return parseValuesInI18nBlock(i18nBlock, code => yaml.safeLoad(code) as never)
+  return parseValuesInI18nBlock(i18nBlock, code => yaml.load(code) as never)
 }
