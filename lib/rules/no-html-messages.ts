@@ -12,13 +12,10 @@ import type { RuleContext, RuleListener } from '../types'
 const debug = debugBuilder('eslint-plugin-vue-i18n:no-html-messages')
 
 function findHTMLNode(
-  node: parse5.DefaultTreeDocumentFragment
-): parse5.DefaultTreeElement | undefined {
-  return node.childNodes.find((child): child is parse5.DefaultTreeElement => {
-    if (
-      child.nodeName !== '#text' &&
-      (child as parse5.DefaultTreeElement).tagName
-    ) {
+  node: parse5.DocumentFragment
+): parse5.Element | undefined {
+  return node.childNodes.find((child): child is parse5.Element => {
+    if (child.nodeName !== '#text' && (child as parse5.Element).tagName) {
       return true
     }
     return false
@@ -38,7 +35,7 @@ function create(context: RuleContext): RuleListener {
     }
     const htmlNode = parse5.parseFragment(`${node.value}`, {
       sourceCodeLocationInfo: true
-    }) as parse5.DefaultTreeDocumentFragment
+    }) as parse5.DocumentFragment
     const foundNode = findHTMLNode(htmlNode)
     if (!foundNode) {
       return
@@ -66,7 +63,7 @@ function create(context: RuleContext): RuleListener {
     }
     const htmlNode = parse5.parseFragment(`${node.value}`, {
       sourceCodeLocationInfo: true
-    }) as parse5.DefaultTreeDocumentFragment
+    }) as parse5.DocumentFragment
     const foundNode = findHTMLNode(htmlNode)
     if (!foundNode) {
       return
