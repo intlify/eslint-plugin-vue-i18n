@@ -20,7 +20,7 @@ import type {
   Range,
   CustomBlockVisitorFactory
 } from '../types'
-import { joinPath } from '../utils/key-path'
+import { joinPath, parsePath } from '../utils/key-path'
 const debug = debugBuilder('eslint-plugin-vue-i18n:no-unused-keys')
 
 type UsedKeys = {
@@ -54,7 +54,7 @@ function getUsedKeysMap(
   const usedKeysMap: UsedKeys = {}
 
   for (const key of [...usedkeys, ...collectLinkedKeys(values, context)]) {
-    const paths = key.split('.')
+    const paths = parsePath(key)
     let map = usedKeysMap
     while (paths.length) {
       const path = paths.shift()!

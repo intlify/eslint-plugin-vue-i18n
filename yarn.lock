@@ -977,24 +977,24 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
-"@intlify/message-compiler@^9.0.0-beta.16":
-  version "9.0.0-beta.16"
-  resolved "https://registry.yarnpkg.com/@intlify/message-compiler/-/message-compiler-9.0.0-beta.16.tgz#359993251a303f148b3a325eca055cdbaf0cd95f"
-  integrity sha512-dE4UZsbVl5TKogYdfrJ6nQKdin1R4XMKVBVa9dE1A8HVvVHBSLy6iQiYpcw8TwcEHIa+rFjuuHuh+IdN3eCw+g==
+"@intlify/message-compiler@^9.0.0-rc.5":
+  version "9.0.0-rc.5"
+  resolved "https://registry.yarnpkg.com/@intlify/message-compiler/-/message-compiler-9.0.0-rc.5.tgz#823d59dda2a48d32015ac5f4c5cf20fb4b3ed897"
+  integrity sha512-TnWea88H3pTqYXNNXV7eZk62IVGXzS7dtoTpTdRj4mfJclyU+3neIqkcoeJC7WM8yeT9VWFkIdx882dWpoghPw==
   dependencies:
-    "@intlify/message-resolver" "9.0.0-beta.16"
-    "@intlify/shared" "9.0.0-beta.16"
+    "@intlify/message-resolver" "9.0.0-rc.5"
+    "@intlify/shared" "9.0.0-rc.5"
     source-map "0.6.1"
 
-"@intlify/message-resolver@9.0.0-beta.16":
-  version "9.0.0-beta.16"
-  resolved "https://registry.yarnpkg.com/@intlify/message-resolver/-/message-resolver-9.0.0-beta.16.tgz#f8960344201050d17560f8d01f63e3cd0b9bf59c"
-  integrity sha512-xwjsFuDDYEv7g1KE5QZRbrPgfsrNsDhYLtNYR7Tn4inzbmB6ipak2UlDzDcQGLieSFbe1WwAoNL0IXy4sUKboQ==
+"@intlify/message-resolver@9.0.0-rc.5", "@intlify/message-resolver@^9.0.0-rc.5":
+  version "9.0.0-rc.5"
+  resolved "https://registry.yarnpkg.com/@intlify/message-resolver/-/message-resolver-9.0.0-rc.5.tgz#144f61a09ff32a9451c37b8e92e806ed3efaf947"
+  integrity sha512-cZT9kWy6TBB71zb17e5juCTuSNz2/RUf8PeqGYnGP+f/mrPG0X6D3KFqpY3tkWgYwSGcwswd8oBMEvmb0eTMTw==
 
-"@intlify/shared@9.0.0-beta.16":
-  version "9.0.0-beta.16"
-  resolved "https://registry.yarnpkg.com/@intlify/shared/-/shared-9.0.0-beta.16.tgz#51a80ca4705c93cb14c8f06398dfc550df09d67d"
-  integrity sha512-A7GSOovcZn/NMoAmDc8FG9uRcFv6iygriK8+C6HFeOnMQ9X+T9f5A9bPtXhCOCiRpQm9SUtGqXedxO5Y8rz9/A==
+"@intlify/shared@9.0.0-rc.5":
+  version "9.0.0-rc.5"
+  resolved "https://registry.yarnpkg.com/@intlify/shared/-/shared-9.0.0-rc.5.tgz#8ed9ea92e73b3856031724dc4a11fcbf7f1f7a7c"
+  integrity sha512-LGurIHW/TYo07WrbCWXBuZQ3Hg2CHAv5rXLFpxBfHjZawCTrrORQfD4NA+RPVbaWFgzMgw5VJybpJRd9iB1x6g==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.0.0"

@@ -18,7 +18,7 @@ import {
 import { ResourceLoader } from './resource-loader'
 import JSON5 from 'json5'
 import yaml from 'js-yaml'
-import { joinPath } from './key-path'
+import { joinPath, parsePath } from './key-path'
 
 /**
  * The localization message class
@@ -253,7 +253,7 @@ export class LocaleMessages {
   findMissingPath(key: string): string | null {
     let missingPath: string[] = []
     for (const locale of this.locales) {
-      const paths = key.split('.')
+      const paths = parsePath(key)
       const length = paths.length
       let lasts: I18nLocaleMessageValue[] = this.localeMessages.map(lm =>
         lm.getMessagesFromLocale(locale)
