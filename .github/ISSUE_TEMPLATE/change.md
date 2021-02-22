@@ -1,5 +1,5 @@
 ---
-name: "Non-rule change request"
+name: 'Non-rule change request'
 about: Request a change that is not a bug fix, rule change, or new rule
 ---
 
@@ -24,4 +24,3 @@ about: Request a change that is not a bug fix, rule change, or new rule
 
 **Additional context**
 <!-- Add any other context or screenshots about the feature request here. -->
-

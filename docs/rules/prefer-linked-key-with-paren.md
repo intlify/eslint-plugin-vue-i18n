@@ -1,8 +1,9 @@
 ---
-title: "@intlify/vue-i18n/prefer-linked-key-with-paren"
+title: '@intlify/vue-i18n/prefer-linked-key-with-paren'
 description: enforce linked key to be enclosed in parentheses
 since: v0.10.0
 ---
+
 # @intlify/vue-i18n/prefer-linked-key-with-paren
 
 > enforce linked key to be enclosed in parentheses
@@ -19,7 +20,7 @@ locale messages:
 
 <eslint-code-block fix language="json">
 
-```json5
+```json
 /* eslint @intlify/vue-i18n/prefer-linked-key-with-paren: 'error' */
 {
   /* ✗ BAD */
@@ -36,7 +37,7 @@ locale messages (for vue-i18n v9+):
 
 <eslint-code-block fix message-syntax-version="^9" language="json">
 
-```json5
+```json
 /* eslint @intlify/vue-i18n/prefer-linked-key-with-paren: 'error' */
 {
   /* ✓ GOOD */
@@ -51,7 +52,7 @@ locale messages (for vue-i18n v8):
 
 <eslint-code-block fix message-syntax-version="^8" language="json">
 
-```json5
+```json
 /* eslint @intlify/vue-i18n/prefer-linked-key-with-paren: 'error' */
 {
   /* ✓ GOOD */

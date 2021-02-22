@@ -1,8 +1,9 @@
 ---
-title: "@intlify/vue-i18n/valid-message-syntax"
+title: '@intlify/vue-i18n/valid-message-syntax'
 description: disallow invalid message syntax
 since: v0.10.0
 ---
+
 # @intlify/vue-i18n/valid-message-syntax
 
 > disallow invalid message syntax
@@ -17,13 +18,13 @@ This rule is useful localization leaks with incorrect message syntax.
 
 <eslint-code-block language="json">
 
-```json5
+```json
 /* eslint @intlify/vue-i18n/valid-message-syntax: 'error' */
 
 /* ✗ BAD */
 {
   "list-hello": "Hello! {{0}}",
-  "named-hello": "Hello! {{name}}",
+  "named-hello": "Hello! {{name}}"
 }
 ```
 
@@ -33,7 +34,7 @@ This rule is useful localization leaks with incorrect message syntax.
 
 <eslint-code-block language="json">
 
-```json5
+```json
 /* eslint @intlify/vue-i18n/valid-message-syntax: 'error' */
 
 /* ✓ GOOD */

@@ -13,7 +13,7 @@ export function updateRuleDocs({
   nextVersion
 }: { nextVersion?: string } = {}): void {
   function pickSince(content: string) {
-    const fileIntro = /^---\n(.*\n)+---\n*/g.exec(content)
+    const fileIntro = /^---\n(.*\n)+?---\n*/g.exec(content)
     if (fileIntro) {
       const since = /since: (v\d+\.\d+\.\d+)/.exec(fileIntro[0])
       if (since) {
@@ -47,15 +47,15 @@ export function updateRuleDocs({
       const fileIntro = {
         // pageClass: 'rule-details',
         // sidebarDepth: 0,
-        title: `"${rule.id}"`,
+        title: `'${rule.id}'`,
         description: rule.description,
         ...(this.since ? { since: this.since } : {})
       }
       const computed = `---\n${Object.entries(fileIntro)
         .map(item => `${item[0]}: ${item[1]}`)
-        .join('\n')}\n---\n`
+        .join('\n')}\n---\n\n`
 
-      const fileIntroPattern = /^---\n(.*\n)+---\n*/g
+      const fileIntroPattern = /^---\n(.*\n)+?---\n*/g
 
       if (fileIntroPattern.test(this.content)) {
         this.content = this.content.replace(fileIntroPattern, computed)

@@ -7,5 +7,9 @@
 /dist
 /docs/.vuepress/dist
 /node_modules
-# /tests/fixtures Used testcases
+/tests/fixtures
 /tests-integrations/config-recommended
+
+# ignore files
+/CHANGELOG.md
+/.github/ISSUE_TEMPLATE/

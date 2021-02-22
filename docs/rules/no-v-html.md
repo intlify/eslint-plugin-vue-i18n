@@ -1,8 +1,9 @@
 ---
-title: "@intlify/vue-i18n/no-v-html"
+title: '@intlify/vue-i18n/no-v-html'
 description: disallow use of localization methods on v-html to prevent XSS attack
 since: v0.1.0
 ---
+
 # @intlify/vue-i18n/no-v-html
 
 > disallow use of localization methods on v-html to prevent XSS attack
@@ -26,7 +27,7 @@ locale messages:
 
 ```json
 {
-  "term": "<p>I accept xxx <a href=\"\/term\">Terms of Service Agreement</a></p>"
+  "term": "<p>I accept xxx <a href=\"/term\">Terms of Service Agreement</a></p>"
 }
 ```
 
@@ -34,8 +35,12 @@ localization codes:
 
 <eslint-code-block>
 
+<!-- eslint-skip -->
+
 ```vue
-<script>/* eslint @intlify/vue-i18n/no-v-html: 'error' */</script>
+<script>
+/* eslint @intlify/vue-i18n/no-v-html: 'error' */
+</script>
 <template>
   <div class="app">
     <!-- ✗ BAD -->
@@ -61,8 +66,12 @@ localization codes:
 
 <eslint-code-block>
 
+<!-- eslint-skip -->
+
 ```vue
-<script>/* eslint @intlify/vue-i18n/no-v-html: 'error' */</script>
+<script>
+/* eslint @intlify/vue-i18n/no-v-html: 'error' */
+</script>
 <template>
   <div class="app">
     <!-- ✗ GOOD -->

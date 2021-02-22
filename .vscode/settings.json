@@ -1,11 +1,9 @@
 {
-    "eslint.options": { "configFile": ".eslintrc.js" },
-    "eslint.validate": [
-        "javascript",
-        "typescript"
-    ],
-    "eslint.alwaysShowStatus": true,
-    "eslint.packageManager": "yarn",
-    "eslint.run": "onSave",
-    "npm.packageManager": "yarn"
+  "eslint.validate": ["javascript", "typescript", "vue", "markdown"],
+  "eslint.alwaysShowStatus": true,
+  "eslint.packageManager": "yarn",
+  "eslint.run": "onSave",
+  "npm.packageManager": "yarn",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

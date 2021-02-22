@@ -1,8 +1,9 @@
 ---
-title: "@intlify/vue-i18n/key-format-style"
+title: '@intlify/vue-i18n/key-format-style'
 description: enforce specific casing for localization keys
 since: v0.9.0
 ---
+
 # @intlify/vue-i18n/key-format-style
 
 > enforce specific casing for localization keys
@@ -32,10 +33,10 @@ Also, the following localization key definitions are reported as errors, because
 - message1
 - message2
 - message3
-...
+---
 # ✗ BAD: Use object for key.
-{foo: bar}: message
-[1,2,3]: message
+{ foo: bar }: message
+[1, 2, 3]: message
 ```
 
 </eslint-code-block>
@@ -44,7 +45,8 @@ Also, the following localization key definitions are reported as errors, because
 
 ```json
 {
-  "@intlify/vue-i18n/key-format-style": ["error",
+  "@intlify/vue-i18n/key-format-style": [
+    "error",
     "camelCase" | "kebab-case" | "snake_case",
     {
       "allowArray": false
