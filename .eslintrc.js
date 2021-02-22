@@ -10,8 +10,7 @@ module.exports = {
     'plugin:vue-libs/recommended',
     'plugin:prettier/recommended',
     'plugin:markdown/recommended',
-    'prettier',
-    'prettier/vue'
+    'prettier'
   ],
   plugins: ['@typescript-eslint'],
   parserOptions: {
@@ -24,10 +23,7 @@ module.exports = {
   overrides: [
     {
       files: ['*.ts'],
-      extends: [
-        'plugin:@typescript-eslint/recommended',
-        'prettier/@typescript-eslint'
-      ],
+      extends: ['plugin:@typescript-eslint/recommended'],
       parser: 'vue-eslint-parser',
       parserOptions: {
         parser: '@typescript-eslint/parser'
