@@ -5,7 +5,9 @@ description: disallow using deprecated `<i18n>` components (in Vue I18n 9.0.0+)
 
 # @intlify/vue-i18n/no-deprecated-i18n-component
 
-> disallow duplicate localization keys within the same locale
+> disallow using deprecated `<i18n>` components (in Vue I18n 9.0.0+)
+
+- :black_nib:️ The `--fix` option on the [command line](http://eslint.org/docs/user-guide/command-line-interface#fix) can automatically fix some of the problems reported by this rule.
 
 If you are migrating from Vue I18n v8 to v9, the `<i18n>` component should be replaced with the `<i18n-t>` component.
 

@@ -26,6 +26,7 @@ function toCategorySection({
 }) {
   return `## ${category}
 
+<!--prettier-ignore-->
 | Rule ID | Description |    |
 |:--------|:------------|:---|
 ${rules.map(toTableRow).join('\n')}
