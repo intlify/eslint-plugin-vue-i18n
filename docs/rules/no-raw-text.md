@@ -1,8 +1,9 @@
 ---
-title: "@intlify/vue-i18n/no-raw-text"
+title: '@intlify/vue-i18n/no-raw-text'
 description: disallow to string literal in template or JSX
 since: v0.2.0
 ---
+
 # @intlify/vue-i18n/no-raw-text
 
 > disallow to string literal in template or JSX
@@ -38,8 +39,12 @@ export default {
 
 <eslint-code-block>
 
+<!-- eslint-skip -->
+
 ```vue
-<script>/* eslint @intlify/vue-i18n/no-raw-text: 'error' */</script>
+<script>
+/* eslint @intlify/vue-i18n/no-raw-text: 'error' */
+</script>
 <template>
   <!-- ✗ BAD -->
   <p>hello</p>
@@ -88,8 +93,12 @@ export default {
 
 <eslint-code-block>
 
+<!-- eslint-skip -->
+
 ```vue
-<script>/* eslint @intlify/vue-i18n/no-raw-text: 'error' */</script>
+<script>
+/* eslint @intlify/vue-i18n/no-raw-text: 'error' */
+</script>
 <template>
   <!-- ✓ GOOD -->
   <p>{{ $t('hello') }}</p>
@@ -119,11 +128,14 @@ export default {
 
 ```json
 {
-  "@intlify/vue-i18n/no-raw-text": ["error", {
-    "ignoreNodes": ["md-icon", "v-icon"],
-    "ignorePattern": "^[-#:()&]+$",
-    "ignoreText": ["EUR", "HKD", "USD"]
-  }]
+  "@intlify/vue-i18n/no-raw-text": [
+    "error",
+    {
+      "ignoreNodes": ["md-icon", "v-icon"],
+      "ignorePattern": "^[-#:()&]+$",
+      "ignoreText": ["EUR", "HKD", "USD"]
+    }
+  ]
 }
 ```
 

@@ -14,6 +14,7 @@
 See [here](https://eslint-plugin-vue-i18n.intlify.dev)
 
 ## :scroll: Changelog
+
 Details changes for each release are documented in the [CHANGELOG.md](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/CHANGELOG.md).
 
 ## :exclamation: Issues

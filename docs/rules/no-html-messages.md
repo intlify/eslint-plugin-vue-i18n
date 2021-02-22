@@ -1,8 +1,9 @@
 ---
-title: "@intlify/vue-i18n/no-html-messages"
+title: '@intlify/vue-i18n/no-html-messages'
 description: disallow use HTML localization messages
 since: v0.1.0
 ---
+
 # @intlify/vue-i18n/no-html-messages
 
 > disallow use HTML localization messages
@@ -97,10 +98,10 @@ In localization codes of application:
   <div class="app">
     <p>{{ $t('hello') }}</p>
     <i18n path="contents.banner">
-      <Banner :url="bannerURL"/>
+      <Banner :url="bannerURL" />
     </i18n>
     <i18n path="contents.modal">
-      <Modal :url="modalDataURL"/>
+      <Modal :url="modalDataURL" />
     </i18n>
   </div>
 </template>

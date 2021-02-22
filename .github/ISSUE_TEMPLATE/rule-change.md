@@ -1,5 +1,5 @@
 ---
-name: "Rule change request"
+name: 'Rule change request'
 about: Request a change to an existing rule
 ---
 
@@ -11,20 +11,26 @@ about: Request a change to an existing rule
 
 **What rule do you want to change?**
 
+
 **Does this change cause the rule to produce more or fewer warnings?**
+
 
 **How will the change be implemented? (New option, new default behavior, etc.)?**
 
-**Please provide some example code that this change will affect:**
 
+**Please provide some example code that this change will affect:**
 <!-- Put your code examples here -->
+
 ```vue
 
 ```
 
+
 **What does the rule currently do for this code?**
 
+
 **What will the rule do after it's changed?**
+
 
 **Additional context**
 <!-- Add any other context or screenshots about the feature request here. -->

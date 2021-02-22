@@ -1,8 +1,9 @@
 ---
-title: "@intlify/vue-i18n/no-unused-keys"
+title: '@intlify/vue-i18n/no-unused-keys'
 description: disallow unused localization keys
 since: v0.1.0
 ---
+
 # @intlify/vue-i18n/no-unused-keys
 
 > disallow unused localization keys
@@ -72,8 +73,12 @@ For SFC.
 
 <eslint-code-block fix>
 
+<!-- eslint-skip -->
+
 ```vue
-<script>/* eslint @intlify/vue-i18n/no-unused-keys: 'error' */</script>
+<script>
+/* eslint @intlify/vue-i18n/no-unused-keys: 'error' */
+</script>
 <i18n>
 {
   "en": {
@@ -149,11 +154,14 @@ i18n.t('hi')
 
 ```json
 {
-  "@intlify/vue-i18n/no-unused-keys": ["error", {
-    "src": "./src",
-    "extensions": [".js", ".vue"],
-    "enableFix": false
-  }]
+  "@intlify/vue-i18n/no-unused-keys": [
+    "error",
+    {
+      "src": "./src",
+      "extensions": [".js", ".vue"],
+      "enableFix": false
+    }
+  ]
 }
 ```
 

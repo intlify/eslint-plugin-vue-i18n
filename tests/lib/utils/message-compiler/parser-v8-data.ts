@@ -1,6 +1,6 @@
 export const errorsFixtures: {
   code: string
-  expected: Record<string, any>
+  expected: Record<string, unknown>
 }[] = [
   {
     code: '@: empty key',

@@ -9,7 +9,7 @@ env:
 
 jobs:
   test:
-    name: "Test on Node.js ${{ matrix.node }} OS: ${{matrix.os}}"
+    name: 'Test on Node.js ${{ matrix.node }} OS: ${{matrix.os}}'
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:

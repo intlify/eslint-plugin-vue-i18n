@@ -1,8 +1,9 @@
 ---
-title: "@intlify/vue-i18n/no-missing-keys"
+title: '@intlify/vue-i18n/no-missing-keys'
 description: disallow missing locale message key at localization methods
 since: v0.1.0
 ---
+
 # @intlify/vue-i18n/no-missing-keys
 
 > disallow missing locale message key at localization methods
@@ -42,8 +43,12 @@ localization codes:
 
 <eslint-code-block>
 
+<!-- eslint-skip -->
+
 ```vue
-<script>/* eslint @intlify/vue-i18n/no-missing-keys: 'error' */</script>
+<script>
+/* eslint @intlify/vue-i18n/no-missing-keys: 'error' */
+</script>
 <template>
   <div class="app">
     <!-- ✗ BAD -->
@@ -101,8 +106,12 @@ localization codes:
 
 <eslint-code-block>
 
+<!-- eslint-skip -->
+
 ```vue
-<script>/* eslint @intlify/vue-i18n/no-missing-keys: 'error' */</script>
+<script>
+/* eslint @intlify/vue-i18n/no-missing-keys: 'error' */
+</script>
 <template>
   <div class="app">
     <!-- ✓ GOOD -->
@@ -144,8 +153,12 @@ For SFC.
 
 <eslint-code-block>
 
+<!-- eslint-skip -->
+
 ```vue
-<script>/* eslint @intlify/vue-i18n/no-missing-keys: 'error' */</script>
+<script>
+/* eslint @intlify/vue-i18n/no-missing-keys: 'error' */
+</script>
 
 <i18n>
 {

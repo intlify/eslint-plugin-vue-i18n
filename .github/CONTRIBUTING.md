@@ -33,6 +33,7 @@
 - Make sure `yarn test` passes. (see [development setup](#development-setup))
 
 - If adding new feature:
+
   - Add accompanying test case.
   - Provide convincing reason to add this feature. Ideally you should open a suggestion issue first and have it greenlighted before working on it.
 
@@ -41,6 +42,7 @@
   - Add appropriate test coverage if applicable.
 
 ### Work Step Example
+
 - Fork the repository from [@intlify/eslint-plugin-vue-i18n](https://github.com/intlify/eslint-plugin-vue-i18n) !
 - Create your topic branch from `master`: `git branch my-new-topic origin/master`
 - Add codes and pass tests !

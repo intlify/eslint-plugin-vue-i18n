@@ -14,7 +14,7 @@ This rule is useful to provide browsability of localization keys.
 
 <eslint-code-block fix language="json">
 
-```json5
+```json
 /* eslint @intlify/vue-i18n/keys-order: 'error' */
 
 // ✗ BAD
@@ -31,7 +31,7 @@ This rule is useful to provide browsability of localization keys.
 
 <eslint-code-block fix language="json">
 
-```json5
+```json
 /* eslint @intlify/vue-i18n/keys-order: 'error' */
 
 // ✓ GOOD
@@ -48,9 +48,12 @@ This rule is useful to provide browsability of localization keys.
 
 ```json
 {
-  "@intlify/vue-i18n/keys-order": ["error", {
-    "order": "desc"
-  }]
+  "@intlify/vue-i18n/keys-order": [
+    "error",
+    {
+      "order": "desc"
+    }
+  ]
 }
 ```
 

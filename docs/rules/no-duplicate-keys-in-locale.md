@@ -1,8 +1,9 @@
 ---
-title: "@intlify/vue-i18n/no-duplicate-keys-in-locale"
+title: '@intlify/vue-i18n/no-duplicate-keys-in-locale'
 description: disallow duplicate localization keys within the same locale
 since: v0.9.0
 ---
+
 # @intlify/vue-i18n/no-duplicate-keys-in-locale
 
 > disallow duplicate localization keys within the same locale
@@ -23,7 +24,7 @@ locale messages:
 
 <eslint-code-block language="json" filename="en.1.json">
 
-```json5
+```json
 /* eslint @intlify/vue-i18n/no-duplicate-keys-in-locale: 'error' */
 
 // ✗ BAD
@@ -40,7 +41,7 @@ locale messages:
 
 <eslint-code-block language="json" filename="en.2.json">
 
-```json5
+```json
 /* eslint @intlify/vue-i18n/no-duplicate-keys-in-locale: 'error' */
 
 // ✗ BAD
@@ -63,7 +64,7 @@ locale messages:
 
 <eslint-code-block language="json" filename="en.1.json">
 
-```json5
+```json
 /* eslint @intlify/vue-i18n/no-duplicate-keys-in-locale: 'error' */
 
 // ✓ GOOD
@@ -79,7 +80,7 @@ locale messages:
 
 <eslint-code-block language="json" filename="en.2.json">
 
-```json5
+```json
 /* eslint @intlify/vue-i18n/no-duplicate-keys-in-locale: 'error' */
 
 // ✓ GOOD
@@ -96,9 +97,12 @@ locale messages:
 
 ```json
 {
-  "@intlify/vue-i18n/no-duplicate-keys-in-locale": ["error", {
-    "ignoreI18nBlock": false
-  }]
+  "@intlify/vue-i18n/no-duplicate-keys-in-locale": [
+    "error",
+    {
+      "ignoreI18nBlock": false
+    }
+  ]
 }
 ```
 

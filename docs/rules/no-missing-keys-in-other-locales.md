@@ -1,8 +1,9 @@
 ---
-title: "@intlify/vue-i18n/no-missing-keys-in-other-locales"
+title: '@intlify/vue-i18n/no-missing-keys-in-other-locales'
 description: disallow missing locale message keys in other locales
 since: v0.10.0
 ---
+
 # @intlify/vue-i18n/no-missing-keys-in-other-locales
 
 > disallow missing locale message keys in other locales
@@ -19,7 +20,7 @@ locale messages:
 
 <eslint-code-block language="json" locale-key="key">
 
-```json5
+```json
 /* eslint @intlify/vue-i18n/no-missing-keys-in-other-locales: 'error' */
 
 {
@@ -47,7 +48,7 @@ locale messages:
 
 <eslint-code-block language="json" locale-key="key">
 
-```json5
+```json
 /* eslint @intlify/vue-i18n/no-missing-keys-in-other-locales: 'error' */
 
 {
@@ -71,7 +72,8 @@ locale messages:
 
 ```json
 {
-  "@intlify/vue-i18n/no-missing-keys-in-other-locales": ["error",
+  "@intlify/vue-i18n/no-missing-keys-in-other-locales": [
+    "error",
     {
       "ignoreLocales": []
     }

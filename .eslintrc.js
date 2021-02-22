@@ -9,6 +9,7 @@ module.exports = {
   extends: [
     'plugin:vue-libs/recommended',
     'plugin:prettier/recommended',
+    'plugin:markdown/recommended',
     'prettier',
     'prettier/vue'
   ],
@@ -34,6 +35,12 @@ module.exports = {
       rules: {
         '@typescript-eslint/no-non-null-assertion': 'off',
         '@typescript-eslint/consistent-type-imports': 'error'
+      }
+    },
+    {
+      files: ['**/*.md/*.*'],
+      rules: {
+        'prettier/prettier': 'off'
       }
     }
   ]

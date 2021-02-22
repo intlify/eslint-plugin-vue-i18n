@@ -18,15 +18,19 @@ about: Create a report to help us improve
 
 **Please show your full configuration:**
 <!-- Paste content of your .eslintrc file -->
+
 ```json5
 
 ```
 
+
 **What did you do?**
 <!-- Please include the actual source code causing the issue. -->
+
 ```vue
 
 ```
+
 
 **What did you expect to happen?**
 

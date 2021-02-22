@@ -19,17 +19,26 @@ describe('Integration with "plugin:@intlify/vue-i18n/recommended"', () => {
   })
 
   it('should work with shareable config', () => {
-    const CLIEngine = require('./config-recommended/node_modules/eslint').CLIEngine
+    const CLIEngine = require('./config-recommended/node_modules/eslint')
+      .CLIEngine
     const engine = new CLIEngine({
       cwd: TEST_CWD,
       extensions: ['.js', '.vue', '.json']
     })
     const result = engine.executeOnFiles(['./src'])
-    const enJson = result.results.find(r => path.basename(r.filePath) === 'en.json')
+    const enJson = result.results.find(
+      r => path.basename(r.filePath) === 'en.json'
+    )
     assert.strictEqual(enJson.messages.length, 1)
-    assert.strictEqual(enJson.messages[0].ruleId, '@intlify/vue-i18n/no-html-messages')
+    assert.strictEqual(
+      enJson.messages[0].ruleId,
+      '@intlify/vue-i18n/no-html-messages'
+    )
     const aVue = result.results.find(r => path.basename(r.filePath) === 'a.vue')
     assert.strictEqual(aVue.messages.length, 1)
-    assert.strictEqual(aVue.messages[0].ruleId, '@intlify/vue-i18n/no-missing-keys')
+    assert.strictEqual(
+      aVue.messages[0].ruleId,
+      '@intlify/vue-i18n/no-missing-keys'
+    )
   })
 })

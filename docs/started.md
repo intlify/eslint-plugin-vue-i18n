@@ -9,8 +9,10 @@ npm install --save-dev eslint @intlify/eslint-plugin-vue-i18n
 ```
 
 ::: tip Requirements
+
 - ESLint v5.0.0 or later
 - Node.js v10.13.0 or later
+
 :::
 
 ## :rocket: Usage
@@ -74,7 +76,7 @@ See [the rule list](../rules/)
     - `pattern` (`string`) ... A glob for specifying files that store localization messages of project.
     - `localeKey` (`'file' | 'key'`) ... Specifies how to determine the locale for localization messages.
       - `'file'` ... Determine the locale name from the filename. The resource file should only contain messages for that locale. Use this option if you use `vue-cli-plugin-i18n`. This option is also used when String option is specified.
-      - `'key'` ...  Determine the locale name from the root key name of the file contents. The value of that key should only contain messages for that locale. Used when the resource file is in the format given to the `messages` option of the `VueI18n` constructor option.
+      - `'key'` ... Determine the locale name from the root key name of the file contents. The value of that key should only contain messages for that locale. Used when the resource file is in the format given to the `messages` option of the `VueI18n` constructor option.
   - Array option ... An array of String option and Object option. Useful if you have multiple locale directories.
 - `messageSyntaxVersion` (Optional) ... Specify the version of `vue-i18n` you are using. If not specified, the message will be parsed twice. Also, some rules require this setting.
 
@@ -154,12 +156,13 @@ See also: "[Use together with custom parsers](#use-together-with-custom-parsers)
 
 1. Make sure you don't have `eslint-plugin-html` in your config. The `eslint-plugin-html` extracts the content from `<script>` tags, but `eslint-plugin-vue` requires `<script>` tags and `<template>` tags in order to distinguish template and script in single file components.
 
-  ```diff
-    "plugins": [
-      "vue",
-  -   "html"
-    ]
-  ```
+```diff
+  "plugins": [
+    "vue",
+-   "html"
+  ]
+```
 
 2. Make sure your tool is set to lint `.vue` and `.json` files.
-  - CLI targets only `.js` files by default. You have to specify additional extensions by `--ext` option or glob patterns. E.g. `eslint "src/**/*.{js,vue,json}"` or `eslint src --ext .vue,.json`.o
+
+- CLI targets only `.js` files by default. You have to specify additional extensions by `--ext` option or glob patterns. E.g. `eslint "src/**/*.{js,vue,json}"` or `eslint src --ext .vue,.json`.o
