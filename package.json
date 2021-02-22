@@ -52,7 +52,7 @@
     "@typescript-eslint/parser": "^4.10.0",
     "eslint": "^5.15.0 || ^6.0.0 || ^7.0.0",
     "eslint-config-prettier": "^7.0.0",
-    "eslint-plugin-markdown": "^1.0.0",
+    "eslint-plugin-markdown": "^2.0.0",
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-vue-libs": "^3.0.0 || ^4.0.0",
     "eslint4b": "^7.16.0",
