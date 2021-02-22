@@ -7,7 +7,7 @@ import { writeFileSync, readFileSync } from 'fs'
 import { join } from 'path'
 import type { RuleInfo } from './lib/rules'
 import rules from './lib/rules'
-const PLACE_HOLDER = /^#[^\n]*\n+> .+\n+(?:- .+\n)*\n*/u
+const PLACE_HOLDER = /#[^\n]*\n+> .+\n+(?:- .+\n)*\n*/u
 
 export function updateRuleDocs({
   nextVersion
