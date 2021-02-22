@@ -10,6 +10,7 @@
 |:--------|:------------|:---|
 | [@intlify/vue-i18n/<wbr>no-deprecated-i18n-component](./no-deprecated-i18n-component.html) | disallow using deprecated `<i18n>` components (in Vue I18n 9.0.0+) | :black_nib: |
 | [@intlify/vue-i18n/<wbr>no-html-messages](./no-html-messages.html) | disallow use HTML localization messages | :star: |
+| [@intlify/vue-i18n/<wbr>no-i18n-t-path-prop](./no-i18n-t-path-prop.html) | disallow using `path` prop with `<i18n-t>` | :black_nib: |
 | [@intlify/vue-i18n/<wbr>no-missing-keys](./no-missing-keys.html) | disallow missing locale message key at localization methods | :star: |
 | [@intlify/vue-i18n/<wbr>no-raw-text](./no-raw-text.html) | disallow to string literal in template or JSX | :star: |
 | [@intlify/vue-i18n/<wbr>no-v-html](./no-v-html.html) | disallow use of localization methods on v-html to prevent XSS attack | :star: |
