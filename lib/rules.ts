@@ -5,6 +5,7 @@ import noDeprecatedI18nPlaceAttr from './rules/no-deprecated-i18n-place-attr'
 import noDuplicateKeysInLocale from './rules/no-duplicate-keys-in-locale'
 import noDynamicKeys from './rules/no-dynamic-keys'
 import noHtmlMessages from './rules/no-html-messages'
+import noI18nTPathProp from './rules/no-i18n-t-path-prop'
 import noMissingKeysInOtherLocales from './rules/no-missing-keys-in-other-locales'
 import noMissingKeys from './rules/no-missing-keys'
 import noRawText from './rules/no-raw-text'
@@ -20,6 +21,7 @@ export = {
   'no-duplicate-keys-in-locale': noDuplicateKeysInLocale,
   'no-dynamic-keys': noDynamicKeys,
   'no-html-messages': noHtmlMessages,
+  'no-i18n-t-path-prop': noI18nTPathProp,
   'no-missing-keys-in-other-locales': noMissingKeysInOtherLocales,
   'no-missing-keys': noMissingKeys,
   'no-raw-text': noRawText,
