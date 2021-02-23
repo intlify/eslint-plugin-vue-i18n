@@ -1,0 +1,95 @@
+---
+title: '@intlify/vue-i18n/no-deprecated-i18n-place-attr'
+description: disallow using deprecated `place` attribute (Removed in Vue I18n 9.0.0+)
+---
+
+# @intlify/vue-i18n/no-deprecated-i18n-place-attr
+
+> disallow using deprecated `place` attribute (Removed in Vue I18n 9.0.0+)
+
+If you are migrating from Vue I18n v8 to v9, the `place` attribute should be replaced with the `v-slot`.
+
+## :book: Rule Details
+
+This rule reports use of deprecated `place` attribute (Removed in Vue I18n 9.0.0+).
+
+:-1: Examples of **incorrect** code for this rule:
+
+<eslint-code-block>
+
+<!-- eslint-skip -->
+
+```vue
+<script>
+/* eslint @intlify/vue-i18n/no-deprecated-i18n-place-attr: 'error' */
+</script>
+<template>
+  <div class="app">
+    <i18n path="info" tag="p">
+      <!-- ✗ BAD -->
+      <span place="limit">{{ changeLimit }}</span>
+      <!-- ✗ BAD -->
+      <a place="action" :href="changeUrl">{{ $t('change') }}</a>
+    </i18n>
+
+    <!-- Also check the <i18n-t> component to prevent mistakes. -->
+    <i18n-t path="info" tag="p">
+      <!-- ✗ BAD -->
+      <span place="limit">{{ changeLimit }}</span>
+      <!-- ✗ BAD -->
+      <a place="action" :href="changeUrl">{{ $t('change') }}</a>
+    </i18n-t>
+  </div>
+</template>
+```
+
+</eslint-code-block>
+
+:+1: Examples of **correct** code for this rule:
+
+<eslint-code-block>
+
+<!-- eslint-skip -->
+
+```vue
+<script>
+/* eslint @intlify/vue-i18n/no-deprecated-i18n-place-attr: 'error' */
+</script>
+<template>
+  <div class="app">
+    <i18n path="info" tag="p">
+      <!-- ✓ GOOD -->
+      <template v-slot:limit>
+        <span>{{ changeLimit }}</span>
+      </template>
+      <!-- ✓ GOOD -->
+      <template v-slot:action>
+        <a :href="changeUrl">{{ $t('change') }}</a>
+      </template>
+    </i18n>
+
+    <i18n-t keypath="info" tag="p">
+      <!-- ✓ GOOD -->
+      <template #limit>
+        <span>{{ changeLimit }}</span>
+      </template>
+      <!-- ✓ GOOD -->
+      <template #action>
+        <a :href="changeUrl">{{ $t('change') }}</a>
+      </template>
+    </i18n-t>
+  </div>
+</template>
+```
+
+</eslint-code-block>
+
+## :books: Further reading
+
+- [Vue I18n > Breaking Changes - Remove place syntax with `place` attr and `places` prop](https://vue-i18n.intlify.dev/guide/migration/breaking.html#remove-place-syntax-with-place-attr-and-places-prop)
+- [Vue I18n (v8) > Component interpolation - Places syntax usage](https://kazupon.github.io/vue-i18n/guide/interpolation.html#places-syntax-usage)
+
+## :mag: Implementation
+
+- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/lib/rules/no-deprecated-i18n-place-attr.ts)
+- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n/tree/master/tests/lib/rules/no-deprecated-i18n-place-attr.ts)
