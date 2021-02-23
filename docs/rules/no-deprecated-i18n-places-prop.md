@@ -1,6 +1,7 @@
 ---
 title: '@intlify/vue-i18n/no-deprecated-i18n-places-prop'
 description: disallow using deprecated `places` prop (Removed in Vue I18n 9.0.0+)
+since: v0.11.0
 ---
 
 # @intlify/vue-i18n/no-deprecated-i18n-places-prop
@@ -82,6 +83,10 @@ This rule reports use of deprecated `places` prop (Removed in Vue I18n 9.0.0+).
 
 - [Vue I18n > Breaking Changes - Remove place syntax with `place` attr and `places` prop](https://vue-i18n.intlify.dev/guide/migration/breaking.html#remove-place-syntax-with-place-attr-and-places-prop)
 - [Vue I18n (v8) > Component interpolation - Places syntax usage](https://kazupon.github.io/vue-i18n/guide/interpolation.html#places-syntax-usage)
+
+## :rocket: Version
+
+This rule was introduced in `@intlify/eslint-plugin-vue-i18n` v0.11.0
 
 ## :mag: Implementation
 
