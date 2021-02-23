@@ -1,6 +1,7 @@
 ---
 title: '@intlify/vue-i18n/no-i18n-t-path-prop'
 description: disallow using `path` prop with `<i18n-t>`
+since: v0.11.0
 ---
 
 # @intlify/vue-i18n/no-i18n-t-path-prop
@@ -61,6 +62,10 @@ This rule reports use of `path` prop with `<i18n-t>` component.
 ## :books: Further reading
 
 - [Vue I18n > Breaking Changes - Rename to `keypath` prop from `path` prop](https://vue-i18n.intlify.dev/guide/migration/breaking.html#rename-to-keypath-prop-from-path-prop)
+
+## :rocket: Version
+
+This rule was introduced in `@intlify/eslint-plugin-vue-i18n` v0.11.0
 
 ## :mag: Implementation
 

@@ -1,6 +1,7 @@
 ---
 title: '@intlify/vue-i18n/no-deprecated-i18n-component'
 description: disallow using deprecated `<i18n>` components (in Vue I18n 9.0.0+)
+since: v0.11.0
 ---
 
 # @intlify/vue-i18n/no-deprecated-i18n-component
@@ -58,6 +59,10 @@ This rule reports use of deprecated `<i18n>` components (in Vue I18n 9.0.0+).
 ## :books: Further reading
 
 - [Vue I18n > Breaking Changes - Rename to `i18n-t` from `i18n`](https://vue-i18n.intlify.dev/guide/migration/breaking.html#rename-to-i18n-tfrom-i18n)
+
+## :rocket: Version
+
+This rule was introduced in `@intlify/eslint-plugin-vue-i18n` v0.11.0
 
 ## :mag: Implementation
 

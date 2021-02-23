@@ -2,6 +2,21 @@ Version 9 of Highlight.js has reached EOL and is no longer supported.
 Please upgrade or ask whatever dependency you are using to upgrade.
 https://github.com/highlightjs/highlight.js/issues/2877
 
+## v0.11.0 (2021-02-23)
+
+#### :star: Features
+* [#166](https://github.com/intlify/eslint-plugin-vue-i18n/pull/166) Add no-deprecated-i18n-places-prop rule ([@ota-meshi](https://github.com/ota-meshi))
+* [#167](https://github.com/intlify/eslint-plugin-vue-i18n/pull/167) Add no-i18n-t-path-prop rule ([@ota-meshi](https://github.com/ota-meshi))
+* [#165](https://github.com/intlify/eslint-plugin-vue-i18n/pull/165) Add no-deprecated-i18n-place-attr rule ([@ota-meshi](https://github.com/ota-meshi))
+* [#164](https://github.com/intlify/eslint-plugin-vue-i18n/pull/164) Add no-deprecated-i18n-component rule ([@ota-meshi](https://github.com/ota-meshi))
+
+#### Committers: 1
+- Yosuke Ota ([@ota-meshi](https://github.com/ota-meshi))
+
+Version 9 of Highlight.js has reached EOL and is no longer supported.
+Please upgrade or ask whatever dependency you are using to upgrade.
+https://github.com/highlightjs/highlight.js/issues/2877
+
 ## v0.10.0 (2021-01-04)
 
 #### :star: Features
