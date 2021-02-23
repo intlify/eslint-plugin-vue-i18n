@@ -57,6 +57,54 @@ export function defineTemplateBodyVisitor(
   )
 }
 
+/**
+ * Get the attribute which has the given name.
+ * @param {VElement} node The start tag node to check.
+ * @param {string} name The attribute name to check.
+ * @param {string} [value] The attribute value to check.
+ * @returns {VAttribute | null} The found attribute.
+ */
+export function getAttribute(
+  node: VAST.VElement,
+  name: string
+): VAST.VAttribute | null {
+  return (
+    node.startTag.attributes
+      .map(node => (!node.directive ? node : null))
+      .find(node => {
+        return node && node.key.name === name
+      }) || null
+  )
+}
+
+/**
+ * Get the directive which has the given name.
+ * @param {VElement} node The start tag node to check.
+ * @param {string} name The directive name to check.
+ * @param {string} [argument] The directive argument to check.
+ * @returns {VDirective | null} The found directive.
+ */
+export function getDirective(
+  node: VAST.VElement,
+  name: string,
+  argument: string
+): VAST.VDirective | null {
+  return (
+    node.startTag.attributes
+      .map(node => (node.directive ? node : null))
+      .find(node => {
+        return (
+          node &&
+          node.key.name.name === name &&
+          (argument === undefined ||
+            (node.key.argument &&
+              node.key.argument.type === 'VIdentifier' &&
+              node.key.argument.name) === argument)
+        )
+      }) || null
+  )
+}
+
 function loadLocaleMessages(
   localeFilesList: LocaleFiles[],
   cwd: string
