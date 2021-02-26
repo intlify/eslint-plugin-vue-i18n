@@ -6482,12 +6482,13 @@ json5@^2.1.2, json5@^2.1.3:
   dependencies:
     minimist "^1.2.5"
 
-jsonc-eslint-parser@^0.6.2:
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/jsonc-eslint-parser/-/jsonc-eslint-parser-0.6.2.tgz#f538179902f1c2edcb710507194b5333294b7079"
-  integrity sha512-8WlcrtXwiio5/E1J1cpaeBW5jFTHMcFLmlqOhQTbta0kn5hiOM/B56tky/ZJQP7SyHhpVj3zDvaXkVyedYi/LA==
+jsonc-eslint-parser@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/jsonc-eslint-parser/-/jsonc-eslint-parser-1.0.0.tgz#f4d2ce26bd93c6101957e23986e07aeeb8df8455"
+  integrity sha512-uN1rcnUQ3g7sGmAH+eImh+9tzPZhJZGyvwqQGclojMrPXFBciZ+1WTaFkt1guZyiskriHVdLkBA1clFs9Y+Hkw==
   dependencies:
-    eslint-visitor-keys "^1.3.0"
+    eslint-utils "^2.1.0"
+    eslint-visitor-keys "^2.0.0"
     espree "^6.0.0 || ^7.2.0"
 
 jsonfile@^4.0.0:
