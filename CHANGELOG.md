@@ -8,10 +8,6 @@
 - Lukas ([@lukashass](https://github.com/lukashass))
 - Yosuke Ota ([@ota-meshi](https://github.com/ota-meshi))
 
-Version 9 of Highlight.js has reached EOL and is no longer supported.
-Please upgrade or ask whatever dependency you are using to upgrade.
-https://github.com/highlightjs/highlight.js/issues/2877
-
 ## v0.11.0 (2021-02-23)
 
 #### :star: Features
