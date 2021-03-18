@@ -1,3 +1,13 @@
+
+## v0.11.1 (2021-03-18)
+
+#### :bug: Bug Fixes
+* [#173](https://github.com/intlify/eslint-plugin-vue-i18n/pull/173) fix: add debug as dependency ([@lukashass](https://github.com/lukashass))
+
+#### Committers: 2
+- Lukas ([@lukashass](https://github.com/lukashass))
+- Yosuke Ota ([@ota-meshi](https://github.com/ota-meshi))
+
 Version 9 of Highlight.js has reached EOL and is no longer supported.
 Please upgrade or ask whatever dependency you are using to upgrade.
 https://github.com/highlightjs/highlight.js/issues/2877
