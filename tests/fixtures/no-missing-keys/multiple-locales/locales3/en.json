@@ -1,4 +1,5 @@
 {
+  "messages.not_nested.hello": "hi hello!",
   "hello_dio": "hello underscore DIO!",
   "hello {name}": "hello {name}!",
   "hello-dio": "hello hyphen DIO!"

@@ -7,8 +7,10 @@
       "nested": {
         "hello": "hi jojo!"
       },
+      "not_nested.world": "hi world!",
       "en-only": "en-only"
     },
+    "messages.not_nested.hello": "hi hello!",
     "hello_dio": "hello underscore DIO!",
     "hello {name}": "hello {name}!",
     "hello-dio": "hello hyphen DIO!"
@@ -20,8 +22,10 @@
       "link": "@:message.hello",
       "nested": {
         "hello": "こんにちは、ジョジョ!"
-      }
+      },
+      "not_nested.world": "こんにちは、 world!"
     },
+    "messages.not_nested.hello": "こんにちは、 hello!",
     "hello_dio": "こんにちは、アンダースコア DIO！",
     "hello {name}": "こんにちは、{name}！",
     "hello-dio": "こんにちは、ハイフン DIO！"

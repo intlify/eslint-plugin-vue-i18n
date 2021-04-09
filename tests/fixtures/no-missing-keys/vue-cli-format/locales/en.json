@@ -6,6 +6,7 @@
     "nested": {
       "hello": "hi jojo!"
     },
+    "not_nested.world": "hi world!",
     "en-only": "en-only"
   }
 }

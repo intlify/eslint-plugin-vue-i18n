@@ -6,8 +6,10 @@
       "link": "@:message.hello",
       "nested": {
         "hello": "こんにちは、ジョジョ!"
-      }
+      },
+      "not_nested.world": "こんにちは、 world!"
     },
+    "messages.not_nested.hello": "こんにちは、 hello!",
     "hello_dio": "こんにちは、アンダースコア DIO！",
     "hello {name}": "こんにちは、{name}！",
     "hello-dio": "こんにちは、ハイフン DIO！"

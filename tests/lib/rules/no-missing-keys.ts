@@ -57,6 +57,14 @@ tester.run('no-missing-keys', rule as never, {
         code: `$t('hello')`
       },
       {
+        // not nested key
+        code: `t('messages.not_nested.hello')`
+      },
+      {
+        // partial nested key
+        code: `t('messages.not_nested.world')`
+      },
+      {
         // nested key
         code: `t('messages.nested.hello')`
       },

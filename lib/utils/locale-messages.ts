@@ -261,6 +261,15 @@ export class LocaleMessages {
       let i = 0
       let missing = false
       while (i < length) {
+        const remainedKey = paths.slice(i).join('.')
+        if (
+          lasts.some(
+            last => last && typeof last !== 'string' && last[remainedKey]
+          )
+        ) {
+          break
+        }
+
         const values: I18nLocaleMessageValue[] = lasts
           .map(last => {
             return last && typeof last !== 'string' ? last[paths[i]] : undefined
