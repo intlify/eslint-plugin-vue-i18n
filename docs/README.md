@@ -25,7 +25,7 @@ Go to [Get Started](./started.md)
 
 <p align="center">
   <a
-    href="https://www.codeandweb.com/babeledit?utm_campaign=vue-i18n-2019-01" 
+    href="https://www.codeandweb.com/babeledit?utm_campaign=vue-i18n-2019-01"
     target="_blank">
     <img
       src="https://secure.codeandweb.com/static/babeledit.svg"
@@ -60,7 +60,6 @@ Go to [Get Started](./started.md)
     />
   </a>
 </p>
-
 
 ## Become a Sponsor
 
