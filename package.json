@@ -62,7 +62,7 @@
     "monaco-editor": "^0.23.0",
     "nyc": "^15.0.0",
     "opener": "^1.5.1",
-    "prettier": "^2.0.5",
+    "prettier": "^2.2.1",
     "rimraf": "^3.0.0",
     "shipjs": "^0.23.0",
     "ts-node": "^9.0.0",
