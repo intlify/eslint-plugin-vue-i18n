@@ -15,8 +15,8 @@ import type {
   LinkedModifierNode,
   LinkedKeyNode
 } from '@intlify/message-compiler'
-import { NodeTypes } from '@intlify/message-compiler'
 import lodash from 'lodash'
+import { NodeTypes } from './utils'
 
 export function parse(
   code: string

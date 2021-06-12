@@ -24,8 +24,8 @@
     }
   },
   "dependencies": {
-    "@intlify/message-compiler": "^9.0.0-rc.5",
-    "@intlify/message-resolver": "^9.0.0-rc.5",
+    "@intlify/message-compiler": "^9.1.6",
+    "@intlify/message-resolver": "^9.1.6",
     "debug": "^4.3.1",
     "glob": "^7.1.3",
     "ignore": "^5.0.5",
@@ -110,7 +110,7 @@
     "release:prepare": "shipjs prepare",
     "release:trigger": "shipjs trigger",
     "test": "mocha --require ts-node/register \"./tests/**/*.ts\"",
-    "test:debug": "mocha --require ts-node/register --inspect \"./tests/**/*.ts\"",
+    "test:debug": "mocha --require ts-node/register/transpile-only --inspect \"./tests/**/*.ts\"",
     "test:coverage": "nyc mocha --require ts-node/register \"./tests/**/*.ts\" --timeout 60000",
     "test:integrations": "mocha ./tests-integrations/*.js --timeout 60000"
   }

@@ -9,12 +9,12 @@ import debugBuilder from 'debug'
 import type { RuleContext, RuleListener } from '../types'
 import {
   getMessageSyntaxVersions,
-  getReportIndex
+  getReportIndex,
+  NodeTypes
 } from '../utils/message-compiler/utils'
 import { parse } from '../utils/message-compiler/parser'
 import { parse as parseForV8 } from '../utils/message-compiler/parser-v8'
 import { traverseNode } from '../utils/message-compiler/traverser'
-import { NodeTypes } from '@intlify/message-compiler'
 const debug = debugBuilder(
   'eslint-plugin-vue-i18n:prefer-linked-key-with-paren'
 )

@@ -3,12 +3,12 @@
  * @author Yosuke Ota
  */
 import type { ResourceNode } from '@intlify/message-compiler'
-import { NodeTypes } from '@intlify/message-compiler'
 import { traverseNode } from './message-compiler/traverser'
 import type { I18nLocaleMessageDictionary, RuleContext } from '../types'
 import { parse } from './message-compiler/parser'
 import { parse as parseForV8 } from './message-compiler/parser-v8'
 import type { MessageSyntaxVersions } from './message-compiler/utils'
+import { NodeTypes } from './message-compiler/utils'
 import { getMessageSyntaxVersions } from './message-compiler/utils'
 
 /**

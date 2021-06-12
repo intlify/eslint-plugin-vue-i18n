@@ -3,6 +3,19 @@ import semver from 'semver'
 import type { AST as JSONAST } from 'jsonc-eslint-parser'
 import type { AST as YAMLAST } from 'yaml-eslint-parser'
 
+export const NodeTypes = {
+  Resource: 0,
+  Plural: 1,
+  Message: 2,
+  Text: 3,
+  Named: 4,
+  List: 5,
+  Linked: 6,
+  LinkedKey: 7,
+  LinkedModifier: 8,
+  Literal: 9
+} as const
+
 export type MessageSyntaxVersions = {
   v8: boolean
   v9: boolean
