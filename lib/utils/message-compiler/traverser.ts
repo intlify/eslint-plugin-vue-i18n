@@ -10,7 +10,7 @@ import type {
   ResourceNode,
   TextNode
 } from '@intlify/message-compiler'
-import { NodeTypes } from '@intlify/message-compiler'
+import { NodeTypes } from './utils'
 
 type MessageElementNode =
   | TextNode
