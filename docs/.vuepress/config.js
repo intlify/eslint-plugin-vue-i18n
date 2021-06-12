@@ -18,6 +18,10 @@ module.exports = {
           module: require.resolve('./shim/module'),
           glob: require.resolve('./shim/glob'),
           eslint: path.resolve(__dirname, './shim/eslint'),
+          '@eslint/eslintrc$': path.resolve(
+            __dirname,
+            './shim/@eslint/eslintrc'
+          ),
           fs: require.resolve('./shim/fs'),
           [path.resolve(
             __dirname,

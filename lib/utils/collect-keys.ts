@@ -2,7 +2,7 @@
  * @fileoverview Collect localization keys
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
-import { CLIEngine } from 'eslint'
+import type { Linter } from 'eslint'
 import { parseForESLint, AST as VAST } from 'vue-eslint-parser'
 import { readFileSync } from 'fs'
 import { resolve, extname } from 'path'
@@ -12,7 +12,10 @@ import { CacheLoader } from './cache-loader'
 import { defineCacheFunction } from './cache-function'
 import debugBuilder from 'debug'
 import type { VisitorKeys } from '../types'
+// @ts-expect-error -- ignore
+import { Legacy } from '@eslint/eslintrc'
 const debug = debugBuilder('eslint-plugin-vue-i18n:collect-keys')
+const { CascadingConfigArrayFactory } = Legacy
 
 /**
  *
@@ -100,11 +103,11 @@ function getParser(
 function collectKeysFromText(
   text: string,
   filename: string,
-  cliEngine: CLIEngine
+  getConfigForFile: (filePath: string) => Linter.Config<Linter.RulesRecord>
 ) {
   const effectiveFilename = filename || '<text>'
   debug(`collectKeysFromFile ${effectiveFilename}`)
-  const config = cliEngine.getConfigForFile(effectiveFilename)
+  const config = getConfigForFile(effectiveFilename)
   const parser = getParser(config.parser)
 
   const parserOptions = Object.assign({}, config.parserOptions, {
@@ -132,12 +135,15 @@ function collectKeysFromText(
  * Collect the used keys from files.
  * @returns {ResourceLoader[]}
  */
-function collectKeyResourcesFromFiles(fileNames: string[]) {
+function collectKeyResourcesFromFiles(fileNames: string[], cwd: string) {
   debug('collectKeysFromFiles', fileNames)
 
-  const cliEngine = new CLIEngine({})
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  cliEngine.addPlugin('@intlify/vue-i18n', require('../index')) // for Test
+  const configArrayFactory = new CascadingConfigArrayFactory({
+    additionalPluginPool: new Map([['@intlify/vue-i18n', require('../index')]]),
+    cwd,
+    eslintRecommendedPath: require.resolve('../../files/empty.json'),
+    eslintAllPath: require.resolve('../../files/empty.json')
+  })
 
   const results = []
 
@@ -148,12 +154,20 @@ function collectKeyResourcesFromFiles(fileNames: string[]) {
     results.push(
       new ResourceLoader(resolve(filename), () => {
         const text = readFileSync(resolve(filename), 'utf8')
-        return collectKeysFromText(text, filename, cliEngine)
+        return collectKeysFromText(text, filename, getConfigForFile)
       })
     )
   }
 
   return results
+
+  function getConfigForFile(filePath: string) {
+    const absolutePath = resolve(cwd, filePath)
+    return configArrayFactory
+      .getConfigArrayForFile(absolutePath)
+      .extractConfig(absolutePath)
+      .toCompatibleObjectAsConfigFileContent()
+  }
 }
 
 /**
@@ -246,9 +260,11 @@ class UsedKeysCache {
         .filter(f => !f.ignored && extensions.includes(extname(f.filename)))
         .map(f => f.filename)
     })
-    this._collectKeyResourcesFromFiles = defineCacheFunction(fileNames => {
-      return collectKeyResourcesFromFiles(fileNames)
-    })
+    this._collectKeyResourcesFromFiles = defineCacheFunction(
+      (fileNames, cwd) => {
+        return collectKeyResourcesFromFiles(fileNames, cwd)
+      }
+    )
   }
   /**
    * Collect the used keys from files.
