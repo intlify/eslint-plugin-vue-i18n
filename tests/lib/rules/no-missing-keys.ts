@@ -29,8 +29,8 @@ const localeDirs = [
 
 function buildTestsForLocales<
   T extends RuleTester.ValidTestCase | RuleTester.InvalidTestCase
->(testcases: T[], otherTestcases: T[]) {
-  const result = []
+>(testcases: T[], otherTestcases: T[]): T[] {
+  const result: T[] = []
   for (const testcase of testcases) {
     for (const localeDir of localeDirs) {
       result.push({
