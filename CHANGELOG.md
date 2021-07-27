@@ -1,5 +1,11 @@
 
+## v0.12.0 (2021-07-27)
 
+#### :gear: Updates
+
+* [#205](https://github.com/intlify/eslint-plugin-vue-i18n/pull/205) Upgrade @intlify/message-compiler and @intlify/message-resolver
+* [#206](https://github.com/intlify/eslint-plugin-vue-i18n/pull/206) Replace ESLint CLIEngine with @eslint/eslintrc
+* [#211](https://github.com/intlify/eslint-plugin-vue-i18n/pull/211) update dependency yaml-eslint-parser to ^0.4.0
 
 ## v0.11.1 (2021-03-18)
 
