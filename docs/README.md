@@ -8,6 +8,19 @@ Go to [Get Started](./started.md)
 
 ## Sponsors
 
+### 🏅 Platinum
+
+<p align="center">
+  <a
+    href="https://zenarchitects.co.jp/"
+    target="_blank">
+    <img
+      src="https://raw.githubusercontent.com/intlify/vue-i18n-next/master/docs/public/zenarchitects.png"
+      width="400px"
+    />
+  </a>
+</p>
+
 ### 🥇 Gold
 
 <p align="center">
@@ -20,30 +33,21 @@ Go to [Get Started](./started.md)
     />
   </a>
 </p>
+<p align="center">
+  <a
+    href="https://rapidapi.com/"
+    target="_blank">
+    <img
+      src="https://raw.githubusercontent.com/intlify/vue-i18n-next/master/docs/public/RapidAPI.png"
+      width="240px"
+    />
+  </a>
+</p>
 
 ### 🥈 Silver
 
-<p align="center">
-  <a
-    href="https://www.codeandweb.com/babeledit?utm_campaign=vue-i18n-2019-01"
-    target="_blank">
-    <img
-      src="https://secure.codeandweb.com/static/babeledit.svg"
-      width="200px"
-    />
-  </a>
-</p>
-
 ### 🥉 Bronze
 
-<p align="center">
-  <a href="https://zenarchitects.co.jp/" target="_blank">
-    <img
-      src="https://raw.githubusercontent.com/intlify/vue-i18n-next/master/docs/public/zenarchitects.png"
-      width="144px"
-    />
-  </a>
-</p>
 <p align="center">
   <a href="https://www.sendcloud.com/" target="_blank">
     <img
@@ -56,6 +60,14 @@ Go to [Get Started](./started.md)
   <a href="https://www.vuemastery.com/" target="_blank">
     <img
       src="https://raw.githubusercontent.com/intlify/vue-i18n-next/master/docs/public/vuemastery.png"
+      width="144px"
+    />
+  </a>
+</p>
+<p align="center">
+  <a href="https://www.deci-bel.com/" target="_blank">
+    <img
+      src="https://raw.githubusercontent.com/intlify/vue-i18n-next/master/docs/public/decibel.png"
       width="144px"
     />
   </a>

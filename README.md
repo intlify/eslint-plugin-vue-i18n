@@ -15,6 +15,17 @@ Intlify Project is an open source project that is included Vue I18n and i18n too
 
 - [Become a Sponsor on GitHub](https://github.com/sponsors/kazupon)
 
+<h3 align="center">🏅 Platinum Sponsors</h3>
+
+<p align="center">
+  <a href="https://zenarchitects.co.jp/" target="_blank">
+    <img
+      src="https://raw.githubusercontent.com/intlify/vue-i18n-next/master/docs/public/zenarchitects.png"
+      width="400px"
+    />
+  </a>
+</p>
+
 <h3 align="center">🥇 Gold Sponsors</h3>
 
 <p align="center">
@@ -27,30 +38,21 @@ Intlify Project is an open source project that is included Vue I18n and i18n too
     />
   </a>
 </p>
+<p align="center">
+  <a
+    href="https://rapidapi.com/"
+    target="_blank">
+    <img
+      src="https://raw.githubusercontent.com/intlify/vue-i18n-next/master/docs/public/RapidAPI.png"
+      width="240px"
+    />
+  </a>
+</p>
 
 <h3 align="center">🥈 Silver Sponsors</h3>
 
-<p align="center">
-  <a
-    href="https://www.codeandweb.com/babeledit?utm_campaign=vue-i18n-2019-01" 
-    target="_blank">
-    <img
-      src="https://secure.codeandweb.com/static/babeledit.svg"
-      width="200px"
-    />
-  </a>
-</p>
-
 <h3 align="center">🥉 Bronze Sponsors</h3>
 
-<p align="center">
-  <a href="https://zenarchitects.co.jp/" target="_blank">
-    <img
-      src="https://raw.githubusercontent.com/intlify/vue-i18n-next/master/docs/public/zenarchitects.png"
-      width="144px"
-    />
-  </a>
-</p>
 <p align="center">
   <a href="https://www.sendcloud.com/" target="_blank">
     <img
@@ -63,6 +65,14 @@ Intlify Project is an open source project that is included Vue I18n and i18n too
   <a href="https://www.vuemastery.com/" target="_blank">
     <img
       src="https://raw.githubusercontent.com/intlify/vue-i18n-next/master/docs/public/vuemastery.png"
+      width="144px"
+    />
+  </a>
+</p>
+<p align="center">
+  <a href="https://www.deci-bel.com/" target="_blank">
+    <img
+      src="https://raw.githubusercontent.com/intlify/vue-i18n-next/master/docs/public/decibel.png"
       width="144px"
     />
   </a>
