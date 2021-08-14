@@ -60,6 +60,15 @@ function getESLintClassForV6(): typeof eslint.ESLint {
       const result = this.engine.executeOnText(params[0], params[1]?.filePath)
       return result.results
     }
+
+    async lintFiles(
+      ...params: Parameters<eslint.ESLint['lintFiles']>
+    ): ReturnType<eslint.ESLint['lintFiles']> {
+      const result = this.engine.executeOnFiles(
+        Array.isArray(params[0]) ? params[0] : [params[0]]
+      )
+      return result.results
+    }
   }
 
   const eslintClass = ESLintForV6 as never
