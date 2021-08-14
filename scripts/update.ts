@@ -15,12 +15,16 @@ import './update-docs-index'
 // recommended rules.
 import './update-recommended-rules'
 
-// indices.
-for (const pairs of [
-  [resolve(__dirname, '../lib/configs')],
-  [resolve(__dirname, '../lib/rules')],
-  [resolve(__dirname, '../lib/utils'), '', true]
-] as const) {
-  const [dirPath, prefix, all] = pairs
-  writeFileSync(`${dirPath}.ts`, createIndex(dirPath, prefix, all))
+main()
+
+async function main() {
+  // indices.
+  for (const pairs of [
+    [resolve(__dirname, '../lib/configs')],
+    [resolve(__dirname, '../lib/rules')],
+    [resolve(__dirname, '../lib/utils'), '', true]
+  ] as const) {
+    const [dirPath, prefix, all] = pairs
+    writeFileSync(`${dirPath}.ts`, await createIndex(dirPath, prefix, all))
+  }
 }
