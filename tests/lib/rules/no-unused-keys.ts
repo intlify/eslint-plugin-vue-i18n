@@ -929,8 +929,8 @@ describe('no-unused-keys with fixtures', () => {
   const cwdRoot = join(__dirname, '../../fixtures/no-unused-keys')
 
   describe('errors', () => {
-    it('settings.vue-i18n.localeDir', () => {
-      testOnFixtures(
+    it('settings.vue-i18n.localeDir', async () => {
+      await testOnFixtures(
         {
           cwd: join(cwdRoot, './valid'),
           ruleName: '@intlify/vue-i18n/no-unused-keys'
@@ -1002,8 +1002,8 @@ describe('no-unused-keys with fixtures', () => {
   })
 
   describe('valid', () => {
-    it('should be not detected unsued keys', () => {
-      testOnFixtures(
+    it('should be not detected unsued keys', async () => {
+      await testOnFixtures(
         {
           cwd: join(cwdRoot, './valid/vue-cli-format'),
           localeDir: `./locales/*.{json,yaml,yml}`,
@@ -1018,8 +1018,8 @@ describe('no-unused-keys with fixtures', () => {
       )
     })
 
-    it('should be not detected unsued keys for constructor-option-format', () => {
-      testOnFixtures(
+    it('should be not detected unsued keys for constructor-option-format', async () => {
+      await testOnFixtures(
         {
           cwd: join(cwdRoot, './valid/constructor-option-format'),
           localeDir: {
@@ -1037,8 +1037,8 @@ describe('no-unused-keys with fixtures', () => {
       )
     })
 
-    it('should be not detected unsued keys for multiple-locales', () => {
-      testOnFixtures(
+    it('should be not detected unsued keys for multiple-locales', async () => {
+      await testOnFixtures(
         {
           cwd: join(cwdRoot, './valid/multiple-locales'),
           localeDir: [
@@ -1065,7 +1065,7 @@ describe('no-unused-keys with fixtures', () => {
   })
 
   describe('invalid', () => {
-    it('should be detected unsued keys', () => {
+    it('should be detected unsued keys', async () => {
       const fixallEn = `{
   "hello": "hello world",
   "messages": {
@@ -1084,7 +1084,7 @@ messages:
 hello_dio: "こんにちは、アンダースコア DIO！"
 "hello {name}": "こんにちは、{name}！"
 `
-      testOnFixtures(
+      await testOnFixtures(
         {
           cwd: join(cwdRoot, './invalid/vue-cli-format'),
           localeDir: `./locales/*.{json,yaml,yml}`,
@@ -1250,7 +1250,7 @@ hello_dio: "こんにちは、アンダースコア DIO！"
       )
     })
 
-    it('should be detected unsued keys for constructor-option-format', () => {
+    it('should be detected unsued keys for constructor-option-format', async () => {
       const fixall = `{
   "en": {
     "hello": "hello world",
@@ -1274,7 +1274,7 @@ hello_dio: "こんにちは、アンダースコア DIO！"
   }
 }
 `
-      testOnFixtures(
+      await testOnFixtures(
         {
           cwd: join(cwdRoot, './invalid/constructor-option-format'),
           localeDir: {
@@ -1540,8 +1540,8 @@ hello_dio: "こんにちは、アンダースコア DIO！"
       )
     })
 
-    it('should be detected unsued keys for multiple-locales', () => {
-      testOnFixtures(
+    it('should be detected unsued keys for multiple-locales', async () => {
+      await testOnFixtures(
         {
           cwd: join(cwdRoot, './invalid/multiple-locales'),
           localeDir: [
@@ -1798,8 +1798,8 @@ hello_dio: "こんにちは、アンダースコア DIO！"
       )
     })
 
-    it('should be detected unsued keys with typescript', () => {
-      testOnFixtures(
+    it('should be detected unsued keys with typescript', async () => {
+      await testOnFixtures(
         {
           cwd: join(cwdRoot, './invalid/typescript'),
           ruleName: '@intlify/vue-i18n/no-unused-keys',

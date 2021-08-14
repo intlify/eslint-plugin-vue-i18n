@@ -96,8 +96,8 @@ describe('no-html-messages with fixtures', () => {
   const cwdRoot = join(__dirname, '../../fixtures/no-html-messages')
 
   describe('valid', () => {
-    it('should be not detected html messages', () => {
-      testOnFixtures(
+    it('should be not detected html messages', async () => {
+      await testOnFixtures(
         {
           cwd: join(cwdRoot, './valid'),
           localeDir: `*.{json,yaml,yml}`,
@@ -109,8 +109,8 @@ describe('no-html-messages with fixtures', () => {
   })
 
   describe('invalid', () => {
-    it('should be detected html messages', () => {
-      testOnFixtures(
+    it('should be detected html messages', async () => {
+      await testOnFixtures(
         {
           cwd: join(cwdRoot, './invalid'),
           localeDir: `*.{json,yaml,yml}`,

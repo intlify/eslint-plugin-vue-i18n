@@ -8,11 +8,14 @@ import { resolve } from 'path'
 import rules from './lib/rules'
 import { format } from './lib/utils'
 
-// recommended.ts
-writeFileSync(
-  resolve(__dirname, '../lib/configs/recommended.ts'),
-  format(
-    `/** DON'T EDIT THIS FILE; was created by scripts. */
+main()
+
+async function main() {
+  // recommended.ts
+  writeFileSync(
+    resolve(__dirname, '../lib/configs/recommended.ts'),
+    await format(
+      `/** DON'T EDIT THIS FILE; was created by scripts. */
 export = {
   extends: [require.resolve('./base')],
   parserOptions: {
@@ -33,6 +36,7 @@ export = {
       .join('\n        ')}
   },
 }`,
-    resolve(__dirname, '../lib/configs/recommended.ts')
+      resolve(__dirname, '../lib/configs/recommended.ts')
+    )
   )
-)
+}

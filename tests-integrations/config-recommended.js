@@ -18,23 +18,20 @@ describe('Integration with "plugin:@intlify/vue-i18n/recommended"', () => {
     process.chdir(originalCwd)
   })
 
-  it('should work with shareable config', () => {
-    const CLIEngine = require('./config-recommended/node_modules/eslint')
-      .CLIEngine
-    const engine = new CLIEngine({
+  it('should work with shareable config', async () => {
+    const ESLint = require('./config-recommended/node_modules/eslint').ESLint
+    const engine = new ESLint({
       cwd: TEST_CWD,
       extensions: ['.js', '.vue', '.json']
     })
-    const result = engine.executeOnFiles(['./src'])
-    const enJson = result.results.find(
-      r => path.basename(r.filePath) === 'en.json'
-    )
+    const results = await engine.lintFiles(['./src'])
+    const enJson = results.find(r => path.basename(r.filePath) === 'en.json')
     assert.strictEqual(enJson.messages.length, 1)
     assert.strictEqual(
       enJson.messages[0].ruleId,
       '@intlify/vue-i18n/no-html-messages'
     )
-    const aVue = result.results.find(r => path.basename(r.filePath) === 'a.vue')
+    const aVue = results.find(r => path.basename(r.filePath) === 'a.vue')
     assert.strictEqual(aVue.messages.length, 1)
     assert.strictEqual(
       aVue.messages[0].ruleId,

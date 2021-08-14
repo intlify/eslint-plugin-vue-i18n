@@ -5,12 +5,12 @@
  */
 import { readdirSync, existsSync } from 'fs'
 import { basename, extname, join } from 'path'
-import { CLIEngine } from 'eslint'
-const linter = new CLIEngine({ fix: true })
+import { ESLint } from '../lib/eslint-compat'
+const eslint = new ESLint({ fix: true })
 
-function format(text: string, filename: string): string {
-  const lintResult = linter.executeOnText(text, filename)
-  return lintResult.results[0].output || text
+async function format(text: string, filename: string): Promise<string> {
+  const lintResults = await eslint.lintText(text, { filePath: filename })
+  return lintResults[0].output || text
 }
 
 /**
@@ -20,7 +20,11 @@ function camelCase(str: string) {
   return str.replace(/[-_](\w)/gu, (_, c) => (c ? c.toUpperCase() : ''))
 }
 
-function createIndex(dirPath: string, prefix = '', all = false): string {
+async function createIndex(
+  dirPath: string,
+  prefix = '',
+  all = false
+): Promise<string> {
   const dirName = basename(dirPath)
   const tsFiles = readdirSync(dirPath)
     .filter(

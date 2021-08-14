@@ -97,7 +97,6 @@ function getParser(
  * Collect the used keys from source code text.
  * @param {string} text
  * @param {string} filename
- * @param {CLIEngine} cliEngine
  * @returns {string[]}
  */
 function collectKeysFromText(

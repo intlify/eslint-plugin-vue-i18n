@@ -119,8 +119,8 @@ describe('no-duplicate-keys-in-locale with fixtures', () => {
   const cwdRoot = join(__dirname, '../../fixtures/no-duplicate-keys-in-locale')
 
   describe('valid', () => {
-    it('should be not detected dupe keys', () => {
-      testOnFixtures(
+    it('should be not detected dupe keys', async () => {
+      await testOnFixtures(
         {
           cwd: join(cwdRoot, './valid/vue-cli-format'),
           localeDir: `./locales/*.{json,yaml,yml}`,
@@ -130,8 +130,8 @@ describe('no-duplicate-keys-in-locale with fixtures', () => {
       )
     })
 
-    it('should be not detected dupe keys for constructor-option-format', () => {
-      testOnFixtures(
+    it('should be not detected dupe keys for constructor-option-format', async () => {
+      await testOnFixtures(
         {
           cwd: join(cwdRoot, './valid/constructor-option-format'),
           localeDir: {
@@ -143,8 +143,8 @@ describe('no-duplicate-keys-in-locale with fixtures', () => {
         {}
       )
     })
-    it('should be not detected dupe keys for multiple-locales', () => {
-      testOnFixtures(
+    it('should be not detected dupe keys for multiple-locales', async () => {
+      await testOnFixtures(
         {
           cwd: join(cwdRoot, './valid/multiple-locales'),
           localeDir: [
@@ -166,8 +166,8 @@ describe('no-duplicate-keys-in-locale with fixtures', () => {
   })
 
   describe('invalid', () => {
-    it('should be detected dupe keys', () => {
-      testOnFixtures(
+    it('should be detected dupe keys', async () => {
+      await testOnFixtures(
         {
           cwd: join(cwdRoot, './invalid/vue-cli-format'),
           localeDir: `./locales/*.{json,yaml,yml}`,
@@ -282,8 +282,8 @@ describe('no-duplicate-keys-in-locale with fixtures', () => {
       )
     })
 
-    it('should be detected dupe keys for constructor-option-format', () => {
-      testOnFixtures(
+    it('should be detected dupe keys for constructor-option-format', async () => {
+      await testOnFixtures(
         {
           cwd: join(cwdRoot, './invalid/constructor-option-format'),
           localeDir: {
@@ -387,8 +387,8 @@ describe('no-duplicate-keys-in-locale with fixtures', () => {
         }
       )
     })
-    it('should be detected dupe keys for multiple-locales', () => {
-      testOnFixtures(
+    it('should be detected dupe keys for multiple-locales', async () => {
+      await testOnFixtures(
         {
           cwd: join(cwdRoot, './invalid/multiple-locales'),
           localeDir: [
@@ -508,8 +508,8 @@ describe('no-duplicate-keys-in-locale with fixtures', () => {
       )
     })
 
-    it('should be detected dupe keys with ignoreI18nBlock', () => {
-      testOnFixtures(
+    it('should be detected dupe keys with ignoreI18nBlock', async () => {
+      await testOnFixtures(
         {
           cwd: join(cwdRoot, './invalid/vue-cli-format'),
           localeDir: `./locales/*.{json,yaml,yml}`,
@@ -595,8 +595,8 @@ describe('no-duplicate-keys-in-locale with fixtures', () => {
       )
     })
 
-    it('should be detected dupe keys with ignoreI18nBlock for constructor-option-format', () => {
-      testOnFixtures(
+    it('should be detected dupe keys with ignoreI18nBlock for constructor-option-format', async () => {
+      await testOnFixtures(
         {
           cwd: join(cwdRoot, './invalid/constructor-option-format'),
           localeDir: {
