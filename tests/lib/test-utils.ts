@@ -1,14 +1,14 @@
 import fs from 'fs'
 import path from 'path'
 import assert from 'assert'
-import { CLIEngine } from 'eslint'
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import linter = require('eslint/lib/linter')
+import { ESLint } from '../../scripts/lib/eslint-compat'
 import base = require('../../lib/configs/base')
 import plugin = require('../../lib/index')
 import type { SettingsVueI18nLocaleDir } from '../../lib/types'
-const { SourceCodeFixer } = linter
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+// eslint-disable-next-line @typescript-eslint/no-var-requires -- ignore
+const { SourceCodeFixer } = require('eslint/lib/linter')
 
 function buildBaseConfigPath() {
   const configPath = path.join(
@@ -22,7 +22,7 @@ function buildBaseConfigPath() {
 
 export const baseConfigPath = buildBaseConfigPath()
 
-export function testOnFixtures(
+export async function testOnFixtures(
   testOptions: {
     cwd: string
     ruleName: string
@@ -49,15 +49,18 @@ export function testOnFixtures(
     }
   },
   assertOptions?: { messageOnly?: boolean }
-): void {
+): Promise<void> {
   const originalCwd = process.cwd()
   try {
     process.chdir(testOptions.cwd)
-    const linter = new CLIEngine(
+    const eslint = new ESLint(
       testOptions.useEslintrc
         ? {
             cwd: testOptions.cwd,
-            useEslintrc: true
+            useEslintrc: true,
+            plugins: {
+              '@intlify/vue-i18n': plugin
+            }
           }
         : {
             cwd: testOptions.cwd,
@@ -70,23 +73,30 @@ export function testOnFixtures(
               }
             },
             useEslintrc: false,
-            parserOptions: {
-              ecmaVersion: 2020,
-              sourceType: 'module'
+            overrideConfig: {
+              parserOptions: {
+                ecmaVersion: 2020,
+                sourceType: 'module'
+              },
+              rules: {
+                [testOptions.ruleName]: [
+                  'error',
+                  ...(testOptions.options || [])
+                ]
+              }
             },
-            rules: {
-              [testOptions.ruleName]: ['error', ...(testOptions.options || [])]
-            },
-            extensions: ['.js', '.vue', '.json', '.json5', '.yaml', '.yml']
+            extensions: ['.js', '.vue', '.json', '.json5', '.yaml', '.yml'],
+            plugins: {
+              '@intlify/vue-i18n': plugin
+            }
           }
     )
-    linter.addPlugin('@intlify/vue-i18n', plugin)
 
-    const messages = linter.executeOnFiles(['.'])
+    const messageResults = await eslint.lintFiles(['.'])
     const filePaths = Object.keys(expectedMessages).map(file =>
       path.join(testOptions.cwd, file)
     )
-    for (const lintResult of messages.results) {
+    for (const lintResult of messageResults) {
       if (lintResult.errorCount > 0) {
         if (!filePaths.includes(lintResult.filePath)) {
           assert.fail(
@@ -102,7 +112,7 @@ export function testOnFixtures(
     for (const filePath of Object.keys(expectedMessages)) {
       const fileMessages = getResult(
         testOptions.ruleName,
-        messages,
+        messageResults,
         path.resolve(testOptions.cwd, filePath),
         assertOptions
       )
@@ -114,7 +124,10 @@ export function testOnFixtures(
       )
       count += fileMessages.errors.length
     }
-    assert.equal(messages.errorCount, count)
+    assert.equal(
+      messageResults.reduce((s, m) => s + m.errorCount, 0),
+      count
+    )
   } finally {
     process.chdir(originalCwd)
   }
@@ -122,7 +135,7 @@ export function testOnFixtures(
 
 function getResult(
   ruleName: string,
-  messages: CLIEngine.LintReport,
+  messageResults: ESLint.LintResult[],
   fullPath: string,
   options?: { messageOnly?: boolean }
 ): {
@@ -135,7 +148,7 @@ function getResult(
         suggestions?: { desc: string; output: string }[]
       }[]
 } {
-  const result = messages.results.find(result => result.filePath === fullPath)
+  const result = messageResults.find(result => result.filePath === fullPath)
   if (!result) {
     assert.fail('not found lint results at ' + fullPath)
   }
