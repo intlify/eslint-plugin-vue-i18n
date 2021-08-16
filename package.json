@@ -60,7 +60,7 @@
     "eslint4b": "^7.16.0",
     "lerna-changelog": "^1.0.1",
     "mocha": "^8.0.0",
-    "monaco-editor": "^0.26.0",
+    "monaco-editor": "^0.27.0",
     "nyc": "^15.0.0",
     "opener": "^1.5.1",
     "prettier": "^2.0.5",
