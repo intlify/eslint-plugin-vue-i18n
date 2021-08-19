@@ -60,7 +60,8 @@ export async function testOnFixtures(
             useEslintrc: true,
             plugins: {
               '@intlify/vue-i18n': plugin
-            }
+            },
+            extensions: ['.js', '.vue', '.json', '.json5', '.yaml', '.yml']
           }
         : {
             cwd: testOptions.cwd,

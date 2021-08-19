@@ -25,7 +25,7 @@ jobs:
       - name: Lint docs
         run: yarn lint:docs
   test:
-    name: 'Test on Node.js ${{ matrix.node }} OS: ${{matrix.os}}'
+    name: 'Test for ESLint 7 on Node.js ${{ matrix.node }} OS: ${{matrix.os}}'
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -47,7 +47,7 @@ jobs:
           yarn build
           yarn test:integrations
   test-for-eslint:
-    name: 'Test for ESLint v${{ matrix.eslint }} on OS: ${{matrix.os}}'
+    name: 'Test for ESLint ${{ matrix.eslint }} on OS: ${{matrix.os}}'
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
