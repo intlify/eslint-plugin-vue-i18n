@@ -8,13 +8,29 @@ env:
   CI: true
 
 jobs:
+  lint:
+    name: 'Lint'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - name: Install
+        run: yarn install
+      - name: Lint
+        run: yarn lint
+      - name: Lint docs
+        run: yarn lint:docs
   test:
     name: 'Test on Node.js ${{ matrix.node }} OS: ${{matrix.os}}'
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node: [10, 12, 14]
+        node: [10, 12, 14, 16]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -24,13 +40,27 @@ jobs:
           node-version: ${{ matrix.node }}
       - name: Install
         run: yarn install
-      - name: Lint
-        run: yarn lint
-      - name: Lint docs
-        run: yarn lint:docs
       - name: Test
         run: yarn test
       - name: Integration Test
         run: |
           yarn build
           yarn test:integrations
+  test-for-eslint:
+    name: 'Test for ESLint v${{ matrix.eslint }} on OS: ${{matrix.os}}'
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        eslint: [5, 6, ^8.0.0-0]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - name: Install
+        run: yarn add eslint@${{ matrix.eslint }}
+      - name: Test
+        run: yarn test
