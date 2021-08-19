@@ -5,10 +5,7 @@ import { ESLint } from '../../scripts/lib/eslint-compat'
 import base = require('../../lib/configs/base')
 import plugin = require('../../lib/index')
 import type { SettingsVueI18nLocaleDir } from '../../lib/types'
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-// eslint-disable-next-line @typescript-eslint/no-var-requires -- ignore
-const { SourceCodeFixer } = require('eslint/lib/linter')
+import { SourceCodeFixer } from './source-code-fixer'
 
 function buildBaseConfigPath() {
   const configPath = path.join(
@@ -140,7 +137,7 @@ function getResult(
   fullPath: string,
   options?: { messageOnly?: boolean }
 ): {
-  output?: string
+  output?: string | null
   errors:
     | string[]
     | {
@@ -181,7 +178,7 @@ function getResult(
       ? {
           output: (() => {
             const output = SourceCodeFixer.applyFixes(
-              result.source,
+              result.source!,
               sortedMessages
             ).output
             return output === result.source ? null : output
@@ -197,7 +194,7 @@ function getResult(
         ...(message.suggestions
           ? {
               suggestions: message.suggestions!.map(suggest => {
-                const output = SourceCodeFixer.applyFixes(result.source, [
+                const output = SourceCodeFixer.applyFixes(result.source!, [
                   suggest
                 ]).output
                 return {
