@@ -56,7 +56,7 @@ export async function testOnFixtures(
             cwd: testOptions.cwd,
             useEslintrc: true,
             plugins: {
-              '@intlify/vue-i18n': plugin
+              '@intlify/eslint-plugin-vue-i18n': plugin
             },
             extensions: ['.js', '.vue', '.json', '.json5', '.yaml', '.yml']
           }
@@ -85,7 +85,7 @@ export async function testOnFixtures(
             },
             extensions: ['.js', '.vue', '.json', '.json5', '.yaml', '.yml'],
             plugins: {
-              '@intlify/vue-i18n': plugin
+              '@intlify/eslint-plugin-vue-i18n': plugin
             }
           }
     )
