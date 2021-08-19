@@ -6,8 +6,13 @@ import path from 'path'
 import assert from 'assert'
 import { usedKeysCache } from '../../../lib/utils/collect-keys'
 import { setTimeouts } from '../../../lib/utils/default-timeouts'
+import semver from 'semver'
 
 describe('usedKeysCache', () => {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires -- ignore
+  if (!semver.satisfies(require('eslint/package.json').version, '>=6')) {
+    return
+  }
   before(() => {
     setTimeouts({
       CACHE_LOADER: 10,
