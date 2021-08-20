@@ -33,17 +33,19 @@ export function getTestCasesFromFixtures(testOptions: {
   cwd: string
   options?: unknown[]
   localeDir?: SettingsVueI18nLocaleDir
+  parserOptions?: RuleTester.ValidTestCase['parserOptions']
 }): IterableIterator<RuleTester.ValidTestCase>
 export function getTestCasesFromFixtures(
   testOptions: {
     cwd: string
     options?: unknown[]
     localeDir?: SettingsVueI18nLocaleDir
+    parserOptions?: RuleTester.ValidTestCase['parserOptions']
   },
   outputs: {
     [file: string]:
       | Omit<RuleTester.InvalidTestCase, keyof RuleTester.ValidTestCase>
-      | true
+      | boolean
   }
 ): IterableIterator<RuleTester.InvalidTestCase>
 export function* getTestCasesFromFixtures(
@@ -55,7 +57,7 @@ export function* getTestCasesFromFixtures(
   outputs?: {
     [file: string]:
       | Omit<RuleTester.InvalidTestCase, keyof RuleTester.ValidTestCase>
-      | true
+      | boolean
   }
 ): IterableIterator<RuleTester.ValidTestCase | RuleTester.InvalidTestCase> {
   if (!testOptions) {
@@ -109,6 +111,9 @@ function* extractTargetFiles(
   parser: string | undefined
 }> {
   for (const relative of fs.readdirSync(dir)) {
+    if (relative === 'node_modules' || relative === '.eslintrc.js') {
+      continue
+    }
     const filename = path.join(dir, relative)
     const ext = path.extname(relative)
     if (
@@ -120,9 +125,6 @@ function* extractTargetFiles(
       ext === '.yml'
     ) {
       yield { filename, relative, parser: PARSERS[ext] }
-      continue
-    }
-    if (relative === 'node_modules') {
       continue
     }
     if (fs.statSync(filename).isDirectory()) {
