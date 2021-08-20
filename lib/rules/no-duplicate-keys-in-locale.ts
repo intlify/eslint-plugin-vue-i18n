@@ -123,7 +123,13 @@ function create(context: RuleContext): RuleListener {
         const keyPath = [...pathStack.keyPath, key]
         const keyPathStr = joinPath(...keyPath)
         const nextOtherDictionaries: DictData[] = []
-        for (const value of keyOtherValues) {
+        for (const value of keyOtherValues.sort((a, b) =>
+          a.source.fullpath > b.source.fullpath
+            ? 1
+            : a.source.fullpath < b.source.fullpath
+            ? -1
+            : 0
+        )) {
           if (typeof value.value === 'string') {
             context.report({
               message: `duplicate key '${keyPathStr}' in '${
