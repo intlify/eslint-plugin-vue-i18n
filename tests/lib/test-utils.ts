@@ -5,10 +5,7 @@ import { ESLint } from '../../scripts/lib/eslint-compat'
 import base = require('../../lib/configs/base')
 import plugin = require('../../lib/index')
 import type { SettingsVueI18nLocaleDir } from '../../lib/types'
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-// eslint-disable-next-line @typescript-eslint/no-var-requires -- ignore
-const { SourceCodeFixer } = require('eslint/lib/linter')
+import { SourceCodeFixer } from './source-code-fixer'
 
 function buildBaseConfigPath() {
   const configPath = path.join(
@@ -17,6 +14,15 @@ function buildBaseConfigPath() {
   )
   fs.mkdirSync(path.dirname(configPath), { recursive: true })
   fs.writeFileSync(configPath, JSON.stringify(base, null, 2), 'utf8')
+
+  fs.writeFileSync(
+    path.join(
+      __dirname,
+      '../../node_modules/@intlify/eslint-plugin-vue-i18n/index.js'
+    ),
+    '',
+    'utf8'
+  )
   return configPath
 }
 
@@ -59,8 +65,9 @@ export async function testOnFixtures(
             cwd: testOptions.cwd,
             useEslintrc: true,
             plugins: {
-              '@intlify/vue-i18n': plugin
-            }
+              '@intlify/eslint-plugin-vue-i18n': plugin
+            },
+            extensions: ['.js', '.vue', '.json', '.json5', '.yaml', '.yml']
           }
         : {
             cwd: testOptions.cwd,
@@ -75,7 +82,7 @@ export async function testOnFixtures(
             useEslintrc: false,
             overrideConfig: {
               parserOptions: {
-                ecmaVersion: 2020,
+                ecmaVersion: 2018,
                 sourceType: 'module'
               },
               rules: {
@@ -87,7 +94,7 @@ export async function testOnFixtures(
             },
             extensions: ['.js', '.vue', '.json', '.json5', '.yaml', '.yml'],
             plugins: {
-              '@intlify/vue-i18n': plugin
+              '@intlify/eslint-plugin-vue-i18n': plugin
             }
           }
     )
@@ -139,7 +146,7 @@ function getResult(
   fullPath: string,
   options?: { messageOnly?: boolean }
 ): {
-  output?: string
+  output?: string | null
   errors:
     | string[]
     | {
@@ -180,7 +187,7 @@ function getResult(
       ? {
           output: (() => {
             const output = SourceCodeFixer.applyFixes(
-              result.source,
+              result.source!,
               sortedMessages
             ).output
             return output === result.source ? null : output
@@ -196,7 +203,7 @@ function getResult(
         ...(message.suggestions
           ? {
               suggestions: message.suggestions!.map(suggest => {
-                const output = SourceCodeFixer.applyFixes(result.source, [
+                const output = SourceCodeFixer.applyFixes(result.source!, [
                   suggest
                 ]).output
                 return {

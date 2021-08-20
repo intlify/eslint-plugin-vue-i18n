@@ -5,6 +5,7 @@ import { RuleTester } from 'eslint'
 import { join } from 'path'
 import rule = require('../../../lib/rules/no-unused-keys')
 import { testOnFixtures } from '../test-utils'
+import semver from 'semver'
 
 new RuleTester({
   parser: require.resolve('vue-eslint-parser'),
@@ -1003,6 +1004,10 @@ describe('no-unused-keys with fixtures', () => {
 
   describe('valid', () => {
     it('should be not detected unsued keys', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires -- ignore
+      if (!semver.satisfies(require('eslint/package.json').version, '>=6')) {
+        return
+      }
       await testOnFixtures(
         {
           cwd: join(cwdRoot, './valid/vue-cli-format'),
@@ -1019,6 +1024,10 @@ describe('no-unused-keys with fixtures', () => {
     })
 
     it('should be not detected unsued keys for constructor-option-format', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires -- ignore
+      if (!semver.satisfies(require('eslint/package.json').version, '>=6')) {
+        return
+      }
       await testOnFixtures(
         {
           cwd: join(cwdRoot, './valid/constructor-option-format'),
@@ -1038,6 +1047,10 @@ describe('no-unused-keys with fixtures', () => {
     })
 
     it('should be not detected unsued keys for multiple-locales', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires -- ignore
+      if (!semver.satisfies(require('eslint/package.json').version, '>=6')) {
+        return
+      }
       await testOnFixtures(
         {
           cwd: join(cwdRoot, './valid/multiple-locales'),
@@ -1066,6 +1079,10 @@ describe('no-unused-keys with fixtures', () => {
 
   describe('invalid', () => {
     it('should be detected unsued keys', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires -- ignore
+      if (!semver.satisfies(require('eslint/package.json').version, '>=6')) {
+        return
+      }
       const fixallEn = `{
   "hello": "hello world",
   "messages": {
@@ -1251,6 +1268,10 @@ hello_dio: "こんにちは、アンダースコア DIO！"
     })
 
     it('should be detected unsued keys for constructor-option-format', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires -- ignore
+      if (!semver.satisfies(require('eslint/package.json').version, '>=6')) {
+        return
+      }
       const fixall = `{
   "en": {
     "hello": "hello world",
@@ -1541,6 +1562,10 @@ hello_dio: "こんにちは、アンダースコア DIO！"
     })
 
     it('should be detected unsued keys for multiple-locales', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires -- ignore
+      if (!semver.satisfies(require('eslint/package.json').version, '>=6')) {
+        return
+      }
       await testOnFixtures(
         {
           cwd: join(cwdRoot, './invalid/multiple-locales'),
@@ -1799,6 +1824,10 @@ hello_dio: "こんにちは、アンダースコア DIO！"
     })
 
     it('should be detected unsued keys with typescript', async () => {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires -- ignore
+      if (!semver.satisfies(require('eslint/package.json').version, '>=6')) {
+        return
+      }
       await testOnFixtures(
         {
           cwd: join(cwdRoot, './invalid/typescript'),
