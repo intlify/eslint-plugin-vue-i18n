@@ -133,6 +133,9 @@ function* extractTargetFiles(
     }
   }
 }
+/**
+ * @deprecated
+ */
 export async function testOnFixtures(
   testOptions: {
     cwd: string

@@ -206,12 +206,7 @@ new RuleTester({
             {
               line: 10,
               message:
-                "duplicate key 'dupe' in 'ja'. \"./locales/ja.1.json\" has the same key"
-            },
-            {
-              line: 10,
-              message:
-                "duplicate key 'dupe' in 'ja'. \"./locales/ja.2.json\" has the same key"
+                'duplicate key \'dupe\' in \'ja\'. "./locales/ja.1.json", and "./locales/ja.2.json" has the same key'
             },
             {
               line: 13,
@@ -309,12 +304,7 @@ new RuleTester({
             {
               line: 16,
               message:
-                "duplicate key 'dupe' in 'ja'. \"./locales/index.1.json\" has the same key"
-            },
-            {
-              line: 16,
-              message:
-                "duplicate key 'dupe' in 'ja'. \"./locales/index.2.yaml\" has the same key"
+                'duplicate key \'dupe\' in \'ja\'. "./locales/index.1.json", and "./locales/index.2.yaml" has the same key'
             },
             {
               line: 21,
@@ -426,12 +416,7 @@ new RuleTester({
             {
               line: 16,
               message:
-                "duplicate key 'dupe' in 'ja'. \"./locales3/index.1.json\" has the same key"
-            },
-            {
-              line: 16,
-              message:
-                "duplicate key 'dupe' in 'ja'. \"./locales3/index.2.yaml\" has the same key"
+                'duplicate key \'dupe\' in \'ja\'. "./locales3/index.1.json", and "./locales3/index.2.yaml" has the same key'
             },
             {
               line: 21,

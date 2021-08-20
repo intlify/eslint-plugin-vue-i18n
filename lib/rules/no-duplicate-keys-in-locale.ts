@@ -123,29 +123,30 @@ function create(context: RuleContext): RuleListener {
         const keyPath = [...pathStack.keyPath, key]
         const keyPathStr = joinPath(...keyPath)
         const nextOtherDictionaries: DictData[] = []
-        for (const value of keyOtherValues.sort((a, b) =>
-          a.source.fullpath > b.source.fullpath
-            ? 1
-            : a.source.fullpath < b.source.fullpath
-            ? -1
-            : 0
-        )) {
+        const reportFiles = []
+        for (const value of keyOtherValues) {
           if (typeof value.value === 'string') {
-            context.report({
-              message: `duplicate key '${keyPathStr}' in '${
-                pathStack.locale
-              }'. "${getMessageFilepath(
-                value.source.fullpath,
-                context
-              )}" has the same key`,
-              loc: reportNode.loc
-            })
+            reportFiles.push(
+              '"' + getMessageFilepath(value.source.fullpath, context) + '"'
+            )
           } else {
             nextOtherDictionaries.push({
               dict: value.value,
               source: value.source
             })
           }
+        }
+        if (reportFiles.length) {
+          reportFiles.sort()
+          const last = reportFiles.pop()
+          context.report({
+            message: `duplicate key '${keyPathStr}' in '${pathStack.locale}'. ${
+              reportFiles.length === 0
+                ? last
+                : reportFiles.join(', ') + ', and ' + last
+            } has the same key`,
+            loc: reportNode.loc
+          })
         }
 
         pushKey(
