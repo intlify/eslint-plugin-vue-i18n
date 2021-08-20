@@ -11,9 +11,10 @@ import { ResourceLoader } from './resource-loader'
 import { CacheLoader } from './cache-loader'
 import { defineCacheFunction } from './cache-function'
 import debugBuilder from 'debug'
-import type { VisitorKeys } from '../types'
+import type { RuleContext, VisitorKeys } from '../types'
 // @ts-expect-error -- ignore
 import { Legacy } from '@eslint/eslintrc'
+import { getCwd } from './get-cwd'
 const debug = debugBuilder('eslint-plugin-vue-i18n:collect-keys')
 const { CascadingConfigArrayFactory } = Legacy
 
@@ -246,7 +247,7 @@ export function collectKeysFromAST(
 
 class UsedKeysCache {
   private _targetFilesLoader: CacheLoader<
-    [string[], string[], string],
+    [string, string[], string[], string],
     string[]
   >
   private _collectKeyResourcesFromFiles: (
@@ -254,8 +255,8 @@ class UsedKeysCache {
     cwd: string
   ) => ResourceLoader<string[]>[]
   constructor() {
-    this._targetFilesLoader = new CacheLoader((files, extensions) => {
-      return listFilesToProcess(files, { extensions })
+    this._targetFilesLoader = new CacheLoader((cwd, files, extensions) => {
+      return listFilesToProcess(files, { cwd, extensions })
         .filter(f => !f.ignored && extensions.includes(extname(f.filename)))
         .map(f => f.filename)
     })
@@ -271,9 +272,13 @@ class UsedKeysCache {
    * @param {string[]} extensions
    * @returns {string[]}
    */
-  collectKeysFromFiles(files: string[], extensions: string[]) {
+  collectKeysFromFiles(
+    files: string[],
+    extensions: string[],
+    context: RuleContext
+  ) {
     const result = new Set<string>()
-    for (const resource of this._getKeyResources(files, extensions)) {
+    for (const resource of this._getKeyResources(context, files, extensions)) {
       for (const key of resource.getResource()) {
         result.add(key)
       }
@@ -284,9 +289,13 @@ class UsedKeysCache {
   /**
    * @returns {ResourceLoader[]}
    */
-  _getKeyResources(files: string[], extensions: string[]) {
-    const cwd = process.cwd()
-    const fileNames = this._targetFilesLoader.get(files, extensions, cwd)
+  _getKeyResources(
+    context: RuleContext,
+    files: string[],
+    extensions: string[]
+  ) {
+    const cwd = getCwd(context)
+    const fileNames = this._targetFilesLoader.get(cwd, files, extensions, cwd)
     return this._collectKeyResourcesFromFiles(fileNames, cwd)
   }
 }

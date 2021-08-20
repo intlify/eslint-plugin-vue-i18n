@@ -14,6 +14,7 @@ import type {
   SourceCode
 } from '../types'
 import { joinPath } from '../utils/key-path'
+import { getCwd } from '../utils/get-cwd'
 const debug = debugBuilder('eslint-plugin-vue-i18n:no-duplicate-keys-in-locale')
 
 interface DictData {
@@ -29,9 +30,10 @@ interface PathStack {
   upper?: PathStack
 }
 
-function getMessageFilepath(fullPath: string) {
-  if (fullPath.startsWith(process.cwd())) {
-    return fullPath.replace(process.cwd() + '/', './')
+function getMessageFilepath(fullPath: string, context: RuleContext) {
+  const cwd = getCwd(context)
+  if (fullPath.startsWith(cwd)) {
+    return fullPath.replace(cwd + '/', './')
   }
   return fullPath
 }
@@ -127,7 +129,8 @@ function create(context: RuleContext): RuleListener {
               message: `duplicate key '${keyPathStr}' in '${
                 pathStack.locale
               }'. "${getMessageFilepath(
-                value.source.fullpath
+                value.source.fullpath,
+                context
               )}" has the same key`,
               loc: reportNode.loc
             })

@@ -6,6 +6,7 @@ import base = require('../../lib/configs/base')
 import plugin = require('../../lib/index')
 import type { SettingsVueI18nLocaleDir } from '../../lib/types'
 import { SourceCodeFixer } from './source-code-fixer'
+import type { RuleTester } from 'eslint'
 
 function buildBaseConfigPath() {
   const configPath = path.join(
@@ -28,6 +29,110 @@ function buildBaseConfigPath() {
 
 export const baseConfigPath = buildBaseConfigPath()
 
+export function getTestCasesFromFixtures(testOptions: {
+  cwd: string
+  options?: unknown[]
+  localeDir?: SettingsVueI18nLocaleDir
+}): IterableIterator<RuleTester.ValidTestCase>
+export function getTestCasesFromFixtures(
+  testOptions: {
+    cwd: string
+    options?: unknown[]
+    localeDir?: SettingsVueI18nLocaleDir
+  },
+  outputs: {
+    [file: string]: Omit<
+      RuleTester.InvalidTestCase,
+      keyof RuleTester.ValidTestCase
+    >
+  }
+): IterableIterator<RuleTester.InvalidTestCase>
+export function* getTestCasesFromFixtures(
+  testOptions: {
+    cwd: string
+    options?: unknown[]
+    localeDir?: SettingsVueI18nLocaleDir
+  },
+  outputs?: {
+    [file: string]: Omit<
+      RuleTester.InvalidTestCase,
+      keyof RuleTester.ValidTestCase
+    >
+  }
+): IterableIterator<RuleTester.ValidTestCase | RuleTester.InvalidTestCase> {
+  for (const { filename, relative, parser } of extractTargetFiles(
+    testOptions.cwd
+  )) {
+    const data: RuleTester.ValidTestCase = {
+      code: fs.readFileSync(filename, 'utf8'),
+      filename,
+      options: testOptions.options || [],
+      parser,
+      parserOptions: {},
+      settings: {
+        'vue-i18n': {
+          localeDir: testOptions.localeDir,
+          cwd: testOptions.cwd
+        }
+      }
+    }
+    if (outputs) {
+      const output: Omit<
+        RuleTester.InvalidTestCase,
+        keyof RuleTester.ValidTestCase
+      > = outputs[relative]
+      if (!output) {
+        throw new Error(relative + ' output is not found')
+      }
+      Object.assign(data, output)
+    }
+    yield data
+  }
+}
+
+const PARSERS = {
+  '.js': undefined,
+  '.vue': require.resolve('vue-eslint-parser'),
+  '.json': require.resolve('jsonc-eslint-parser'),
+  '.json5': require.resolve('jsonc-eslint-parser'),
+  '.yaml': require.resolve('yaml-eslint-parser'),
+  '.yml': require.resolve('yaml-eslint-parser')
+}
+function* extractTargetFiles(
+  dir: string
+): IterableIterator<{
+  filename: string
+  relative: string
+  parser: string | undefined
+}> {
+  for (const relative of fs.readdirSync(dir)) {
+    const filename = path.join(dir, relative)
+    const ext = path.extname(relative)
+    if (
+      ext === '.js' ||
+      ext === '.vue' ||
+      ext === '.json' ||
+      ext === '.json5' ||
+      ext === '.yaml' ||
+      ext === '.yml'
+    ) {
+      yield { filename, relative, parser: PARSERS[ext] }
+      continue
+    }
+    if (relative === 'node_modules') {
+      continue
+    }
+    if (fs.statSync(filename).isDirectory()) {
+      for (const f of extractTargetFiles(filename)) {
+        yield {
+          filename: f.filename,
+          relative: path.join(relative, f.relative),
+          parser: f.parser
+        }
+      }
+    }
+  }
+}
 export async function testOnFixtures(
   testOptions: {
     cwd: string

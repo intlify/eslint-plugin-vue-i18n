@@ -33,6 +33,7 @@ export interface RuleContext {
     'vue-i18n'?: {
       localeDir?: SettingsVueI18nLocaleDir
       messageSyntaxVersion?: string
+      cwd?: string // for test
     }
   }
   parserPath: string
@@ -44,6 +45,7 @@ export interface RuleContext {
   getSourceCode(): SourceCode
   getScope(): Scope
   report(descriptor: ReportDescriptor): void
+  getCwd?: () => string
 }
 
 interface ReportDescriptorOptionsBase {
