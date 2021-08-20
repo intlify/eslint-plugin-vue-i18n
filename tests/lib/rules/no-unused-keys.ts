@@ -4,9 +4,10 @@
 import { RuleTester } from 'eslint'
 import { join } from 'path'
 import rule = require('../../../lib/rules/no-unused-keys')
-import { testOnFixtures } from '../test-utils'
+import { testOnFixtures, getTestCasesFromFixtures } from '../test-utils'
 import semver from 'semver'
 
+const cwdRoot = join(__dirname, '../../fixtures/no-unused-keys')
 new RuleTester({
   parser: require.resolve('vue-eslint-parser'),
   parserOptions: { ecmaVersion: 2015, sourceType: 'module' }
@@ -102,7 +103,21 @@ new RuleTester({
     </template>
     <script>
     </script>`
-    }
+    },
+    ...getTestCasesFromFixtures({
+      cwd: join(cwdRoot, './valid/vue-cli-format'),
+      localeDir: `./locales/*.{json,yaml,yml}`,
+      options: [
+        {
+          src: '.'
+        }
+      ]
+    })
+    // ...getTestCasesFromFixtures(),
+    // ...getTestCasesFromFixtures(),
+    // ...getTestCasesFromFixtures(),
+    // ...getTestCasesFromFixtures(),
+    // ...getTestCasesFromFixtures()
   ],
   invalid: [
     {
@@ -922,83 +937,92 @@ ${' '.repeat(6)}
     <template></template>
     <script></script>`,
       errors: [`unused '["[{foo: bar}]"].foo' key`]
-    }
+    },
+    ...getTestCasesFromFixtures(
+      {
+        cwd: join(cwdRoot, './valid')
+      },
+      {
+        'constructor-option-format/src/App.vue': true,
+        'constructor-option-format/src/main.js': true,
+        'multiple-locales/src/App.vue': true,
+        'multiple-locales/src/main.js': true,
+        'vue-cli-format/src/App.vue': true,
+        'vue-cli-format/src/main.js': true,
+        'constructor-option-format/locales/index.json': {
+          output: null,
+          errors: [
+            {
+              line: 1,
+              message:
+                "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+            }
+          ]
+        },
+        'vue-cli-format/locales/en.json': {
+          output: null,
+          errors: [
+            {
+              line: 1,
+              message:
+                "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+            }
+          ]
+        },
+        'vue-cli-format/locales/ja.yaml': {
+          output: null,
+          errors: [
+            {
+              line: 1,
+              message:
+                "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+            }
+          ]
+        },
+        'multiple-locales/locales1/en.1.json': {
+          output: null,
+          errors: [
+            {
+              line: 1,
+              message:
+                "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+            }
+          ]
+        },
+        'multiple-locales/locales2/en.2.json': {
+          output: null,
+          errors: [
+            {
+              line: 1,
+              message:
+                "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+            }
+          ]
+        },
+        'multiple-locales/locales3/index.json': {
+          output: null,
+          errors: [
+            {
+              line: 1,
+              message:
+                "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+            }
+          ]
+        }
+      }
+    )
+    // ...getTestCasesFromFixtures(),
+    // ...getTestCasesFromFixtures(),
+    // ...getTestCasesFromFixtures(),
+    // ...getTestCasesFromFixtures(),
+    // ...getTestCasesFromFixtures()
   ]
 })
 
 describe('no-unused-keys with fixtures', () => {
-  const cwdRoot = join(__dirname, '../../fixtures/no-unused-keys')
-
   describe('errors', () => {
     it('settings.vue-i18n.localeDir', async () => {
-      await testOnFixtures(
-        {
-          cwd: join(cwdRoot, './valid'),
-          ruleName: '@intlify/vue-i18n/no-unused-keys'
-        },
-        {
-          'constructor-option-format/locales/index.json': {
-            output: null,
-            errors: [
-              {
-                line: 1,
-                message:
-                  "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
-              }
-            ]
-          },
-          'vue-cli-format/locales/en.json': {
-            output: null,
-            errors: [
-              {
-                line: 1,
-                message:
-                  "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
-              }
-            ]
-          },
-          'vue-cli-format/locales/ja.yaml': {
-            output: null,
-            errors: [
-              {
-                line: 1,
-                message:
-                  "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
-              }
-            ]
-          },
-          'multiple-locales/locales1/en.1.json': {
-            output: null,
-            errors: [
-              {
-                line: 1,
-                message:
-                  "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
-              }
-            ]
-          },
-          'multiple-locales/locales2/en.2.json': {
-            output: null,
-            errors: [
-              {
-                line: 1,
-                message:
-                  "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
-              }
-            ]
-          },
-          'multiple-locales/locales3/index.json': {
-            output: null,
-            errors: [
-              {
-                line: 1,
-                message:
-                  "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
-              }
-            ]
-          }
-        }
-      )
+      // await testOnFixtures()
     })
   })
 

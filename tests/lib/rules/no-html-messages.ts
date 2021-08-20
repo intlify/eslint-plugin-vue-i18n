@@ -5,7 +5,7 @@ import { RuleTester } from 'eslint'
 import { join } from 'path'
 import fs from 'fs'
 import rule = require('../../../lib/rules/no-html-messages')
-import { getTestCasesFromFixtures, testOnFixtures } from '../test-utils'
+import { getTestCasesFromFixtures } from '../test-utils'
 
 const cwdRoot = join(__dirname, '../../fixtures/no-html-messages')
 

@@ -41,10 +41,9 @@ export function getTestCasesFromFixtures(
     localeDir?: SettingsVueI18nLocaleDir
   },
   outputs: {
-    [file: string]: Omit<
-      RuleTester.InvalidTestCase,
-      keyof RuleTester.ValidTestCase
-    >
+    [file: string]:
+      | Omit<RuleTester.InvalidTestCase, keyof RuleTester.ValidTestCase>
+      | true
   }
 ): IterableIterator<RuleTester.InvalidTestCase>
 export function* getTestCasesFromFixtures(
@@ -54,12 +53,14 @@ export function* getTestCasesFromFixtures(
     localeDir?: SettingsVueI18nLocaleDir
   },
   outputs?: {
-    [file: string]: Omit<
-      RuleTester.InvalidTestCase,
-      keyof RuleTester.ValidTestCase
-    >
+    [file: string]:
+      | Omit<RuleTester.InvalidTestCase, keyof RuleTester.ValidTestCase>
+      | true
   }
 ): IterableIterator<RuleTester.ValidTestCase | RuleTester.InvalidTestCase> {
+  if (!testOptions) {
+    return
+  }
   for (const { filename, relative, parser } of extractTargetFiles(
     testOptions.cwd
   )) {
@@ -77,12 +78,14 @@ export function* getTestCasesFromFixtures(
       }
     }
     if (outputs) {
-      const output: Omit<
-        RuleTester.InvalidTestCase,
-        keyof RuleTester.ValidTestCase
-      > = outputs[relative]
+      const output = outputs[relative]
       if (!output) {
-        throw new Error(relative + ' output is not found')
+        throw new Error(
+          `${relative} output is not found. Specify \`'${relative}': true\` if there are no errors in the file.`
+        )
+      }
+      if (output === true) {
+        continue
       }
       Object.assign(data, output)
     }
