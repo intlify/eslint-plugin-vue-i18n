@@ -30,7 +30,11 @@ describe('usedKeysCache', () => {
   const filesDir = path.join(__dirname, '../../fixtures/utils/collect-keys/src')
 
   function collectKeysFromFiles() {
-    return usedKeysCache.collectKeysFromFiles([filesDir], ['.vue', '.js'])
+    return usedKeysCache.collectKeysFromFiles(
+      [filesDir],
+      ['.vue', '.js'],
+      {} as never
+    )
   }
   it('should be refresh with change files.', async () => {
     const vuePath = path.join(

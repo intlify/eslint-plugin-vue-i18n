@@ -14,6 +14,7 @@ import type {
   SourceCode
 } from '../types'
 import { joinPath } from '../utils/key-path'
+import { getCwd } from '../utils/get-cwd'
 const debug = debugBuilder('eslint-plugin-vue-i18n:no-duplicate-keys-in-locale')
 
 interface DictData {
@@ -29,9 +30,10 @@ interface PathStack {
   upper?: PathStack
 }
 
-function getMessageFilepath(fullPath: string) {
-  if (fullPath.startsWith(process.cwd())) {
-    return fullPath.replace(process.cwd() + '/', './')
+function getMessageFilepath(fullPath: string, context: RuleContext) {
+  const cwd = getCwd(context)
+  if (fullPath.startsWith(cwd)) {
+    return fullPath.replace(cwd + '/', './')
   }
   return fullPath
 }
@@ -121,22 +123,30 @@ function create(context: RuleContext): RuleListener {
         const keyPath = [...pathStack.keyPath, key]
         const keyPathStr = joinPath(...keyPath)
         const nextOtherDictionaries: DictData[] = []
+        const reportFiles = []
         for (const value of keyOtherValues) {
           if (typeof value.value === 'string') {
-            context.report({
-              message: `duplicate key '${keyPathStr}' in '${
-                pathStack.locale
-              }'. "${getMessageFilepath(
-                value.source.fullpath
-              )}" has the same key`,
-              loc: reportNode.loc
-            })
+            reportFiles.push(
+              '"' + getMessageFilepath(value.source.fullpath, context) + '"'
+            )
           } else {
             nextOtherDictionaries.push({
               dict: value.value,
               source: value.source
             })
           }
+        }
+        if (reportFiles.length) {
+          reportFiles.sort()
+          const last = reportFiles.pop()
+          context.report({
+            message: `duplicate key '${keyPathStr}' in '${pathStack.locale}'. ${
+              reportFiles.length === 0
+                ? last
+                : reportFiles.join(', ') + ', and ' + last
+            } has the same key`,
+            loc: reportNode.loc
+          })
         }
 
         pushKey(

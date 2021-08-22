@@ -4,9 +4,10 @@
 import { RuleTester } from 'eslint'
 import { join } from 'path'
 import rule = require('../../../lib/rules/no-unused-keys')
-import { testOnFixtures } from '../test-utils'
+import { getTestCasesFromFixtures } from '../test-utils'
 import semver from 'semver'
 
+const cwdRoot = join(__dirname, '../../fixtures/no-unused-keys')
 new RuleTester({
   parser: require.resolve('vue-eslint-parser'),
   parserOptions: { ecmaVersion: 2015, sourceType: 'module' }
@@ -102,7 +103,52 @@ new RuleTester({
     </template>
     <script>
     </script>`
-    }
+    },
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    ...(semver.satisfies(require('eslint/package.json').version, '>=6')
+      ? [
+          ...getTestCasesFromFixtures({
+            cwd: join(cwdRoot, './valid/vue-cli-format'),
+            localeDir: `./locales/*.{json,yaml,yml}`,
+            options: [
+              {
+                src: '.'
+              }
+            ]
+          }),
+          ...getTestCasesFromFixtures({
+            cwd: join(cwdRoot, './valid/constructor-option-format'),
+            localeDir: {
+              pattern: `./locales/*.{json,yaml,yml}`,
+              localeKey: 'key'
+            },
+            options: [
+              {
+                src: '.'
+              }
+            ]
+          }),
+          ...getTestCasesFromFixtures({
+            cwd: join(cwdRoot, './valid/multiple-locales'),
+            localeDir: [
+              `./locales1/*.{json,yaml,yml}`,
+              {
+                pattern: `./locales2/*.{json,yaml,yml}`,
+                localeKey: 'file'
+              },
+              {
+                pattern: `./locales3/*.{json,yaml,yml}`,
+                localeKey: 'key'
+              }
+            ],
+            options: [
+              {
+                src: '.'
+              }
+            ]
+          })
+        ]
+      : [])
   ],
   invalid: [
     {
@@ -922,936 +968,869 @@ ${' '.repeat(6)}
     <template></template>
     <script></script>`,
       errors: [`unused '["[{foo: bar}]"].foo' key`]
+    },
+    ...getTestCasesFromFixtures(
+      {
+        cwd: join(cwdRoot, './valid')
+      },
+      {
+        'constructor-option-format/src/App.vue': true,
+        'constructor-option-format/src/main.js': true,
+        'multiple-locales/src/App.vue': true,
+        'multiple-locales/src/main.js': true,
+        'vue-cli-format/src/App.vue': true,
+        'vue-cli-format/src/main.js': true,
+        'constructor-option-format/locales/index.json': {
+          output: null,
+          errors: [
+            {
+              line: 1,
+              message:
+                "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+            }
+          ]
+        },
+        'vue-cli-format/locales/en.json': {
+          output: null,
+          errors: [
+            {
+              line: 1,
+              message:
+                "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+            }
+          ]
+        },
+        'vue-cli-format/locales/ja.yaml': {
+          output: null,
+          errors: [
+            {
+              line: 1,
+              message:
+                "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+            }
+          ]
+        },
+        'multiple-locales/locales1/en.1.json': {
+          output: null,
+          errors: [
+            {
+              line: 1,
+              message:
+                "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+            }
+          ]
+        },
+        'multiple-locales/locales2/en.2.json': {
+          output: null,
+          errors: [
+            {
+              line: 1,
+              message:
+                "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+            }
+          ]
+        },
+        'multiple-locales/locales3/index.json': {
+          output: null,
+          errors: [
+            {
+              line: 1,
+              message:
+                "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+            }
+          ]
+        }
+      }
+    ),
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    ...(semver.satisfies(require('eslint/package.json').version, '>=6')
+      ? [
+          ...getTestCasesFromFixtures(
+            {
+              cwd: join(cwdRoot, './invalid/vue-cli-format'),
+              localeDir: `./locales/*.{json,yaml,yml}`,
+              options: [{ src: '.', enableFix: true }]
+            },
+            (() => {
+              const fixAllEn = `{
+  "hello": "hello world",
+  "messages": {
+    "hello": "hi DIO!",
+    "nested": {
     }
+  },
+  "hello_dio": "hello underscore DIO!",
+  "hello {name}": "hello {name}!"
+}
+`
+              const fixAllJa = `hello: "ハローワールド"
+messages:
+  hello: "こんにちは、DIO！"
+  nested: {}
+hello_dio: "こんにちは、アンダースコア DIO！"
+"hello {name}": "こんにちは、{name}！"
+`
+              return {
+                'src/App.vue': true,
+                'src/main.js': true,
+                'locales/en.json': {
+                  output: fixAllEn,
+                  errors: [
+                    {
+                      message: "unused 'messages.link' key",
+                      line: 5,
+                      suggestions: [
+                        {
+                          desc: "Remove the 'messages.link' key.",
+                          output: `{
+  "hello": "hello world",
+  "messages": {
+    "hello": "hi DIO!",
+    "nested": {
+      "hello": "hi jojo!"
+    }
+  },
+  "hello_dio": "hello underscore DIO!",
+  "hello {name}": "hello {name}!",
+  "hello-dio": "hello hyphen DIO!"
+}
+`
+                        },
+                        {
+                          desc: 'Remove all unused keys.',
+                          output: fixAllEn
+                        }
+                      ]
+                    },
+                    {
+                      message: "unused 'messages.nested.hello' key",
+                      line: 7,
+                      suggestions: [
+                        {
+                          desc: "Remove the 'messages.nested.hello' key.",
+                          output: `{
+  "hello": "hello world",
+  "messages": {
+    "hello": "hi DIO!",
+    "link": "@:message.hello",
+    "nested": {
+    }
+  },
+  "hello_dio": "hello underscore DIO!",
+  "hello {name}": "hello {name}!",
+  "hello-dio": "hello hyphen DIO!"
+}
+`
+                        },
+                        {
+                          desc: 'Remove all unused keys.',
+                          output: fixAllEn
+                        }
+                      ]
+                    },
+                    {
+                      message: "unused 'hello-dio' key",
+                      line: 12,
+                      suggestions: [
+                        {
+                          desc: "Remove the 'hello-dio' key.",
+                          output: `{
+  "hello": "hello world",
+  "messages": {
+    "hello": "hi DIO!",
+    "link": "@:message.hello",
+    "nested": {
+      "hello": "hi jojo!"
+    }
+  },
+  "hello_dio": "hello underscore DIO!",
+  "hello {name}": "hello {name}!"
+}
+`
+                        },
+                        {
+                          desc: 'Remove all unused keys.',
+                          output: fixAllEn
+                        }
+                      ]
+                    }
+                  ]
+                },
+                'locales/ja.yaml': {
+                  output: fixAllJa,
+                  errors: [
+                    {
+                      message: "unused 'messages.link' key",
+                      line: 4,
+                      suggestions: [
+                        {
+                          desc: "Remove the 'messages.link' key.",
+                          output: `hello: "ハローワールド"
+messages:
+  hello: "こんにちは、DIO！"
+  nested:
+    hello: "こんにちは、ジョジョ!"
+hello_dio: "こんにちは、アンダースコア DIO！"
+"hello {name}": "こんにちは、{name}！"
+hello-dio: "こんにちは、ハイフン DIO！"
+`
+                        },
+                        {
+                          desc: 'Remove all unused keys.',
+                          output: fixAllJa
+                        }
+                      ]
+                    },
+                    {
+                      message: "unused 'messages.nested.hello' key",
+                      line: 6,
+                      suggestions: [
+                        {
+                          desc: "Remove the 'messages.nested.hello' key.",
+                          output: `hello: "ハローワールド"
+messages:
+  hello: "こんにちは、DIO！"
+  link: "@:message.hello"
+  nested: {}
+hello_dio: "こんにちは、アンダースコア DIO！"
+"hello {name}": "こんにちは、{name}！"
+hello-dio: "こんにちは、ハイフン DIO！"
+`
+                        },
+                        {
+                          desc: 'Remove all unused keys.',
+                          output: fixAllJa
+                        }
+                      ]
+                    },
+                    {
+                      message: "unused 'hello-dio' key",
+                      line: 9,
+                      suggestions: [
+                        {
+                          desc: "Remove the 'hello-dio' key.",
+                          output: `hello: "ハローワールド"
+messages:
+  hello: "こんにちは、DIO！"
+  link: "@:message.hello"
+  nested:
+    hello: "こんにちは、ジョジョ!"
+hello_dio: "こんにちは、アンダースコア DIO！"
+"hello {name}": "こんにちは、{name}！"
+`
+                        },
+                        {
+                          desc: 'Remove all unused keys.',
+                          output: fixAllJa
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            })()
+          ),
+          ...getTestCasesFromFixtures(
+            {
+              cwd: join(cwdRoot, './invalid/constructor-option-format'),
+              localeDir: {
+                pattern: `./locales/*.{json,yaml,yml}`,
+                localeKey: 'key'
+              },
+              options: [{ src: '.', enableFix: true }]
+            },
+            (() => {
+              const fixAll = `{
+  "en": {
+    "hello": "hello world",
+    "messages": {
+      "hello": "hi DIO!",
+      "nested": {
+      }
+    },
+    "hello_dio": "hello underscore DIO!",
+    "hello {name}": "hello {name}!"
+  },
+  "ja": {
+    "hello": "ハローワールド",
+    "messages": {
+      "hello": "こんにちは、DIO！",
+      "nested": {
+      }
+    },
+    "hello_dio": "こんにちは、アンダースコア DIO！",
+    "hello {name}": "こんにちは、{name}！"
+  }
+}
+`
+              return {
+                'src/App.vue': true,
+                'src/main.js': true,
+                'locales/index.json': {
+                  output: fixAll,
+                  errors: [
+                    {
+                      message: "unused 'en.messages.link' key",
+                      line: 6,
+                      suggestions: [
+                        {
+                          desc: "Remove the 'en.messages.link' key.",
+                          output: `{
+  "en": {
+    "hello": "hello world",
+    "messages": {
+      "hello": "hi DIO!",
+      "nested": {
+        "hello": "hi jojo!"
+      }
+    },
+    "hello_dio": "hello underscore DIO!",
+    "hello {name}": "hello {name}!",
+    "hello-dio": "hello hyphen DIO!"
+  },
+  "ja": {
+    "hello": "ハローワールド",
+    "messages": {
+      "hello": "こんにちは、DIO！",
+      "link": "@:message.hello",
+      "nested": {
+        "hello": "こんにちは、ジョジョ!"
+      }
+    },
+    "hello_dio": "こんにちは、アンダースコア DIO！",
+    "hello {name}": "こんにちは、{name}！",
+    "hello-dio": "こんにちは、ハイフン DIO！"
+  }
+}
+`
+                        },
+                        {
+                          desc: 'Remove all unused keys.',
+                          output: fixAll
+                        }
+                      ]
+                    },
+                    {
+                      message: "unused 'en.messages.nested.hello' key",
+                      line: 8,
+                      suggestions: [
+                        {
+                          desc: "Remove the 'en.messages.nested.hello' key.",
+                          output: `{
+  "en": {
+    "hello": "hello world",
+    "messages": {
+      "hello": "hi DIO!",
+      "link": "@:message.hello",
+      "nested": {
+      }
+    },
+    "hello_dio": "hello underscore DIO!",
+    "hello {name}": "hello {name}!",
+    "hello-dio": "hello hyphen DIO!"
+  },
+  "ja": {
+    "hello": "ハローワールド",
+    "messages": {
+      "hello": "こんにちは、DIO！",
+      "link": "@:message.hello",
+      "nested": {
+        "hello": "こんにちは、ジョジョ!"
+      }
+    },
+    "hello_dio": "こんにちは、アンダースコア DIO！",
+    "hello {name}": "こんにちは、{name}！",
+    "hello-dio": "こんにちは、ハイフン DIO！"
+  }
+}
+`
+                        },
+                        {
+                          desc: 'Remove all unused keys.',
+                          output: fixAll
+                        }
+                      ]
+                    },
+                    {
+                      message: "unused 'en.hello-dio' key",
+                      line: 13,
+                      suggestions: [
+                        {
+                          desc: "Remove the 'en.hello-dio' key.",
+                          output: `{
+  "en": {
+    "hello": "hello world",
+    "messages": {
+      "hello": "hi DIO!",
+      "link": "@:message.hello",
+      "nested": {
+        "hello": "hi jojo!"
+      }
+    },
+    "hello_dio": "hello underscore DIO!",
+    "hello {name}": "hello {name}!"
+  },
+  "ja": {
+    "hello": "ハローワールド",
+    "messages": {
+      "hello": "こんにちは、DIO！",
+      "link": "@:message.hello",
+      "nested": {
+        "hello": "こんにちは、ジョジョ!"
+      }
+    },
+    "hello_dio": "こんにちは、アンダースコア DIO！",
+    "hello {name}": "こんにちは、{name}！",
+    "hello-dio": "こんにちは、ハイフン DIO！"
+  }
+}
+`
+                        },
+                        {
+                          desc: 'Remove all unused keys.',
+                          output: fixAll
+                        }
+                      ]
+                    },
+                    {
+                      message: "unused 'ja.messages.link' key",
+                      line: 19,
+                      suggestions: [
+                        {
+                          desc: "Remove the 'ja.messages.link' key.",
+                          output: `{
+  "en": {
+    "hello": "hello world",
+    "messages": {
+      "hello": "hi DIO!",
+      "link": "@:message.hello",
+      "nested": {
+        "hello": "hi jojo!"
+      }
+    },
+    "hello_dio": "hello underscore DIO!",
+    "hello {name}": "hello {name}!",
+    "hello-dio": "hello hyphen DIO!"
+  },
+  "ja": {
+    "hello": "ハローワールド",
+    "messages": {
+      "hello": "こんにちは、DIO！",
+      "nested": {
+        "hello": "こんにちは、ジョジョ!"
+      }
+    },
+    "hello_dio": "こんにちは、アンダースコア DIO！",
+    "hello {name}": "こんにちは、{name}！",
+    "hello-dio": "こんにちは、ハイフン DIO！"
+  }
+}
+`
+                        },
+                        {
+                          desc: 'Remove all unused keys.',
+                          output: fixAll
+                        }
+                      ]
+                    },
+                    {
+                      message: "unused 'ja.messages.nested.hello' key",
+                      line: 21,
+                      suggestions: [
+                        {
+                          desc: "Remove the 'ja.messages.nested.hello' key.",
+                          output: `{
+  "en": {
+    "hello": "hello world",
+    "messages": {
+      "hello": "hi DIO!",
+      "link": "@:message.hello",
+      "nested": {
+        "hello": "hi jojo!"
+      }
+    },
+    "hello_dio": "hello underscore DIO!",
+    "hello {name}": "hello {name}!",
+    "hello-dio": "hello hyphen DIO!"
+  },
+  "ja": {
+    "hello": "ハローワールド",
+    "messages": {
+      "hello": "こんにちは、DIO！",
+      "link": "@:message.hello",
+      "nested": {
+      }
+    },
+    "hello_dio": "こんにちは、アンダースコア DIO！",
+    "hello {name}": "こんにちは、{name}！",
+    "hello-dio": "こんにちは、ハイフン DIO！"
+  }
+}
+`
+                        },
+                        {
+                          desc: 'Remove all unused keys.',
+                          output: fixAll
+                        }
+                      ]
+                    },
+                    {
+                      message: "unused 'ja.hello-dio' key",
+                      line: 26,
+                      suggestions: [
+                        {
+                          desc: "Remove the 'ja.hello-dio' key.",
+                          output: `{
+  "en": {
+    "hello": "hello world",
+    "messages": {
+      "hello": "hi DIO!",
+      "link": "@:message.hello",
+      "nested": {
+        "hello": "hi jojo!"
+      }
+    },
+    "hello_dio": "hello underscore DIO!",
+    "hello {name}": "hello {name}!",
+    "hello-dio": "hello hyphen DIO!"
+  },
+  "ja": {
+    "hello": "ハローワールド",
+    "messages": {
+      "hello": "こんにちは、DIO！",
+      "link": "@:message.hello",
+      "nested": {
+        "hello": "こんにちは、ジョジョ!"
+      }
+    },
+    "hello_dio": "こんにちは、アンダースコア DIO！",
+    "hello {name}": "こんにちは、{name}！"
+  }
+}
+`
+                        },
+                        {
+                          desc: 'Remove all unused keys.',
+                          output: fixAll
+                        }
+                      ]
+                    }
+                  ]
+                }
+              }
+            })()
+          ),
+          ...getTestCasesFromFixtures(
+            {
+              cwd: join(cwdRoot, './invalid/multiple-locales'),
+              localeDir: [
+                `./locales1/*.{json,yaml,yml}`,
+                {
+                  pattern: `./locales2/*.{json,yaml,yml}`,
+                  localeKey: 'file'
+                },
+                {
+                  pattern: `./locales3/*.{json,yaml,yml}`,
+                  localeKey: 'key'
+                }
+              ],
+              options: [{ src: '.', enableFix: true }]
+            },
+            {
+              'src/App.vue': true,
+              'src/main.js': true,
+              'locales1/en.json': {
+                output: `{
+  "hello": "hello world",
+  "messages": {
+    "hello": "hi DIO!",
+    "nested": {
+    }
+  }
+}
+`,
+                errors: [
+                  {
+                    line: 5,
+                    message: "unused 'messages.link' key",
+                    suggestions: [
+                      {
+                        desc: "Remove the 'messages.link' key.",
+                        output: `{
+  "hello": "hello world",
+  "messages": {
+    "hello": "hi DIO!",
+    "nested": {
+      "hello": "hi jojo!"
+    }
+  }
+}
+`
+                      },
+                      {
+                        desc: 'Remove all unused keys.',
+                        output: `{
+  "hello": "hello world",
+  "messages": {
+    "hello": "hi DIO!",
+    "nested": {
+    }
+  }
+}
+`
+                      }
+                    ]
+                  },
+                  {
+                    line: 7,
+                    message: "unused 'messages.nested.hello' key",
+                    suggestions: [
+                      {
+                        desc: "Remove the 'messages.nested.hello' key.",
+                        output: `{
+  "hello": "hello world",
+  "messages": {
+    "hello": "hi DIO!",
+    "link": "@:message.hello",
+    "nested": {
+    }
+  }
+}
+`
+                      },
+                      {
+                        desc: 'Remove all unused keys.',
+                        output: `{
+  "hello": "hello world",
+  "messages": {
+    "hello": "hi DIO!",
+    "nested": {
+    }
+  }
+}
+`
+                      }
+                    ]
+                  }
+                ]
+              },
+              'locales2/en.json': {
+                output: `{
+  "hello_dio": "hello underscore DIO!",
+  "hello {name}": "hello {name}!"
+}
+`,
+                errors: [
+                  {
+                    line: 4,
+                    message: "unused 'hello-dio' key",
+                    suggestions: [
+                      {
+                        desc: "Remove the 'hello-dio' key.",
+                        output: `{
+  "hello_dio": "hello underscore DIO!",
+  "hello {name}": "hello {name}!"
+}
+`
+                      }
+                    ]
+                  }
+                ]
+              },
+              'locales3/index.json': {
+                output: `{
+  "ja": {
+    "hello": "ハローワールド",
+    "messages": {
+      "hello": "こんにちは、DIO！",
+      "nested": {
+      }
+    },
+    "hello_dio": "こんにちは、アンダースコア DIO！",
+    "hello {name}": "こんにちは、{name}！"
+  }
+}
+`,
+                errors: [
+                  {
+                    line: 6,
+                    message: "unused 'ja.messages.link' key",
+                    suggestions: [
+                      {
+                        desc: "Remove the 'ja.messages.link' key.",
+                        output: `{
+  "ja": {
+    "hello": "ハローワールド",
+    "messages": {
+      "hello": "こんにちは、DIO！",
+      "nested": {
+        "hello": "こんにちは、ジョジョ!"
+      }
+    },
+    "hello_dio": "こんにちは、アンダースコア DIO！",
+    "hello {name}": "こんにちは、{name}！",
+    "hello-dio": "こんにちは、ハイフン DIO！"
+  }
+}
+`
+                      },
+                      {
+                        desc: 'Remove all unused keys.',
+                        output: `{
+  "ja": {
+    "hello": "ハローワールド",
+    "messages": {
+      "hello": "こんにちは、DIO！",
+      "nested": {
+      }
+    },
+    "hello_dio": "こんにちは、アンダースコア DIO！",
+    "hello {name}": "こんにちは、{name}！"
+  }
+}
+`
+                      }
+                    ]
+                  },
+                  {
+                    line: 8,
+                    message: "unused 'ja.messages.nested.hello' key",
+                    suggestions: [
+                      {
+                        desc: "Remove the 'ja.messages.nested.hello' key.",
+                        output: `{
+  "ja": {
+    "hello": "ハローワールド",
+    "messages": {
+      "hello": "こんにちは、DIO！",
+      "link": "@:message.hello",
+      "nested": {
+      }
+    },
+    "hello_dio": "こんにちは、アンダースコア DIO！",
+    "hello {name}": "こんにちは、{name}！",
+    "hello-dio": "こんにちは、ハイフン DIO！"
+  }
+}
+`
+                      },
+                      {
+                        desc: 'Remove all unused keys.',
+                        output: `{
+  "ja": {
+    "hello": "ハローワールド",
+    "messages": {
+      "hello": "こんにちは、DIO！",
+      "nested": {
+      }
+    },
+    "hello_dio": "こんにちは、アンダースコア DIO！",
+    "hello {name}": "こんにちは、{name}！"
+  }
+}
+`
+                      }
+                    ]
+                  },
+                  {
+                    line: 13,
+                    message: "unused 'ja.hello-dio' key",
+                    suggestions: [
+                      {
+                        desc: "Remove the 'ja.hello-dio' key.",
+                        output: `{
+  "ja": {
+    "hello": "ハローワールド",
+    "messages": {
+      "hello": "こんにちは、DIO！",
+      "link": "@:message.hello",
+      "nested": {
+        "hello": "こんにちは、ジョジョ!"
+      }
+    },
+    "hello_dio": "こんにちは、アンダースコア DIO！",
+    "hello {name}": "こんにちは、{name}！"
+  }
+}
+`
+                      },
+                      {
+                        desc: 'Remove all unused keys.',
+                        output: `{
+  "ja": {
+    "hello": "ハローワールド",
+    "messages": {
+      "hello": "こんにちは、DIO！",
+      "nested": {
+      }
+    },
+    "hello_dio": "こんにちは、アンダースコア DIO！",
+    "hello {name}": "こんにちは、{name}！"
+  }
+}
+`
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          ),
+          ...getTestCasesFromFixtures(
+            {
+              cwd: join(cwdRoot, './invalid/typescript'),
+              localeDir: {
+                pattern: `./locales/*.{json,yaml,yml}`,
+                localeKey: 'file'
+              },
+              options: [
+                {
+                  src: './src',
+                  extensions: ['.tsx', '.ts', '.vue'],
+                  enableFix: true
+                }
+              ],
+              parserOptions: {
+                parser: '@typescript-eslint/parser'
+              }
+            },
+            {
+              'src/App.vue': true,
+              'locales/en.json': {
+                output: `{
+  "hello": "hello world",
+  "messages": {
+    "hello": "hi DIO!",
+    "nested": {
+    }
+  },
+  "hello_dio": "hello underscore DIO!",
+  "hello {name}": "hello {name}!"
+}
+`,
+                errors: [
+                  "unused 'messages.link' key",
+                  "unused 'messages.nested.hello' key",
+                  "unused 'hello-dio' key"
+                ]
+              },
+              'locales/ja.yaml': {
+                output: `hello: "ハローワールド"
+messages:
+  hello: "こんにちは、DIO！"
+  nested: {}
+hello_dio: "こんにちは、アンダースコア DIO！"
+"hello {name}": "こんにちは、{name}！"
+`,
+                errors: [
+                  "unused 'messages.link' key",
+                  "unused 'messages.nested.hello' key",
+                  "unused 'hello-dio' key"
+                ]
+              }
+            }
+          )
+        ]
+      : [])
   ]
-})
-
-describe('no-unused-keys with fixtures', () => {
-  const cwdRoot = join(__dirname, '../../fixtures/no-unused-keys')
-
-  describe('errors', () => {
-    it('settings.vue-i18n.localeDir', async () => {
-      await testOnFixtures(
-        {
-          cwd: join(cwdRoot, './valid'),
-          ruleName: '@intlify/vue-i18n/no-unused-keys'
-        },
-        {
-          'constructor-option-format/locales/index.json': {
-            output: null,
-            errors: [
-              {
-                line: 1,
-                message:
-                  "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
-              }
-            ]
-          },
-          'vue-cli-format/locales/en.json': {
-            output: null,
-            errors: [
-              {
-                line: 1,
-                message:
-                  "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
-              }
-            ]
-          },
-          'vue-cli-format/locales/ja.yaml': {
-            output: null,
-            errors: [
-              {
-                line: 1,
-                message:
-                  "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
-              }
-            ]
-          },
-          'multiple-locales/locales1/en.1.json': {
-            output: null,
-            errors: [
-              {
-                line: 1,
-                message:
-                  "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
-              }
-            ]
-          },
-          'multiple-locales/locales2/en.2.json': {
-            output: null,
-            errors: [
-              {
-                line: 1,
-                message:
-                  "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
-              }
-            ]
-          },
-          'multiple-locales/locales3/index.json': {
-            output: null,
-            errors: [
-              {
-                line: 1,
-                message:
-                  "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
-              }
-            ]
-          }
-        }
-      )
-    })
-  })
-
-  describe('valid', () => {
-    it('should be not detected unsued keys', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires -- ignore
-      if (!semver.satisfies(require('eslint/package.json').version, '>=6')) {
-        return
-      }
-      await testOnFixtures(
-        {
-          cwd: join(cwdRoot, './valid/vue-cli-format'),
-          localeDir: `./locales/*.{json,yaml,yml}`,
-          ruleName: '@intlify/vue-i18n/no-unused-keys',
-          options: [
-            {
-              src: '.'
-            }
-          ]
-        },
-        {}
-      )
-    })
-
-    it('should be not detected unsued keys for constructor-option-format', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires -- ignore
-      if (!semver.satisfies(require('eslint/package.json').version, '>=6')) {
-        return
-      }
-      await testOnFixtures(
-        {
-          cwd: join(cwdRoot, './valid/constructor-option-format'),
-          localeDir: {
-            pattern: `./locales/*.{json,yaml,yml}`,
-            localeKey: 'key'
-          },
-          ruleName: '@intlify/vue-i18n/no-unused-keys',
-          options: [
-            {
-              src: '.'
-            }
-          ]
-        },
-        {}
-      )
-    })
-
-    it('should be not detected unsued keys for multiple-locales', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires -- ignore
-      if (!semver.satisfies(require('eslint/package.json').version, '>=6')) {
-        return
-      }
-      await testOnFixtures(
-        {
-          cwd: join(cwdRoot, './valid/multiple-locales'),
-          localeDir: [
-            `./locales1/*.{json,yaml,yml}`,
-            {
-              pattern: `./locales2/*.{json,yaml,yml}`,
-              localeKey: 'file'
-            },
-            {
-              pattern: `./locales3/*.{json,yaml,yml}`,
-              localeKey: 'key'
-            }
-          ],
-          ruleName: '@intlify/vue-i18n/no-unused-keys',
-          options: [
-            {
-              src: '.'
-            }
-          ]
-        },
-        {}
-      )
-    })
-  })
-
-  describe('invalid', () => {
-    it('should be detected unsued keys', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires -- ignore
-      if (!semver.satisfies(require('eslint/package.json').version, '>=6')) {
-        return
-      }
-      const fixallEn = `{
-  "hello": "hello world",
-  "messages": {
-    "hello": "hi DIO!",
-    "nested": {
-    }
-  },
-  "hello_dio": "hello underscore DIO!",
-  "hello {name}": "hello {name}!"
-}
-`
-      const fixallJa = `hello: "ハローワールド"
-messages:
-  hello: "こんにちは、DIO！"
-  nested: {}
-hello_dio: "こんにちは、アンダースコア DIO！"
-"hello {name}": "こんにちは、{name}！"
-`
-      await testOnFixtures(
-        {
-          cwd: join(cwdRoot, './invalid/vue-cli-format'),
-          localeDir: `./locales/*.{json,yaml,yml}`,
-          ruleName: '@intlify/vue-i18n/no-unused-keys',
-          options: [{ src: '.', enableFix: true }]
-        },
-        {
-          'locales/en.json': {
-            output: fixallEn,
-            errors: [
-              {
-                message: "unused 'messages.link' key",
-                line: 5,
-                suggestions: [
-                  {
-                    desc: "Remove the 'messages.link' key.",
-                    output: `{
-  "hello": "hello world",
-  "messages": {
-    "hello": "hi DIO!",
-    "nested": {
-      "hello": "hi jojo!"
-    }
-  },
-  "hello_dio": "hello underscore DIO!",
-  "hello {name}": "hello {name}!",
-  "hello-dio": "hello hyphen DIO!"
-}
-`
-                  },
-                  {
-                    desc: 'Remove all unused keys.',
-                    output: fixallEn
-                  }
-                ]
-              },
-              {
-                message: "unused 'messages.nested.hello' key",
-                line: 7,
-                suggestions: [
-                  {
-                    desc: "Remove the 'messages.nested.hello' key.",
-                    output: `{
-  "hello": "hello world",
-  "messages": {
-    "hello": "hi DIO!",
-    "link": "@:message.hello",
-    "nested": {
-    }
-  },
-  "hello_dio": "hello underscore DIO!",
-  "hello {name}": "hello {name}!",
-  "hello-dio": "hello hyphen DIO!"
-}
-`
-                  },
-                  {
-                    desc: 'Remove all unused keys.',
-                    output: fixallEn
-                  }
-                ]
-              },
-              {
-                message: "unused 'hello-dio' key",
-                line: 12,
-                suggestions: [
-                  {
-                    desc: "Remove the 'hello-dio' key.",
-                    output: `{
-  "hello": "hello world",
-  "messages": {
-    "hello": "hi DIO!",
-    "link": "@:message.hello",
-    "nested": {
-      "hello": "hi jojo!"
-    }
-  },
-  "hello_dio": "hello underscore DIO!",
-  "hello {name}": "hello {name}!"
-}
-`
-                  },
-                  {
-                    desc: 'Remove all unused keys.',
-                    output: fixallEn
-                  }
-                ]
-              }
-            ]
-          },
-          'locales/ja.yaml': {
-            output: fixallJa,
-            errors: [
-              {
-                message: "unused 'messages.link' key",
-                line: 4,
-                suggestions: [
-                  {
-                    desc: "Remove the 'messages.link' key.",
-                    output: `hello: "ハローワールド"
-messages:
-  hello: "こんにちは、DIO！"
-  nested:
-    hello: "こんにちは、ジョジョ!"
-hello_dio: "こんにちは、アンダースコア DIO！"
-"hello {name}": "こんにちは、{name}！"
-hello-dio: "こんにちは、ハイフン DIO！"
-`
-                  },
-                  {
-                    desc: 'Remove all unused keys.',
-                    output: fixallJa
-                  }
-                ]
-              },
-              {
-                message: "unused 'messages.nested.hello' key",
-                line: 6,
-                suggestions: [
-                  {
-                    desc: "Remove the 'messages.nested.hello' key.",
-                    output: `hello: "ハローワールド"
-messages:
-  hello: "こんにちは、DIO！"
-  link: "@:message.hello"
-  nested: {}
-hello_dio: "こんにちは、アンダースコア DIO！"
-"hello {name}": "こんにちは、{name}！"
-hello-dio: "こんにちは、ハイフン DIO！"
-`
-                  },
-                  {
-                    desc: 'Remove all unused keys.',
-                    output: fixallJa
-                  }
-                ]
-              },
-              {
-                message: "unused 'hello-dio' key",
-                line: 9,
-                suggestions: [
-                  {
-                    desc: "Remove the 'hello-dio' key.",
-                    output: `hello: "ハローワールド"
-messages:
-  hello: "こんにちは、DIO！"
-  link: "@:message.hello"
-  nested:
-    hello: "こんにちは、ジョジョ!"
-hello_dio: "こんにちは、アンダースコア DIO！"
-"hello {name}": "こんにちは、{name}！"
-`
-                  },
-                  {
-                    desc: 'Remove all unused keys.',
-                    output: fixallJa
-                  }
-                ]
-              }
-            ]
-          }
-        }
-      )
-    })
-
-    it('should be detected unsued keys for constructor-option-format', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires -- ignore
-      if (!semver.satisfies(require('eslint/package.json').version, '>=6')) {
-        return
-      }
-      const fixall = `{
-  "en": {
-    "hello": "hello world",
-    "messages": {
-      "hello": "hi DIO!",
-      "nested": {
-      }
-    },
-    "hello_dio": "hello underscore DIO!",
-    "hello {name}": "hello {name}!"
-  },
-  "ja": {
-    "hello": "ハローワールド",
-    "messages": {
-      "hello": "こんにちは、DIO！",
-      "nested": {
-      }
-    },
-    "hello_dio": "こんにちは、アンダースコア DIO！",
-    "hello {name}": "こんにちは、{name}！"
-  }
-}
-`
-      await testOnFixtures(
-        {
-          cwd: join(cwdRoot, './invalid/constructor-option-format'),
-          localeDir: {
-            pattern: `./locales/*.{json,yaml,yml}`,
-            localeKey: 'key'
-          },
-          ruleName: '@intlify/vue-i18n/no-unused-keys',
-          options: [{ src: '.', enableFix: true }]
-        },
-        {
-          'locales/index.json': {
-            output: fixall,
-            errors: [
-              {
-                message: "unused 'en.messages.link' key",
-                line: 6,
-                suggestions: [
-                  {
-                    desc: "Remove the 'en.messages.link' key.",
-                    output: `{
-  "en": {
-    "hello": "hello world",
-    "messages": {
-      "hello": "hi DIO!",
-      "nested": {
-        "hello": "hi jojo!"
-      }
-    },
-    "hello_dio": "hello underscore DIO!",
-    "hello {name}": "hello {name}!",
-    "hello-dio": "hello hyphen DIO!"
-  },
-  "ja": {
-    "hello": "ハローワールド",
-    "messages": {
-      "hello": "こんにちは、DIO！",
-      "link": "@:message.hello",
-      "nested": {
-        "hello": "こんにちは、ジョジョ!"
-      }
-    },
-    "hello_dio": "こんにちは、アンダースコア DIO！",
-    "hello {name}": "こんにちは、{name}！",
-    "hello-dio": "こんにちは、ハイフン DIO！"
-  }
-}
-`
-                  },
-                  {
-                    desc: 'Remove all unused keys.',
-                    output: fixall
-                  }
-                ]
-              },
-              {
-                message: "unused 'en.messages.nested.hello' key",
-                line: 8,
-                suggestions: [
-                  {
-                    desc: "Remove the 'en.messages.nested.hello' key.",
-                    output: `{
-  "en": {
-    "hello": "hello world",
-    "messages": {
-      "hello": "hi DIO!",
-      "link": "@:message.hello",
-      "nested": {
-      }
-    },
-    "hello_dio": "hello underscore DIO!",
-    "hello {name}": "hello {name}!",
-    "hello-dio": "hello hyphen DIO!"
-  },
-  "ja": {
-    "hello": "ハローワールド",
-    "messages": {
-      "hello": "こんにちは、DIO！",
-      "link": "@:message.hello",
-      "nested": {
-        "hello": "こんにちは、ジョジョ!"
-      }
-    },
-    "hello_dio": "こんにちは、アンダースコア DIO！",
-    "hello {name}": "こんにちは、{name}！",
-    "hello-dio": "こんにちは、ハイフン DIO！"
-  }
-}
-`
-                  },
-                  {
-                    desc: 'Remove all unused keys.',
-                    output: fixall
-                  }
-                ]
-              },
-              {
-                message: "unused 'en.hello-dio' key",
-                line: 13,
-                suggestions: [
-                  {
-                    desc: "Remove the 'en.hello-dio' key.",
-                    output: `{
-  "en": {
-    "hello": "hello world",
-    "messages": {
-      "hello": "hi DIO!",
-      "link": "@:message.hello",
-      "nested": {
-        "hello": "hi jojo!"
-      }
-    },
-    "hello_dio": "hello underscore DIO!",
-    "hello {name}": "hello {name}!"
-  },
-  "ja": {
-    "hello": "ハローワールド",
-    "messages": {
-      "hello": "こんにちは、DIO！",
-      "link": "@:message.hello",
-      "nested": {
-        "hello": "こんにちは、ジョジョ!"
-      }
-    },
-    "hello_dio": "こんにちは、アンダースコア DIO！",
-    "hello {name}": "こんにちは、{name}！",
-    "hello-dio": "こんにちは、ハイフン DIO！"
-  }
-}
-`
-                  },
-                  {
-                    desc: 'Remove all unused keys.',
-                    output: fixall
-                  }
-                ]
-              },
-              {
-                message: "unused 'ja.messages.link' key",
-                line: 19,
-                suggestions: [
-                  {
-                    desc: "Remove the 'ja.messages.link' key.",
-                    output: `{
-  "en": {
-    "hello": "hello world",
-    "messages": {
-      "hello": "hi DIO!",
-      "link": "@:message.hello",
-      "nested": {
-        "hello": "hi jojo!"
-      }
-    },
-    "hello_dio": "hello underscore DIO!",
-    "hello {name}": "hello {name}!",
-    "hello-dio": "hello hyphen DIO!"
-  },
-  "ja": {
-    "hello": "ハローワールド",
-    "messages": {
-      "hello": "こんにちは、DIO！",
-      "nested": {
-        "hello": "こんにちは、ジョジョ!"
-      }
-    },
-    "hello_dio": "こんにちは、アンダースコア DIO！",
-    "hello {name}": "こんにちは、{name}！",
-    "hello-dio": "こんにちは、ハイフン DIO！"
-  }
-}
-`
-                  },
-                  {
-                    desc: 'Remove all unused keys.',
-                    output: fixall
-                  }
-                ]
-              },
-              {
-                message: "unused 'ja.messages.nested.hello' key",
-                line: 21,
-                suggestions: [
-                  {
-                    desc: "Remove the 'ja.messages.nested.hello' key.",
-                    output: `{
-  "en": {
-    "hello": "hello world",
-    "messages": {
-      "hello": "hi DIO!",
-      "link": "@:message.hello",
-      "nested": {
-        "hello": "hi jojo!"
-      }
-    },
-    "hello_dio": "hello underscore DIO!",
-    "hello {name}": "hello {name}!",
-    "hello-dio": "hello hyphen DIO!"
-  },
-  "ja": {
-    "hello": "ハローワールド",
-    "messages": {
-      "hello": "こんにちは、DIO！",
-      "link": "@:message.hello",
-      "nested": {
-      }
-    },
-    "hello_dio": "こんにちは、アンダースコア DIO！",
-    "hello {name}": "こんにちは、{name}！",
-    "hello-dio": "こんにちは、ハイフン DIO！"
-  }
-}
-`
-                  },
-                  {
-                    desc: 'Remove all unused keys.',
-                    output: fixall
-                  }
-                ]
-              },
-              {
-                message: "unused 'ja.hello-dio' key",
-                line: 26,
-                suggestions: [
-                  {
-                    desc: "Remove the 'ja.hello-dio' key.",
-                    output: `{
-  "en": {
-    "hello": "hello world",
-    "messages": {
-      "hello": "hi DIO!",
-      "link": "@:message.hello",
-      "nested": {
-        "hello": "hi jojo!"
-      }
-    },
-    "hello_dio": "hello underscore DIO!",
-    "hello {name}": "hello {name}!",
-    "hello-dio": "hello hyphen DIO!"
-  },
-  "ja": {
-    "hello": "ハローワールド",
-    "messages": {
-      "hello": "こんにちは、DIO！",
-      "link": "@:message.hello",
-      "nested": {
-        "hello": "こんにちは、ジョジョ!"
-      }
-    },
-    "hello_dio": "こんにちは、アンダースコア DIO！",
-    "hello {name}": "こんにちは、{name}！"
-  }
-}
-`
-                  },
-                  {
-                    desc: 'Remove all unused keys.',
-                    output: fixall
-                  }
-                ]
-              }
-            ]
-          }
-        }
-      )
-    })
-
-    it('should be detected unsued keys for multiple-locales', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires -- ignore
-      if (!semver.satisfies(require('eslint/package.json').version, '>=6')) {
-        return
-      }
-      await testOnFixtures(
-        {
-          cwd: join(cwdRoot, './invalid/multiple-locales'),
-          localeDir: [
-            `./locales1/*.{json,yaml,yml}`,
-            {
-              pattern: `./locales2/*.{json,yaml,yml}`,
-              localeKey: 'file'
-            },
-            {
-              pattern: `./locales3/*.{json,yaml,yml}`,
-              localeKey: 'key'
-            }
-          ],
-          ruleName: '@intlify/vue-i18n/no-unused-keys',
-          options: [{ src: '.', enableFix: true }]
-        },
-        {
-          'locales1/en.json': {
-            output: `{
-  "hello": "hello world",
-  "messages": {
-    "hello": "hi DIO!",
-    "nested": {
-    }
-  }
-}
-`,
-            errors: [
-              {
-                line: 5,
-                message: "unused 'messages.link' key",
-                suggestions: [
-                  {
-                    desc: "Remove the 'messages.link' key.",
-                    output: `{
-  "hello": "hello world",
-  "messages": {
-    "hello": "hi DIO!",
-    "nested": {
-      "hello": "hi jojo!"
-    }
-  }
-}
-`
-                  },
-                  {
-                    desc: 'Remove all unused keys.',
-                    output: `{
-  "hello": "hello world",
-  "messages": {
-    "hello": "hi DIO!",
-    "nested": {
-    }
-  }
-}
-`
-                  }
-                ]
-              },
-              {
-                line: 7,
-                message: "unused 'messages.nested.hello' key",
-                suggestions: [
-                  {
-                    desc: "Remove the 'messages.nested.hello' key.",
-                    output: `{
-  "hello": "hello world",
-  "messages": {
-    "hello": "hi DIO!",
-    "link": "@:message.hello",
-    "nested": {
-    }
-  }
-}
-`
-                  },
-                  {
-                    desc: 'Remove all unused keys.',
-                    output: `{
-  "hello": "hello world",
-  "messages": {
-    "hello": "hi DIO!",
-    "nested": {
-    }
-  }
-}
-`
-                  }
-                ]
-              }
-            ]
-          },
-          'locales2/en.json': {
-            output: `{
-  "hello_dio": "hello underscore DIO!",
-  "hello {name}": "hello {name}!"
-}
-`,
-            errors: [
-              {
-                line: 4,
-                message: "unused 'hello-dio' key",
-                suggestions: [
-                  {
-                    desc: "Remove the 'hello-dio' key.",
-                    output: `{
-  "hello_dio": "hello underscore DIO!",
-  "hello {name}": "hello {name}!"
-}
-`
-                  }
-                ]
-              }
-            ]
-          },
-          'locales3/index.json': {
-            output: `{
-  "ja": {
-    "hello": "ハローワールド",
-    "messages": {
-      "hello": "こんにちは、DIO！",
-      "nested": {
-      }
-    },
-    "hello_dio": "こんにちは、アンダースコア DIO！",
-    "hello {name}": "こんにちは、{name}！"
-  }
-}
-`,
-            errors: [
-              {
-                line: 6,
-                message: "unused 'ja.messages.link' key",
-                suggestions: [
-                  {
-                    desc: "Remove the 'ja.messages.link' key.",
-                    output: `{
-  "ja": {
-    "hello": "ハローワールド",
-    "messages": {
-      "hello": "こんにちは、DIO！",
-      "nested": {
-        "hello": "こんにちは、ジョジョ!"
-      }
-    },
-    "hello_dio": "こんにちは、アンダースコア DIO！",
-    "hello {name}": "こんにちは、{name}！",
-    "hello-dio": "こんにちは、ハイフン DIO！"
-  }
-}
-`
-                  },
-                  {
-                    desc: 'Remove all unused keys.',
-                    output: `{
-  "ja": {
-    "hello": "ハローワールド",
-    "messages": {
-      "hello": "こんにちは、DIO！",
-      "nested": {
-      }
-    },
-    "hello_dio": "こんにちは、アンダースコア DIO！",
-    "hello {name}": "こんにちは、{name}！"
-  }
-}
-`
-                  }
-                ]
-              },
-              {
-                line: 8,
-                message: "unused 'ja.messages.nested.hello' key",
-                suggestions: [
-                  {
-                    desc: "Remove the 'ja.messages.nested.hello' key.",
-                    output: `{
-  "ja": {
-    "hello": "ハローワールド",
-    "messages": {
-      "hello": "こんにちは、DIO！",
-      "link": "@:message.hello",
-      "nested": {
-      }
-    },
-    "hello_dio": "こんにちは、アンダースコア DIO！",
-    "hello {name}": "こんにちは、{name}！",
-    "hello-dio": "こんにちは、ハイフン DIO！"
-  }
-}
-`
-                  },
-                  {
-                    desc: 'Remove all unused keys.',
-                    output: `{
-  "ja": {
-    "hello": "ハローワールド",
-    "messages": {
-      "hello": "こんにちは、DIO！",
-      "nested": {
-      }
-    },
-    "hello_dio": "こんにちは、アンダースコア DIO！",
-    "hello {name}": "こんにちは、{name}！"
-  }
-}
-`
-                  }
-                ]
-              },
-              {
-                line: 13,
-                message: "unused 'ja.hello-dio' key",
-                suggestions: [
-                  {
-                    desc: "Remove the 'ja.hello-dio' key.",
-                    output: `{
-  "ja": {
-    "hello": "ハローワールド",
-    "messages": {
-      "hello": "こんにちは、DIO！",
-      "link": "@:message.hello",
-      "nested": {
-        "hello": "こんにちは、ジョジョ!"
-      }
-    },
-    "hello_dio": "こんにちは、アンダースコア DIO！",
-    "hello {name}": "こんにちは、{name}！"
-  }
-}
-`
-                  },
-                  {
-                    desc: 'Remove all unused keys.',
-                    output: `{
-  "ja": {
-    "hello": "ハローワールド",
-    "messages": {
-      "hello": "こんにちは、DIO！",
-      "nested": {
-      }
-    },
-    "hello_dio": "こんにちは、アンダースコア DIO！",
-    "hello {name}": "こんにちは、{name}！"
-  }
-}
-`
-                  }
-                ]
-              }
-            ]
-          }
-        }
-      )
-    })
-
-    it('should be detected unsued keys with typescript', async () => {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires -- ignore
-      if (!semver.satisfies(require('eslint/package.json').version, '>=6')) {
-        return
-      }
-      await testOnFixtures(
-        {
-          cwd: join(cwdRoot, './invalid/typescript'),
-          ruleName: '@intlify/vue-i18n/no-unused-keys',
-          useEslintrc: true
-        },
-        {
-          'locales/en.json': {
-            errors: [
-              "unused 'messages.link' key",
-              "unused 'messages.nested.hello' key",
-              "unused 'hello-dio' key"
-            ]
-          },
-          'locales/ja.yaml': {
-            errors: [
-              "unused 'messages.link' key",
-              "unused 'messages.nested.hello' key",
-              "unused 'hello-dio' key"
-            ]
-          }
-        },
-        { messageOnly: true }
-      )
-    })
-  })
 })

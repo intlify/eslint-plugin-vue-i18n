@@ -24,6 +24,7 @@ import type {
 } from '../types'
 import * as jsoncESLintParser from 'jsonc-eslint-parser'
 import * as yamlESLintParser from 'yaml-eslint-parser'
+import { getCwd } from './get-cwd'
 
 interface LocaleFiles {
   files: string[]
@@ -162,7 +163,10 @@ export function getLocaleMessages(context: RuleContext): LocaleMessages {
   return new LocaleMessages([
     ...(getLocaleMessagesFromI18nBlocks(context, i18nBlocks) || []),
     ...((localeDir &&
-      localeDirLocaleMessagesCache.getLocaleMessagesFromLocaleDir(localeDir)) ||
+      localeDirLocaleMessagesCache.getLocaleMessagesFromLocaleDir(
+        context,
+        localeDir
+      )) ||
       [])
   ])
 }
@@ -174,7 +178,9 @@ class LocaleDirLocaleMessagesCache {
     cwd: string
   ) => FileLocaleMessage[]
   constructor() {
-    this._targetFilesLoader = new CacheLoader(pattern => glob.sync(pattern))
+    this._targetFilesLoader = new CacheLoader((pattern, cwd) =>
+      glob.sync(pattern, { cwd })
+    )
 
     this._loadLocaleMessages = defineCacheFunction(
       (localeFilesList: LocaleFiles[], cwd) => {
@@ -186,8 +192,11 @@ class LocaleDirLocaleMessagesCache {
    * @param {SettingsVueI18nLocaleDir} localeDir
    * @returns {LocaleMessage[]}
    */
-  getLocaleMessagesFromLocaleDir(localeDir: SettingsVueI18nLocaleDir) {
-    const cwd = process.cwd()
+  getLocaleMessagesFromLocaleDir(
+    context: RuleContext,
+    localeDir: SettingsVueI18nLocaleDir
+  ) {
+    const cwd = getCwd(context)
     let localeFilesList: LocaleFiles[]
     if (Array.isArray(localeDir)) {
       localeFilesList = localeDir.map(dir => this._toLocaleFiles(dir, cwd))

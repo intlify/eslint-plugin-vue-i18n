@@ -5,7 +5,9 @@ import { RuleTester } from 'eslint'
 import { join } from 'path'
 import fs from 'fs'
 import rule = require('../../../lib/rules/no-html-messages')
-import { testOnFixtures } from '../test-utils'
+import { getTestCasesFromFixtures } from '../test-utils'
+
+const cwdRoot = join(__dirname, '../../fixtures/no-html-messages')
 
 new RuleTester({
   parser: require.resolve('vue-eslint-parser'),
@@ -34,7 +36,11 @@ new RuleTester({
       }
     }
     </script>`
-    }
+    },
+    ...getTestCasesFromFixtures({
+      cwd: join(cwdRoot, './valid'),
+      localeDir: `*.{json,yaml,yml}`
+    })
   ],
   invalid: [
     {
@@ -88,69 +94,47 @@ new RuleTester({
           column: 20
         }
       ]
-    }
-  ]
-})
+    },
 
-describe('no-html-messages with fixtures', () => {
-  const cwdRoot = join(__dirname, '../../fixtures/no-html-messages')
-
-  describe('valid', () => {
-    it('should be not detected html messages', async () => {
-      await testOnFixtures(
-        {
-          cwd: join(cwdRoot, './valid'),
-          localeDir: `*.{json,yaml,yml}`,
-          ruleName: '@intlify/vue-i18n/no-html-messages'
+    ...getTestCasesFromFixtures(
+      {
+        cwd: join(cwdRoot, './invalid'),
+        localeDir: `*.{json,yaml,yml}`
+      },
+      {
+        'en.json': {
+          errors: [
+            {
+              line: 3,
+              message: 'used HTML localization message'
+            },
+            {
+              line: 5,
+              message: 'used HTML localization message'
+            },
+            {
+              line: 6,
+              message: 'used HTML localization message'
+            }
+          ]
         },
-        {}
-      )
-    })
-  })
-
-  describe('invalid', () => {
-    it('should be detected html messages', async () => {
-      await testOnFixtures(
-        {
-          cwd: join(cwdRoot, './invalid'),
-          localeDir: `*.{json,yaml,yml}`,
-          ruleName: '@intlify/vue-i18n/no-html-messages'
-        },
-        {
-          'en.json': {
-            errors: [
-              {
-                line: 3,
-                message: 'used HTML localization message'
-              },
-              {
-                line: 5,
-                message: 'used HTML localization message'
-              },
-              {
-                line: 6,
-                message: 'used HTML localization message'
-              }
-            ]
-          },
-          'en.yaml': {
-            errors: [
-              {
-                line: 2,
-                message: 'used HTML localization message'
-              },
-              {
-                line: 4,
-                message: 'used HTML localization message'
-              },
-              {
-                line: 5,
-                message: 'used HTML localization message'
-              }
-            ]
-          }
+        'en.yaml': {
+          errors: [
+            {
+              line: 2,
+              message: 'used HTML localization message'
+            },
+            {
+              line: 4,
+              message: 'used HTML localization message'
+            },
+            {
+              line: 5,
+              message: 'used HTML localization message'
+            }
+          ]
         }
-      )
-    })
-  })
+      }
+    )
+  ]
 })

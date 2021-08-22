@@ -21,6 +21,7 @@ import type {
   CustomBlockVisitorFactory
 } from '../types'
 import { joinPath, parsePath } from '../utils/key-path'
+import { getCwd } from '../utils/get-cwd'
 const debug = debugBuilder('eslint-plugin-vue-i18n:no-unused-keys')
 
 type UsedKeys = {
@@ -524,12 +525,13 @@ function create(context: RuleContext): RuleListener {
       debug(`ignore ${filename} in no-unused-keys`)
       return {}
     }
-    const src = options.src || process.cwd()
+    const src = options.src || getCwd(context)
     const extensions = options.extensions || ['.js', '.vue']
 
     const usedLocaleMessageKeys = usedKeysCache.collectKeysFromFiles(
       [src],
-      extensions
+      extensions,
+      context
     )
     const sourceCode = context.getSourceCode()
 
