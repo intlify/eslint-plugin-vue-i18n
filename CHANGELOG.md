@@ -1,4 +1,13 @@
 
+## v0.13.0 (2021-08-22)
+
+#### :star: Features
+* [#221](https://github.com/intlify/eslint-plugin-vue-i18n/pull/221) Add support for eslint v8(beta) ([@ota-meshi](https://github.com/ota-meshi))
+
+#### Committers: 1
+- Yosuke Ota ([@ota-meshi](https://github.com/ota-meshi))
+
+
 ## v0.12.0 (2021-07-27)
 
 #### :gear: Updates
