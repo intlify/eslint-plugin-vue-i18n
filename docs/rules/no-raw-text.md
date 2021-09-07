@@ -10,7 +10,10 @@ since: v0.2.0
 
 - :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` property in a configuration file enables this rule.
 
-This rule warns the usage of string literal.
+This rule warns the usage of literal the bellow:
+
+- string literal
+- template literals (no epressions, plain text only)
 
 This rule encourage i18n in about the application needs to be localized.
 
