@@ -154,7 +154,21 @@ tester.run('no-raw-text', rule as never, {
       errors: [
         {
           message: `raw text 'hello' is used`,
-          line: 1
+          line: 1,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `<i18n>
+{
+  "en": {
+    "hello": "hello"
+  }
+}
+</i18n>
+
+<template><p>{{$t('hello')}}</p></template>`
+            }
+          ]
         }
       ]
     },
@@ -168,7 +182,25 @@ tester.run('no-raw-text', rule as never, {
       errors: [
         {
           message: `raw text 'hello' is used`,
-          line: 3
+          line: 3,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "hello": "hello"
+  }
+}
+</i18n>
+
+<template>
+        <p>{{$t('hello')}}</p>
+      </template>
+    `
+            }
+          ]
         }
       ]
     },
@@ -185,19 +217,103 @@ tester.run('no-raw-text', rule as never, {
       errors: [
         {
           message: `raw text 'hello' is used`,
-          line: 4
+          line: 4,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "hello": "hello"
+  }
+}
+</i18n>
+
+<template>
+        <div class="app">
+          <p class="a1">{{$t('hello')}}</p>
+          <p class="inner">click<a href="/foo">here</a>!</p>
+        </div>
+      </template>
+    `
+            }
+          ]
         },
         {
           message: `raw text 'click' is used`,
-          line: 5
+          line: 5,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "click": "click"
+  }
+}
+</i18n>
+
+<template>
+        <div class="app">
+          <p class="a1">hello</p>
+          <p class="inner">{{$t('click')}}<a href="/foo">here</a>!</p>
+        </div>
+      </template>
+    `
+            }
+          ]
         },
         {
           message: `raw text 'here' is used`,
-          line: 5
+          line: 5,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "here": "here"
+  }
+}
+</i18n>
+
+<template>
+        <div class="app">
+          <p class="a1">hello</p>
+          <p class="inner">click<a href="/foo">{{$t('here')}}</a>!</p>
+        </div>
+      </template>
+    `
+            }
+          ]
         },
         {
           message: `raw text '!' is used`,
-          line: 5
+          line: 5,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "!": "!"
+  }
+}
+</i18n>
+
+<template>
+        <div class="app">
+          <p class="a1">hello</p>
+          <p class="inner">click<a href="/foo">here</a>{{$t('!')}}</p>
+        </div>
+      </template>
+    `
+            }
+          ]
         }
       ]
     },
@@ -211,7 +327,25 @@ tester.run('no-raw-text', rule as never, {
       errors: [
         {
           message: `raw text 'hello' is used`,
-          line: 3
+          line: 3,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "hello": "hello"
+  }
+}
+</i18n>
+
+<template>
+        <p>{{ $t('hello') }}</p>
+      </template>
+    `
+            }
+          ]
         }
       ]
     },
@@ -225,7 +359,25 @@ tester.run('no-raw-text', rule as never, {
       errors: [
         {
           message: `raw text 'hello' is used`,
-          line: 3
+          line: 3,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "hello": "hello"
+  }
+}
+</i18n>
+
+<template>
+        <p>{{ $t(\`hello\`) }}</p>
+      </template>
+    `
+            }
+          ]
         }
       ]
     },
@@ -239,11 +391,47 @@ tester.run('no-raw-text', rule as never, {
       errors: [
         {
           message: `raw text 'hello' is used`,
-          line: 3
+          line: 3,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "hello": "hello"
+  }
+}
+</i18n>
+
+<template>
+        <p>{{ ok ? $t('hello') : 'world' }}</p>
+      </template>
+    `
+            }
+          ]
         },
         {
           message: `raw text 'world' is used`,
-          line: 3
+          line: 3,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "world": "world"
+  }
+}
+</i18n>
+
+<template>
+        <p>{{ ok ? 'hello' : $t('world') }}</p>
+      </template>
+    `
+            }
+          ]
         }
       ]
     },
@@ -257,11 +445,47 @@ tester.run('no-raw-text', rule as never, {
       errors: [
         {
           message: `raw text 'hello' is used`,
-          line: 3
+          line: 3,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "hello": "hello"
+  }
+}
+</i18n>
+
+<template>
+        <p>{{ ok ? $t(\`hello\`) : \`world\` }}</p>
+      </template>
+    `
+            }
+          ]
         },
         {
           message: `raw text 'world' is used`,
-          line: 3
+          line: 3,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "world": "world"
+  }
+}
+</i18n>
+
+<template>
+        <p>{{ ok ? \`hello\` : $t(\`world\`) }}</p>
+      </template>
+    `
+            }
+          ]
         }
       ]
     },
@@ -275,7 +499,25 @@ tester.run('no-raw-text', rule as never, {
       errors: [
         {
           message: `raw text 'hello' is used`,
-          line: 3
+          line: 3,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "hello": "hello"
+  }
+}
+</i18n>
+
+<template>
+        <p v-text="$t('hello')"></p>
+      </template>
+    `
+            }
+          ]
         }
       ]
     },
@@ -289,7 +531,25 @@ tester.run('no-raw-text', rule as never, {
       errors: [
         {
           message: `raw text 'hello' is used`,
-          line: 3
+          line: 3,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "hello": "hello"
+  }
+}
+</i18n>
+
+<template>
+        <p v-text="$t(\`hello\`)"></p>
+      </template>
+    `
+            }
+          ]
         }
       ]
     },
@@ -303,7 +563,8 @@ tester.run('no-raw-text', rule as never, {
       errors: [
         {
           message: `raw text 'hello' is used`,
-          line: 3
+          line: 3,
+          suggestions: []
         }
       ]
     },
@@ -317,7 +578,8 @@ tester.run('no-raw-text', rule as never, {
       errors: [
         {
           message: `raw text 'hello' is used`,
-          line: 3
+          line: 3,
+          suggestions: []
         }
       ]
     },
@@ -331,7 +593,8 @@ tester.run('no-raw-text', rule as never, {
       errors: [
         {
           message: `raw text 'hello' is used`,
-          line: 3
+          line: 3,
+          suggestions: []
         }
       ]
     },
@@ -345,7 +608,8 @@ tester.run('no-raw-text', rule as never, {
       errors: [
         {
           message: `raw text 'hello' is used`,
-          line: 3
+          line: 3,
+          suggestions: []
         }
       ]
     },
@@ -360,7 +624,8 @@ tester.run('no-raw-text', rule as never, {
       errors: [
         {
           message: `raw text 'hello' is used`,
-          line: 2
+          line: 2,
+          suggestions: []
         }
       ]
     },
@@ -375,7 +640,8 @@ tester.run('no-raw-text', rule as never, {
       errors: [
         {
           message: `raw text 'hello' is used`,
-          line: 2
+          line: 2,
+          suggestions: []
         }
       ]
     },
@@ -391,7 +657,8 @@ tester.run('no-raw-text', rule as never, {
         {
           message: `raw text 'hello' is used`,
           line: 2,
-          column: 30
+          column: 31,
+          suggestions: []
         }
       ]
     },
@@ -407,7 +674,8 @@ tester.run('no-raw-text', rule as never, {
         {
           message: `raw text 'hello' is used`,
           line: 2,
-          column: 30
+          column: 31,
+          suggestions: []
         }
       ]
     },
@@ -423,12 +691,14 @@ tester.run('no-raw-text', rule as never, {
         {
           message: `raw text 'hello' is used`,
           line: 2,
-          column: 35
+          column: 36,
+          suggestions: []
         },
         {
           message: `raw text 'world' is used`,
           line: 2,
-          column: 45
+          column: 46,
+          suggestions: []
         }
       ]
     },
@@ -444,12 +714,14 @@ tester.run('no-raw-text', rule as never, {
         {
           message: `raw text 'hello' is used`,
           line: 2,
-          column: 35
+          column: 36,
+          suggestions: []
         },
         {
           message: `raw text 'world' is used`,
           line: 2,
-          column: 45
+          column: 46,
+          suggestions: []
         }
       ]
     },
@@ -465,7 +737,8 @@ tester.run('no-raw-text', rule as never, {
       errors: [
         {
           message: `raw text 'hello' is used`,
-          line: 4
+          line: 4,
+          suggestions: []
         }
       ]
     },
@@ -481,7 +754,27 @@ tester.run('no-raw-text', rule as never, {
       errors: [
         {
           message: `raw text 'hello' is used`,
-          line: 5
+          line: 5,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "hello": "hello"
+  }
+}
+</i18n>
+
+<template>
+        <md-icon>person</md-icon>
+        <v-icon>menu</v-icon>
+        <p>{{$t('hello')}}</p>
+      </template>
+    `
+            }
+          ]
         }
       ]
     },
@@ -500,17 +793,86 @@ tester.run('no-raw-text', rule as never, {
       errors: [
         {
           message: `raw text 'hello' is used`,
-          line: 4
+          line: 4,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "hello": "hello"
+  }
+}
+</i18n>
+
+<template>
+        <p>{{ $t(\`foo\`) }}: {{ $t('bar') }}</p>
+        <p>{{$t('hello')}}</p>
+        <p> - </p>
+        <p>@</p>
+        <p>{{ true ? $t(\`ok\`) : ' - ' }}</p>
+        <p>{{ true ? $t('ok') : '@' }}</p>
+      </template>
+    `
+            }
+          ]
         },
         {
           message: `raw text '@' is used`,
           line: 6,
-          column: 12
+          column: 12,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "@": "@"
+  }
+}
+</i18n>
+
+<template>
+        <p>{{ $t(\`foo\`) }}: {{ $t('bar') }}</p>
+        <p>hello</p>
+        <p> - </p>
+        <p>{{$t('@')}}</p>
+        <p>{{ true ? $t(\`ok\`) : ' - ' }}</p>
+        <p>{{ true ? $t('ok') : '@' }}</p>
+      </template>
+    `
+            }
+          ]
         },
         {
           message: `raw text '@' is used`,
           line: 8,
-          column: 33
+          column: 33,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "@": "@"
+  }
+}
+</i18n>
+
+<template>
+        <p>{{ $t(\`foo\`) }}: {{ $t('bar') }}</p>
+        <p>hello</p>
+        <p> - </p>
+        <p>@</p>
+        <p>{{ true ? $t(\`ok\`) : ' - ' }}</p>
+        <p>{{ true ? $t('ok') : $t('@') }}</p>
+      </template>
+    `
+            }
+          ]
         }
       ]
     },
@@ -534,7 +896,29 @@ tester.run('no-raw-text', rule as never, {
         {
           message: `raw text 'not' is used`,
           line: 4,
-          column: 25
+          column: 25,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "not": "not"
+  }
+}
+</i18n>
+
+<template>
+        <v-icon v-text="'mdi-check'" />
+        <v-icon v-text="$t(\`not\`)" />
+        <v-icon v-text="'ok'" />
+        <v-icon v-html="'mdi-check'" />
+        <v-icon v-html="'ok'" />
+      </template>
+    `
+            }
+          ]
         }
       ]
     },
@@ -549,7 +933,26 @@ tester.run('no-raw-text', rule as never, {
       errors: [
         {
           message: `raw text 'world' is used`,
-          line: 4
+          line: 4,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "world": "world"
+  }
+}
+</i18n>
+
+<template>
+        <p>hello</p>
+        <p>{{$t('world')}}</p>
+      </template>
+    `
+            }
+          ]
         }
       ]
     },
@@ -602,6 +1005,324 @@ tester.run('no-raw-text', rule as never, {
         "raw text 'MyComponent' is used",
         "raw text 'components option' is used",
         "raw text 'mark' is used"
+      ]
+    },
+    {
+      code: `
+      <script>
+      Vue.extend({
+        template: "<p>foo</p>"
+      })
+      </script>`,
+      errors: [
+        {
+          message: `raw text 'foo' is used`,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "foo": "foo"
+  }
+}
+</i18n>
+
+<script>
+      Vue.extend({
+        template: "<p>{{$t('foo')}}</p>"
+      })
+      </script>`
+            }
+          ]
+        }
+      ]
+    },
+    {
+      code: `
+      <script>
+      Vue.extend({
+        template: '<p>foo</p>'
+      })
+      </script>`,
+      errors: [
+        {
+          message: `raw text 'foo' is used`,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "foo": "foo"
+  }
+}
+</i18n>
+
+<script>
+      Vue.extend({
+        template: '<p>{{$t("foo")}}</p>'
+      })
+      </script>`
+            }
+          ]
+        }
+      ]
+    },
+    {
+      code: `
+      <script>
+      Vue.extend({
+        template: '<p>\\\\foo</p>'
+      })
+      </script>`,
+      errors: [
+        {
+          message: `raw text '\\foo' is used`,
+          suggestions: []
+        }
+      ]
+    },
+    {
+      code: `
+      <script>
+      Vue.extend({
+        template: '<p>{{"foo"}}</p>'
+      })
+      </script>`,
+      errors: [
+        {
+          message: `raw text 'foo' is used`,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "foo": "foo"
+  }
+}
+</i18n>
+
+<script>
+      Vue.extend({
+        template: '<p>{{$t("foo")}}</p>'
+      })
+      </script>`
+            }
+          ]
+        }
+      ]
+    },
+    {
+      code: `
+      <script>
+      Vue.extend({
+        template: '<p>{{"\\\\"foo"}}</p>'
+      })
+      </script>`,
+      errors: [
+        {
+          message: `raw text '"foo' is used`,
+          suggestions: []
+        }
+      ]
+    },
+    {
+      code: `
+      <script>
+      const Component = {
+        render () {
+          return (<p>hello</p>)
+        }
+      }
+      </script>`,
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "hello": "hello"
+  }
+}
+</i18n>
+
+<script>
+      const Component = {
+        render () {
+          return (<p>{$t('hello')}</p>)
+        }
+      }
+      </script>`
+            }
+          ]
+        }
+      ]
+    },
+    {
+      code: `
+      <i18n>
+      {
+        "ja": {
+          "hello": "こんにちは"
+        },
+        "en": {"hello": "hello"},
+        "zh": {}
+      }
+      </i18n>
+      <template>
+        <p>foo</p>
+      </template>`,
+      errors: [
+        {
+          message: `raw text 'foo' is used`,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+      {
+        "ja": {
+          "foo": "foo",
+          "hello": "こんにちは"
+        },
+        "en": {
+          "foo": "foo",
+          "hello": "hello"},
+        "zh": {
+          "foo": "foo"}
+      }
+      </i18n>
+      <template>
+        <p>{{$t('foo')}}</p>
+      </template>`
+            }
+          ]
+        }
+      ]
+    },
+    {
+      code: `
+      <i18n>
+      {
+        "ja": {
+          "hello": "こんにちは"
+        },
+        "en": {"hello": "hello"},
+        "zh": {}
+      }
+      </i18n>
+      <template>
+        <p>こんにちは</p>
+      </template>`,
+      errors: [
+        {
+          message: `raw text 'こんにちは' is used`,
+          suggestions: [
+            {
+              desc: `Replace to "{{$t('hello')}}".`,
+              output: `
+      <i18n>
+      {
+        "ja": {
+          "hello": "こんにちは"
+        },
+        "en": {"hello": "hello"},
+        "zh": {}
+      }
+      </i18n>
+      <template>
+        <p>{{$t('hello')}}</p>
+      </template>`
+            },
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+      {
+        "ja": {
+          "こんにちは": "こんにちは",
+          "hello": "こんにちは"
+        },
+        "en": {
+          "こんにちは": "こんにちは",
+          "hello": "hello"},
+        "zh": {
+          "こんにちは": "こんにちは"}
+      }
+      </i18n>
+      <template>
+        <p>{{$t('こんにちは')}}</p>
+      </template>`
+            }
+          ]
+        }
+      ]
+    },
+    {
+      code: `
+      <i18n>
+      {
+        "ja": {
+          "hello": "こんにちは"
+        },
+        "en": {"hello": "hello"},
+        "zh": {}
+      }
+      </i18n>
+      <template>
+        <p>{{'こんにちは'}}</p>
+      </template>`,
+      errors: [
+        {
+          message: `raw text 'こんにちは' is used`,
+          suggestions: [
+            {
+              desc: `Replace to "$t('hello')".`,
+              output: `
+      <i18n>
+      {
+        "ja": {
+          "hello": "こんにちは"
+        },
+        "en": {"hello": "hello"},
+        "zh": {}
+      }
+      </i18n>
+      <template>
+        <p>{{$t('hello')}}</p>
+      </template>`
+            },
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+      {
+        "ja": {
+          "こんにちは": "こんにちは",
+          "hello": "こんにちは"
+        },
+        "en": {
+          "こんにちは": "こんにちは",
+          "hello": "hello"},
+        "zh": {
+          "こんにちは": "こんにちは"}
+      }
+      </i18n>
+      <template>
+        <p>{{$t('こんにちは')}}</p>
+      </template>`
+            }
+          ]
+        }
       ]
     }
   ]
