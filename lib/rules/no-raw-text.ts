@@ -11,18 +11,27 @@ import type {
   SourceLocation
 } from '../types'
 
-type AnyValue = VAST.ESLintLiteral['value']
+type AnyValue =
+  | VAST.ESLintLiteral['value']
+  | VAST.ESLintTemplateElement['value']
 const config: {
   ignorePattern: RegExp
   ignoreNodes: string[]
   ignoreText: string[]
 } = { ignorePattern: /^[^\S\s]$/, ignoreNodes: [], ignoreText: [] }
 const hasOnlyWhitespace = (value: string) => /^[\r\n\s\t\f\v]+$/.test(value)
+const hasTemplateElementValue = (
+  value: any // eslint-disable-line @typescript-eslint/no-explicit-any
+): value is { raw: string; cooked: string } =>
+  'raw' in value &&
+  typeof value.raw === 'string' &&
+  'cooked' in value &&
+  typeof value.cooked === 'string'
 const INNER_START_OFFSET = '<template>'.length
 
 function calculateLoc(
-  node: VAST.ESLintLiteral,
-  base: VAST.ESLintLiteral | null = null
+  node: VAST.ESLintLiteral | VAST.ESLintTemplateElement,
+  base: VAST.ESLintLiteral | VAST.ESLintTemplateElement | null = null
 ) {
   return !base
     ? node.loc
@@ -40,13 +49,22 @@ function calculateLoc(
       }
 }
 
-function testValue(value: AnyValue) {
+function testTextable(value: string): boolean {
   return (
-    typeof value !== 'string' ||
     hasOnlyWhitespace(value) ||
     config.ignorePattern.test(value.trim()) ||
     config.ignoreText.includes(value.trim())
   )
+}
+
+function testValue(value: AnyValue): boolean {
+  if (typeof value === 'string') {
+    return testTextable(value)
+  } else if (hasTemplateElementValue(value)) {
+    return testTextable(value.raw)
+  } else {
+    return false
+  }
 }
 
 // parent is directive (e.g <p v-xxx="..."></p>)
@@ -65,29 +83,17 @@ function checkVAttributeDirective(
       (attrNode.key.name === 'text' ||
         // for vue-eslint-parser v6+
         attrNode.key.name.name === 'text') &&
-      node.expression &&
-      node.expression.type === 'Literal'
+      node.expression
     ) {
-      const literalNode = node.expression
-      const value = literalNode.value
-
-      if (testValue(value)) {
-        return
-      }
-
-      const loc = calculateLoc(literalNode, baseNode)
-      context.report({
-        loc,
-        message: `raw text '${literalNode.value}' is used`
-      })
+      checkExpressionContainerText(context, node.expression, baseNode)
     }
   }
 }
 
-function checkVExpressionContainerText(
+function checkVExpressionContainer(
   context: RuleContext,
   node: VAST.VExpressionContainer,
-  baseNode: VAST.ESLintLiteral | null = null
+  baseNode: VAST.ESLintLiteral | VAST.ESLintTemplateElement | null = null
 ) {
   if (!node.expression) {
     return
@@ -95,33 +101,7 @@ function checkVExpressionContainerText(
 
   if (node.parent && node.parent.type === 'VElement') {
     // parent is element (e.g. <p>{{ ... }}</p>)
-    if (node.expression.type === 'Literal') {
-      const literalNode = node.expression
-      if (testValue(literalNode.value)) {
-        return
-      }
-
-      const loc = calculateLoc(literalNode, baseNode)
-      context.report({
-        loc,
-        message: `raw text '${literalNode.value}' is used`
-      })
-    } else if (node.expression.type === 'ConditionalExpression') {
-      const targets = [node.expression.consequent, node.expression.alternate]
-      targets.forEach(target => {
-        if (target.type === 'Literal') {
-          if (testValue(target.value)) {
-            return
-          }
-
-          const loc = calculateLoc(target, baseNode)
-          context.report({
-            loc,
-            message: `raw text '${target.value}' is used`
-          })
-        }
-      })
-    }
+    checkExpressionContainerText(context, node.expression, baseNode)
   } else if (
     node.parent &&
     node.parent.type === 'VAttribute' &&
@@ -133,6 +113,67 @@ function checkVExpressionContainerText(
         parent: VAST.VDirective
       }
     )
+  }
+}
+function checkExpressionContainerText(
+  context: RuleContext,
+  expression: Exclude<VAST.VExpressionContainer['expression'], null>,
+  baseNode: VAST.ESLintLiteral | VAST.ESLintTemplateElement | null = null
+) {
+  if (expression.type === 'Literal') {
+    const literalNode = expression
+    if (testValue(literalNode.value)) {
+      return
+    }
+
+    const loc = calculateLoc(literalNode, baseNode)
+    context.report({
+      loc,
+      message: `raw text '${literalNode.value}' is used`
+    })
+  } else if (
+    expression.type === 'TemplateLiteral' &&
+    expression.expressions.length === 0
+  ) {
+    const templateNode = expression.quasis[0]
+    if (testValue(templateNode.value)) {
+      return
+    }
+
+    const loc = calculateLoc(templateNode, baseNode)
+    context.report({
+      loc,
+      message: `raw text '${templateNode.value.raw}' is used`
+    })
+  } else if (expression.type === 'ConditionalExpression') {
+    const targets = [expression.consequent, expression.alternate]
+    targets.forEach(target => {
+      if (target.type === 'Literal') {
+        if (testValue(target.value)) {
+          return
+        }
+
+        const loc = calculateLoc(target, baseNode)
+        context.report({
+          loc,
+          message: `raw text '${target.value}' is used`
+        })
+      } else if (
+        target.type === 'TemplateLiteral' &&
+        target.expressions.length === 0
+      ) {
+        const node = target.quasis[0]
+        if (testValue(node.value)) {
+          return
+        }
+
+        const loc = calculateLoc(node, baseNode)
+        context.report({
+          loc,
+          message: `raw text '${node.value.raw}' is used`
+        })
+      }
+    })
   }
 }
 
@@ -158,7 +199,7 @@ function findVariable(variables: Variable[], name: string) {
 function getComponentTemplateValueNode(
   context: RuleContext,
   node: VAST.ESLintObjectExpression
-): VAST.ESLintLiteral | null {
+): VAST.ESLintLiteral | VAST.ESLintTemplateElement | null {
   const templateNode = node.properties.find(
     (p): p is VAST.ESLintProperty =>
       p.type === 'Property' &&
@@ -169,6 +210,11 @@ function getComponentTemplateValueNode(
   if (templateNode) {
     if (templateNode.value.type === 'Literal') {
       return templateNode.value
+    } else if (
+      templateNode.value.type === 'TemplateLiteral' &&
+      templateNode.value.expressions.length === 0
+    ) {
+      return templateNode.value.quasis[0]
     } else if (templateNode.value.type === 'Identifier') {
       const templateVariable = findVariable(
         context.getScope().variables,
@@ -177,8 +223,15 @@ function getComponentTemplateValueNode(
       if (templateVariable) {
         const varDeclNode = templateVariable.defs[0]
           .node as VAST.ESLintVariableDeclarator
-        if (varDeclNode.init && varDeclNode.init.type === 'Literal') {
-          return varDeclNode.init
+        if (varDeclNode.init) {
+          if (varDeclNode.init.type === 'Literal') {
+            return varDeclNode.init
+          } else if (
+            varDeclNode.init.type === 'TemplateLiteral' &&
+            varDeclNode.init.expressions.length === 0
+          ) {
+            return varDeclNode.init.quasis[0]
+          }
         }
       }
     }
@@ -188,7 +241,17 @@ function getComponentTemplateValueNode(
 }
 
 function getComponentTemplateNode(value: AnyValue) {
-  return parse(`<template>${value}</template>`, {}).templateBody!
+  return parse(
+    `<template>${
+      // prettier-ignore
+      typeof value === 'string'
+        ? value
+        : hasTemplateElementValue(value)
+          ? value.raw
+          : value
+    }</template>`,
+    {}
+  ).templateBody!
 }
 
 function create(context: RuleContext): RuleListener {
@@ -213,7 +276,7 @@ function create(context: RuleContext): RuleListener {
     {
       // template block
       VExpressionContainer(node: VAST.VExpressionContainer) {
-        checkVExpressionContainerText(context, node)
+        checkVExpressionContainer(context, node)
       },
 
       VText(node: VAST.VText) {
@@ -238,7 +301,7 @@ function create(context: RuleContext): RuleListener {
             if (node.type === 'VText') {
               checkRawText(context, node.value, valueNode.loc)
             } else if (node.type === 'VExpressionContainer') {
-              checkVExpressionContainerText(context, node, valueNode)
+              checkVExpressionContainer(context, node, valueNode)
             }
           },
           leaveNode() {

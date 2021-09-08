@@ -22,7 +22,7 @@ tester.run('no-raw-text', rule as never, {
       <template>
         <div class="app">
           <p class="a1">{{ $t('hello') }}</p>
-          <p class="inner">{{ $t('click') }}<a href="/foo">{{ $t('here') }}</a>{{ $t('terminal') }}</p>
+          <p class="inner">{{ $t(\`click\`) }}<a href="/foo">{{ $t('here') }}</a>{{ $t('terminal') }}</p>
         </div>
       </template>
     `
@@ -86,6 +86,10 @@ tester.run('no-raw-text', rule as never, {
       </template>
     `,
       options: [{ ignoreText: ['hello', 'world'] }]
+    },
+    {
+      // specify a template literal with expression as `template`
+      code: 'export default { template: `<p>${msg}</p>` }'
     }
   ],
 
@@ -158,10 +162,42 @@ tester.run('no-raw-text', rule as never, {
       ]
     },
     {
+      // directly specify template literal in mustache
+      code: `
+      <template>
+        <p>{{ \`hello\` }}</p>
+      </template>
+    `,
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          line: 3
+        }
+      ]
+    },
+    {
       // javascript expression specify string literal in mustache
       code: `
       <template>
         <p>{{ ok ? 'hello' : 'world' }}</p>
+      </template>
+    `,
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          line: 3
+        },
+        {
+          message: `raw text 'world' is used`,
+          line: 3
+        }
+      ]
+    },
+    {
+      // javascript expression specify template literal in mustache
+      code: `
+      <template>
+        <p>{{ ok ? \`hello\` : \`world\` }}</p>
       </template>
     `,
       errors: [
@@ -190,10 +226,38 @@ tester.run('no-raw-text', rule as never, {
       ]
     },
     {
+      // directly specify tempate literal in v-text
+      code: `
+      <template>
+        <p v-text="\`hello\`"></p>
+      </template>
+    `,
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          line: 3
+        }
+      ]
+    },
+    {
       // directly specify string literal to `template` component option at export default object
       code: `
       export default {
         template: '<p>hello</p>'
+      }
+    `,
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          line: 3
+        }
+      ]
+    },
+    {
+      // directly specify template literal to `template` component option at export default object
+      code: `
+      export default {
+        template: \`<p>hello</p>\`
       }
     `,
       errors: [
@@ -218,9 +282,38 @@ tester.run('no-raw-text', rule as never, {
       ]
     },
     {
+      // directly specify template literal to `template` component option at variable
+      code: `
+      const Component = {
+        template: \`<p>hello</p>\`
+      }
+    `,
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          line: 3
+        }
+      ]
+    },
+    {
       // directly specify string literal to `template` variable
       code: `
       const template = '<p>hello</p>'
+      const Component = {
+        template
+      }
+    `,
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          line: 2
+        }
+      ]
+    },
+    {
+      // directly specify templtea literal to `template` variable
+      code: `
+      const template = \`<p>hello</p>\`
       const Component = {
         template
       }
@@ -249,9 +342,46 @@ tester.run('no-raw-text', rule as never, {
       ]
     },
     {
+      // directly specify string literal to `template` variable
+      code: `
+      const template = '<p>{{ \`hello\` }}</p>'
+      const Component = {
+        template
+      }
+    `,
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          line: 2,
+          column: 30
+        }
+      ]
+    },
+    {
       // javascript expression specify string literal to `template` variable in mustache
       code: `
       const template = '<p>{{ ok ? "hello" : "world" }}</p>'
+      const Component = {
+        template
+      }
+    `,
+      errors: [
+        {
+          message: `raw text 'hello' is used`,
+          line: 2,
+          column: 35
+        },
+        {
+          message: `raw text 'world' is used`,
+          line: 2,
+          column: 45
+        }
+      ]
+    },
+    {
+      // javascript expression specify tempalte literal to `template` variable in mustache
+      code: `
+      const template = '<p>{{ ok ? \`hello\` : \`world\` }}</p>'
       const Component = {
         template
       }
@@ -304,11 +434,11 @@ tester.run('no-raw-text', rule as never, {
     {
       code: `
       <template>
-        <p>{{ $t('foo') }}: {{ $t('bar') }}</p>
+        <p>{{ $t(\`foo\`) }}: {{ $t('bar') }}</p>
         <p>hello</p>
         <p> - </p>
         <p>@</p>
-        <p>{{ true ? $t('ok') : ' - ' }}</p>
+        <p>{{ true ? $t(\`ok\`) : ' - ' }}</p>
         <p>{{ true ? $t('ok') : '@' }}</p>
       </template>
     `,
@@ -334,7 +464,7 @@ tester.run('no-raw-text', rule as never, {
       code: `
       <template>
         <v-icon v-text="'mdi-check'" />
-        <v-icon v-text="'not'" />
+        <v-icon v-text="\`not\`" />
         <v-icon v-text="'ok'" />
         <v-icon v-html="'mdi-check'" />
         <v-icon v-html="'ok'" />
