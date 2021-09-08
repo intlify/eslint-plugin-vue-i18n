@@ -2,7 +2,7 @@
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
 import { parse, AST as VAST } from 'vue-eslint-parser'
-import { defineTemplateBodyVisitor } from '../utils/index'
+import { defineTemplateBodyVisitor, getVueObjectType } from '../utils/index'
 import type {
   JSXText,
   RuleContext,
@@ -21,8 +21,10 @@ const config: {
 } = { ignorePattern: /^[^\S\s]$/, ignoreNodes: [], ignoreText: [] }
 const hasOnlyWhitespace = (value: string) => /^[\r\n\s\t\f\v]+$/.test(value)
 const hasTemplateElementValue = (
-  value: any // eslint-disable-line @typescript-eslint/no-explicit-any
+  value: AnyValue
 ): value is { raw: string; cooked: string } =>
+  value != null &&
+  typeof value === 'object' &&
   'raw' in value &&
   typeof value.raw === 'string' &&
   'cooked' in value &&
@@ -292,6 +294,12 @@ function create(context: RuleContext): RuleListener {
       ObjectExpression(node: VAST.ESLintObjectExpression) {
         const valueNode = getComponentTemplateValueNode(context, node)
         if (!valueNode) {
+          return
+        }
+        if (
+          getVueObjectType(context, node) == null ||
+          valueNode.value == null
+        ) {
           return
         }
 

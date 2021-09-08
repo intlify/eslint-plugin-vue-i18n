@@ -339,6 +339,156 @@ export function defineCustomBlocksVisitor(
   return compositingVisitors(jsonVisitor, yamlVisitor)
 }
 
+export type VueObjectType =
+  | 'mark'
+  | 'export'
+  | 'definition'
+  | 'instance'
+  | 'variable'
+  | 'components-option'
+/**
+ * If the given object is a Vue component or instance, returns the Vue definition type.
+ * @param context The ESLint rule context object.
+ * @param node Node to check
+ * @returns The Vue definition type.
+ */
+export function getVueObjectType(
+  context: RuleContext,
+  node: VAST.ESLintObjectExpression
+): VueObjectType | null {
+  if (node.type !== 'ObjectExpression' || !node.parent) {
+    return null
+  }
+  const parent = node.parent
+  if (parent.type === 'ExportDefaultDeclaration') {
+    // export default {} in .vue || .jsx
+    const ext = extname(context.getFilename()).toLowerCase()
+    if (
+      (ext === '.vue' || ext === '.jsx' || !ext) &&
+      skipTSAsExpression(parent.declaration) === node
+    ) {
+      const scriptSetup = getScriptSetupElement(context)
+      if (
+        scriptSetup &&
+        scriptSetup.range[0] <= parent.range[0] &&
+        parent.range[1] <= scriptSetup.range[1]
+      ) {
+        // `export default` in `<script setup>`
+        return null
+      }
+      return 'export'
+    }
+  } else if (parent.type === 'CallExpression') {
+    // Vue.component('xxx', {}) || component('xxx', {})
+    if (
+      getVueComponentDefinitionType(node) != null &&
+      skipTSAsExpression(parent.arguments.slice(-1)[0]) === node
+    ) {
+      return 'definition'
+    }
+  } else if (parent.type === 'NewExpression') {
+    // new Vue({})
+    if (
+      isVueInstance(parent) &&
+      skipTSAsExpression(parent.arguments[0]) === node
+    ) {
+      return 'instance'
+    }
+  } else if (parent.type === 'VariableDeclarator') {
+    // This is a judgment method that eslint-plugin-vue does not have.
+    // If the variable name is PascalCase, it is considered to be a Vue component. e.g. MyComponent = {}
+    if (
+      parent.init === node &&
+      parent.id.type === 'Identifier' &&
+      /^[A-Z][a-zA-Z\d]+/u.test(parent.id.name) &&
+      parent.id.name.toUpperCase() !== parent.id.name
+    ) {
+      return 'variable'
+    }
+  } else if (parent.type === 'Property') {
+    // This is a judgment method that eslint-plugin-vue does not have.
+    // If set to components, it is considered to be a Vue component.
+    const componentsCandidate = parent.parent as VAST.ESLintObjectExpression
+    const pp = componentsCandidate.parent
+    if (
+      pp &&
+      pp.type === 'Property' &&
+      pp.value === componentsCandidate &&
+      !pp.computed &&
+      (pp.key.type === 'Identifier'
+        ? pp.key.name
+        : pp.key.type === 'Literal'
+        ? pp.key.value + ''
+        : '') === 'components'
+    ) {
+      return 'components-option'
+    }
+  }
+  if (
+    getComponentComments(context).some(
+      el => el.loc.end.line === node.loc.start.line - 1
+    )
+  ) {
+    return 'mark'
+  }
+  return null
+}
+
+/**
+ * Gets the element of `<script setup>`
+ * @param context The ESLint rule context object.
+ * @returns the element of `<script setup>`
+ */
+export function getScriptSetupElement(
+  context: RuleContext
+): VAST.VElement | null {
+  const df =
+    context.parserServices.getDocumentFragment &&
+    context.parserServices.getDocumentFragment()
+  if (!df) {
+    return null
+  }
+  const scripts = df.children
+    .filter(isVElement)
+    .filter(e => e.name === 'script')
+  if (scripts.length === 2) {
+    return scripts.find(e => getAttribute(e, 'setup')) || null
+  } else {
+    const script = scripts[0]
+    if (script && getAttribute(script, 'setup')) {
+      return script
+    }
+  }
+  return null
+}
+/**
+ * Checks whether the given node is VElement.
+ * @param node
+ */
+export function isVElement(
+  node: VAST.VElement | VAST.VExpressionContainer | VAST.VText
+): node is VAST.VElement {
+  return node.type === 'VElement'
+}
+
+/**
+ * Retrieve `TSAsExpression#expression` value if the given node a `TSAsExpression` node. Otherwise, pass through it.
+ * @template T Node type
+ * @param node The node to address.
+ * @returns The `TSAsExpression#expression` value if the node is a `TSAsExpression` node. Otherwise, the node.
+ */
+export function skipTSAsExpression<T extends VAST.Node>(node: T): T {
+  if (!node) {
+    return node
+  }
+  // @ts-expect-error -- ignore
+  if (node.type === 'TSAsExpression') {
+    // @ts-expect-error -- ignore
+    return skipTSAsExpression(node.expression)
+  }
+  return node
+}
+
 function compositingVisitors(
   visitor: RuleListener,
   ...visitors: RuleListener[]
@@ -360,4 +510,116 @@ function compositingVisitors(
     }
   }
   return visitor
+}
+
+/**
+ * Get the Vue component definition type from given node
+ * Vue.component('xxx', {}) || component('xxx', {})
+ * @param node Node to check
+ * @returns {'component' | 'mixin' | 'extend' | 'createApp' | 'defineComponent' | null}
+ */
+function getVueComponentDefinitionType(node: VAST.ESLintObjectExpression) {
+  const parent = node.parent
+  if (parent && parent.type === 'CallExpression') {
+    const callee = parent.callee
+
+    if (callee.type === 'MemberExpression') {
+      const calleeObject = skipTSAsExpression(callee.object)
+
+      if (calleeObject.type === 'Identifier') {
+        const propName =
+          !callee.computed &&
+          callee.property.type === 'Identifier' &&
+          callee.property.name
+        if (calleeObject.name === 'Vue') {
+          // for Vue.js 2.x
+          // Vue.component('xxx', {}) || Vue.mixin({}) || Vue.extend('xxx', {})
+          const maybeFullVueComponentForVue2 =
+            propName && isObjectArgument(parent)
+
+          return maybeFullVueComponentForVue2 &&
+            (propName === 'component' ||
+              propName === 'mixin' ||
+              propName === 'extend')
+            ? propName
+            : null
+        }
+
+        // for Vue.js 3.x
+        // app.component('xxx', {}) || app.mixin({})
+        const maybeFullVueComponent = propName && isObjectArgument(parent)
+
+        return maybeFullVueComponent &&
+          (propName === 'component' || propName === 'mixin')
+          ? propName
+          : null
+      }
+    }
+
+    if (callee.type === 'Identifier') {
+      if (callee.name === 'component') {
+        // for Vue.js 2.x
+        // component('xxx', {})
+        const isDestructedVueComponent = isObjectArgument(parent)
+        return isDestructedVueComponent ? 'component' : null
+      }
+      if (callee.name === 'createApp') {
+        // for Vue.js 3.x
+        // createApp({})
+        const isAppVueComponent = isObjectArgument(parent)
+        return isAppVueComponent ? 'createApp' : null
+      }
+      if (callee.name === 'defineComponent') {
+        // for Vue.js 3.x
+        // defineComponent({})
+        const isDestructedVueComponent = isObjectArgument(parent)
+        return isDestructedVueComponent ? 'defineComponent' : null
+      }
+    }
+  }
+
+  return null
+
+  function isObjectArgument(node: VAST.ESLintCallExpression) {
+    return (
+      node.arguments.length > 0 &&
+      skipTSAsExpression(node.arguments.slice(-1)[0]).type ===
+        'ObjectExpression'
+    )
+  }
+}
+
+/**
+ * Check whether given node is new Vue instance
+ * new Vue({})
+ * @param node Node to check
+ */
+function isVueInstance(node: VAST.ESLintNewExpression) {
+  const callee = node.callee
+  return Boolean(
+    node.type === 'NewExpression' &&
+      callee.type === 'Identifier' &&
+      callee.name === 'Vue' &&
+      node.arguments.length &&
+      skipTSAsExpression(node.arguments[0]).type === 'ObjectExpression'
+  )
+}
+
+const componentComments = new WeakMap<RuleContext, VAST.Token[]>()
+/**
+ * Gets the component comments of a given context.
+ * @param context The ESLint rule context object.
+ * @return The the component comments.
+ */
+function getComponentComments(context: RuleContext) {
+  let tokens = componentComments.get(context)
+  if (tokens) {
+    return tokens
+  }
+  const sourceCode = context.getSourceCode()
+  tokens = sourceCode
+    .getAllComments()
+    .filter(comment => /@vue\/component/g.test(comment.value))
+  componentComments.set(context, tokens)
+  return tokens
 }
