@@ -1,4 +1,13 @@
 
+## v0.15.0 (2021-09-08)
+
+#### :star: Features
+* [#232](https://github.com/intlify/eslint-plugin-vue-i18n/pull/232) feat: support suggestion for `no-raw-text` rule ([@ota-meshi](https://github.com/ota-meshi))
+
+#### Committers: 1
+- Yosuke Ota ([@ota-meshi](https://github.com/ota-meshi))
+
+
 ## v0.14.0 (2021-09-08)
 
 #### :star: Features
