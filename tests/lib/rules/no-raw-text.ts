@@ -90,7 +90,61 @@ tester.run('no-raw-text', rule as never, {
     {
       // specify a template literal with expression as `template`
       code: 'export default { template: `<p>${msg}</p>` }'
+    },
+    {
+      code: 'export default { template: `<p>raw</p>` }',
+      filename: 'unknown.js'
+    },
+    `
+    <script>
+    export default Vue.extend({
+      components: {
+      },
+
+      data() {
+        return {
+          template: 'foo'
+        }
+      },
+    })
+    </script>
+    `,
+    `
+    <script>
+    export default Vue.extend({
+      components: {
+      },
+
+      data() {
+        return {
+          template: null
+        }
+      },
+    })
+    </script>
+    `,
+    `
+    <script>
+    export default Vue.extend({
+      template: null
+    })
+    </script>
+    `,
+    `
+    <script setup>
+    export default {
+      template: 'script setup'
     }
+    </script>
+    `,
+    `
+    const CONST = {
+      template: 'maybe const value'
+    }
+    const varValue = {
+      template: 'maybe normal variable'
+    }
+    `
   ],
 
   invalid: [
@@ -497,6 +551,57 @@ tester.run('no-raw-text', rule as never, {
           message: `raw text 'world' is used`,
           line: 4
         }
+      ]
+    },
+    {
+      code: `
+      Vue.component('xxx', {
+        template: 'Vue.component'
+      })
+      component('xxx', {
+        template: 'component'
+      })
+      app.component('xxx', {
+        template: 'app.component'
+      })
+      Vue.extend({
+        template: 'Vue.extend'
+      })
+      defineComponent({
+        template: 'defineComponent'
+      })
+      new Vue({
+        template: 'new Vue'
+      })
+      createApp({
+        template: 'createApp'
+      })
+      const MyButton = {
+        template: 'MyComponent'
+      }
+      const foo = {
+        components: {
+          Foo: {
+            template: 'components option'
+          }
+        }
+      }
+      // @vue/component
+      const bar = {
+        template: 'mark'
+      }
+      `,
+      errors: [
+        "raw text 'Vue.component' is used",
+        "raw text 'component' is used",
+        "raw text 'app.component' is used",
+        "raw text 'Vue.extend' is used",
+        "raw text 'defineComponent' is used",
+        "raw text 'new Vue' is used",
+        "raw text 'createApp' is used",
+        "raw text 'MyComponent' is used",
+        "raw text 'components option' is used",
+        "raw text 'mark' is used"
       ]
     }
   ]
