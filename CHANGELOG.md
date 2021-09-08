@@ -1,4 +1,17 @@
 
+## v0.14.0 (2021-09-08)
+
+#### :star: Features
+* [#229](https://github.com/intlify/eslint-plugin-vue-i18n/pull/229) feat: support template literal for no-raw-text rule ([@kazupon](https://github.com/kazupon))
+
+#### :bug: Bug Fixes
+* [#230](https://github.com/intlify/eslint-plugin-vue-i18n/pull/230) Fix false positives for non component template in `no-raw-text` rule. ([@ota-meshi](https://github.com/ota-meshi))
+
+#### Committers: 2
+- Yosuke Ota ([@ota-meshi](https://github.com/ota-meshi))
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v0.13.0 (2021-08-22)
 
 #### :star: Features
