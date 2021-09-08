@@ -29,11 +29,11 @@ This rule encourage i18n in about the application needs to be localized.
 
 ```js
 /* eslint @intlify/vue-i18n/no-raw-text: 'error' */
-export default {
+export default Vue.extend({
   // ✗ BAD
   template: '<p>hello</p>'
   // ...
-}
+})
 ```
 
 </eslint-code-block>
@@ -83,11 +83,11 @@ export default {
 
 ```js
 /* eslint @intlify/vue-i18n/no-raw-text: 'error' */
-export default {
+export default Vue.extend({
   // ✓ GOOD
   template: `<p>{{ \$t('hello') }}</p>`
   // ...
-}
+})
 ```
 
 </eslint-code-block>

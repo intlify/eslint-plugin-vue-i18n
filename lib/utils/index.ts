@@ -133,7 +133,10 @@ const puttedSettingsError = new WeakSet<RuleContext>()
  * @param {RuleContext} context
  * @returns {LocaleMessages}
  */
-export function getLocaleMessages(context: RuleContext): LocaleMessages {
+export function getLocaleMessages(
+  context: RuleContext,
+  options?: { ignoreMissingSettingsError?: boolean }
+): LocaleMessages {
   const { settings } = context
   /** @type {SettingsVueI18nLocaleDir | null} */
   const localeDir =
@@ -150,7 +153,10 @@ export function getLocaleMessages(context: RuleContext): LocaleMessages {
       )) ||
     []
   if (!localeDir && !i18nBlocks.length) {
-    if (!puttedSettingsError.has(context)) {
+    if (
+      !puttedSettingsError.has(context) &&
+      !options?.ignoreMissingSettingsError
+    ) {
       context.report({
         loc: UNEXPECTED_ERROR_LOCATION,
         message: `You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation`
@@ -247,12 +253,7 @@ function getLocaleMessagesFromI18nBlocks(
   const filename = context.getFilename()
   localeMessages = i18nBlocks
     .map(block => {
-      const attrs: { [name: string]: string | undefined } = {}
-      for (const attr of block.startTag.attributes) {
-        if (!attr.directive && attr.value) {
-          attrs[attr.key.name] = attr.value.value
-        }
-      }
+      const attrs = getStaticAttributes(block)
       let localeMessage = null
       if (attrs.src) {
         const fullpath = resolve(dirname(filename), attrs.src)
@@ -469,6 +470,31 @@ export function isVElement(
   node: VAST.VElement | VAST.VExpressionContainer | VAST.VText
 ): node is VAST.VElement {
   return node.type === 'VElement'
+}
+/**
+ * Checks whether the given node is `<i18n>`.
+ * @param node
+ */
+export function isI18nBlock(
+  node: VAST.VElement | VAST.VExpressionContainer | VAST.VText
+): node is VAST.VElement & { name: 'i18n' } {
+  return isVElement(node) && node.name === 'i18n'
+}
+
+/**
+ * Get the static attribute values from a given element.
+ * @param element The element to get.
+ */
+export function getStaticAttributes(
+  element: VAST.VElement
+): { [name: string]: string | undefined } {
+  const attrs: { [name: string]: string | undefined } = {}
+  for (const attr of element.startTag.attributes) {
+    if (!attr.directive && attr.value) {
+      attrs[attr.key.name] = attr.value.value
+    }
+  }
+  return attrs
 }
 
 /**
