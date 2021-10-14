@@ -25,12 +25,16 @@ jobs:
       - name: Lint docs
         run: yarn lint:docs
   test:
-    name: 'Test for ESLint 7 on Node.js ${{ matrix.node }} OS: ${{matrix.os}}'
+    name: 'Test for ESLint ${{ matrix.eslint }} on Node.js ${{ matrix.node }} OS: ${{matrix.os}}'
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest]
+        eslint: [5, 6, 7, 8]
         node: [10, 12, 14, 16]
+    exclude:
+      - node: 10
+        eslint: 8
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -39,29 +43,15 @@ jobs:
         with:
           node-version: ${{ matrix.node }}
       - name: Install
-        run: yarn install
+        run: yarn install --ignore-engines
+      - name: Install eslint@${{ matrix.eslint }}
+        run: yarn add eslint@${{ matrix.eslint }}
+      - name: Install @typescript-eslint/parser@4
+        run: yarn add @typescript-eslint/parser@4 @typescript-eslint/eslint-plugin@4
+        if: matrix.eslint == 5
       - name: Test
         run: yarn test
       - name: Integration Test
         run: |
           yarn build
           yarn test:integrations
-  test-for-eslint:
-    name: 'Test for ESLint ${{ matrix.eslint }} on ${{ matrix.node }} OS: ${{matrix.os}}'
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [ubuntu-latest]
-        eslint: [5, 6, ^8.0.0-0]
-        node: [14]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-      - name: Setup Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node }}
-      - name: Install
-        run: yarn add eslint@${{ matrix.eslint }}
-      - name: Test
-        run: yarn test
