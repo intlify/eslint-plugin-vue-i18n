@@ -169,6 +169,7 @@ export function listFilesToProcess(
   debug('Creating list of files to process.')
   const resolvedPathsByGlobPattern = resolvedGlobPatterns.map(pattern => {
     const file = resolve(cwd, pattern)
+    console.log(file)
 
     if (
       options.globInputPaths === false ||
