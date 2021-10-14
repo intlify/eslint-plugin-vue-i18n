@@ -52,7 +52,7 @@
     "@types/semver": "^7.3.4",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
-    "eslint": "^5.15.0 || ^6.0.0 || ^7.0.0",
+    "eslint": "^5.15.0 || ^6.0.0 || ^7.0.0 || ^8.0.0",
     "eslint-config-prettier": "^8.0.0",
     "eslint-plugin-markdown": "^2.0.0",
     "eslint-plugin-prettier": "^4.0.0",
