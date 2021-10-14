@@ -295,6 +295,7 @@ class UsedKeysCache {
     extensions: string[]
   ) {
     const cwd = getCwd(context)
+    console.log(cwd)
     const fileNames = this._targetFilesLoader.get(cwd, files, extensions, cwd)
     return this._collectKeyResourcesFromFiles(fileNames, cwd)
   }
