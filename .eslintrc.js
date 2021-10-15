@@ -14,7 +14,8 @@ module.exports = {
   ],
   plugins: ['@typescript-eslint'],
   parserOptions: {
-    ecmaVersion: 2015
+    ecmaVersion: 2020,
+    parser: 'espree'
   },
   rules: {
     'object-shorthand': 'error',
