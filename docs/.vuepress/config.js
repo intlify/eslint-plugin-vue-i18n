@@ -26,6 +26,11 @@ module.exports = {
             __dirname,
             './shim/@eslint/eslintrc'
           ),
+          'eslint-visitor-keys$': path.resolve(
+            __dirname,
+            './shim/eslint-visitor-keys'
+          ),
+          esquery$: require.resolve('esquery/dist/esquery'),
           fs: require.resolve('./shim/fs'),
           [path.resolve(
             __dirname,
