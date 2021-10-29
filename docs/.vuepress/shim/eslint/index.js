@@ -1,2 +1,2 @@
-import { SourceCode } from '../../../../node_modules/eslint/lib/source-code'
-export { SourceCode }
+export { Linter } from 'eslint/lib/linter/linter.js'
+export { SourceCode } from 'eslint/lib/source-code/index.js'

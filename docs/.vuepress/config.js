@@ -17,7 +17,11 @@ module.exports = {
         alias: {
           module: require.resolve('./shim/module'),
           glob: require.resolve('./shim/glob'),
-          eslint: path.resolve(__dirname, './shim/eslint'),
+          eslint$: path.resolve(__dirname, './shim/eslint'),
+          '@eslint/eslintrc/universal': path.resolve(
+            __dirname,
+            '../../node_modules/@eslint/eslintrc/dist/eslintrc-universal.cjs'
+          ),
           '@eslint/eslintrc$': path.resolve(
             __dirname,
             './shim/@eslint/eslintrc'

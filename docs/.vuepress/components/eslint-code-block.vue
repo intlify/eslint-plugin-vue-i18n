@@ -7,7 +7,7 @@
       v-model="code"
       :style="{ height }"
       class="eslint-code-block"
-      :filename="resplvedFilename"
+      :filename="'/path/' + resplvedFilename"
       :language="language"
       dark
       :format="format"
@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import './setup'
 import EslintEditor from 'vue-eslint-editor'
 import { rules } from '../../../'
 import { setTimeouts } from '../../../dist/utils/default-timeouts'
@@ -194,14 +193,12 @@ export default {
     })
     // Load linter.
     const [
-      { default: Linter },
-      { default: coreRules },
+      { Linter },
       vueESLintParser,
       jsoncESLintParser,
       yamlESLintParser
     ] = await Promise.all([
-      import('eslint4b/dist/linter'),
-      import('eslint4b/dist/core-rules'),
+      import('eslint'),
       import('espree').then(() => import('vue-eslint-parser')),
       import('espree').then(() => import('jsonc-eslint-parser')),
       import('yaml-eslint-parser')
@@ -209,7 +206,6 @@ export default {
 
     const linter = (this.linter = new Linter({ cwd: '/path' }))
 
-    linter.defineRules(coreRules)
     for (const ruleId of Object.keys(rules)) {
       linter.defineRule(`@intlify/vue-i18n/${ruleId}`, rules[ruleId])
     }
