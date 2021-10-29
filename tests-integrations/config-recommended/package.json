@@ -7,6 +7,6 @@
   "license": "MIT",
   "devDependencies": {
     "@intlify/eslint-plugin-vue-i18n": "file:../..",
-    "eslint": "^7.4.0"
+    "eslint": "^8.0.0"
   }
 }
