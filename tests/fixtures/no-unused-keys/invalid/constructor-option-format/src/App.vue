@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <p v-t="'hello_dio'">{{ $t('messages.hello') }}</p>
+    <i18n-t keypath=hello_dio></i18n-t>
+    <p>{{ $t('messages.hello') }}</p>
   </div>
 </template>
 
