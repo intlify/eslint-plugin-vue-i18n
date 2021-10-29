@@ -41,3 +41,10 @@ about: Create a report to help us improve
   If you are only looking at the results of your editor extension, also check the CLI results.
 -->
 
+**Repository to reproduce this issue**
+<!--
+  Please share a repository that can reproduce your issue.
+  If you don't share it, we will most likely add a comment asking you to share the repository.
+-->
+
+
