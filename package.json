@@ -59,7 +59,7 @@
     "eslint-plugin-vue": "^7.16.0",
     "eslint-plugin-vue-libs": "^3.0.0 || ^4.0.0",
     "eslint4b": "^7.16.0",
-    "lerna-changelog": "^1.0.1",
+    "lerna-changelog": "^2.0.0",
     "mocha": "^9.0.0",
     "monaco-editor": "^0.29.0",
     "nyc": "^15.0.0",
