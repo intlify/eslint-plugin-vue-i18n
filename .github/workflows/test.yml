@@ -64,7 +64,7 @@ jobs:
       - name: Install
         run: yarn add eslint@${{ matrix.eslint }}
       - name: Install ts-eslint v5
-        run: yarn add @typescript-eslint/parser@5 @typescript-eslint/eslint-plugin@5
-        if: matrix.eslint == 8
+        run: yarn add @typescript-eslint/parser@4 @typescript-eslint/eslint-plugin@4
+        if: matrix.eslint == 5
       - name: Test
         run: yarn test
