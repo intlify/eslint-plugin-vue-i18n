@@ -11,7 +11,7 @@ npm install --save-dev eslint @intlify/eslint-plugin-vue-i18n
 ::: tip Requirements
 
 - ESLint v5.0.0 or later
-- Node.js v10.13.0 or later
+- Node.js v12.22.x, v14.17.x, v16.x or later
 
 :::
 
