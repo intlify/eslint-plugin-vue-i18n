@@ -35,3 +35,4 @@
 | Rule ID | Description |    |
 |:--------|:------------|:---|
 | [@intlify/vue-i18n/<wbr>prefer-linked-key-with-paren](./prefer-linked-key-with-paren.html) | enforce linked key to be enclosed in parentheses | :black_nib: |
+

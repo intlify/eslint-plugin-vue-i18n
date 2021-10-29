@@ -10,7 +10,7 @@ export function existsSync(filename) {
   return Boolean(files[filename]) || filename === '.'
 }
 export function readFileSync(filename) {
-  return files[filename] || ''
+  return files[filename] || files[filename.replace(/^\/path\//, '')] || ''
 }
 
 // utility
