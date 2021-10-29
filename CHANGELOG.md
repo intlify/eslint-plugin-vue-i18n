@@ -1,4 +1,14 @@
 
+## v1.0.0 (2021-10-29)
+
+#### :boom: Breaking Change
+* [#243](https://github.com/intlify/eslint-plugin-vue-i18n/pull/243) fix(deps): update dependency vue-eslint-parser to v8 ([@renovate[bot]](https://github.com/apps/renovate))
+* [#247](https://github.com/intlify/eslint-plugin-vue-i18n/pull/247) Drop support for Node <v12, v13, and v15 ([@ota-meshi](https://github.com/ota-meshi))
+
+#### Committers: 1
+- Yosuke Ota ([@ota-meshi](https://github.com/ota-meshi))
+
+
 ## v0.15.0 (2021-09-08)
 
 #### :star: Features
