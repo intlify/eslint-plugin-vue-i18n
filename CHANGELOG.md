@@ -1,4 +1,13 @@
 
+## v1.0.1 (2021-10-29)
+
+#### :bug: Bug Fixes
+* [#252](https://github.com/intlify/eslint-plugin-vue-i18n/pull/252) Fix false positives for `<i18n-t keypath>` in `no-unused-key` rule ([@ota-meshi](https://github.com/ota-meshi))
+
+#### Committers: 1
+- Yosuke Ota ([@ota-meshi](https://github.com/ota-meshi))
+
+
 ## v1.0.0 (2021-10-29)
 
 #### :boom: Breaking Change
