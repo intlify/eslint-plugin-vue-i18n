@@ -19,7 +19,8 @@ module.exports = {
   },
   rules: {
     'object-shorthand': 'error',
-    'no-debugger': 'error'
+    'no-debugger': 'error',
+    'vue/multi-word-component-names': 'off'
   },
   overrides: [
     {
