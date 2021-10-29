@@ -161,6 +161,14 @@ tester.run('no-missing-keys', rule as never, {
     <template>
       <div id="app"></div>
     </template>`
+      },
+      {
+        filename: 'test.vue',
+        code: `
+        <i18n locale="en">{"hello": "hello"}</i18n>
+        <template>
+          <i18n-t keypath="'hello'"></i18n-t>
+        </template>`
       }
     ]
   ),
@@ -278,6 +286,15 @@ tester.run('no-missing-keys', rule as never, {
       <p v-t="'missing'"></p>
     </template>`,
         errors: [`'missing' does not exist in localization message resources`]
+      },
+      {
+        filename: 'test.vue',
+        code: `
+        <i18n locale="en">{"hello": "hello"}</i18n>
+        <template>
+          <i18n-t keypath="hi"></i18n-t>
+        </template>`,
+        errors: [`'hi' does not exist in localization message resources`]
       }
     ]
   )
