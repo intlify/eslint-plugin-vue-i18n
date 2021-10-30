@@ -148,7 +148,31 @@ new RuleTester({
             ]
           })
         ]
-      : [])
+      : []),
+    {
+      filename: 'test.vue',
+      code: `
+      <i18n locale="en">
+      {
+        "Usage: $0 <command> [options]": "Usage: $0 <command> [options]"
+      }
+      </i18n>
+      <script>
+      t('Usage: $0 <command> [options]')
+      </script>`
+    },
+    {
+      filename: 'test.vue',
+      code: `
+      <i18n locale="en">
+      {
+        "foo.bar": "Message"
+      }
+      </i18n>
+      <script>
+      t('foo.bar')
+      </script>`
+    }
   ],
   invalid: [
     {

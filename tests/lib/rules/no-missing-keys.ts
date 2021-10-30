@@ -169,6 +169,30 @@ tester.run('no-missing-keys', rule as never, {
         <template>
           <i18n-t keypath="'hello'"></i18n-t>
         </template>`
+      },
+      {
+        filename: 'test.vue',
+        code: `
+        <i18n locale="en">
+        {
+          "Usage: $0 <command> [options]": "Usage: $0 <command> [options]"
+        }
+        </i18n>
+        <script>
+        t('Usage: $0 <command> [options]')
+        </script>`
+      },
+      {
+        filename: 'test.vue',
+        code: `
+        <i18n locale="en">
+        {
+          "foo.bar": "Message"
+        }
+        </i18n>
+        <script>
+        t('foo.bar')
+        </script>`
       }
     ]
   ),
@@ -216,6 +240,13 @@ tester.run('no-missing-keys', rule as never, {
         // nested basic
         code: `$t('missing.path')`,
         errors: [`'missing' does not exist in localization message resources`]
+      },
+      {
+        // nested missing
+        code: `$t('messages.missing')`,
+        errors: [
+          `'messages.missing' does not exist in localization message resources`
+        ]
       },
       {
         // nested missing

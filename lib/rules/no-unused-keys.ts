@@ -55,6 +55,7 @@ function getUsedKeysMap(
   const usedKeysMap: UsedKeys = {}
 
   for (const key of [...usedkeys, ...collectLinkedKeys(values, context)]) {
+    usedKeysMap[key] = {} // Set original key.
     const paths = parsePath(key)
     let map = usedKeysMap
     while (paths.length) {
