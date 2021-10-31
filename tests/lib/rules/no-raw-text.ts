@@ -1324,6 +1324,279 @@ tester.run('no-raw-text', rule as never, {
           ]
         }
       ]
+    },
+    {
+      code: `
+      <template>
+        <my-input label="raw" />
+        <other-input label='raw' />
+      </template>`,
+      options: [
+        {
+          attributes: {
+            '/.*/': ['label']
+          }
+        }
+      ],
+      errors: [
+        {
+          message: "raw text 'raw' is used",
+          line: 3,
+          column: 25,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "raw": "raw"
+  }
+}
+</i18n>
+
+<template>
+        <my-input :label="$t('raw')" />
+        <other-input label='raw' />
+      </template>`
+            }
+          ]
+        },
+        {
+          message: "raw text 'raw' is used",
+          line: 4,
+          column: 28,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "raw": "raw"
+  }
+}
+</i18n>
+
+<template>
+        <my-input label="raw" />
+        <other-input :label='$t("raw")' />
+      </template>`
+            }
+          ]
+        }
+      ]
+    },
+    {
+      code: `
+      <template>
+        <my-input label="raw" />
+        <other-input label='raw' />
+      </template>`,
+      options: [
+        {
+          attributes: {
+            'my-input': ['label']
+          }
+        }
+      ],
+      errors: [
+        {
+          message: "raw text 'raw' is used",
+          line: 3,
+          column: 25,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "raw": "raw"
+  }
+}
+</i18n>
+
+<template>
+        <my-input :label="$t('raw')" />
+        <other-input label='raw' />
+      </template>`
+            }
+          ]
+        }
+      ]
+    },
+    {
+      code: `
+      <i18n locale="en">
+      {
+        "hello": "Hello!"
+      }
+      </i18n>
+      <template>
+        <my-input label='Hello!' />
+      </template>`,
+      options: [
+        {
+          attributes: {
+            'my-input': ['label']
+          }
+        }
+      ],
+      errors: [
+        {
+          message: "raw text 'Hello!' is used",
+          suggestions: [
+            {
+              desc: `Replace to "$t('hello')".`,
+              output: `
+      <i18n locale="en">
+      {
+        "hello": "Hello!"
+      }
+      </i18n>
+      <template>
+        <my-input :label='$t("hello")' />
+      </template>`
+            },
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n locale="en">
+      {
+        "Hello!": "Hello!",
+        "hello": "Hello!"
+      }
+      </i18n>
+      <template>
+        <my-input :label='$t("Hello!")' />
+      </template>`
+            }
+          ]
+        }
+      ]
+    },
+    {
+      code: `
+      <script>
+      export default {
+        template: "<my-input label='Hello!' >Hello!</my-input>"
+      }
+      </script>`,
+      options: [
+        {
+          attributes: {
+            'my-input': ['label']
+          }
+        }
+      ],
+      errors: [
+        {
+          message: "raw text 'Hello!' is used",
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "Hello!": "Hello!"
+  }
+}
+</i18n>
+
+<script>
+      export default {
+        template: "<my-input :label='$t(\`Hello!\`)' >Hello!</my-input>"
+      }
+      </script>`
+            }
+          ]
+        },
+        {
+          message: "raw text 'Hello!' is used",
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "Hello!": "Hello!"
+  }
+}
+</i18n>
+
+<script>
+      export default {
+        template: "<my-input label='Hello!' >{{$t('Hello!')}}</my-input>"
+      }
+      </script>`
+            }
+          ]
+        }
+      ]
+    },
+    {
+      code: `
+      <script>
+      export default {
+        template: '<my-input label="Hello!" >Hello!</my-input>'
+      }
+      </script>`,
+      options: [
+        {
+          attributes: {
+            'my-input': ['label']
+          }
+        }
+      ],
+      errors: [
+        {
+          message: "raw text 'Hello!' is used",
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "Hello!": "Hello!"
+  }
+}
+</i18n>
+
+<script>
+      export default {
+        template: '<my-input :label="$t(\`Hello!\`)" >Hello!</my-input>'
+      }
+      </script>`
+            }
+          ]
+        },
+        {
+          message: "raw text 'Hello!' is used",
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n>
+{
+  "en": {
+    "Hello!": "Hello!"
+  }
+}
+</i18n>
+
+<script>
+      export default {
+        template: '<my-input label="Hello!" >{{$t("Hello!")}}</my-input>'
+      }
+      </script>`
+            }
+          ]
+        }
+      ]
     }
   ]
 })

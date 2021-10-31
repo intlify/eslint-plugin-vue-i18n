@@ -134,6 +134,17 @@ export default {
   "@intlify/vue-i18n/no-raw-text": [
     "error",
     {
+      "attributes": {
+        "/.+/": [
+          "title",
+          "aria-label",
+          "aria-placeholder",
+          "aria-roledescription",
+          "aria-valuetext"
+        ],
+        "input": ["placeholder"],
+        "img": ["alt"]
+      },
       "ignoreNodes": ["md-icon", "v-icon"],
       "ignorePattern": "^[-#:()&]+$",
       "ignoreText": ["EUR", "HKD", "USD"]
@@ -142,9 +153,47 @@ export default {
 }
 ```
 
-- `ignoreNodes`: specify nodes to ignore such as icon components
-- `ignorePattern`: specify a regexp pattern that matches strings to ignore
-- `ignoreText`: specify an array of strings to ignore
+- `attributes`: An object whose keys are tag name or patterns and value is an array of attributes to check for that tag name. Default empty.
+- `ignoreNodes`: specify nodes to ignore such as icon components. Default empty.
+- `ignorePattern`: specify a regexp pattern that matches strings to ignore. Default none.
+- `ignoreText`: specify an array of strings to ignore. Default empty.
+
+### `attributes`
+
+<eslint-code-block>
+
+<!-- eslint-skip -->
+
+```vue
+<script>
+/* eslint @intlify/vue-i18n/no-raw-text: ['error', {attributes: { '/.+/': ['label'] }}] */
+</script>
+<template>
+  <!-- ✗ BAD -->
+  <my-input label="hello" />
+  <any-component label="hello" />
+</template>
+```
+
+</eslint-code-block>
+
+<eslint-code-block>
+
+<!-- eslint-skip -->
+
+```vue
+<script>
+/* eslint @intlify/vue-i18n/no-raw-text: ['error', {attributes: { 'MyInput': ['label'] }}] */
+</script>
+<template>
+  <!-- ✗ BAD -->
+  <my-input label="hello" />
+  <!-- ✓ GOOD -->
+  <other-component label="hello" />
+</template>
+```
+
+</eslint-code-block>
 
 ## :rocket: Version
 
