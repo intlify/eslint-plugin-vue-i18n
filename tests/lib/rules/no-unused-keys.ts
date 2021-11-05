@@ -172,6 +172,25 @@ new RuleTester({
       <script>
       t('foo.bar')
       </script>`
+    },
+    {
+      // https://github.com/intlify/eslint-plugin-vue-i18n/issues/260
+      filename: 'test.vue',
+      code: `
+      <i18n locale="en">
+      {
+        "hello {name}.": "hello {name}!"
+      }
+      </i18n>
+      <script>
+      export default {
+        methods: {
+          fn () {
+            this.$i18n.t('hello {name}.', { name: 'DIO' })
+          }
+        }
+      }
+      </script>`
     }
   ],
   invalid: [
