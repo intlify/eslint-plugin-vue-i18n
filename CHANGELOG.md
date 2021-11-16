@@ -1,4 +1,18 @@
 
+## v1.1.0 (2021-11-16)
+
+#### :star: Features
+* [#259](https://github.com/intlify/eslint-plugin-vue-i18n/pull/259) Add `attributes` option to `no-raw-text` rule ([@ota-meshi](https://github.com/ota-meshi))
+* [#257](https://github.com/intlify/eslint-plugin-vue-i18n/pull/257) Add `SCREAMING_SNAKE_CASE` option to `key-format-style` rule ([@ota-meshi](https://github.com/ota-meshi))
+
+#### :bug: Bug Fixes
+* [#256](https://github.com/intlify/eslint-plugin-vue-i18n/pull/256) Fix bug when using delimited-like path. ([@ota-meshi](https://github.com/ota-meshi))
+* [#253](https://github.com/intlify/eslint-plugin-vue-i18n/pull/253) Fix false negatives for `<i18n-t keypath>` in `no-missing-key` rule ([@ota-meshi](https://github.com/ota-meshi))
+
+#### Committers: 1
+- Yosuke Ota ([@ota-meshi](https://github.com/ota-meshi))
+
+
 ## v1.0.1 (2021-10-29)
 
 #### :bug: Bug Fixes
