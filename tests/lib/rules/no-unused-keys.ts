@@ -148,7 +148,50 @@ new RuleTester({
             ]
           })
         ]
-      : [])
+      : []),
+    {
+      filename: 'test.vue',
+      code: `
+      <i18n locale="en">
+      {
+        "Usage: $0 <command> [options]": "Usage: $0 <command> [options]"
+      }
+      </i18n>
+      <script>
+      t('Usage: $0 <command> [options]')
+      </script>`
+    },
+    {
+      filename: 'test.vue',
+      code: `
+      <i18n locale="en">
+      {
+        "foo.bar": "Message"
+      }
+      </i18n>
+      <script>
+      t('foo.bar')
+      </script>`
+    },
+    {
+      // https://github.com/intlify/eslint-plugin-vue-i18n/issues/260
+      filename: 'test.vue',
+      code: `
+      <i18n locale="en">
+      {
+        "hello {name}.": "hello {name}!"
+      }
+      </i18n>
+      <script>
+      export default {
+        methods: {
+          fn () {
+            this.$i18n.t('hello {name}.', { name: 'DIO' })
+          }
+        }
+      }
+      </script>`
+    }
   ],
   invalid: [
     {

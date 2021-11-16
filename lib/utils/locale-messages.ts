@@ -253,31 +253,39 @@ export class LocaleMessages {
   findMissingPath(key: string): string | null {
     let missingPath: string[] = []
     for (const locale of this.locales) {
-      const paths = parsePath(key)
-      const length = paths.length
-      let lasts: I18nLocaleMessageValue[] = this.localeMessages.map(lm =>
-        lm.getMessagesFromLocale(locale)
+      const localeMessages: I18nLocaleMessageValue[] = this.localeMessages.map(
+        lm => lm.getMessagesFromLocale(locale)
       )
-      let i = 0
-      let missing = false
-      while (i < length) {
+      if (
+        localeMessages.some(last => {
+          return last && typeof last !== 'string' ? last[key] != null : false
+        })
+      ) {
+        // Hit the original key.
+        return null
+      }
+
+      const paths = [...parsePath(key)]
+      let lasts = localeMessages
+      const targetPaths = []
+      while (paths.length) {
+        const path = paths.shift()!
+        targetPaths.push(path)
         const values: I18nLocaleMessageValue[] = lasts
           .map(last => {
-            return last && typeof last !== 'string' ? last[paths[i]] : undefined
+            return last && typeof last !== 'string' ? last[path] : undefined
           })
           .filter((val): val is I18nLocaleMessageValue => val != null)
 
         if (values.length === 0) {
-          if (missingPath.length <= i) {
-            missingPath = paths.slice(0, i + 1)
+          if (missingPath.length <= targetPaths.length) {
+            missingPath = targetPaths
           }
-          missing = true
           break
         }
         lasts = values
-        i++
       }
-      if (!missing) {
+      if (!missingPath.length) {
         return null
       }
     }
