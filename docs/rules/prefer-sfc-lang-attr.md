@@ -19,6 +19,8 @@ locale messages:
 
 <eslint-code-block fix>
 
+<!-- eslint-skip -->
+
 ```vue
 <i18n>
 {
@@ -39,6 +41,8 @@ locale messages:
 locale messages:
 
 <eslint-code-block fix>
+
+<!-- eslint-skip -->
 
 ```vue
 <i18n lang="json">
