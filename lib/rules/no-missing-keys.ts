@@ -17,13 +17,8 @@ function create(context: RuleContext): RuleListener {
         checkDirective(context, node)
       },
 
-      "VElement:matches([name=i18n], [name=i18n-t]) > VStartTag > VAttribute[key.name='path']"(
-        node: VAST.VAttribute
-      ) {
-        checkComponent(context, node)
-      },
-
-      "VElement:matches([name=i18n], [name=i18n-t]) > VStartTag > VAttribute[key.name.name='path']"(
+      ["VElement:matches([name=i18n], [name=i18n-t]) > VStartTag > VAttribute[key.name='path']," +
+      "VElement[name=i18n-t] > VStartTag > VAttribute[key.name='keypath']"](
         node: VAST.VAttribute
       ) {
         checkComponent(context, node)
