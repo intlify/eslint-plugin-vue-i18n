@@ -4,6 +4,13 @@
  */
 
 /**
+ * Capitalize a string.
+ */
+function capitalize(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+/**
  * Checks whether the given string has symbols.
  */
 function hasSymbols(str: string) {
@@ -99,6 +106,22 @@ const checkersMap = {
   camelCase: isCamelCase,
   PascalCase: isPascalCase,
   SCREAMING_SNAKE_CASE: isScreamingSnakeCase
+}
+
+/**
+ * Convert text to camelCase
+ */
+export function camelCase(str: string) {
+  if (isPascalCase(str)) {
+    return str.charAt(0).toLowerCase() + str.slice(1)
+  }
+  return str.replace(/[-_](\w)/gu, (_, c) => (c ? c.toUpperCase() : ''))
+}
+/**
+ * Convert text to PascalCase
+ */
+export function pascalCase(str: string): string {
+  return capitalize(camelCase(str))
 }
 
 export const allowedCaseOptions = [

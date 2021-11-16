@@ -20,8 +20,10 @@ import type {
   RuleListener,
   SuggestionReportDescriptor,
   Fix,
-  I18nLocaleMessageDictionary
+  I18nLocaleMessageDictionary,
+  Range
 } from '../types'
+import { isKebabCase, pascalCase } from '../utils/casing'
 
 type LiteralValue = VAST.ESLintLiteral['value']
 type StaticTemplateLiteral = VAST.ESLintTemplateLiteral & {
@@ -30,13 +32,70 @@ type StaticTemplateLiteral = VAST.ESLintTemplateLiteral & {
 }
 type TemplateOptionValueNode = VAST.ESLintLiteral | StaticTemplateLiteral
 type NodeScope = 'template' | 'template-option' | 'jsx'
-const config: {
+type TargetAttrs = { name: RegExp; attrs: Set<string> }
+type Config = {
+  attributes: TargetAttrs[]
   ignorePattern: RegExp
   ignoreNodes: string[]
   ignoreText: string[]
-} = { ignorePattern: /^[^\S\s]$/, ignoreNodes: [], ignoreText: [] }
+}
+type Quotes = Set<'"' | "'" | '`'>
+function getFixQuote(quotes: Quotes, code: string) {
+  if (!code.includes('\n')) {
+    for (const q of ["'", '"'] as const) {
+      if (!quotes.has(q) && !code.includes(q)) {
+        return q
+      }
+    }
+  }
+  if (!quotes.has('`') && !code.includes('`')) {
+    return '`'
+  }
+  return null
+}
+const RE_REGEXP_CHAR = /[\\^$.*+?()[\]{}|]/gu
+const RE_HAS_REGEXP_CHAR = new RegExp(RE_REGEXP_CHAR.source)
+const RE_REGEXP_STR = /^\/(.+)\/(.*)$/u
+function toRegExp(str: string): RegExp {
+  const parts = RE_REGEXP_STR.exec(str)
+  if (parts) {
+    return new RegExp(parts[1], parts[2])
+  }
+  return new RegExp(`^${escape(str)}$`)
+}
 const hasOnlyWhitespace = (value: string) => /^[\r\n\s\t\f\v]+$/.test(value)
 const INNER_START_OFFSET = '<template>'.length
+
+/**
+ * Escapes the `RegExp` special characters "^", "$", "\", ".", "*", "+",
+ * "?", "(", ")", "[", "]", "{", "}", and "|" in `string`.
+ *
+ * @param {string} string The string to escape.
+ * @returns {string} Returns the escaped string.
+ */
+function escape(str: string) {
+  return str && RE_HAS_REGEXP_CHAR.test(str)
+    ? str.replace(RE_REGEXP_CHAR, '\\$&')
+    : str
+}
+
+/**
+ * Get the attribute to be verified from the element name.
+ */
+function getTargetAttrs(tagName: string, config: Config): Set<string> {
+  const result = []
+  for (const { name, attrs } of config.attributes) {
+    name.lastIndex = 0
+    if (name.test(tagName)) {
+      result.push(...attrs)
+    }
+  }
+  if (isKebabCase(tagName)) {
+    result.push(...getTargetAttrs(pascalCase(tagName), config))
+  }
+
+  return new Set(result)
+}
 
 function isStaticTemplateLiteral(
   node:
@@ -49,17 +108,29 @@ function isStaticTemplateLiteral(
   )
 }
 function calculateRange(
-  node: VAST.ESLintLiteral | StaticTemplateLiteral | VAST.VText | JSXText,
+  node:
+    | VAST.ESLintLiteral
+    | StaticTemplateLiteral
+    | VAST.VText
+    | JSXText
+    | VAST.VLiteral
+    | VAST.VIdentifier,
   base: TemplateOptionValueNode | null
-): [number, number] {
+): Range {
+  const range = node.range
   if (!base) {
-    return node.range
+    return range
   }
   const offset = base.range[0] + 1 /* quote */ - INNER_START_OFFSET
-  return [offset + node.range[0], offset + node.range[1]]
+  return [offset + range[0], offset + range[1]]
 }
 function calculateLoc(
-  node: VAST.ESLintLiteral | StaticTemplateLiteral | VAST.VText | JSXText,
+  node:
+    | VAST.ESLintLiteral
+    | StaticTemplateLiteral
+    | VAST.VText
+    | JSXText
+    | VAST.VLiteral,
   base: TemplateOptionValueNode | null,
   context: RuleContext
 ) {
@@ -73,7 +144,7 @@ function calculateLoc(
   }
 }
 
-function testValue(value: LiteralValue): boolean {
+function testValue(value: LiteralValue, config: Config): boolean {
   if (typeof value === 'string') {
     return (
       hasOnlyWhitespace(value) ||
@@ -91,6 +162,7 @@ function checkVAttributeDirective(
   node: VAST.VExpressionContainer & {
     parent: VAST.VDirective
   },
+  config: Config,
   baseNode: TemplateOptionValueNode | null,
   scope: NodeScope
 ) {
@@ -104,7 +176,13 @@ function checkVAttributeDirective(
         attrNode.key.name.name === 'text') &&
       node.expression
     ) {
-      checkExpressionContainerText(context, node.expression, baseNode, scope)
+      checkExpressionContainerText(
+        context,
+        node.expression,
+        config,
+        baseNode,
+        scope
+      )
     }
   }
 }
@@ -112,6 +190,7 @@ function checkVAttributeDirective(
 function checkVExpressionContainer(
   context: RuleContext,
   node: VAST.VExpressionContainer,
+  config: Config,
   baseNode: TemplateOptionValueNode | null,
   scope: NodeScope
 ) {
@@ -121,7 +200,13 @@ function checkVExpressionContainer(
 
   if (node.parent && node.parent.type === 'VElement') {
     // parent is element (e.g. <p>{{ ... }}</p>)
-    checkExpressionContainerText(context, node.expression, baseNode, scope)
+    checkExpressionContainerText(
+      context,
+      node.expression,
+      config,
+      baseNode,
+      scope
+    )
   } else if (
     node.parent &&
     node.parent.type === 'VAttribute' &&
@@ -132,6 +217,7 @@ function checkVExpressionContainer(
       node as VAST.VExpressionContainer & {
         parent: VAST.VDirective
       },
+      config,
       baseNode,
       scope
     )
@@ -140,20 +226,21 @@ function checkVExpressionContainer(
 function checkExpressionContainerText(
   context: RuleContext,
   expression: Exclude<VAST.VExpressionContainer['expression'], null>,
+  config: Config,
   baseNode: TemplateOptionValueNode | null,
   scope: NodeScope
 ) {
   if (expression.type === 'Literal') {
-    checkLiteral(context, expression, baseNode, scope)
+    checkLiteral(context, expression, config, baseNode, scope)
   } else if (isStaticTemplateLiteral(expression)) {
-    checkLiteral(context, expression, baseNode, scope)
+    checkLiteral(context, expression, config, baseNode, scope)
   } else if (expression.type === 'ConditionalExpression') {
     const targets = [expression.consequent, expression.alternate]
     targets.forEach(target => {
       if (target.type === 'Literal') {
-        checkLiteral(context, target, baseNode, scope)
+        checkLiteral(context, target, config, baseNode, scope)
       } else if (isStaticTemplateLiteral(target)) {
-        checkLiteral(context, target, baseNode, scope)
+        checkLiteral(context, target, config, baseNode, scope)
       }
     })
   }
@@ -162,13 +249,16 @@ function checkExpressionContainerText(
 function checkLiteral(
   context: RuleContext,
   literal: VAST.ESLintLiteral | StaticTemplateLiteral,
+  config: Config,
   baseNode: TemplateOptionValueNode | null,
   scope: NodeScope
 ) {
   const value =
-    literal.type === 'Literal' ? literal.value : literal.quasis[0].value.cooked
+    literal.type !== 'TemplateLiteral'
+      ? literal.value
+      : literal.quasis[0].value.cooked
 
-  if (testValue(value)) {
+  if (testValue(value, config)) {
     return
   }
 
@@ -222,14 +312,99 @@ function checkLiteral(
   }
 }
 
+function checkVAttribute(
+  context: RuleContext,
+  attribute: VAST.VAttribute,
+  config: Config,
+  baseNode: TemplateOptionValueNode | null,
+  scope: NodeScope
+) {
+  if (!attribute.value) {
+    return
+  }
+  const literal = attribute.value
+  const value = literal.value
+
+  if (testValue(value, config)) {
+    return
+  }
+
+  const loc = calculateLoc(literal, baseNode, context)
+  context.report({
+    loc,
+    message: `raw text '${value}' is used`,
+    suggest: buildSuggest()
+  })
+
+  function buildSuggest(): SuggestionReportDescriptor[] | null {
+    if (scope === 'template-option') {
+      if (!withoutEscape(context, baseNode)) {
+        return null
+      }
+    } else if (scope !== 'template') {
+      return null
+    }
+    const literalRange = calculateRange(literal, baseNode)
+    const replaceRange = [literalRange[0] + 1, literalRange[1] - 1] as Range
+    const keyRange = calculateRange(attribute.key, baseNode)
+    const sourceCode = context.getSourceCode()
+    const attrQuote = sourceCode.text[literalRange[0]]
+    const quotes: Quotes = new Set(attrQuote as never)
+    if (baseNode) {
+      const baseQuote = sourceCode.text[baseNode.range[0]]
+      quotes.add(baseQuote as never)
+    }
+
+    const suggest: SuggestionReportDescriptor[] = []
+
+    for (const key of extractMessageKeys(context, `${value}`)) {
+      const quote = getFixQuote(quotes, key)
+      if (quote) {
+        suggest.push({
+          desc: `Replace to "$t('${key}')".`,
+          fix(fixer) {
+            return [
+              fixer.insertTextBeforeRange(keyRange, ':'),
+              fixer.replaceTextRange(replaceRange, `$t(${quote}${key}${quote})`)
+            ]
+          }
+        })
+      }
+    }
+    const i18nBlocks = getFixableI18nBlocks(context, `${value}`)
+    const quote = getFixQuote(quotes, sourceCode.text.slice(...replaceRange))
+    if (i18nBlocks && quote) {
+      suggest.push({
+        desc: "Add the resource to the '<i18n>' block.",
+        fix(fixer) {
+          return generateFixAddI18nBlock(
+            context,
+            fixer,
+            i18nBlocks,
+            `${value}`,
+            [
+              fixer.insertTextBeforeRange(keyRange, ':'),
+              fixer.insertTextBeforeRange(replaceRange, `$t(${quote}`),
+              fixer.insertTextAfterRange(replaceRange, `${quote})`)
+            ]
+          )
+        }
+      })
+    }
+
+    return suggest
+  }
+}
+
 function checkText(
   context: RuleContext,
   textNode: VAST.VText | JSXText,
+  config: Config,
   baseNode: TemplateOptionValueNode | null,
   scope: NodeScope
 ) {
   const value = textNode.value
-  if (testValue(value)) {
+  if (testValue(value, config)) {
     return
   }
 
@@ -247,39 +422,33 @@ function checkText(
       }
     }
     const replaceRange = calculateRange(textNode, baseNode)
-    const codeText = context.getSourceCode().text.slice(...replaceRange)
-    const baseQuote = baseNode
-      ? context.getSourceCode().getText(baseNode)[0]
-      : ''
-    const quote =
-      !codeText.includes("'") && !codeText.includes('\n') && baseQuote !== "'"
-        ? "'"
-        : !codeText.includes('"') &&
-          !codeText.includes('\n') &&
-          baseQuote !== '"'
-        ? '"'
-        : !codeText.includes('`') && baseQuote !== '`'
-        ? '`'
-        : null
-    if (quote == null) {
-      return null
+    const sourceCode = context.getSourceCode()
+    const quotes: Quotes = new Set()
+    if (baseNode) {
+      const baseQuote = sourceCode.text[baseNode.range[0]]
+      quotes.add(baseQuote as never)
     }
-
-    const before = `${scope === 'jsx' ? '{' : '{{'}$t(${quote}`
-    const after = `${quote})${scope === 'jsx' ? '}' : '}}'}`
 
     const suggest: SuggestionReportDescriptor[] = []
 
     for (const key of extractMessageKeys(context, value)) {
-      suggest.push({
-        desc: `Replace to "${before}${key}${after}".`,
-        fix(fixer) {
-          return fixer.replaceTextRange(replaceRange, before + key + after)
-        }
-      })
+      const quote = getFixQuote(quotes, key)
+      if (quote) {
+        const before = `${scope === 'jsx' ? '{' : '{{'}$t(${quote}`
+        const after = `${quote})${scope === 'jsx' ? '}' : '}}'}`
+        suggest.push({
+          desc: `Replace to "${before}${key}${after}".`,
+          fix(fixer) {
+            return fixer.replaceTextRange(replaceRange, before + key + after)
+          }
+        })
+      }
     }
     const i18nBlocks = getFixableI18nBlocks(context, `${value}`)
-    if (i18nBlocks) {
+    const quote = getFixQuote(quotes, sourceCode.text.slice(...replaceRange))
+    if (i18nBlocks && quote) {
+      const before = `${scope === 'jsx' ? '{' : '{{'}$t(${quote}`
+      const after = `${quote})${scope === 'jsx' ? '}' : '}}'}`
       suggest.push({
         desc: "Add the resource to the '<i18n>' block.",
         fix(fixer) {
@@ -565,78 +734,129 @@ function extractMessageKeys(
   }
 }
 
+/**
+ * Parse attributes option
+ */
+function parseTargetAttrs(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  options: any
+) {
+  const regexps: TargetAttrs[] = []
+  for (const tagName of Object.keys(options)) {
+    const attrs: Set<string> = new Set(options[tagName])
+    regexps.push({
+      name: toRegExp(tagName),
+      attrs
+    })
+  }
+  return regexps
+}
+
 function create(context: RuleContext): RuleListener {
-  config.ignorePattern = /^$/
-  config.ignoreNodes = []
-  config.ignoreText = []
+  const options = context.options[0] || {}
 
-  if (context.options[0] && context.options[0].ignorePattern) {
-    config.ignorePattern = new RegExp(context.options[0].ignorePattern, 'u')
+  const config: Config = {
+    attributes: [],
+    ignorePattern: /^$/,
+    ignoreNodes: [],
+    ignoreText: []
   }
 
-  if (context.options[0] && context.options[0].ignoreNodes) {
-    config.ignoreNodes = context.options[0].ignoreNodes
+  if (options.ignorePattern) {
+    config.ignorePattern = new RegExp(options.ignorePattern, 'u')
   }
 
-  if (context.options[0] && context.options[0].ignoreText) {
-    config.ignoreText = context.options[0].ignoreText
+  if (options.ignoreNodes) {
+    config.ignoreNodes = options.ignoreNodes
   }
 
-  return defineTemplateBodyVisitor(
-    context,
-    {
-      // template block
-      VExpressionContainer(node: VAST.VExpressionContainer) {
-        checkVExpressionContainer(context, node, null, 'template')
-      },
+  if (options.ignoreText) {
+    config.ignoreText = options.ignoreText
+  }
+  if (options.attributes) {
+    config.attributes = parseTargetAttrs(options.attributes)
+  }
 
-      VText(node: VAST.VText) {
-        if (config.ignoreNodes.includes((node.parent as VAST.VElement).name)) {
-          return
-        }
-
-        checkText(context, node, null, 'template')
-      }
+  const templateVisitor = {
+    // template block
+    VExpressionContainer(
+      node: VAST.VExpressionContainer,
+      baseNode: TemplateOptionValueNode | null = null,
+      scope: NodeScope = 'template'
+    ) {
+      checkVExpressionContainer(context, node, config, baseNode, scope)
     },
-    {
-      // script block or scripts
-      ObjectExpression(node: VAST.ESLintObjectExpression) {
-        const valueNode = getComponentTemplateValueNode(context, node)
-        if (!valueNode) {
-          return
-        }
-        if (
-          getVueObjectType(context, node) == null ||
-          (valueNode.type === 'Literal' && valueNode.value == null)
-        ) {
-          return
-        }
 
-        const templateNode = getComponentTemplateNode(valueNode)
-        VAST.traverseNodes(templateNode, {
-          enterNode(node) {
-            if (node.type === 'VText') {
-              checkText(context, node, valueNode, 'template-option')
-            } else if (node.type === 'VExpressionContainer') {
-              checkVExpressionContainer(
-                context,
-                node,
-                valueNode,
-                'template-option'
-              )
-            }
-          },
-          leaveNode() {
-            // noop
-          }
-        })
-      },
-
-      JSXText(node: JSXText) {
-        checkText(context, node, null, 'jsx')
+    VAttribute(
+      node: VAST.VAttribute,
+      baseNode: TemplateOptionValueNode | null = null,
+      scope: NodeScope = 'template'
+    ) {
+      if (node.directive) {
+        return
       }
+      const tagName = node.parent.parent.rawName
+      const attrName = node.key.name
+      if (!getTargetAttrs(tagName, config).has(attrName)) {
+        return
+      }
+
+      checkVAttribute(context, node, config, baseNode, scope)
+    },
+
+    VText(
+      node: VAST.VText,
+      baseNode: TemplateOptionValueNode | null = null,
+      scope: NodeScope = 'template'
+    ) {
+      if (config.ignoreNodes.includes((node.parent as VAST.VElement).name)) {
+        return
+      }
+
+      checkText(context, node, config, baseNode, scope)
     }
-  )
+  }
+
+  return defineTemplateBodyVisitor(context, templateVisitor, {
+    // script block or scripts
+    ObjectExpression(node: VAST.ESLintObjectExpression) {
+      const valueNode = getComponentTemplateValueNode(context, node)
+      if (!valueNode) {
+        return
+      }
+      if (
+        getVueObjectType(context, node) == null ||
+        (valueNode.type === 'Literal' && valueNode.value == null)
+      ) {
+        return
+      }
+
+      const templateNode = getComponentTemplateNode(valueNode)
+      VAST.traverseNodes(templateNode, {
+        enterNode(node) {
+          const visitor:
+            | ((
+                node: VAST.Node,
+                baseNode: TemplateOptionValueNode,
+                scope: NodeScope
+              ) => void)
+            | undefined =
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            templateVisitor[node.type as never] as any
+          if (visitor) {
+            visitor(node, valueNode, 'template-option')
+          }
+        },
+        leaveNode() {
+          // noop
+        }
+      })
+    },
+
+    JSXText(node: JSXText) {
+      checkText(context, node, config, null, 'jsx')
+    }
+  })
 }
 
 export = {
@@ -653,6 +873,17 @@ export = {
       {
         type: 'object',
         properties: {
+          attributes: {
+            type: 'object',
+            patternProperties: {
+              '^(?:\\S+|/.*/[a-z]*)$': {
+                type: 'array',
+                items: { type: 'string' },
+                uniqueItems: true
+              }
+            },
+            additionalProperties: false
+          },
           ignoreNodes: {
             type: 'array'
           },
