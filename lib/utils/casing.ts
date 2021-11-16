@@ -17,6 +17,14 @@ function hasUpper(str: string) {
 }
 
 /**
+ * Checks whether the given string has lower.
+ * @param {string} str
+ */
+function hasLower(str: string) {
+  return /[a-z]/u.test(str)
+}
+
+/**
  * Checks whether the given string is kebab-case.
  */
 export function isKebabCase(str: string): boolean {
@@ -74,18 +82,31 @@ export function isPascalCase(str: string): boolean {
   return true
 }
 
+/**
+ * Checks whether the given string is SCREAMING_SNAKE_CASE.
+ * @param {string} str
+ */
+export function isScreamingSnakeCase(str: string): boolean {
+  if (hasLower(str) || hasSymbols(str) || /-|__|\s/u.test(str)) {
+    return false
+  }
+  return true
+}
+
 const checkersMap = {
   'kebab-case': isKebabCase,
   snake_case: isSnakeCase,
   camelCase: isCamelCase,
-  PascalCase: isPascalCase
+  PascalCase: isPascalCase,
+  SCREAMING_SNAKE_CASE: isScreamingSnakeCase
 }
 
 export const allowedCaseOptions = [
   'camelCase',
   'kebab-case',
   'PascalCase',
-  'snake_case'
+  'snake_case',
+  'SCREAMING_SNAKE_CASE'
 ] as const
 
 /**

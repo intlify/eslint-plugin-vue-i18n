@@ -11,7 +11,12 @@ import { getCasingChecker } from '../utils/casing'
 import type { LocaleMessage } from '../utils/locale-messages'
 const debug = debugBuilder('eslint-plugin-vue-i18n:key-format-style')
 
-const allowedCaseOptions = ['camelCase', 'kebab-case', 'snake_case'] as const
+const allowedCaseOptions = [
+  'camelCase',
+  'kebab-case',
+  'snake_case',
+  'SCREAMING_SNAKE_CASE'
+] as const
 type CaseOption = typeof allowedCaseOptions[number]
 
 function create(context: RuleContext): RuleListener {

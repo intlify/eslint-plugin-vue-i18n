@@ -489,6 +489,49 @@ tester.run('key-format-style', rule as never, {
           line: 5
         }
       ]
+    },
+    {
+      filename: 'test.vue',
+      code: `
+      <i18n>
+      {
+        "en-US": {
+          "foo-bar": "baz",
+          "fooBar": "baz",
+          "foo_bar": "baz",
+          "FOO_BAR": "baz",
+        }
+      }
+      </i18n>
+      <template></template>
+      <script></script>`,
+      errors: [
+        '"foo-bar" is not camelCase',
+        '"foo_bar" is not camelCase',
+        '"FOO_BAR" is not camelCase'
+      ]
+    },
+    {
+      filename: 'test.vue',
+      code: `
+      <i18n>
+      {
+        "en-US": {
+          "foo-bar": "baz",
+          "fooBar": "baz",
+          "foo_bar": "baz",
+          "FOO_BAR": "baz",
+        }
+      }
+      </i18n>
+      <template></template>
+      <script></script>`,
+      options: ['SCREAMING_SNAKE_CASE'],
+      errors: [
+        '"foo-bar" is not SCREAMING_SNAKE_CASE',
+        '"fooBar" is not SCREAMING_SNAKE_CASE',
+        '"foo_bar" is not SCREAMING_SNAKE_CASE'
+      ]
     }
   ]
 })
