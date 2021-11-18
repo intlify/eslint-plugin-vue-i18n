@@ -111,7 +111,7 @@ const checkersMap = {
 /**
  * Convert text to camelCase
  */
-export function camelCase(str: string) {
+export function camelCase(str: string): string {
   if (isPascalCase(str)) {
     return str.charAt(0).toLowerCase() + str.slice(1)
   }

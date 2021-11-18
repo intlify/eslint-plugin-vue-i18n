@@ -63,7 +63,7 @@ function create(context: RuleContext): RuleListener {
       upper?: KeyStack
     }
     let keyStack: KeyStack = {
-      inLocale: targetLocaleMessage.localeKey === 'file'
+      inLocale: targetLocaleMessage.isResolvedLocaleByFileName()
     }
     return {
       JSONProperty(node: JSONAST.JSONProperty) {
@@ -110,7 +110,7 @@ function create(context: RuleContext): RuleListener {
       upper?: KeyStack
     }
     let keyStack: KeyStack = {
-      inLocale: targetLocaleMessage.localeKey === 'file'
+      inLocale: targetLocaleMessage.isResolvedLocaleByFileName()
     }
     function withinKey(node: YAMLAST.YAMLNode) {
       for (const keyNode of yamlKeyNodes) {

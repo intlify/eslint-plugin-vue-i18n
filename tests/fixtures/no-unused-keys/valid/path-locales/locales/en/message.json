@@ -1,0 +1,10 @@
+{
+  "hello": "hello world",
+  "messages": {
+    "hello": "hi DIO!",
+    "link": "@:messages.hello"
+  },
+  "hello_dio": "hello underscore DIO!",
+  "hello {name}": "hello {name}!",
+  "term": "I accept xxx {0}."
+}
