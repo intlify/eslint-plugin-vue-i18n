@@ -115,7 +115,7 @@ function create(context: RuleContext): RuleListener {
           }[]
         }
     let keyStack: KeyStack
-    if (targetLocaleMessage.localeKey === 'file') {
+    if (targetLocaleMessage.isResolvedLocaleByFileName()) {
       const locale = targetLocaleMessage.locales[0]
       keyStack = {
         locale,

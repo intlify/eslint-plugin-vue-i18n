@@ -114,11 +114,15 @@ export abstract class LocaleMessage {
     return (this._locales = [])
   }
 
+  isResolvedLocaleByFileName() {
+    return this.localeKey === 'file' || this.localeKey === 'path'
+  }
+
   /**
    * Gets messages for the given locale.
    */
   getMessagesFromLocale(locale: string): I18nLocaleMessageDictionary {
-    if (this.localeKey === 'file' || this.localeKey === 'path') {
+    if (this.isResolvedLocaleByFileName()) {
       if (!this.locales.includes(locale)) {
         return {}
       }

@@ -47,7 +47,7 @@ function create(context: RuleContext): RuleListener {
     targetLocaleMessage: LocaleMessage,
     otherLocaleMessages: LocaleMessage[]
   ): PathStack {
-    if (targetLocaleMessage.localeKey === 'file') {
+    if (targetLocaleMessage.isResolvedLocaleByFileName()) {
       const locale = targetLocaleMessage.locales[0]
       return createInitLocalePathStack(locale, otherLocaleMessages)
     } else {
