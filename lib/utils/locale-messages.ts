@@ -56,14 +56,14 @@ export abstract class LocaleMessage {
     fullpath: string
     locales?: string[]
     localeKey: LocaleKeyType
-    localePattern?: RegExp
+    localePattern?: string | RegExp
   }) {
     this.fullpath = fullpath
     /** @type {LocaleKeyType} Specifies how to determine the locale for localization messages. */
     this.localeKey = localeKey
     /** @type {string} The localization messages file name. */
     this.file = fullpath.replace(/^.*(\\|\/|:)/, '')
-    this.localePattern = localePattern || DEFAULT_LOCALE_CAPTURE_REGEX
+    this.localePattern = this.getLocalePatternWithRegex(localePattern)
 
     this._locales = locales
   }
@@ -72,6 +72,20 @@ export abstract class LocaleMessage {
    * @protected
    */
   abstract getMessagesInternal(): I18nLocaleMessageDictionary
+
+  /**
+   * Get locale pattern with regular expression
+   */
+  getLocalePatternWithRegex(localePattern?: string | RegExp): RegExp {
+    // prettier-ignore
+    return localePattern != null
+      ? typeof localePattern === 'string'
+        ? new RegExp(localePattern, 'i')
+        : Object.prototype.toString.call(localePattern) === '[object RegExp]'
+          ? localePattern
+          : DEFAULT_LOCALE_CAPTURE_REGEX
+      : DEFAULT_LOCALE_CAPTURE_REGEX
+  }
 
   /**
    * @returns {object} The localization messages object.
@@ -178,7 +192,7 @@ export class FileLocaleMessage extends LocaleMessage {
    * @param {string} arg.fullpath Absolute path.
    * @param {string[]} [arg.locales] The locales.
    * @param {LocaleKeyType} arg.localeKey Specifies how to determine the locale for localization messages.
-   * @param {RegExp} args.localePattern Specifies how to determin the regular expression pattern for how to get the locale.
+   * @param {string | RegExp} args.localePattern Specifies how to determin the regular expression pattern for how to get the locale.
    */
   constructor({
     fullpath,
@@ -189,7 +203,7 @@ export class FileLocaleMessage extends LocaleMessage {
     fullpath: string
     locales?: string[]
     localeKey: LocaleKeyType
-    localePattern?: RegExp
+    localePattern?: string | RegExp
   }) {
     super({
       fullpath,

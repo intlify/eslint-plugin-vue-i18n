@@ -29,7 +29,7 @@ import { getCwd } from './get-cwd'
 interface LocaleFiles {
   files: string[]
   localeKey: LocaleKeyType
-  localePattern?: RegExp
+  localePattern?: string | RegExp
 }
 const UNEXPECTED_ERROR_LOCATION = { line: 1, column: 0 }
 /**

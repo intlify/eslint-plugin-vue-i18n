@@ -38,5 +38,5 @@ export interface SettingsVueI18nLocaleDirObject {
    * You need to use the locale capture as a named capture `?<locale>`, so it’s be able to capture from the path of the locale resources.
    * If you omit it, it will be captured from the resource path with the same regular expression pattern as `vue-cli-plugin-i18n`.
    */
-  localePattern?: RegExp
+  localePattern?: string | RegExp
 }
