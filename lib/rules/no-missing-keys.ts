@@ -18,7 +18,7 @@ function create(context: RuleContext): RuleListener {
       },
 
       ["VElement:matches([name=i18n], [name=i18n-t]) > VStartTag > VAttribute[key.name='path']," +
-      "VElement[name=i18n-t] > VStartTag > VAttribute[key.name='keypath']"](
+        "VElement[name=i18n-t] > VStartTag > VAttribute[key.name='keypath']"](
         node: VAST.VAttribute
       ) {
         checkComponent(context, node)

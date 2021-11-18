@@ -7,11 +7,17 @@ export namespace ESLint {
 }
 export const ESLint = eslint.ESLint || getESLintClassForV6()
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ESLintCLIEngine = any
+
 function getESLintClassForV6(): typeof eslint.ESLint {
+  const CLIEngine: ESLintCLIEngine =
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (eslint as any).CLIEngine
   class ESLintForV6 {
-    private engine: eslint.CLIEngine
+    private engine: ESLintCLIEngine
     static get version() {
-      return eslint.CLIEngine.version
+      return CLIEngine.version
     }
 
     constructor(options?: eslint.ESLint.Options) {
@@ -26,7 +32,7 @@ function getESLintClassForV6(): typeof eslint.ESLint {
         plugins: pluginsMap,
         ...otherOptions
       } = options || {}
-      const newOptions: eslint.CLIEngine.Options = {
+      const newOptions: ESLintCLIEngine['Options'] = {
         fix: Boolean(fix),
         reportUnusedDisableDirectives: reportUnusedDisableDirectives
           ? reportUnusedDisableDirectives !== 'off'
@@ -43,11 +49,11 @@ function getESLintClassForV6(): typeof eslint.ESLint {
                 o[ruleId] = opt
               }
               return o
-            }, {} as NonNullable<eslint.CLIEngine.Options['rules']>)
+            }, {} as NonNullable<ESLintCLIEngine['Options']['rules']>)
           : undefined,
         ...overrideConfig
       }
-      this.engine = new eslint.CLIEngine(newOptions)
+      this.engine = new CLIEngine(newOptions)
 
       for (const [name, plugin] of Object.entries(pluginsMap || {})) {
         this.engine.addPlugin(name, plugin)

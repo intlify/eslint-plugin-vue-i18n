@@ -109,6 +109,7 @@
     "docs:build": "npm run build && vuepress build docs",
     "generate": "ts-node scripts/update.ts && prettier . --write",
     "lint": "eslint . --ext js,ts,vue,md --ignore-pattern \"/tests/fixtures\"",
+    "lint-fix": "eslint . --ext js,ts,vue,md --ignore-pattern \"/tests/fixtures\" --fix",
     "lint:docs": "prettier docs --check",
     "release:prepare": "shipjs prepare",
     "release:trigger": "shipjs trigger",

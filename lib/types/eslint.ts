@@ -126,9 +126,10 @@ export interface SourceCode extends TokenStore {
   getText(node?: MaybeNode, beforeCount?: number, afterCount?: number): string
   getLines(): string[]
   getAllComments(): MaybeToken[]
-  getComments(
-    node: MaybeNode
-  ): { leading: MaybeToken[]; trailing: MaybeToken[] }
+  getComments(node: MaybeNode): {
+    leading: MaybeToken[]
+    trailing: MaybeToken[]
+  }
   getJSDocComment(node: MaybeNode): MaybeToken | null
   getNodeByRangeIndex(index: number): MaybeNode
   isSpaceBetweenTokens(first: MaybeToken, second: MaybeToken): boolean

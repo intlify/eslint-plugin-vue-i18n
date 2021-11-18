@@ -489,9 +489,9 @@ export function isI18nBlock(
  * Get the static attribute values from a given element.
  * @param element The element to get.
  */
-export function getStaticAttributes(
-  element: VAST.VElement
-): { [name: string]: string | undefined } {
+export function getStaticAttributes(element: VAST.VElement): {
+  [name: string]: string | undefined
+} {
   const attrs: { [name: string]: string | undefined } = {}
   for (const attr of element.startTag.attributes) {
     if (!attr.directive && attr.value) {

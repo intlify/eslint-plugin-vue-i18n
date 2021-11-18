@@ -18,9 +18,7 @@ import type {
 import lodash from 'lodash'
 import { NodeTypes } from './utils'
 
-export function parse(
-  code: string
-): {
+export function parse(code: string): {
   ast: ResourceNode
   errors: CompileError[]
 } {
