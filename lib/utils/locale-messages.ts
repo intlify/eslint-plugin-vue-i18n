@@ -20,6 +20,17 @@ import JSON5 from 'json5'
 import yaml from 'js-yaml'
 import { joinPath, parsePath } from './key-path'
 
+// see https://github.com/kazupon/vue-cli-plugin-i18n/blob/e9519235a454db52fdafcd0517ce6607821ef0b4/generator/templates/js/src/i18n.js#L10
+const DEFAULT_LOCALE_PATTERN = '[A-Za-z0-9-_]+'
+const DEFAULT_LOCALE_FIELNAME_REGEX = new RegExp(
+  `(${DEFAULT_LOCALE_PATTERN})\.`,
+  'i'
+)
+const DEFAULT_LOCALE_CAPTURE_REGEX = new RegExp(
+  `^.*\/(?<locale>${DEFAULT_LOCALE_PATTERN})\.(json5?|ya?ml)$`,
+  'i'
+)
+
 /**
  * The localization message class
  */
@@ -27,27 +38,32 @@ export abstract class LocaleMessage {
   public readonly fullpath: string
   public readonly localeKey: LocaleKeyType
   public readonly file: string
+  public readonly localePattern: RegExp
   private _locales: string[] | undefined
   /**
    * @param {object} arg
    * @param {string} arg.fullpath Absolute path.
    * @param {string[]} [arg.locales] The locales.
    * @param {LocaleKeyType} arg.localeKey Specifies how to determine the locale for localization messages.
+   * @param {RegExp} args.localePattern Specifies how to determin the regular expression pattern for how to get the locale.
    */
   constructor({
     fullpath,
     locales,
-    localeKey
+    localeKey,
+    localePattern
   }: {
     fullpath: string
     locales?: string[]
     localeKey: LocaleKeyType
+    localePattern?: RegExp
   }) {
     this.fullpath = fullpath
     /** @type {LocaleKeyType} Specifies how to determine the locale for localization messages. */
     this.localeKey = localeKey
     /** @type {string} The localization messages file name. */
     this.file = fullpath.replace(/^.*(\\|\/|:)/, '')
+    this.localePattern = localePattern || DEFAULT_LOCALE_CAPTURE_REGEX
 
     this._locales = locales
   }
@@ -71,9 +87,13 @@ export abstract class LocaleMessage {
       return this._locales
     }
     if (this.localeKey === 'file') {
-      // see https://github.com/kazupon/vue-cli-plugin-i18n/blob/e9519235a454db52fdafcd0517ce6607821ef0b4/generator/templates/js/src/i18n.js#L10
-      const matched = this.file.match(/([A-Za-z0-9-_]+)\./i)
+      const matched = this.file.match(DEFAULT_LOCALE_FIELNAME_REGEX)
       return (this._locales = [(matched && matched[1]) || this.file])
+    } else if (this.localeKey === 'path') {
+      const matched = this.fullpath.match(this.localePattern)
+      return (this._locales = [
+        (matched && matched.groups?.locale) || this.fullpath
+      ])
     } else if (this.localeKey === 'key') {
       return (this._locales = Object.keys(this.messages))
     }
@@ -84,7 +104,7 @@ export abstract class LocaleMessage {
    * Gets messages for the given locale.
    */
   getMessagesFromLocale(locale: string): I18nLocaleMessageDictionary {
-    if (this.localeKey === 'file') {
+    if (this.localeKey === 'file' || this.localeKey === 'path') {
       if (!this.locales.includes(locale)) {
         return {}
       }
@@ -158,20 +178,24 @@ export class FileLocaleMessage extends LocaleMessage {
    * @param {string} arg.fullpath Absolute path.
    * @param {string[]} [arg.locales] The locales.
    * @param {LocaleKeyType} arg.localeKey Specifies how to determine the locale for localization messages.
+   * @param {RegExp} args.localePattern Specifies how to determin the regular expression pattern for how to get the locale.
    */
   constructor({
     fullpath,
     locales,
-    localeKey
+    localeKey,
+    localePattern
   }: {
     fullpath: string
     locales?: string[]
     localeKey: LocaleKeyType
+    localePattern?: RegExp
   }) {
     super({
       fullpath,
       locales,
-      localeKey
+      localeKey,
+      localePattern
     })
     this._resource = new ResourceLoader(fullpath, fileName => {
       const ext = extname(fileName).toLowerCase()

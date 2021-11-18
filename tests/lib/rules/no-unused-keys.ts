@@ -146,6 +146,19 @@ new RuleTester({
                 src: '.'
               }
             ]
+          }),
+          ...getTestCasesFromFixtures({
+            cwd: join(cwdRoot, './valid/path-locales'),
+            localeDir: {
+              pattern: `./locales/**/*.{json,yaml,yml}`,
+              localeKey: 'path',
+              localePattern: /^.*\/(?<locale>[A-Za-z0-9-_]+)\/.*\.(json5?|ya?ml)$/
+            },
+            options: [
+              {
+                src: '.'
+              }
+            ]
           })
         ]
       : []),
@@ -1021,6 +1034,10 @@ ${' '.repeat(6)}
         'constructor-option-format/src/main.js': true,
         'multiple-locales/src/App.vue': true,
         'multiple-locales/src/main.js': true,
+        'path-locales/locales/en/message.json': true,
+        'path-locales/locales/ja/message.yaml': true,
+        'path-locales/src/App.vue': true,
+        'path-locales/src/main.js': true,
         'vue-cli-format/src/App.vue': true,
         'vue-cli-format/src/main.js': true,
         'constructor-option-format/locales/index.json': {
