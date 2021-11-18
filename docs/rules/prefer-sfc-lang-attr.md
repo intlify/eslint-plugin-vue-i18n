@@ -1,6 +1,7 @@
 ---
 title: '@intlify/vue-i18n/prefer-sfc-lang-attr'
 description: require lang attribute on `<i18n>` block
+since: v1.2.0
 ---
 
 # @intlify/vue-i18n/prefer-sfc-lang-attr
@@ -58,6 +59,10 @@ locale messages:
 ```
 
 </eslint-code-block>
+
+## :rocket: Version
+
+This rule was introduced in `@intlify/eslint-plugin-vue-i18n` v1.2.0
 
 ## :mag: Implementation
 

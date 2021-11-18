@@ -1,4 +1,15 @@
 
+## v1.2.0 (2021-11-18)
+
+#### :star: Features
+* [#267](https://github.com/intlify/eslint-plugin-vue-i18n/pull/267) Add `prefer-sfc-lang-attr` rule ([@ota-meshi](https://github.com/ota-meshi))
+* [#270](https://github.com/intlify/eslint-plugin-vue-i18n/pull/270) feat: support `localePattern` option for locale structured with directory ([@kazupon](https://github.com/kazupon))
+
+#### Committers: 2
+- Yosuke Ota ([@ota-meshi](https://github.com/ota-meshi))
+- kazuya kawaguchi ([@kazupon](https://github.com/kazupon))
+
+
 ## v1.1.0 (2021-11-16)
 
 #### :star: Features
