@@ -74,9 +74,8 @@ function create(context: RuleContext): RuleListener {
       parent: JSONAST.JSONNode
     ) {
       let message
-      let getReportOffset:
-        | ((error: CompileError) => number | null)
-        | null = null
+      let getReportOffset: ((error: CompileError) => number | null) | null =
+        null
       if (node) {
         if (
           node.type === 'JSONArrayExpression' ||
@@ -126,9 +125,8 @@ function create(context: RuleContext): RuleListener {
       parent: YAMLAST.YAMLNode
     ) {
       let message
-      let getReportOffset:
-        | ((error: CompileError) => number | null)
-        | null = null
+      let getReportOffset: ((error: CompileError) => number | null) | null =
+        null
       if (node) {
         const valueNode = node.type === 'YAMLWithMeta' ? node.value : node
         if (

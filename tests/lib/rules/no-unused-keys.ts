@@ -152,7 +152,8 @@ new RuleTester({
             localeDir: {
               pattern: `./locales/**/*.{json,yaml,yml}`,
               localeKey: 'path',
-              localePattern: /^.*\/(?<locale>[A-Za-z0-9-_]+)\/.*\.(json5?|ya?ml)$/
+              localePattern:
+                /^.*\/(?<locale>[A-Za-z0-9-_]+)\/.*\.(json5?|ya?ml)$/
             },
             options: [
               {

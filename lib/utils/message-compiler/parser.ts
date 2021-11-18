@@ -1,9 +1,7 @@
 import type { CompileError, ResourceNode } from '@intlify/message-compiler'
 import { createParser } from '@intlify/message-compiler'
 
-export function parse(
-  code: string
-): {
+export function parse(code: string): {
   ast: ResourceNode
   errors: CompileError[]
 } {

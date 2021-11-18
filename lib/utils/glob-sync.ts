@@ -35,7 +35,7 @@ GlobSync.prototype._readdir = function (abs, inGlobStar) {
   return Sync.prototype._readdir.call(this, abs, inGlobStar)
 }
 
-export default (GlobSync as never) as new (
+export default GlobSync as never as new (
   pattern: string,
   options: IOptions,
   shouldIgnore: (absolutePath: string) => boolean

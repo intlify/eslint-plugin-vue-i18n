@@ -348,9 +348,8 @@ function create(context: RuleContext): RuleListener {
     }
 
     const sourceCode = context.getSourceCode()
-    const otherLocaleMessages: LocaleMessage[] = localeMessages.localeMessages.filter(
-      lm => lm !== targetLocaleMessage
-    )
+    const otherLocaleMessages: LocaleMessage[] =
+      localeMessages.localeMessages.filter(lm => lm !== targetLocaleMessage)
 
     if (context.parserServices.isJSON) {
       return createVisitorForJson(
