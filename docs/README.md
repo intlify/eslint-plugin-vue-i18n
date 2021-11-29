@@ -43,6 +43,16 @@ Go to [Get Started](./started.md)
     />
   </a>
 </p>
+<p align="center">
+  <a
+    href="https://cypress.com/"
+    target="_blank">
+    <img
+      src="https://raw.githubusercontent.com/intlify/vue-i18n-next/master/docs/public/cypress.svg"
+      width="240px"
+    />
+  </a>
+</p>
 
 ### 🥈 Silver
 

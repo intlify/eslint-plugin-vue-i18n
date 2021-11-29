@@ -48,6 +48,16 @@ Intlify Project is an open source project that is included Vue I18n and i18n too
     />
   </a>
 </p>
+<p align="center">
+  <a
+    href="https://cypress.com/"
+    target="_blank">
+    <img
+      src="https://raw.githubusercontent.com/intlify/vue-i18n-next/master/docs/public/cypress.svg"
+      width="240px"
+    />
+  </a>
+</p>
 
 <h3 align="center">🥈 Silver Sponsors</h3>
 
