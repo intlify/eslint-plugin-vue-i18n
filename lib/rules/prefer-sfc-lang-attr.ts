@@ -1,5 +1,6 @@
 import { getAttribute, isI18nBlock } from '../utils/index'
 import type { RuleContext, RuleListener } from '../types'
+import { createRule } from '../utils/rule'
 
 function create(context: RuleContext): RuleListener {
   const df = context.parserServices.getDocumentFragment?.()
@@ -44,12 +45,13 @@ function create(context: RuleContext): RuleListener {
   }
 }
 
-export = {
+export = createRule({
   meta: {
     type: 'suggestion',
     docs: {
       description: 'require lang attribute on `<i18n>` block',
       category: 'Best Practices',
+      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/prefer-sfc-lang-attr.html',
       recommended: false
     },
     fixable: 'code',
@@ -59,4 +61,4 @@ export = {
     }
   },
   create
-}
+})

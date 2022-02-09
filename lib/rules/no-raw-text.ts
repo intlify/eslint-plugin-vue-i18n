@@ -24,6 +24,7 @@ import type {
   Range
 } from '../types'
 import { isKebabCase, pascalCase } from '../utils/casing'
+import { createRule } from '../utils/rule'
 
 type LiteralValue = VAST.ESLintLiteral['value']
 type StaticTemplateLiteral = VAST.ESLintTemplateLiteral & {
@@ -859,12 +860,13 @@ function create(context: RuleContext): RuleListener {
   })
 }
 
-export = {
+export = createRule({
   meta: {
     type: 'suggestion',
     docs: {
       description: 'disallow to string literal in template or JSX',
       category: 'Recommended',
+      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-raw-text.html',
       recommended: true
     },
     fixable: null,
@@ -898,4 +900,4 @@ export = {
     ]
   },
   create
-}
+})

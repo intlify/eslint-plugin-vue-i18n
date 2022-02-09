@@ -9,6 +9,7 @@ import debugBuilder from 'debug'
 import type { RuleContext, RuleListener } from '../types'
 import { getCasingChecker } from '../utils/casing'
 import type { LocaleMessage } from '../utils/locale-messages'
+import { createRule } from '../utils/rule'
 const debug = debugBuilder('eslint-plugin-vue-i18n:key-format-style')
 
 const allowedCaseOptions = [
@@ -212,18 +213,19 @@ function create(context: RuleContext): RuleListener {
   }
 }
 
-export = {
+export = createRule({
   meta: {
     type: 'layout',
     docs: {
       description: 'enforce specific casing for localization keys',
       category: 'Best Practices',
+      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/key-format-style.html',
       recommended: false
     },
     fixable: null,
     schema: [
       {
-        enum: allowedCaseOptions
+        enum: [...allowedCaseOptions]
       },
       {
         type: 'object',
@@ -237,4 +239,4 @@ export = {
     ]
   },
   create
-}
+})

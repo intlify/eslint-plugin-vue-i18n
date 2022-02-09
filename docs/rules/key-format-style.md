@@ -41,7 +41,7 @@ Also, the following localization key definitions are reported as errors, because
 
 </eslint-code-block>
 
-## Options
+## :gear: Options
 
 ```json
 {

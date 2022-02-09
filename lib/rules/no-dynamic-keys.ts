@@ -4,6 +4,7 @@
 import { defineTemplateBodyVisitor } from '../utils/index'
 import type { RuleContext, RuleListener } from '../types'
 import type { AST as VAST } from 'vue-eslint-parser'
+import { createRule } from '../utils/rule'
 
 function isStatic(
   node:
@@ -138,16 +139,17 @@ function create(context: RuleContext): RuleListener {
   )
 }
 
-export = {
+export = createRule({
   meta: {
     type: 'suggestion',
     docs: {
       description: 'disallow localization dynamic keys at localization methods',
       category: 'Best Practices',
+      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-dynamic-keys.html',
       recommended: false
     },
     fixable: null,
     schema: []
   },
   create
-}
+})

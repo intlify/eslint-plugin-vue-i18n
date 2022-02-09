@@ -22,6 +22,7 @@ import type {
 } from '../types'
 import { joinPath, parsePath } from '../utils/key-path'
 import { getCwd } from '../utils/get-cwd'
+import { createRule } from '../utils/rule'
 const debug = debugBuilder('eslint-plugin-vue-i18n:no-unused-keys')
 
 type UsedKeys = {
@@ -554,12 +555,13 @@ function create(context: RuleContext): RuleListener {
   }
 }
 
-export = {
+export = createRule({
   meta: {
     type: 'suggestion',
     docs: {
       description: 'disallow unused localization keys',
       category: 'Best Practices',
+      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-unused-keys.html',
       recommended: false
     },
     fixable: 'code',
@@ -585,4 +587,4 @@ export = {
     ]
   },
   create
-}
+})

@@ -4,6 +4,7 @@
 import type { AST as VAST } from 'vue-eslint-parser'
 import { defineTemplateBodyVisitor } from '../utils/index'
 import type { RuleContext, RuleListener } from '../types'
+import { createRule } from '../utils/rule'
 
 function checkDirective(context: RuleContext, node: VAST.VDirective) {
   if (
@@ -46,17 +47,18 @@ function create(context: RuleContext): RuleListener {
   })
 }
 
-export = {
+export = createRule({
   meta: {
     type: 'problem',
     docs: {
       description:
         'disallow use of localization methods on v-html to prevent XSS attack',
       category: 'Recommended',
+      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-v-html.html',
       recommended: true
     },
     fixable: null,
     schema: []
   },
   create
-}
+})

@@ -68,7 +68,7 @@ locale messages:
 
 </resource-group>
 
-## Options
+## :gear: Options
 
 ```json
 {
