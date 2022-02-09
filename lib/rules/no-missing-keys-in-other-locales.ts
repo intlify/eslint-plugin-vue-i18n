@@ -13,6 +13,7 @@ import type {
 } from '../types'
 import type { LocaleMessage, LocaleMessages } from '../utils/locale-messages'
 import { joinPath } from '../utils/key-path'
+import { createRule } from '../utils/rule'
 const debug = debugBuilder(
   'eslint-plugin-vue-i18n:no-missing-keys-in-other-locales'
 )
@@ -326,12 +327,13 @@ function create(context: RuleContext): RuleListener {
   }
 }
 
-export = {
+export = createRule({
   meta: {
     type: 'layout',
     docs: {
       description: 'disallow missing locale message keys in other locales',
       category: 'Best Practices',
+      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-missing-keys-in-other-locales.html',
       recommended: false
     },
     fixable: null,
@@ -349,4 +351,4 @@ export = {
     ]
   },
   create
-}
+})

@@ -44,7 +44,7 @@ This rule is useful to provide browsability of localization keys.
 
 </eslint-code-block>
 
-## Options
+## :gear: Options
 
 ```json
 {

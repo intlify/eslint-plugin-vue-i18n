@@ -8,6 +8,7 @@ import debugBuilder from 'debug'
 import type { AST as JSONAST } from 'jsonc-eslint-parser'
 import type { AST as YAMLAST } from 'yaml-eslint-parser'
 import type { RuleContext, RuleListener } from '../types'
+import { createRule } from '../utils/rule'
 
 const debug = debugBuilder('eslint-plugin-vue-i18n:no-html-messages')
 
@@ -115,16 +116,17 @@ function create(context: RuleContext): RuleListener {
   }
 }
 
-export = {
+export = createRule({
   meta: {
     type: 'problem',
     docs: {
       description: 'disallow use HTML localization messages',
       category: 'Recommended',
+      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-html-messages.html',
       recommended: true
     },
     fixable: null,
     schema: []
   },
   create
-}
+})

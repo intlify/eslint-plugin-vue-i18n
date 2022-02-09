@@ -15,6 +15,7 @@ import {
 import { parse } from '../utils/message-compiler/parser'
 import { parse as parseForV8 } from '../utils/message-compiler/parser-v8'
 import { traverseNode } from '../utils/message-compiler/traverser'
+import { createRule } from '../utils/rule'
 const debug = debugBuilder(
   'eslint-plugin-vue-i18n:prefer-linked-key-with-paren'
 )
@@ -240,16 +241,17 @@ function create(context: RuleContext): RuleListener {
   }
 }
 
-export = {
+export = createRule({
   meta: {
     type: 'layout',
     docs: {
       description: 'enforce linked key to be enclosed in parentheses',
       category: 'Stylistic Issues',
+      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/prefer-linked-key-with-paren.html',
       recommended: false
     },
     fixable: 'code',
     schema: []
   },
   create
-}
+})

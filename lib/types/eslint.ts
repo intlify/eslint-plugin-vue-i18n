@@ -1,9 +1,11 @@
 import type { AST as JSONAST } from 'jsonc-eslint-parser'
 import type { AST as YAMLAST } from 'yaml-eslint-parser'
 import type { AST as VAST } from 'vue-eslint-parser'
+import type { JSONSchema4 } from 'json-schema'
 import type { VueParserServices } from './vue-parser-services'
 import type { TokenStore } from './types'
 import type { SettingsVueI18nLocaleDir } from './settings'
+import type { RuleListener } from './vue-parser-services'
 
 export interface Position {
   /** >= 1 */
@@ -228,4 +230,24 @@ export type Definition = DefinitionType & { name: VAST.ESLintIdentifier }
 
 export interface VisitorKeys {
   [type: string]: string[]
+}
+
+export type RuleModule = {
+  create(context: RuleContext): RuleListener
+  meta: RuleMetaData
+}
+
+export interface RuleMetaData {
+  docs: {
+    description: string
+    category: 'Recommended' | 'Best Practices' | 'Stylistic Issues'
+    recommended?: boolean
+    url: string
+  }
+  messages?: { [messageId: string]: string }
+  fixable: 'code' | 'whitespace' | null
+  schema: JSONSchema4[]
+  hasSuggestions?: true
+  deprecated?: boolean
+  type: 'problem' | 'suggestion' | 'layout'
 }

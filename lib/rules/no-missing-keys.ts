@@ -4,6 +4,7 @@
 import { defineTemplateBodyVisitor, getLocaleMessages } from '../utils/index'
 import type { AST as VAST } from 'vue-eslint-parser'
 import type { RuleContext, RuleListener } from '../types'
+import { createRule } from '../utils/rule'
 
 function create(context: RuleContext): RuleListener {
   return defineTemplateBodyVisitor(
@@ -126,13 +127,14 @@ function checkCallExpression(
   }
 }
 
-export = {
+export = createRule({
   meta: {
     type: 'problem',
     docs: {
       description:
         'disallow missing locale message key at localization methods',
       category: 'Recommended',
+      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-missing-keys.html',
       recommended: true
     },
     fixable: null,
@@ -142,4 +144,4 @@ export = {
     }
   },
   create
-}
+})
