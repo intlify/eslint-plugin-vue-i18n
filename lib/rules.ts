@@ -14,6 +14,7 @@ import noUnusedKeys from './rules/no-unused-keys'
 import noVHtml from './rules/no-v-html'
 import preferLinkedKeyWithParen from './rules/prefer-linked-key-with-paren'
 import preferSfcLangAttr from './rules/prefer-sfc-lang-attr'
+import sfcLocaleAttr from './rules/sfc-locale-attr'
 import validMessageSyntax from './rules/valid-message-syntax'
 
 export = {
@@ -32,5 +33,6 @@ export = {
   'no-v-html': noVHtml,
   'prefer-linked-key-with-paren': preferLinkedKeyWithParen,
   'prefer-sfc-lang-attr': preferSfcLangAttr,
+  'sfc-locale-attr': sfcLocaleAttr,
   'valid-message-syntax': validMessageSyntax
 }

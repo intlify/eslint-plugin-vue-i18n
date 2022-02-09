@@ -94,7 +94,6 @@ description: description
 > description
 
 ## :book: Rule Details
-## :book: Rule Details
 
 This rule reports ???.
 
