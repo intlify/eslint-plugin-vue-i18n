@@ -27,6 +27,7 @@
 | [@intlify/vue-i18n/<wbr>no-duplicate-keys-in-locale](./no-duplicate-keys-in-locale.html) | disallow duplicate localization keys within the same locale |  |
 | [@intlify/vue-i18n/<wbr>no-dynamic-keys](./no-dynamic-keys.html) | disallow localization dynamic keys at localization methods |  |
 | [@intlify/vue-i18n/<wbr>no-missing-keys-in-other-locales](./no-missing-keys-in-other-locales.html) | disallow missing locale message keys in other locales |  |
+| [@intlify/vue-i18n/<wbr>no-unknown-locale](./no-unknown-locale.html) | disallow unknown locale name |  |
 | [@intlify/vue-i18n/<wbr>no-unused-keys](./no-unused-keys.html) | disallow unused localization keys | :black_nib: |
 | [@intlify/vue-i18n/<wbr>prefer-sfc-lang-attr](./prefer-sfc-lang-attr.html) | require lang attribute on `<i18n>` block | :black_nib: |
 

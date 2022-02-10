@@ -10,6 +10,7 @@ import noI18nTPathProp from './rules/no-i18n-t-path-prop'
 import noMissingKeysInOtherLocales from './rules/no-missing-keys-in-other-locales'
 import noMissingKeys from './rules/no-missing-keys'
 import noRawText from './rules/no-raw-text'
+import noUnknownLocale from './rules/no-unknown-locale'
 import noUnusedKeys from './rules/no-unused-keys'
 import noVHtml from './rules/no-v-html'
 import preferLinkedKeyWithParen from './rules/prefer-linked-key-with-paren'
@@ -28,6 +29,7 @@ export = {
   'no-missing-keys-in-other-locales': noMissingKeysInOtherLocales,
   'no-missing-keys': noMissingKeys,
   'no-raw-text': noRawText,
+  'no-unknown-locale': noUnknownLocale,
   'no-unused-keys': noUnusedKeys,
   'no-v-html': noVHtml,
   'prefer-linked-key-with-paren': preferLinkedKeyWithParen,
