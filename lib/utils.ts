@@ -15,6 +15,7 @@ import * as localeMessages from './utils/locale-messages'
 import * as parsers from './utils/parsers'
 import * as pathUtils from './utils/path-utils'
 import * as resourceLoader from './utils/resource-loader'
+import * as rule from './utils/rule'
 
 export = {
   'cache-function': cacheFunction,
@@ -32,5 +33,6 @@ export = {
   'locale-messages': localeMessages,
   parsers,
   'path-utils': pathUtils,
-  'resource-loader': resourceLoader
+  'resource-loader': resourceLoader,
+  rule
 }
