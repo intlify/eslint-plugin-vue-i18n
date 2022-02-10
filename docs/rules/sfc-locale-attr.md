@@ -53,7 +53,7 @@ This rule aims to enforce the `<i18n>` block to use or not the `locale` attribut
 - `"always"` ... The `<i18n>` blocks requires the locale attribute.
 - `"never"` ... Do not use the locale attribute on `<i18n>` blocks.
 
-:+1: Examples of code for this rule with `"never"` option:
+### Examples of code for this rule with `"never"` option:
 
 <eslint-code-block>
 
