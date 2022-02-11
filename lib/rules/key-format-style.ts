@@ -25,6 +25,7 @@ function create(context: RuleContext): RuleListener {
   const expectCasing: CaseOption = context.options[0] ?? 'camelCase'
   const checker = getCasingChecker(expectCasing)
   const allowArray: boolean = context.options[1]?.allowArray
+  const splitByDotsOption: boolean = context.options[1]?.splitByDots
 
   function reportUnknown(reportNode: YAMLAST.YAMLNode) {
     context.report({
@@ -32,22 +33,92 @@ function create(context: RuleContext): RuleListener {
       loc: reportNode.loc
     })
   }
-  function verifyKey(
-    key: string | number,
-    reportNode: JSONAST.JSONNode | YAMLAST.YAMLNode
-  ) {
-    if (typeof key === 'number') {
-      if (!allowArray) {
+  function verifyKeyForString(
+    key: string,
+    reportNode:
+      | JSONAST.JSONProperty['key']
+      | NonNullable<YAMLAST.YAMLPair['key']>
+  ): void {
+    for (const target of splitByDotsOption && key.includes('.')
+      ? splitByDots(key, reportNode)
+      : [{ key, loc: reportNode.loc }]) {
+      if (!checker(target.key)) {
         context.report({
-          message: `Unexpected array element`,
-          loc: reportNode.loc
+          message: `"{{key}}" is not {{expectCasing}}`,
+          loc: target.loc,
+          data: {
+            key: target.key,
+            expectCasing
+          }
         })
       }
-    } else {
-      if (!checker(key)) {
-        context.report({
-          message: `"${key}" is not ${expectCasing}`,
-          loc: reportNode.loc
+    }
+  }
+  function verifyKeyForNumber(
+    key: number,
+    reportNode:
+      | NonNullable<JSONAST.JSONArrayExpression['elements'][number]>
+      | NonNullable<YAMLAST.YAMLSequence['entries'][number]>
+  ): void {
+    if (!allowArray) {
+      context.report({
+        message: `Unexpected array element`,
+        loc: reportNode.loc
+      })
+    }
+  }
+
+  function splitByDots(
+    key: string,
+    reportNode:
+      | JSONAST.JSONProperty['key']
+      | NonNullable<YAMLAST.YAMLPair['key']>
+  ) {
+    const result: {
+      key: string
+      loc: JSONAST.SourceLocation
+    }[] = []
+    let startIndex = 0
+    let index
+    while ((index = key.indexOf('.', startIndex)) >= 0) {
+      const getLoc = buildGetLocation(startIndex, index)
+      result.push({
+        key: key.slice(startIndex, index),
+        get loc() {
+          return getLoc()
+        }
+      })
+
+      startIndex = index + 1
+    }
+
+    const getLoc = buildGetLocation(startIndex, key.length)
+    result.push({
+      key: key.slice(startIndex, index),
+      get loc() {
+        return getLoc()
+      }
+    })
+
+    return result
+
+    function buildGetLocation(start: number, end: number) {
+      const offset =
+        reportNode.type === 'JSONLiteral' ||
+        (reportNode.type === 'YAMLScalar' &&
+          (reportNode.style === 'double-quoted' ||
+            reportNode.style === 'single-quoted'))
+          ? reportNode.range[0] + 1
+          : reportNode.range[0]
+      let cachedLoc: JSONAST.SourceLocation | undefined
+      return () => {
+        if (cachedLoc) {
+          return cachedLoc
+        }
+        const sourceCode = context.getSourceCode()
+        return (cachedLoc = {
+          start: sourceCode.getLocFromIndex(offset + start),
+          end: sourceCode.getLocFromIndex(offset + end)
         })
       }
     }
@@ -81,7 +152,7 @@ function create(context: RuleContext): RuleListener {
         const key =
           node.key.type === 'JSONLiteral' ? `${node.key.value}` : node.key.name
 
-        verifyKey(key, node.key)
+        verifyKeyForString(key, node.key)
       },
       'JSONProperty:exit'() {
         keyStack = keyStack.upper!
@@ -92,7 +163,7 @@ function create(context: RuleContext): RuleListener {
         }
       ) {
         const key = node.parent.elements.indexOf(node)
-        verifyKey(key, node)
+        verifyKeyForNumber(key, node)
       }
     }
   }
@@ -147,7 +218,7 @@ function create(context: RuleContext): RuleListener {
         } else if (node.key.type === 'YAMLScalar') {
           const keyValue = node.key.value
           const key = typeof keyValue === 'string' ? keyValue : String(keyValue)
-          verifyKey(key, node.key)
+          verifyKeyForString(key, node.key)
         } else {
           reportUnknown(node)
         }
@@ -164,7 +235,7 @@ function create(context: RuleContext): RuleListener {
           return
         }
         const key = node.parent.entries.indexOf(node)
-        verifyKey(key, node)
+        verifyKeyForNumber(key, node)
       }
     }
   }
@@ -231,6 +302,9 @@ export = createRule({
         type: 'object',
         properties: {
           allowArray: {
+            type: 'boolean'
+          },
+          splitByDots: {
             type: 'boolean'
           }
         },

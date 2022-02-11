@@ -200,6 +200,16 @@ tester.run('key-format-style', rule as never, {
       </i18n>
       <template></template>
       <script></script>`
+    },
+    {
+      code: `{
+        "camelCase.camelCase": {
+          "fooBar": "kebab-value"
+        }
+      }
+      `,
+      ...options.json.file,
+      options: ['camelCase', { splitByDots: true }]
     }
   ],
 
@@ -531,6 +541,36 @@ tester.run('key-format-style', rule as never, {
         '"foo-bar" is not SCREAMING_SNAKE_CASE',
         '"fooBar" is not SCREAMING_SNAKE_CASE',
         '"foo_bar" is not SCREAMING_SNAKE_CASE'
+      ]
+    },
+    {
+      code: `{
+        "kebab-case1.kebab-case2": {
+          "foo-bar": "kebab-value"
+        }
+      }
+      `,
+      ...options.json.file,
+      options: ['camelCase', { splitByDots: true }],
+      errors: [
+        {
+          message: '"kebab-case1" is not camelCase',
+          line: 2,
+          column: 10,
+          endColumn: 21
+        },
+        {
+          message: '"kebab-case" is not camelCase',
+          line: 2,
+          column: 22,
+          endColumn: 33
+        },
+        {
+          message: '"foo-bar" is not camelCase',
+          line: 3,
+          column: 11,
+          endColumn: 20
+        }
       ]
     }
   ]
