@@ -13,99 +13,24 @@
 
 Intlify Project is an open source project that is included Vue I18n and i18n tooling and libralies with its ongoing development made possible entirely by the support of Sponsors. If you would like to become a sponsor, please consider:
 
-- [Become a Sponsor on GitHub](https://github.com/sponsors/kazupon)
+- [Become a Sponsor on GitHub](https://github.com/sponsors/ota-meshi)
 
-<h3 align="center">🏅 Platinum Sponsors</h3>
-
-<p align="center">
-  <a href="https://zenarchitects.co.jp/" target="_blank">
-    <img
-      src="https://raw.githubusercontent.com/intlify/vue-i18n-next/master/docs/public/zenarchitects.png"
-      width="400px"
-    />
-  </a>
-</p>
-
-<h3 align="center">🥇 Gold Sponsors</h3>
-
-<p align="center">
-  <a
-    href="https://nuxtjs.org/"
-    target="_blank">
-    <img
-      src="https://raw.githubusercontent.com/intlify/vue-i18n-next/master/docs/public/nuxt.png"
-      width="240px"
-    />
-  </a>
-</p>
-<p align="center">
-  <a
-    href="https://rapidapi.com/"
-    target="_blank">
-    <img
-      src="https://raw.githubusercontent.com/intlify/vue-i18n-next/master/docs/public/RapidAPI.png"
-      width="240px"
-    />
-  </a>
-</p>
-<p align="center">
-  <a
-    href="https://cypress.com/"
-    target="_blank">
-    <img
-      src="https://raw.githubusercontent.com/intlify/vue-i18n-next/master/docs/public/cypress.svg"
-      width="240px"
-    />
-  </a>
-</p>
-
-<h3 align="center">🥈 Silver Sponsors</h3>
-
-<h3 align="center">🥉 Bronze Sponsors</h3>
-
-<p align="center">
-  <a href="https://www.sendcloud.com/" target="_blank">
-    <img
-      src="https://raw.githubusercontent.com/intlify/vue-i18n-next/master/docs/public/sendcloud.png"
-      width="144px"
-    />
-  </a>
-</p>
-<p align="center">
-  <a href="https://www.vuemastery.com/" target="_blank">
-    <img
-      src="https://raw.githubusercontent.com/intlify/vue-i18n-next/master/docs/public/vuemastery.png"
-      width="144px"
-    />
-  </a>
-</p>
-<p align="center">
-  <a href="https://www.deci-bel.com/" target="_blank">
-    <img
-      src="https://raw.githubusercontent.com/intlify/vue-i18n-next/master/docs/public/decibel.png"
-      width="144px"
-    />
-  </a>
-</p>
-
-<br/>
-
-## :book: Documentation
+## 📔 Documentation
 
 See [here](https://eslint-plugin-vue-i18n.intlify.dev)
 
-## :scroll: Changelog
+## 📜 Changelog
 
 Details changes for each release are documented in the [CHANGELOG.md](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/CHANGELOG.md).
 
-## :exclamation: Issues
+## ❗ Issues
 
 Please make sure to read the [Issue Reporting Checklist](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/CONTRIBUTING.md#issue-reporting-guidelines) before opening an issue. Issues not conforming to the guidelines may be closed immediately.
 
-## :muscle: Contribution
+## 💪 Contribution
 
 Please make sure to read the [Contributing Guide](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/.github/CONTRIBUTING.md) before making a pull request.
 
-## :copyright: License
+## ©️ License
 
 [MIT](http://opensource.org/licenses/MIT)

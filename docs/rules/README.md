@@ -38,3 +38,4 @@
 |:--------|:------------|:---|
 | [@intlify/vue-i18n/<wbr>prefer-linked-key-with-paren](./prefer-linked-key-with-paren.html) | enforce linked key to be enclosed in parentheses | :black_nib: |
 | [@intlify/vue-i18n/<wbr>sfc-locale-attr](./sfc-locale-attr.html) | require or disallow the locale attribute on `<i18n>` block |  |
+
