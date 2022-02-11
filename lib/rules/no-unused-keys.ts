@@ -23,6 +23,7 @@ import type {
 import { joinPath, parsePath } from '../utils/key-path'
 import { getCwd } from '../utils/get-cwd'
 import { createRule } from '../utils/rule'
+import { toRegExp } from '../utils/regexp'
 const debug = debugBuilder('eslint-plugin-vue-i18n:no-unused-keys')
 
 type UsedKeys = {
@@ -78,6 +79,7 @@ function create(context: RuleContext): RuleListener {
   const filename = context.getFilename()
   const options = (context.options && context.options[0]) || {}
   const enableFix = options.enableFix
+  const ignores = ((options.ignores || []) as string[]).map(toRegExp)
 
   function createVerifyContext<N extends JSONAST.JSONNode | YAMLAST.YAMLNode>(
     usedKeys: UsedKeys,
@@ -129,6 +131,9 @@ function create(context: RuleContext): RuleListener {
       reports() {
         for (const { node, keyPath } of reports) {
           const keyPathStr = joinPath(...keyPath)
+          if (ignores.some(reg => reg.test(keyPathStr))) {
+            continue
+          }
           const fix = buildFixer(node)
           context.report({
             message: `unused '${keyPathStr}' key`,
@@ -577,6 +582,10 @@ export = createRule({
             type: 'array',
             items: { type: 'string' },
             default: ['.js', '.vue']
+          },
+          ignores: {
+            type: 'array',
+            items: { type: 'string' }
           },
           enableFix: {
             type: 'boolean'
