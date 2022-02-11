@@ -1,6 +1,7 @@
 ---
 title: '@intlify/vue-i18n/sfc-locale-attr'
 description: require or disallow the locale attribute on `<i18n>` block
+since: v1.3.0
 ---
 
 # @intlify/vue-i18n/sfc-locale-attr
@@ -82,6 +83,10 @@ This rule aims to enforce the `<i18n>` block to use or not the `locale` attribut
 ```
 
 </eslint-code-block>
+
+## :rocket: Version
+
+This rule was introduced in `@intlify/eslint-plugin-vue-i18n` v1.3.0
 
 ## :mag: Implementation
 
