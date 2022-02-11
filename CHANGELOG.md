@@ -1,4 +1,20 @@
 
+## v1.3.0 (2022-02-11)
+
+#### :star: Features
+* [#289](https://github.com/intlify/eslint-plugin-vue-i18n/pull/289) Add splitByDots option to key-format-style rule ([@ota-meshi](https://github.com/ota-meshi))
+* [#288](https://github.com/intlify/eslint-plugin-vue-i18n/pull/288) Add ignores option to no-unused-keys rule ([@ota-meshi](https://github.com/ota-meshi))
+* [#287](https://github.com/intlify/eslint-plugin-vue-i18n/pull/287) Add no-unknown-locale rule ([@ota-meshi](https://github.com/ota-meshi))
+* [#286](https://github.com/intlify/eslint-plugin-vue-i18n/pull/286) Add sfc-locale-attr rule ([@ota-meshi](https://github.com/ota-meshi))
+
+#### :pencil: Documentation
+* [#274](https://github.com/intlify/eslint-plugin-vue-i18n/pull/274) Fix unordered list formatting in docs ([@FloEdelmann](https://github.com/FloEdelmann))
+
+#### Committers: 2
+- Flo Edelmann ([@FloEdelmann](https://github.com/FloEdelmann))
+- Yosuke Ota ([@ota-meshi](https://github.com/ota-meshi))
+
+
 ## v1.2.0 (2021-11-18)
 
 #### :star: Features
