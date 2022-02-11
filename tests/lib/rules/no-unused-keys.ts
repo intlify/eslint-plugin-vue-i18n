@@ -205,6 +205,52 @@ new RuleTester({
         }
       }
       </script>`
+    },
+    {
+      filename: 'test.vue',
+      code: `
+    <i18n locale="en">
+    {
+      "foo": "foo",
+      "bar": {
+        "nest": "nest",
+        "ignore": "ignore",
+      },
+      "ignore": "ignore",
+    }
+    </i18n>
+    <script>
+    export default {
+      created () {
+        this.$t('foo')
+        this.$t('bar.nest')
+      }
+    }
+    </script>`,
+      options: [{ ignores: ['ignore', 'bar.ignore'] }]
+    },
+    {
+      filename: 'test.vue',
+      code: `
+    <i18n locale="en">
+    {
+      "foo": "foo",
+      "bar": {
+        "nest": "nest",
+        "ptn_foo": "ignore",
+      },
+      "ptn_bar": "ignore"
+    }
+    </i18n>
+    <script>
+    export default {
+      created () {
+        this.$t('foo')
+        this.$t('bar.nest')
+      }
+    }
+    </script>`,
+      options: [{ ignores: ['/ptn/'] }]
     }
   ],
   invalid: [
@@ -1025,6 +1071,80 @@ ${' '.repeat(6)}
     <template></template>
     <script></script>`,
       errors: [`unused '["[{foo: bar}]"].foo' key`]
+    },
+    {
+      filename: 'test.vue',
+      code: `
+    <i18n locale="en">
+    {
+      "foo": "foo",
+      "bar": {
+        "nest": "nest",
+        "ignore": "ignore",
+        "not_ignore": "not_ignore",
+      },
+      "ignore": "ignore",
+      "not_ignore": "not_ignore",
+    }
+    </i18n>
+    <script>
+    export default {
+      created () {
+        this.$t('foo')
+        this.$t('bar.nest')
+      }
+    }
+    </script>`,
+      options: [{ ignores: ['ignore', 'bar.ignore'] }],
+      errors: [
+        {
+          message: "unused 'bar.not_ignore' key",
+          line: 8,
+          column: 9
+        },
+        {
+          message: "unused 'not_ignore' key",
+          line: 11,
+          column: 7
+        }
+      ]
+    },
+    {
+      filename: 'test.vue',
+      code: `
+    <i18n locale="en">
+    {
+      "foo": "foo",
+      "bar": {
+        "nest": "nest",
+        "ptn_foo": "ignore",
+        "no_hit_pattern_foo": "not_ignore"
+      },
+      "ptn_bar": "ignore",
+      "no_hit_pattern_bar": "not_ignore"
+    }
+    </i18n>
+    <script>
+    export default {
+      created () {
+        this.$t('foo')
+        this.$t('bar.nest')
+      }
+    }
+    </script>`,
+      options: [{ ignores: ['/ptn/'] }],
+      errors: [
+        {
+          message: "unused 'bar.no_hit_pattern_foo' key",
+          line: 8,
+          column: 9
+        },
+        {
+          message: "unused 'no_hit_pattern_bar' key",
+          line: 11,
+          column: 7
+        }
+      ]
     },
     ...getTestCasesFromFixtures(
       {
