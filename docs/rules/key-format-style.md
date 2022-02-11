@@ -49,7 +49,8 @@ Also, the following localization key definitions are reported as errors, because
     "error",
     "camelCase" | "kebab-case" | "snake_case",
     {
-      "allowArray": false
+      "allowArray": false,
+      "splitByDots": false,
     }
   ]
 }
@@ -57,6 +58,7 @@ Also, the following localization key definitions are reported as errors, because
 
 - Primary Option: Select the casing you want to apply. It set to `"camelCase"` as default
 - `allowArray`: If `true`, allow the use of arrays. If `false`, disallow the use of arrays. It set to `false` as default.
+- `splitByDots`: If `true`, check the values of the key name split by dots.
 
 :+1: Examples of **correct** code for this rule with `"camelCase"`:
 
