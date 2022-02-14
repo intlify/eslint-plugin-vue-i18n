@@ -3,6 +3,7 @@
  * @author kazuya kawaguchi (a.k.a. kazupon)
  * Forked by https://github.com/mysticatea/eslint-plugin-eslint-comments/tree/master/scripts/update-docs-headers.js
  */
+import prettier from 'prettier'
 import { writeFileSync, readFileSync } from 'fs'
 import { join } from 'path'
 import type { RuleInfo } from './lib/rules'
@@ -39,7 +40,10 @@ export function updateRuleDocs({
     }
 
     write() {
-      writeFileSync(this.filePath, this.content)
+      writeFileSync(
+        this.filePath,
+        prettier.format(this.content, { filepath: this.filePath })
+      )
     }
     updateFileIntro() {
       const rule = this.rule

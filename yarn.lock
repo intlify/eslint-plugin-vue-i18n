@@ -1322,6 +1322,11 @@
   resolved "https://registry.yarnpkg.com/@types/parse5/-/parse5-6.0.2.tgz#99f6b72d82e34cea03a4d8f2ed72114d909c1c61"
   integrity sha512-+hQX+WyJAOne7Fh3zF5CxPemILIbuhNcqHHodzK9caYOLnC8pD5efmPleRnw0z++LfKUC/sVNMwk0Gap+B0baA==
 
+"@types/prettier@^2.4.4":
+  version "2.4.4"
+  resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-2.4.4.tgz#5d9b63132df54d8909fce1c3f8ca260fdd693e17"
+  integrity sha512-ReVR2rLTV1kvtlWFyuot+d1pkpG2Fw/XKE3PDAdj57rbM97ttSp9JZ2UsP+2EHTylra9cUf6JA7tGwW1INzUrA==
+
 "@types/q@^1.5.1":
   version "1.5.5"
   resolved "https://registry.yarnpkg.com/@types/q/-/q-1.5.5.tgz#75a2a8e7d8ab4b230414505d92335d1dcb53a6df"

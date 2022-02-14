@@ -50,6 +50,7 @@
     "@types/lodash": "^4.14.159",
     "@types/mocha": "^9.0.0",
     "@types/parse5": "^6.0.0",
+    "@types/prettier": "^2.4.4",
     "@types/semver": "^7.3.4",
     "@typescript-eslint/eslint-plugin": "^5.2.0",
     "@typescript-eslint/parser": "^5.2.0",
