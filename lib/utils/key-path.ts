@@ -1,4 +1,4 @@
-import { parse } from '@intlify/message-resolver'
+import { parse } from '@intlify/core-base'
 
 /**
  * @fileoverview Utility for localization keys
