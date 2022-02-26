@@ -139,6 +139,12 @@ function collectKeyResourcesFromFiles(fileNames: string[], cwd: string) {
   const configArrayFactory = new CascadingConfigArrayFactory({
     additionalPluginPool: new Map([['@intlify/vue-i18n', require('../index')]]),
     cwd,
+    getEslintRecommendedConfig() {
+      return require('../../files/empty.json')
+    },
+    getEslintAllConfig() {
+      return require('../../files/empty.json')
+    },
     eslintRecommendedPath: require.resolve('../../files/empty.json'),
     eslintAllPath: require.resolve('../../files/empty.json')
   })
