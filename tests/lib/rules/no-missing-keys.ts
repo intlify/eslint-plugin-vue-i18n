@@ -46,7 +46,7 @@ function buildTestsForLocales<
 
 const tester = new RuleTester({
   parser: require.resolve('vue-eslint-parser'),
-  parserOptions: { ecmaVersion: 2015 }
+  parserOptions: { ecmaVersion: 2015, sourceType: 'module' }
 })
 
 tester.run('no-missing-keys', rule as never, {
@@ -193,6 +193,27 @@ tester.run('no-missing-keys', rule as never, {
         <script>
         t('foo.bar')
         </script>`
+      },
+      {
+        // template literal
+        filename: 'test.vue',
+        code: `
+        <i18n locale="en">
+        { "foo": "foo", "bar": "bar", "baz": "baz" }
+        </i18n>
+        <template>
+          <div id="app">
+            {{ $t(\`foo\`) }}
+          </div>
+          <div v-t="\`baz\`"/>
+        </template>
+        <script>
+        export default {
+          created () {
+            this.$t(\`bar\`)
+          }
+        }
+        </script>`
       }
     ]
   ),
@@ -326,6 +347,41 @@ tester.run('no-missing-keys', rule as never, {
           <i18n-t keypath="hi"></i18n-t>
         </template>`,
         errors: [`'hi' does not exist in localization message resources`]
+      },
+      {
+        // template literal
+        filename: 'test.vue',
+        code: `
+        <i18n locale="en">
+        {  }
+        </i18n>
+        <template>
+          <div id="app">
+            {{ $t(\`foo\`) }}
+          </div>
+          <div v-t="\`baz\`"/>
+        </template>
+        <script>
+        export default {
+          created () {
+            this.$t(\`bar\`)
+          }
+        }
+        </script>`,
+        errors: [
+          {
+            message: "'foo' does not exist in localization message resources",
+            line: 7
+          },
+          {
+            message: "'baz' does not exist in localization message resources",
+            line: 9
+          },
+          {
+            message: "'bar' does not exist in localization message resources",
+            line: 14
+          }
+        ]
       }
     ]
   )

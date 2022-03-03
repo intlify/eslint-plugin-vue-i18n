@@ -15,6 +15,7 @@ import type { RuleContext, VisitorKeys } from '../types'
 // @ts-expect-error -- ignore
 import { Legacy } from '@eslint/eslintrc'
 import { getCwd } from './get-cwd'
+import { isStaticLiteral, getStaticLiteralValue } from './index'
 const debug = debugBuilder('eslint-plugin-vue-i18n:collect-keys')
 const { CascadingConfigArrayFactory } = Legacy
 
@@ -39,11 +40,11 @@ function getKeyFromCallExpression(node: VAST.ESLintCallExpression) {
   }
 
   const [keyNode] = node.arguments
-  if (keyNode.type !== 'Literal') {
+  if (!isStaticLiteral(keyNode)) {
     return null
   }
 
-  return keyNode.value ? keyNode.value : null
+  return getStaticLiteralValue(keyNode)
 }
 
 /**
@@ -53,10 +54,9 @@ function getKeyFromVDirective(node: VAST.VDirective) {
   if (
     node.value &&
     node.value.type === 'VExpressionContainer' &&
-    node.value.expression &&
-    node.value.expression.type === 'Literal'
+    isStaticLiteral(node.value.expression)
   ) {
-    return node.value.expression.value ? node.value.expression.value : null
+    return getStaticLiteralValue(node.value.expression)
   } else {
     return null
   }

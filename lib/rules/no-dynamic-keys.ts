@@ -1,28 +1,10 @@
 /**
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
-import { defineTemplateBodyVisitor } from '../utils/index'
+import { defineTemplateBodyVisitor, isStaticLiteral } from '../utils/index'
 import type { RuleContext, RuleListener } from '../types'
 import type { AST as VAST } from 'vue-eslint-parser'
 import { createRule } from '../utils/rule'
-
-function isStatic(
-  node:
-    | VAST.ESLintExpression
-    | VAST.ESLintSpreadElement
-    | VAST.VFilterSequenceExpression
-    | VAST.VForExpression
-    | VAST.VOnExpression
-    | VAST.VSlotScopeExpression
-): boolean {
-  if (node.type === 'Literal') {
-    return true
-  }
-  if (node.type === 'TemplateLiteral' && node.expressions.length === 0) {
-    return true
-  }
-  return false
-}
 
 function getNodeName(context: RuleContext, node: VAST.Node): string {
   if (node.type === 'Identifier') {
@@ -50,7 +32,7 @@ function checkDirective(context: RuleContext, node: VAST.VDirective) {
     node.value &&
     node.value.type === 'VExpressionContainer' &&
     node.value.expression &&
-    !isStatic(node.value.expression)
+    !isStaticLiteral(node.value.expression)
   ) {
     const name = getNodeName(context, node.value.expression)
     context.report({
@@ -70,7 +52,7 @@ function checkComponent(context: RuleContext, node: VAST.VDirectiveKey) {
     node.parent.value &&
     node.parent.value.type === 'VExpressionContainer' &&
     node.parent.value.expression &&
-    !isStatic(node.parent.value.expression)
+    !isStaticLiteral(node.parent.value.expression)
   ) {
     const name = getNodeName(context, node.parent.value.expression)
     context.report({
@@ -100,7 +82,7 @@ function checkCallExpression(
   }
 
   const [keyNode] = node.arguments
-  if (!isStatic(keyNode)) {
+  if (!isStaticLiteral(keyNode)) {
     const name = getNodeName(context, keyNode)
     context.report({
       node,
