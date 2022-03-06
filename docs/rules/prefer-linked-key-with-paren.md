@@ -1,5 +1,5 @@
 ---
-title: '@intlify/vue-i18n/prefer-linked-key-with-paren'
+title: "@intlify/vue-i18n/prefer-linked-key-with-paren"
 description: enforce linked key to be enclosed in parentheses
 since: v0.10.0
 ---

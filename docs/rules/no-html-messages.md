@@ -1,5 +1,5 @@
 ---
-title: '@intlify/vue-i18n/no-html-messages'
+title: "@intlify/vue-i18n/no-html-messages"
 description: disallow use HTML localization messages
 since: v0.1.0
 ---
@@ -43,7 +43,7 @@ In localization codes of application:
 ```vue
 <template>
   <div class="app">
-    <p>{{ $t('hello') }}</p>
+    <p>{{ $t("hello") }}</p>
     <!-- supply-chain attack -->
     <div v-html="$t('contents.banner')"></div>
     <!-- XSS attack -->
@@ -53,20 +53,20 @@ In localization codes of application:
 ```
 
 ```js
-import Vue from 'vue'
-import VueI18n from 'vue-i18n'
+import Vue from "vue";
+import VueI18n from "vue-i18n";
 
 const i18n = new VueI18n({
-  locale: 'en',
+  locale: "en",
   messages: {
-    en: require('./locales/en.json')
-  }
-})
+    en: require("./locales/en.json"),
+  },
+});
 
 new Vue({
-  i18n
+  i18n,
   // ...
-}).$mount('#app')
+}).$mount("#app");
 ```
 
 :+1: Examples of **correct** code for this rule:
@@ -96,7 +96,7 @@ In localization codes of application:
 ```vue
 <template>
   <div class="app">
-    <p>{{ $t('hello') }}</p>
+    <p>{{ $t("hello") }}</p>
     <i18n path="contents.banner">
       <Banner :url="bannerURL" />
     </i18n>
@@ -108,34 +108,34 @@ In localization codes of application:
 ```
 
 ```js
-import Vue from 'vue'
-import VueI18n from 'vue-i18n'
+import Vue from "vue";
+import VueI18n from "vue-i18n";
 
 // import some components used in i18n component
-import Banner from './path/to/components/Banner.vue'
-import Modal from './path/to/components/Modal.vue'
+import Banner from "./path/to/components/Banner.vue";
+import Modal from "./path/to/components/Modal.vue";
 
 // register imprted components (in this example case, Vue.component)
-Vue.component('Banner', Banner)
-Vue.component('Modal', Modal)
+Vue.component("Banner", Banner);
+Vue.component("Modal", Modal);
 
 const i18n = new VueI18n({
-  locale: 'en',
+  locale: "en",
   messages: {
-    en: require('./locales/en.json')
-  }
-})
+    en: require("./locales/en.json"),
+  },
+});
 
 new Vue({
   i18n,
   data() {
     return {
-      bannerURL: 'https://banner.domain.com',
-      modalDataURL: 'https://fetch.domain.com'
-    }
-  }
+      bannerURL: "https://banner.domain.com",
+      modalDataURL: "https://fetch.domain.com",
+    };
+  },
   // ...
-}).$mount('#app')
+}).$mount("#app");
 ```
 
 ## :mute: When Not To Use It

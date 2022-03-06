@@ -1,5 +1,5 @@
 ---
-title: '@intlify/vue-i18n/no-missing-keys'
+title: "@intlify/vue-i18n/no-missing-keys"
 description: disallow missing locale message key at localization methods
 since: v0.1.0
 ---
@@ -52,7 +52,7 @@ localization codes:
 <template>
   <div class="app">
     <!-- ✗ BAD -->
-    <p>{{ $t('hi') }}</p>
+    <p>{{ $t("hi") }}</p>
     <!-- ✗ BAD -->
     <p v-t="'hi'"></p>
     <!-- ✗ BAD -->
@@ -69,17 +69,17 @@ localization codes:
 
 ```js
 /* eslint @intlify/vue-i18n/no-missing-keys: 'error' */
-import VueI18n from 'vue-i18n'
+import VueI18n from "vue-i18n";
 
 const i18n = new VueI18n({
-  locale: 'en',
+  locale: "en",
   messages: {
-    en: require('./locales/en.json')
-  }
-})
+    en: require("./locales/en.json"),
+  },
+});
 
 /* ✗ BAD */
-i18n.t('hi')
+i18n.t("hi");
 ```
 
 </eslint-code-block>
@@ -115,7 +115,7 @@ localization codes:
 <template>
   <div class="app">
     <!-- ✓ GOOD -->
-    <p>{{ $t('hello') }}</p>
+    <p>{{ $t("hello") }}</p>
     <!-- ✓ GOOD -->
     <p v-t="'hello'"></p>
     <!-- ✓ GOOD -->
@@ -132,17 +132,17 @@ localization codes:
 
 ```js
 /* eslint @intlify/vue-i18n/no-missing-keys: 'error' */
-import VueI18n from 'vue-i18n'
+import VueI18n from "vue-i18n";
 
 const i18n = new VueI18n({
-  locale: 'en',
+  locale: "en",
   messages: {
-    en: require('./locales/en.json')
-  }
-})
+    en: require("./locales/en.json"),
+  },
+});
 
 /* ✓ GOOD */
-i18n.t('hello')
+i18n.t("hello");
 ```
 
 </eslint-code-block>
@@ -171,7 +171,7 @@ For SFC.
 <template>
   <div class="app">
     <!-- ✓ GOOD -->
-    <p>{{ $t('hi') }}</p>
+    <p>{{ $t("hi") }}</p>
   </div>
 </template>
 ```

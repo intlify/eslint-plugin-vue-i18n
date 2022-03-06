@@ -1,5 +1,5 @@
 ---
-title: '@intlify/vue-i18n/no-i18n-t-path-prop'
+title: "@intlify/vue-i18n/no-i18n-t-path-prop"
 description: disallow using `path` prop with `<i18n-t>`
 since: v0.11.0
 ---
