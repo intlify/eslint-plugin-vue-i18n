@@ -1,5 +1,5 @@
 ---
-title: "@intlify/vue-i18n/prefer-sfc-lang-attr"
+title: '@intlify/vue-i18n/prefer-sfc-lang-attr'
 description: require lang attribute on `<i18n>` block
 since: v1.2.0
 ---

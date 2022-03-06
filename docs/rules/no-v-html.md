@@ -1,5 +1,5 @@
 ---
-title: "@intlify/vue-i18n/no-v-html"
+title: '@intlify/vue-i18n/no-v-html'
 description: disallow use of localization methods on v-html to prevent XSS attack
 since: v0.1.0
 ---
@@ -76,7 +76,7 @@ localization codes:
   <div class="app">
     <!-- ✗ GOOD -->
     <i18n path="term" tag="label" for="tos">
-      <a :href="url" target="_blank">{{ $t("tos") }}</a>
+      <a :href="url" target="_blank">{{ $t('tos') }}</a>
     </i18n>
   </div>
 </template>

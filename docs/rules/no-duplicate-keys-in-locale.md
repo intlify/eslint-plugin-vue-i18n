@@ -1,5 +1,5 @@
 ---
-title: "@intlify/vue-i18n/no-duplicate-keys-in-locale"
+title: '@intlify/vue-i18n/no-duplicate-keys-in-locale'
 description: disallow duplicate localization keys within the same locale
 since: v0.9.0
 ---

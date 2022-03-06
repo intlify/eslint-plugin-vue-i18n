@@ -1,5 +1,5 @@
 ---
-title: "@intlify/vue-i18n/sfc-locale-attr"
+title: '@intlify/vue-i18n/sfc-locale-attr'
 description: require or disallow the locale attribute on `<i18n>` block
 since: v1.3.0
 ---
