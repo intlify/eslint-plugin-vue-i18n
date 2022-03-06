@@ -14,6 +14,7 @@ import * as keyPath from './utils/key-path'
 import * as localeMessages from './utils/locale-messages'
 import * as parsers from './utils/parsers'
 import * as pathUtils from './utils/path-utils'
+import * as regexp from './utils/regexp'
 import * as resourceLoader from './utils/resource-loader'
 import * as rule from './utils/rule'
 
@@ -33,6 +34,7 @@ export = {
   'locale-messages': localeMessages,
   parsers,
   'path-utils': pathUtils,
+  regexp,
   'resource-loader': resourceLoader,
   rule
 }

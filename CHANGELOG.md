@@ -1,4 +1,13 @@
 
+## v1.4.0 (2022-03-06)
+
+#### :bug: Bug Fixes
+* [#302](https://github.com/intlify/eslint-plugin-vue-i18n/pull/302) Fix false positives and false negatives for no-missing-keys and no-unused-keys rules ([@ota-meshi](https://github.com/ota-meshi))
+
+#### Committers: 1
+- Yosuke Ota ([@ota-meshi](https://github.com/ota-meshi))
+
+
 ## v1.3.0 (2022-02-11)
 
 #### :star: Features
