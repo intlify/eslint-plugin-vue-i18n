@@ -251,6 +251,26 @@ new RuleTester({
     }
     </script>`,
       options: [{ ignores: ['/ptn/'] }]
+    },
+    {
+      // template literal
+      filename: 'test.vue',
+      code: `
+      <i18n locale="en">
+      { "foo": "foo", "bar": "bar" }
+      </i18n>
+      <template>
+        <div id="app">
+          {{ $t(\`foo\`) }}
+        </div>
+      </template>
+      <script>
+      export default {
+        created () {
+          this.$t(\`bar\`)
+        }
+      }
+      </script>`
     }
   ],
   invalid: [

@@ -4,7 +4,10 @@
 import { parse, AST as VAST } from 'vue-eslint-parser'
 import type { AST as JSONAST } from 'jsonc-eslint-parser'
 import { parseJSON, getStaticJSONValue } from 'jsonc-eslint-parser'
+import type { StaticLiteral } from '../utils/index'
 import {
+  getStaticLiteralValue,
+  isStaticLiteral,
   defineTemplateBodyVisitor,
   getLocaleMessages,
   getStaticAttributes,
@@ -28,11 +31,7 @@ import { createRule } from '../utils/rule'
 import { toRegExp } from '../utils/regexp'
 
 type LiteralValue = VAST.ESLintLiteral['value']
-type StaticTemplateLiteral = VAST.ESLintTemplateLiteral & {
-  quasis: [VAST.ESLintTemplateElement]
-  expressions: [/* empty */]
-}
-type TemplateOptionValueNode = VAST.ESLintLiteral | StaticTemplateLiteral
+type TemplateOptionValueNode = StaticLiteral
 type NodeScope = 'template' | 'template-option' | 'jsx'
 type TargetAttrs = { name: RegExp; attrs: Set<string> }
 type Config = {
@@ -76,24 +75,8 @@ function getTargetAttrs(tagName: string, config: Config): Set<string> {
   return new Set(result)
 }
 
-function isStaticTemplateLiteral(
-  node:
-    | VAST.ESLintExpression
-    | VAST.VExpressionContainer['expression']
-    | VAST.ESLintPattern
-): node is StaticTemplateLiteral {
-  return Boolean(
-    node && node.type === 'TemplateLiteral' && node.expressions.length === 0
-  )
-}
 function calculateRange(
-  node:
-    | VAST.ESLintLiteral
-    | StaticTemplateLiteral
-    | VAST.VText
-    | JSXText
-    | VAST.VLiteral
-    | VAST.VIdentifier,
+  node: StaticLiteral | VAST.VText | JSXText | VAST.VLiteral | VAST.VIdentifier,
   base: TemplateOptionValueNode | null
 ): Range {
   const range = node.range
@@ -104,12 +87,7 @@ function calculateRange(
   return [offset + range[0], offset + range[1]]
 }
 function calculateLoc(
-  node:
-    | VAST.ESLintLiteral
-    | StaticTemplateLiteral
-    | VAST.VText
-    | JSXText
-    | VAST.VLiteral,
+  node: StaticLiteral | VAST.VText | JSXText | VAST.VLiteral,
   base: TemplateOptionValueNode | null,
   context: RuleContext
 ) {
@@ -209,16 +187,12 @@ function checkExpressionContainerText(
   baseNode: TemplateOptionValueNode | null,
   scope: NodeScope
 ) {
-  if (expression.type === 'Literal') {
-    checkLiteral(context, expression, config, baseNode, scope)
-  } else if (isStaticTemplateLiteral(expression)) {
+  if (isStaticLiteral(expression)) {
     checkLiteral(context, expression, config, baseNode, scope)
   } else if (expression.type === 'ConditionalExpression') {
     const targets = [expression.consequent, expression.alternate]
     targets.forEach(target => {
-      if (target.type === 'Literal') {
-        checkLiteral(context, target, config, baseNode, scope)
-      } else if (isStaticTemplateLiteral(target)) {
+      if (isStaticLiteral(target)) {
         checkLiteral(context, target, config, baseNode, scope)
       }
     })
@@ -227,15 +201,12 @@ function checkExpressionContainerText(
 
 function checkLiteral(
   context: RuleContext,
-  literal: VAST.ESLintLiteral | StaticTemplateLiteral,
+  literal: StaticLiteral,
   config: Config,
   baseNode: TemplateOptionValueNode | null,
   scope: NodeScope
 ) {
-  const value =
-    literal.type !== 'TemplateLiteral'
-      ? literal.value
-      : literal.quasis[0].value.cooked
+  const value = getStaticLiteralValue(literal)
 
   if (testValue(value, config)) {
     return
@@ -465,9 +436,7 @@ function getComponentTemplateValueNode(
   )
 
   if (templateNode) {
-    if (templateNode.value.type === 'Literal') {
-      return templateNode.value
-    } else if (isStaticTemplateLiteral(templateNode.value)) {
+    if (isStaticLiteral(templateNode.value)) {
       return templateNode.value
     } else if (templateNode.value.type === 'Identifier') {
       const templateVariable = findVariable(
@@ -478,9 +447,7 @@ function getComponentTemplateValueNode(
         const varDeclNode = templateVariable.defs[0]
           .node as VAST.ESLintVariableDeclarator
         if (varDeclNode.init) {
-          if (varDeclNode.init.type === 'Literal') {
-            return varDeclNode.init
-          } else if (isStaticTemplateLiteral(varDeclNode.init)) {
+          if (isStaticLiteral(varDeclNode.init)) {
             return varDeclNode.init
           }
         }
@@ -492,12 +459,8 @@ function getComponentTemplateValueNode(
 }
 
 function getComponentTemplateNode(node: TemplateOptionValueNode) {
-  return parse(
-    `<template>${
-      node.type === 'TemplateLiteral' ? node.quasis[0].value.cooked : node.value
-    }</template>`,
-    {}
-  ).templateBody!
+  return parse(`<template>${getStaticLiteralValue(node)}</template>`, {})
+    .templateBody!
 }
 
 function withoutEscape(
@@ -508,10 +471,7 @@ function withoutEscape(
     return false
   }
   const sourceText = context.getSourceCode().getText(baseNode).slice(1, -1)
-  const templateText =
-    baseNode.type === 'TemplateLiteral'
-      ? baseNode.quasis[0].value.cooked
-      : `${baseNode.value}`
+  const templateText = `${getStaticLiteralValue(baseNode)}`
   return sourceText === templateText
 }
 

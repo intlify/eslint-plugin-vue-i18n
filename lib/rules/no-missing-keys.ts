@@ -1,7 +1,12 @@
 /**
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
-import { defineTemplateBodyVisitor, getLocaleMessages } from '../utils/index'
+import {
+  defineTemplateBodyVisitor,
+  getLocaleMessages,
+  getStaticLiteralValue,
+  isStaticLiteral
+} from '../utils/index'
 import type { AST as VAST } from 'vue-eslint-parser'
 import type { RuleContext, RuleListener } from '../types'
 import { createRule } from '../utils/rule'
@@ -45,10 +50,9 @@ function checkDirective(context: RuleContext, node: VAST.VDirective) {
   if (
     node.value &&
     node.value.type === 'VExpressionContainer' &&
-    node.value.expression &&
-    node.value.expression.type === 'Literal'
+    isStaticLiteral(node.value.expression)
   ) {
-    const key = node.value.expression.value
+    const key = getStaticLiteralValue(node.value.expression)
     if (!key) {
       // TODO: should be error
       return
@@ -111,11 +115,11 @@ function checkCallExpression(
   }
 
   const [keyNode] = node.arguments
-  if (keyNode.type !== 'Literal') {
+  if (!isStaticLiteral(keyNode)) {
     return
   }
 
-  const key = keyNode.value
+  const key = getStaticLiteralValue(keyNode)
   if (!key) {
     // TODO: should be error
     return

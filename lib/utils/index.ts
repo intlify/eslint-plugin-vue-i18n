@@ -107,6 +107,22 @@ export function getDirective(
   )
 }
 
+export type StaticLiteral = VAST.ESLintLiteral | VAST.ESLintTemplateLiteral
+export function isStaticLiteral(node: VAST.Node | null): node is StaticLiteral {
+  return Boolean(
+    node &&
+      (node.type === 'Literal' ||
+        (node.type === 'TemplateLiteral' && node.expressions.length === 0))
+  )
+}
+export function getStaticLiteralValue(
+  node: StaticLiteral
+): VAST.ESLintLiteral['value'] {
+  return node.type !== 'TemplateLiteral'
+    ? node.value
+    : node.quasis[0].value.cooked || node.quasis[0].value.raw
+}
+
 function loadLocaleMessages(
   localeFilesList: LocaleFiles[],
   cwd: string
