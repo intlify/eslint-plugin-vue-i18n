@@ -5,16 +5,16 @@ import {
   defineTemplateBodyVisitor,
   getLocaleMessages,
   getStaticLiteralValue,
-  isStaticLiteral
+  isStaticLiteral,
+  compositingVisitors
 } from '../utils/index'
 import type { AST as VAST } from 'vue-eslint-parser'
 import type { RuleContext, RuleListener } from '../types'
 import { createRule } from '../utils/rule'
 
 function create(context: RuleContext): RuleListener {
-  return defineTemplateBodyVisitor(
-    context,
-    {
+  return compositingVisitors(
+    defineTemplateBodyVisitor(context, {
       "VAttribute[directive=true][key.name='t']"(node: VAST.VDirective) {
         checkDirective(context, node)
       },
@@ -33,7 +33,7 @@ function create(context: RuleContext): RuleListener {
       CallExpression(node: VAST.ESLintCallExpression) {
         checkCallExpression(context, node)
       }
-    },
+    }),
     {
       CallExpression(node: VAST.ESLintCallExpression) {
         checkCallExpression(context, node)

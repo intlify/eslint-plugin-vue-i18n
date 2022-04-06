@@ -535,7 +535,7 @@ export function skipTSAsExpression<T extends VAST.Node>(node: T): T {
   return node
 }
 
-function compositingVisitors(
+export function compositingVisitors(
   visitor: RuleListener,
   ...visitors: RuleListener[]
 ) {
