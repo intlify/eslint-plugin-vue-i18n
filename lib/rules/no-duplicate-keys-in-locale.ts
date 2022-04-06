@@ -113,20 +113,21 @@ function create(context: RuleContext): RuleListener {
           }
           return
         }
-        const keyOtherValues = pathStack.otherDictionaries
-          .filter(dict => dict.dict[key] != null)
-          .map(dict => {
-            return {
-              value: dict.dict[key],
-              source: dict.source
-            }
-          })
+        const keyOtherValues = pathStack.otherDictionaries.map(dict => {
+          return {
+            value: dict.dict[key],
+            source: dict.source
+          }
+        })
         const keyPath = [...pathStack.keyPath, key]
         const keyPathStr = joinPath(...keyPath)
         const nextOtherDictionaries: DictData[] = []
         const reportFiles = []
         for (const value of keyOtherValues) {
-          if (typeof value.value === 'string') {
+          if (value.value == null) {
+            continue
+          }
+          if (typeof value.value !== 'object') {
             reportFiles.push(
               '"' + getMessageFilepath(value.source.fullpath, context) + '"'
             )

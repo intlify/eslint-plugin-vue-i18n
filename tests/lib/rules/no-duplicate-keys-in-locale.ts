@@ -76,6 +76,12 @@ new RuleTester({
       <template></template>
       <script></script>`
     },
+    {
+      filename: 'test.vue',
+      code: `
+      <i18n locale="en">{ "foo": null, "bar": 123 }</i18n>
+      <template>Hello!</template>`
+    },
     ...getTestCasesFromFixtures({
       cwd: join(cwdRoot, './valid/vue-cli-format'),
       localeDir: `./locales/*.{json,yaml,yml}`

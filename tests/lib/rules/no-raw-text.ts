@@ -1597,6 +1597,27 @@ tester.run('no-raw-text', rule as never, {
           ]
         }
       ]
+    },
+    {
+      // null value
+      code: `
+      <i18n locale="en">{ "foo": null, "bar": 123 }</i18n>
+      <template>Hello!</template>`,
+      errors: [
+        {
+          message: "raw text 'Hello!' is used",
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `
+      <i18n locale="en">{
+        "Hello!": "Hello!",
+         "foo": null, "bar": 123 }</i18n>
+      <template>{{$t('Hello!')}}</template>`
+            }
+          ]
+        }
+      ]
     }
   ]
 })
