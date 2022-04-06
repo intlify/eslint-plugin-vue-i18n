@@ -214,6 +214,20 @@ tester.run('no-missing-keys', rule as never, {
           }
         }
         </script>`
+      },
+      {
+        filename: 'test.vue',
+        code: `
+        <template>
+          {{$t('nesting01.a.a')}}
+          {{$t('nesting01.a.b')}}
+        </template>`,
+        settings: {
+          'vue-i18n': {
+            localeDir:
+              './tests/fixtures/no-missing-keys/complex-locales/locales/*.json'
+          }
+        }
       }
     ]
   ),
