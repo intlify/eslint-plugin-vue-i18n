@@ -1,5 +1,5 @@
 ---
-title: '@intlify/vue-i18n/no-raw-text'
+title: "@intlify/vue-i18n/no-raw-text"
 description: disallow to string literal in template or JSX
 since: v0.2.0
 ---
@@ -31,9 +31,9 @@ This rule encourage i18n in about the application needs to be localized.
 /* eslint @intlify/vue-i18n/no-raw-text: 'error' */
 export default Vue.extend({
   // ✗ BAD
-  template: '<p>hello</p>'
+  template: "<p>hello</p>",
   // ...
-})
+});
 ```
 
 </eslint-code-block>
@@ -66,9 +66,9 @@ export default Vue.extend({
 /* eslint @intlify/vue-i18n/no-raw-text: 'error' */
 export default {
   // ✗ BAD
-  render: h => <p>hello</p>
+  render: (h) => <p>hello</p>,
   // ...
-}
+};
 ```
 
 </eslint-code-block>
@@ -85,9 +85,9 @@ export default {
 /* eslint @intlify/vue-i18n/no-raw-text: 'error' */
 export default Vue.extend({
   // ✓ GOOD
-  template: `<p>{{ \$t('hello') }}</p>`
+  template: `<p>{{ \$t('hello') }}</p>`,
   // ...
-})
+});
 ```
 
 </eslint-code-block>
@@ -104,7 +104,7 @@ export default Vue.extend({
 </script>
 <template>
   <!-- ✓ GOOD -->
-  <p>{{ $t('hello') }}</p>
+  <p>{{ $t("hello") }}</p>
 </template>
 ```
 
@@ -120,9 +120,9 @@ export default Vue.extend({
 /* eslint @intlify/vue-i18n/no-raw-text: 'error' */
 export default {
   // ✓ GOOD
-  render: h => <p>{this.$t('hello')}</p>
+  render: (h) => <p>{this.$t("hello")}</p>,
   // ...
-}
+};
 ```
 
 </eslint-code-block>

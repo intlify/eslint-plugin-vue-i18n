@@ -1,5 +1,5 @@
 ---
-title: '@intlify/vue-i18n/no-dynamic-keys'
+title: "@intlify/vue-i18n/no-dynamic-keys"
 description: disallow localization dynamic keys at localization methods
 since: v0.1.0
 ---
@@ -63,25 +63,25 @@ localization codes:
 
 ```js
 /* eslint @intlify/vue-i18n/no-dynamic-keys: 'error' */
-import Vue from 'vue'
-import VueI18n from 'vue-i18n'
+import Vue from "vue";
+import VueI18n from "vue-i18n";
 
 const i18n = new VueI18n({
-  locale: 'en',
+  locale: "en",
   messages: {
-    en: require('./locales/en.json')
-  }
-})
+    en: require("./locales/en.json"),
+  },
+});
 
 const app = new Vue({
   i18n,
   data() {
-    return { msg: 'hello' }
-  }
-})
+    return { msg: "hello" };
+  },
+});
 
 /* ✗ BAD */
-i18n.t(app.msg)
+i18n.t(app.msg);
 ```
 
 </eslint-code-block>
@@ -109,7 +109,7 @@ localization codes:
 <template>
   <div class="app">
     <!-- ✓ GOOD -->
-    <p>{{ $t('hello') }}</p>
+    <p>{{ $t("hello") }}</p>
     <!-- ✓ GOOD -->
     <p v-t="'hello'"></p>
     <!-- ✓ GOOD -->
@@ -126,25 +126,25 @@ localization codes:
 
 ```js
 /* eslint @intlify/vue-i18n/no-dynamic-keys: 'error' */
-import Vue from 'vue'
-import VueI18n from 'vue-i18n'
+import Vue from "vue";
+import VueI18n from "vue-i18n";
 
 const i18n = new VueI18n({
-  locale: 'en',
+  locale: "en",
   messages: {
-    en: require('./locales/en.json')
-  }
-})
+    en: require("./locales/en.json"),
+  },
+});
 
 new Vue({
   i18n,
   data() {
-    return { msg: 'hello' }
-  }
-})
+    return { msg: "hello" };
+  },
+});
 
 /* ✓ GOOD */
-i18n.t('hello')
+i18n.t("hello");
 ```
 
 </eslint-code-block>

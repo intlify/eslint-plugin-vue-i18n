@@ -1,5 +1,5 @@
 ---
-title: '@intlify/vue-i18n/no-unknown-locale'
+title: "@intlify/vue-i18n/no-unknown-locale"
 description: disallow unknown locale name
 since: v1.3.0
 ---

@@ -1,4 +1,15 @@
 
+## v1.4.1 (2022-04-07)
+
+#### :bug: Bug Fixes
+* [#315](https://github.com/intlify/eslint-plugin-vue-i18n/pull/315) Fix crash with null value in no-raw-text rule ([@ota-meshi](https://github.com/ota-meshi))
+* [#313](https://github.com/intlify/eslint-plugin-vue-i18n/pull/313) Fix false positives in no-missing-keys ([@ota-meshi](https://github.com/ota-meshi))
+* [#312](https://github.com/intlify/eslint-plugin-vue-i18n/pull/312) Fix false negatives when using parsers other than vue-eslint-parser in no-missing-keys ([@ota-meshi](https://github.com/ota-meshi))
+
+#### Committers: 1
+- Yosuke Ota ([@ota-meshi](https://github.com/ota-meshi))
+
+
 ## v1.4.0 (2022-03-06)
 
 #### :bug: Bug Fixes
