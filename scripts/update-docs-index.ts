@@ -4,10 +4,15 @@
  * Forked by https://github.com/mysticatea/eslint-plugin-eslint-comments/tree/master/scripts/update-docs-index.js
  */
 import prettier from 'prettier'
-import { writeFileSync } from 'fs'
-import { resolve } from 'path'
+import { writeFileSync, readFileSync } from 'fs'
+import { resolve, join } from 'path'
+import yaml from 'js-yaml'
 import type { RuleInfo } from './lib/rules'
 import { withCategories } from './lib/rules'
+
+const prettierrc = yaml.load(
+  readFileSync(join(__dirname, '../.prettierrc.yaml'), 'utf8')
+) as prettier.Options
 
 function toTableRow(rule: RuleInfo) {
   const mark = `${rule.recommended ? ':star:' : ''}${
@@ -42,4 +47,7 @@ const content = `# Available Rules
 
 ${withCategories.map(toCategorySection).join('\n')}
 `
-writeFileSync(filePath, prettier.format(content, { filepath: filePath }))
+writeFileSync(
+  filePath,
+  prettier.format(content, { filepath: filePath, ...prettierrc })
+)
