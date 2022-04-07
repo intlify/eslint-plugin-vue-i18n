@@ -1,5 +1,5 @@
 ---
-title: "@intlify/vue-i18n/no-deprecated-i18n-places-prop"
+title: '@intlify/vue-i18n/no-deprecated-i18n-places-prop'
 description: disallow using deprecated `places` prop (Removed in Vue I18n 9.0.0+)
 since: v0.11.0
 ---
@@ -28,13 +28,13 @@ This rule reports use of deprecated `places` prop (Removed in Vue I18n 9.0.0+).
   <div class="app">
     <!-- ✗ BAD -->
     <i18n path="info" tag="p" :places="{ limit: changeLimit }">
-      <a place="action" :href="changeUrl">{{ $t("change") }}</a>
+      <a place="action" :href="changeUrl">{{ $t('change') }}</a>
     </i18n>
 
     <!-- Also check the <i18n-t> component to prevent mistakes. -->
     <!-- ✗ BAD -->
     <i18n-t path="info" tag="p" :places="{ limit: changeLimit }">
-      <a place="action" :href="changeUrl">{{ $t("change") }}</a>
+      <a place="action" :href="changeUrl">{{ $t('change') }}</a>
     </i18n-t>
   </div>
 </template>
@@ -60,7 +60,7 @@ This rule reports use of deprecated `places` prop (Removed in Vue I18n 9.0.0+).
         <span>{{ changeLimit }}</span>
       </template>
       <template v-slot:action>
-        <a :href="changeUrl">{{ $t("change") }}</a>
+        <a :href="changeUrl">{{ $t('change') }}</a>
       </template>
     </i18n>
 
@@ -70,7 +70,7 @@ This rule reports use of deprecated `places` prop (Removed in Vue I18n 9.0.0+).
         <span>{{ changeLimit }}</span>
       </template>
       <template #action>
-        <a :href="changeUrl">{{ $t("change") }}</a>
+        <a :href="changeUrl">{{ $t('change') }}</a>
       </template>
     </i18n-t>
   </div>

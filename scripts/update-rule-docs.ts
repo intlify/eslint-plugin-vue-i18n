@@ -6,9 +6,14 @@
 import prettier from 'prettier'
 import { writeFileSync, readFileSync } from 'fs'
 import { join } from 'path'
+import yaml from 'js-yaml'
 import type { RuleInfo } from './lib/rules'
 import rules from './lib/rules'
 const PLACE_HOLDER = /#[^\n]*\n+> .+\n+(?:- .+\n)*\n*/u
+
+const prettierrc = yaml.load(
+  readFileSync(join(__dirname, '../.prettierrc.yaml'), 'utf8')
+) as prettier.Options
 
 export function updateRuleDocs({
   nextVersion
@@ -42,7 +47,10 @@ export function updateRuleDocs({
     write() {
       writeFileSync(
         this.filePath,
-        prettier.format(this.content, { filepath: this.filePath })
+        prettier.format(this.content, {
+          filepath: this.filePath,
+          ...prettierrc
+        })
       )
     }
     updateFileIntro() {

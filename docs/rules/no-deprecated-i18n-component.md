@@ -1,5 +1,5 @@
 ---
-title: "@intlify/vue-i18n/no-deprecated-i18n-component"
+title: '@intlify/vue-i18n/no-deprecated-i18n-component'
 description: disallow using deprecated `<i18n>` components (in Vue I18n 9.0.0+)
 since: v0.11.0
 ---

@@ -1,5 +1,5 @@
 ---
-title: "@intlify/vue-i18n/no-deprecated-i18n-place-attr"
+title: '@intlify/vue-i18n/no-deprecated-i18n-place-attr'
 description: disallow using deprecated `place` attribute (Removed in Vue I18n 9.0.0+)
 since: v0.11.0
 ---
@@ -30,7 +30,7 @@ This rule reports use of deprecated `place` attribute (Removed in Vue I18n 9.0.0
       <!-- ✗ BAD -->
       <span place="limit">{{ changeLimit }}</span>
       <!-- ✗ BAD -->
-      <a place="action" :href="changeUrl">{{ $t("change") }}</a>
+      <a place="action" :href="changeUrl">{{ $t('change') }}</a>
     </i18n>
 
     <!-- Also check the <i18n-t> component to prevent mistakes. -->
@@ -38,7 +38,7 @@ This rule reports use of deprecated `place` attribute (Removed in Vue I18n 9.0.0
       <!-- ✗ BAD -->
       <span place="limit">{{ changeLimit }}</span>
       <!-- ✗ BAD -->
-      <a place="action" :href="changeUrl">{{ $t("change") }}</a>
+      <a place="action" :href="changeUrl">{{ $t('change') }}</a>
     </i18n-t>
   </div>
 </template>
@@ -65,7 +65,7 @@ This rule reports use of deprecated `place` attribute (Removed in Vue I18n 9.0.0
       </template>
       <!-- ✓ GOOD -->
       <template v-slot:action>
-        <a :href="changeUrl">{{ $t("change") }}</a>
+        <a :href="changeUrl">{{ $t('change') }}</a>
       </template>
     </i18n>
 
@@ -76,7 +76,7 @@ This rule reports use of deprecated `place` attribute (Removed in Vue I18n 9.0.0
       </template>
       <!-- ✓ GOOD -->
       <template #action>
-        <a :href="changeUrl">{{ $t("change") }}</a>
+        <a :href="changeUrl">{{ $t('change') }}</a>
       </template>
     </i18n-t>
   </div>

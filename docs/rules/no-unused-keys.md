@@ -1,5 +1,5 @@
 ---
-title: "@intlify/vue-i18n/no-unused-keys"
+title: '@intlify/vue-i18n/no-unused-keys'
 description: disallow unused localization keys
 since: v0.1.0
 ---
@@ -43,7 +43,7 @@ In localization codes of application:
 ```vue
 <template>
   <div class="app">
-    <p>{{ $t("hello") }}</p>
+    <p>{{ $t('hello') }}</p>
   </div>
 </template>
 ```
@@ -53,16 +53,16 @@ In localization codes of application:
 <eslint-code-block fix language="javascript">
 
 ```js
-import VueI18n from "vue-i18n";
+import VueI18n from 'vue-i18n'
 
 const i18n = new VueI18n({
-  locale: "en",
+  locale: 'en',
   messages: {
-    en: require("./locales/en.json"),
-  },
-});
+    en: require('./locales/en.json')
+  }
+})
 
-i18n.t("hello");
+i18n.t('hello')
 ```
 
 </eslint-code-block>
@@ -90,7 +90,7 @@ For SFC.
 
 <template>
   <div class="app">
-    <p>{{ $t("hello") }}</p>
+    <p>{{ $t('hello') }}</p>
   </div>
 </template>
 ```
@@ -124,7 +124,7 @@ In localization codes of application:
 ```vue
 <template>
   <div class="app">
-    <p>{{ $t("hello") }}</p>
+    <p>{{ $t('hello') }}</p>
   </div>
 </template>
 ```
@@ -134,16 +134,16 @@ In localization codes of application:
 <eslint-code-block fix language="javascript">
 
 ```js
-import VueI18n from "vue-i18n";
+import VueI18n from 'vue-i18n'
 
 const i18n = new VueI18n({
-  locale: "en",
+  locale: 'en',
   messages: {
-    en: require("./locales/en.json"),
-  },
-});
+    en: require('./locales/en.json')
+  }
+})
 
-i18n.t("hi");
+i18n.t('hi')
 ```
 
 </eslint-code-block>

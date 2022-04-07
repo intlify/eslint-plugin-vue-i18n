@@ -109,7 +109,7 @@
     "coverage": "nyc report --reporter lcov && opener coverage/lcov-report/index.html",
     "docs": "npm run build && vuepress dev docs",
     "docs:build": "npm run build && vuepress build docs",
-    "generate": "ts-node scripts/update.ts && npm run format",
+    "generate": "ts-node scripts/update.ts",
     "lint": "eslint . --ext js,ts,vue,md --ignore-pattern \"/tests/fixtures\"",
     "lint-fix": "eslint . --ext js,ts,vue,md --ignore-pattern \"/tests/fixtures\" --fix",
     "lint:docs": "prettier docs --check",
