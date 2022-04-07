@@ -300,7 +300,7 @@ export class LocaleMessages {
       )
       if (
         localeMessages.some(last => {
-          return last && typeof last !== 'string' ? last[key] != null : false
+          return last && typeof last === 'object' ? last[key] != null : false
         })
       ) {
         // Hit the original key.
@@ -316,7 +316,7 @@ export class LocaleMessages {
         targetPaths.push(path)
         const values: I18nLocaleMessageValue[] = lasts
           .map(last => {
-            return last && typeof last !== 'string' ? last[path] : undefined
+            return last && typeof last === 'object' ? last[path] : undefined
           })
           .filter((val): val is I18nLocaleMessageValue => val != null)
 

@@ -662,7 +662,10 @@ function extractMessageKeys(
   ): Iterable<string> {
     for (const key of Object.keys(messages)) {
       const value = messages[key]
-      if (typeof value === 'string') {
+      if (value == null) {
+        continue
+      }
+      if (typeof value !== 'object') {
         if (targetValue === value) {
           yield [...paths, key].join('.')
         }
