@@ -310,6 +310,7 @@ export class LocaleMessages {
       const paths = [...parsePath(key)]
       let lasts = localeMessages
       const targetPaths = []
+      let hasMissing = false
       while (paths.length) {
         const path = paths.shift()!
         targetPaths.push(path)
@@ -323,11 +324,12 @@ export class LocaleMessages {
           if (missingPath.length <= targetPaths.length) {
             missingPath = targetPaths
           }
+          hasMissing = true
           break
         }
         lasts = values
       }
-      if (!missingPath.length) {
+      if (!hasMissing) {
         return null
       }
     }
