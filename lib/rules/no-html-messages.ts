@@ -2,21 +2,22 @@
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
 import { extname } from 'path'
-import parse5 from 'parse5'
+import * as parse5 from 'parse5'
 import { defineCustomBlocksVisitor, getLocaleMessages } from '../utils/index'
 import debugBuilder from 'debug'
 import type { AST as JSONAST } from 'jsonc-eslint-parser'
 import type { AST as YAMLAST } from 'yaml-eslint-parser'
 import type { RuleContext, RuleListener } from '../types'
 import { createRule } from '../utils/rule'
+import type { DefaultTreeAdapterMap } from 'parse5'
 
 const debug = debugBuilder('eslint-plugin-vue-i18n:no-html-messages')
 
-function findHTMLNode(
-  node: parse5.DocumentFragment
-): parse5.Element | undefined {
-  return node.childNodes.find((child): child is parse5.Element => {
-    if (child.nodeName !== '#text' && (child as parse5.Element).tagName) {
+type DocumentFragment = DefaultTreeAdapterMap['documentFragment']
+type Element = DefaultTreeAdapterMap['element']
+function findHTMLNode(node: DocumentFragment): Element | undefined {
+  return node.childNodes.find((child): child is Element => {
+    if (child.nodeName !== '#text' && (child as Element).tagName) {
       return true
     }
     return false
@@ -36,7 +37,7 @@ function create(context: RuleContext): RuleListener {
     }
     const htmlNode = parse5.parseFragment(`${node.value}`, {
       sourceCodeLocationInfo: true
-    }) as parse5.DocumentFragment
+    })
     const foundNode = findHTMLNode(htmlNode)
     if (!foundNode) {
       return
@@ -64,7 +65,7 @@ function create(context: RuleContext): RuleListener {
     }
     const htmlNode = parse5.parseFragment(`${node.value}`, {
       sourceCodeLocationInfo: true
-    }) as parse5.DocumentFragment
+    })
     const foundNode = findHTMLNode(htmlNode)
     if (!foundNode) {
       return
