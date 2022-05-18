@@ -1,4 +1,14 @@
 
+## v2.0.0 (2022-05-18)
+
+#### :boom: Breaking Change
+* [#324](https://github.com/intlify/eslint-plugin-vue-i18n/pull/324) fix(deps): update dependency vue-eslint-parser to v9 ([@renovate[bot]](https://github.com/apps/renovate))
+* [#318](https://github.com/intlify/eslint-plugin-vue-i18n/pull/318) Drop support for Node.js v12 ([@ota-meshi](https://github.com/ota-meshi))
+
+#### Committers: 1
+- Yosuke Ota ([@ota-meshi](https://github.com/ota-meshi))
+
+
 ## v1.4.1 (2022-04-07)
 
 #### :bug: Bug Fixes
