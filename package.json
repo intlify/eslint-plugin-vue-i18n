@@ -48,7 +48,7 @@
     "@types/js-yaml": "^4.0.0",
     "@types/json5": "^0.0.30",
     "@types/lodash": "^4.14.159",
-    "@types/mocha": "^9.0.0",
+    "@types/mocha": "^10.0.0",
     "@types/parse5": "^6.0.0",
     "@types/prettier": "^2.4.4",
     "@types/semver": "^7.3.4",
