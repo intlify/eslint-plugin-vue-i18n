@@ -108,8 +108,8 @@
     "build": "tsc --project ./tsconfig.build.json",
     "clean": "rimraf .nyc_output coverage dist docs/.vuepress/dist",
     "coverage": "nyc report --reporter lcov && opener coverage/lcov-report/index.html",
-    "docs": "npm run build && npm run use-openssl-legacy-provider && vuepress dev docs",
-    "docs:build": "npm run build && npm run use-openssl-legacy-provider && vuepress build docs",
+    "docs": "npm run build && node --openssl-legacy-provider node_modules/vuepress/cli.js dev docs",
+    "docs:build": "npm run build && node --openssl-legacy-provider node_modules/vuepress/cli.js build docs",
     "generate": "ts-node scripts/update.ts",
     "lint": "eslint . --ext js,ts,vue,md --ignore-pattern \"/tests/fixtures\"",
     "lint-fix": "eslint . --ext js,ts,vue,md --ignore-pattern \"/tests/fixtures\" --fix",
@@ -121,7 +121,6 @@
     "test:debug": "mocha --require ts-node/register/transpile-only \"./tests/**/*.ts\"",
     "test:coverage": "nyc mocha --require ts-node/register \"./tests/**/*.ts\" --timeout 60000",
     "test:integrations": "mocha ./tests-integrations/*.js --timeout 60000",
-    "new": "ts-node ./scripts/new-rule.ts",
-    "use-openssl-legacy-provider": "export NODE_OPTIONS=--openssl-legacy-provider"
+    "new": "ts-node ./scripts/new-rule.ts"
   }
 }
