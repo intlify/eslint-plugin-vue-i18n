@@ -38,6 +38,18 @@ module.exports = {
       }
     }
   },
+  chainWebpack(config) {
+    // Transpile because some dependency modules can't be parsed by webpack.
+    const jsRule = config.module.rule('js')
+    const baseExcludes = jsRule.exclude.values()
+    jsRule.exclude.clear()
+    jsRule.exclude.add(filePath => {
+      if (/\/node_modules\/(?:yaml|parse5)\//u.test(filePath)) {
+        return false
+      }
+      return baseExcludes.some(exclude => exclude(filePath))
+    })
+  },
   base: '/',
   title: 'eslint-plugin-vue-i18n',
   description: 'ESLint plugin for Vue I18n',
