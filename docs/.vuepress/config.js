@@ -1,5 +1,5 @@
 /**
- * @fileoverview VuePress configration
+ * @fileoverview VuePress configuration
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
 'use strict'
@@ -31,6 +31,7 @@ module.exports = {
             './shim/eslint-visitor-keys'
           ),
           esquery$: require.resolve('esquery/dist/esquery'),
+          parse5$: require.resolve('parse5'),
           fs: require.resolve('./shim/fs'),
           [path.resolve(__dirname, '../../dist/utils/glob-utils')]:
             require.resolve('./shim/eslint-plugin-vue-i18n/utils/glob-utils')
@@ -38,11 +39,26 @@ module.exports = {
       }
     }
   },
+  chainWebpack(config) {
+    // Transpile because some dependency modules can't be parsed by webpack.
+    const jsRule = config.module.rule('js')
+    const original = jsRule.exclude.values()
+    jsRule.exclude
+      .clear()
+      .add(filePath => {
+        if (/\/node_modules\/yaml\//u.test(filePath)) {
+          return false
+        }
+        return original.some(exclude => exclude(filePath))
+      })
+      .end()
+      .use('babel-loader')
+  },
   base: '/',
   title: 'eslint-plugin-vue-i18n',
   description: 'ESLint plugin for Vue I18n',
   serviceWorker: true,
-  evergreen: true,
+  evergreen: false,
   head: [['meta', { name: 'theme-color', content: '#3eaf7c' }]],
   themeConfig: {
     repo: 'intlify/eslint-plugin-vue-i18n',
