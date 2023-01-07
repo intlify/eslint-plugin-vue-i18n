@@ -1,5 +1,5 @@
 /**
- * @fileoverview VuePress configration
+ * @fileoverview VuePress configuration
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
 'use strict'
@@ -42,7 +42,7 @@ module.exports = {
   title: 'eslint-plugin-vue-i18n',
   description: 'ESLint plugin for Vue I18n',
   serviceWorker: true,
-  evergreen: true,
+  evergreen: false,
   head: [['meta', { name: 'theme-color', content: '#3eaf7c' }]],
   themeConfig: {
     repo: 'intlify/eslint-plugin-vue-i18n',
