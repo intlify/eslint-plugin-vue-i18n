@@ -42,14 +42,17 @@ module.exports = {
   chainWebpack(config) {
     // Transpile because some dependency modules can't be parsed by webpack.
     const jsRule = config.module.rule('js')
-    const baseExcludes = jsRule.exclude.values()
-    jsRule.exclude.clear()
-    jsRule.exclude.add(filePath => {
-      if (/\/node_modules\/yaml\//u.test(filePath)) {
-        return false
-      }
-      return baseExcludes.some(exclude => exclude(filePath))
-    })
+    const original = jsRule.exclude.values()
+    jsRule.exclude
+      .clear()
+      .add(filePath => {
+        if (/\/node_modules\/yaml\//u.test(filePath)) {
+          return false
+        }
+        return original.some(exclude => exclude(filePath))
+      })
+      .end()
+      .use('babel-loader')
   },
   base: '/',
   title: 'eslint-plugin-vue-i18n',
