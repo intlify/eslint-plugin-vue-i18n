@@ -31,6 +31,7 @@ module.exports = {
             './shim/eslint-visitor-keys'
           ),
           esquery$: require.resolve('esquery/dist/esquery'),
+          parse5$: require.resolve('parse5'),
           fs: require.resolve('./shim/fs'),
           [path.resolve(__dirname, '../../dist/utils/glob-utils')]:
             require.resolve('./shim/eslint-plugin-vue-i18n/utils/glob-utils')
@@ -44,7 +45,7 @@ module.exports = {
     const baseExcludes = jsRule.exclude.values()
     jsRule.exclude.clear()
     jsRule.exclude.add(filePath => {
-      if (/\/node_modules\/(?:yaml|parse5)\//u.test(filePath)) {
+      if (/\/node_modules\/yaml\//u.test(filePath)) {
         return false
       }
       return baseExcludes.some(exclude => exclude(filePath))
