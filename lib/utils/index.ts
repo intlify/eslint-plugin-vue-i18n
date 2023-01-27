@@ -30,6 +30,7 @@ interface LocaleFiles {
   files: string[]
   localeKey: LocaleKeyType
   localePattern?: string | RegExp
+  includeFilenameInKey?: boolean
 }
 const UNEXPECTED_ERROR_LOCATION = { line: 1, column: 0 }
 /**
@@ -129,7 +130,12 @@ function loadLocaleMessages(
 ): FileLocaleMessage[] {
   const results: FileLocaleMessage[] = []
   const checkDupeMap: { [file: string]: LocaleKeyType[] } = {}
-  for (const { files, localeKey, localePattern } of localeFilesList) {
+  for (const {
+    files,
+    localeKey,
+    localePattern,
+    includeFilenameInKey
+  } of localeFilesList) {
     for (const file of files) {
       const localeKeys = checkDupeMap[file] || (checkDupeMap[file] = [])
       if (localeKeys.includes(localeKey)) {
@@ -138,7 +144,12 @@ function loadLocaleMessages(
       localeKeys.push(localeKey)
       const fullpath = resolve(cwd, file)
       results.push(
-        new FileLocaleMessage({ fullpath, localeKey, localePattern })
+        new FileLocaleMessage({
+          fullpath,
+          localeKey,
+          localePattern,
+          includeFilenameInKey
+        })
       )
     }
   }
@@ -245,7 +256,8 @@ class LocaleDirLocaleMessagesCache {
       return {
         files: targetFilesLoader.get(localeDir.pattern, cwd),
         localeKey: String(localeDir.localeKey ?? 'file') as LocaleKeyType,
-        localePattern: localeDir.localePattern
+        localePattern: localeDir.localePattern,
+        includeFilenameInKey: localeDir.includeFilenameInKey
       }
     }
   }

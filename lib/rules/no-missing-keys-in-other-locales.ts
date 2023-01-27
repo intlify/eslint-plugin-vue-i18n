@@ -14,12 +14,14 @@ import type {
 import type { LocaleMessage, LocaleMessages } from '../utils/locale-messages'
 import { joinPath } from '../utils/key-path'
 import { createRule } from '../utils/rule'
+import { getBasename } from '../utils/path-utils'
 const debug = debugBuilder(
   'eslint-plugin-vue-i18n:no-missing-keys-in-other-locales'
 )
 
 function create(context: RuleContext): RuleListener {
   const filename = context.getFilename()
+  const basename = getBasename(filename)
   const ignoreLocales: string[] = context.options[0]?.ignoreLocales || []
 
   function reportMissing(
@@ -90,11 +92,20 @@ function create(context: RuleContext): RuleListener {
       return localeMessages.locales
         .filter(locale => !ignores.has(locale))
         .map(locale => {
+          const dictList = localeMessages.localeMessages
+            .filter(lm =>
+              lm.includeFilenameInKey ? lm.basename === basename : true
+            )
+            .map(lm => {
+              const messages = lm.getMessagesFromLocale(locale)
+              return lm.includeFilenameInKey
+                ? ((messages[basename] || {}) as I18nLocaleMessageDictionary)
+                : messages
+            })
+
           return {
             locale,
-            dictList: localeMessages.localeMessages.map(lm =>
-              lm.getMessagesFromLocale(locale)
-            )
+            dictList
           }
         })
     }
@@ -121,7 +132,7 @@ function create(context: RuleContext): RuleListener {
       keyStack = {
         locale,
         otherLocaleMessages: getOtherLocaleMessages(locale),
-        keyPath: []
+        keyPath: targetLocaleMessage.includeFilenameInKey ? [basename] : []
       }
     } else {
       keyStack = {

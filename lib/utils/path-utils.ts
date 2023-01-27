@@ -31,3 +31,11 @@ export function getRelativePath(filepath: string, baseDir: string): string {
   }
   return absolutePath.replace(/^\//, '')
 }
+
+export function getBasename(filepath: string): string {
+  return filepath
+    .replace(/^.*(\\|\/|:)/, '')
+    .split('.')
+    .slice(0, -1)
+    .join('.')
+}
