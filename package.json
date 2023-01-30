@@ -76,6 +76,9 @@
     "vue-github-button": "^1.2.0",
     "vuepress": "^1.8.2"
   },
+  "resolutions": {
+    "yaml-eslint-parser/**/yaml": "2.0.0"
+  },
   "engines": {
     "node": "^14.17.0 || >=16.0.0"
   },
