@@ -1,7 +1,7 @@
 {
   "name": "eslint-plugin-vue-i18n-ex",
   "description": "ESLint plugin for Vue I18n - fork from v2.0.0 of @intify/eslint-plugin-vue-i18n",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "author": {
     "name": "kazuya kawaguchi",
     "email": "kawakazu80@gmail.com"
@@ -83,7 +83,7 @@
     "dist",
     "files"
   ],
-  "homepage": "https://github.com/its-lee/eslint-plugin-vue-i18n#readme",
+  "homepage": "https://github.com/its-lee/eslint-plugin-vue-i18n-ex#readme",
   "keywords": [
     "eslint",
     "eslint-plugin",
@@ -102,7 +102,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/its-lee/eslint-plugin-vue-i18n.git"
+    "url": "git+https://github.com/its-lee/eslint-plugin-vue-i18n-ex.git"
   },
   "scripts": {
     "build": "tsc --project ./tsconfig.build.json",
