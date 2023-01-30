@@ -1,11 +1,11 @@
 module.exports = {
   root: true,
-  extends: ['plugin:@intlify/vue-i18n/base'],
+  extends: ['plugin:vue-i18n-ex/base'],
   parserOptions: {
     parser: '@typescript-eslint/parser'
   },
   rules: {
-    '@intlify/vue-i18n/no-unused-keys': ["error", {
+    'vue-i18n-ex/no-unused-keys': ["error", {
       "src": "./src",
       "extensions": [".tsx", ".ts", ".vue"],
       "enableFix": true,
@@ -22,11 +22,11 @@ module.exports = {
   overrides: [
     {
       files: ['*.json', '*.json5'],
-      extends: ['plugin:@intlify/vue-i18n/base'],
+      extends: ['plugin:vue-i18n-ex/base'],
     },
     {
       files: ['*.yaml', '*.yml'],
-      extends: ['plugin:@intlify/vue-i18n/base'],
+      extends: ['plugin:vue-i18n-ex/base'],
     }
   ]
 }

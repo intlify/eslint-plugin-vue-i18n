@@ -23,7 +23,7 @@ const rules: RuleInfo[] = readdirSync(resolve(__dirname, '../../lib/rules'))
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const meta = require(`../../lib/rules/${name}`).meta
     return {
-      id: `@intlify/vue-i18n/${name}`,
+      id: `vue-i18n-ex/${name}`,
       name,
       category: String(meta.docs.category),
       description: String(meta.docs.description),

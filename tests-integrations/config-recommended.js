@@ -6,7 +6,7 @@ const assert = require('assert')
 
 const TEST_CWD = path.join(__dirname, 'config-recommended')
 
-describe('Integration with "plugin:@intlify/vue-i18n/recommended"', () => {
+describe('Integration with "plugin:vue-i18n-ex/recommended"', () => {
   let originalCwd
 
   before(() => {
@@ -29,13 +29,10 @@ describe('Integration with "plugin:@intlify/vue-i18n/recommended"', () => {
     assert.strictEqual(enJson.messages.length, 1)
     assert.strictEqual(
       enJson.messages[0].ruleId,
-      '@intlify/vue-i18n/no-html-messages'
+      'vue-i18n-ex/no-html-messages'
     )
     const aVue = results.find(r => path.basename(r.filePath) === 'a.vue')
     assert.strictEqual(aVue.messages.length, 1)
-    assert.strictEqual(
-      aVue.messages[0].ruleId,
-      '@intlify/vue-i18n/no-missing-keys'
-    )
+    assert.strictEqual(aVue.messages[0].ruleId, 'vue-i18n-ex/no-missing-keys')
   })
 })

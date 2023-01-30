@@ -2,7 +2,7 @@
 
 module.exports = {
   root: true,
-  extends: ['plugin:vue/recommended', 'plugin:@intlify/vue-i18n/recommended'],
+  extends: ['plugin:vue/recommended', 'plugin:vue-i18n-ex/recommended'],
   rules: {
     'vue/multi-word-component-names': 'off'
   },

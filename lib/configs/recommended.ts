@@ -13,9 +13,9 @@ export = {
     es6: true
   },
   rules: {
-    '@intlify/vue-i18n/no-html-messages': 'warn',
-    '@intlify/vue-i18n/no-missing-keys': 'warn',
-    '@intlify/vue-i18n/no-raw-text': 'warn',
-    '@intlify/vue-i18n/no-v-html': 'warn'
+    'vue-i18n-ex/no-html-messages': 'warn',
+    'vue-i18n-ex/no-missing-keys': 'warn',
+    'vue-i18n-ex/no-raw-text': 'warn',
+    'vue-i18n-ex/no-v-html': 'warn'
   }
 }

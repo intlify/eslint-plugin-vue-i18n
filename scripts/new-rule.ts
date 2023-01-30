@@ -85,11 +85,11 @@ tester.run("${ruleId}", rule as never, {
   fs.writeFileSync(
     docFile,
     `---
-title: '@intlify/vue-i18n/${ruleId}'
+title: 'vue-i18n-ex/${ruleId}'
 description: description
 ---
 
-# @intlify/vue-i18n/${ruleId}
+# vue-i18n-ex/${ruleId}
 
 > description
 
@@ -103,7 +103,7 @@ This rule reports ???.
 
 \`\`\`vue
 <script>
-/* eslint @intlify/vue-i18n/${ruleId}: "error" */
+/* eslint vue-i18n-ex/${ruleId}: "error" */
 </script>
 
 <!-- ✓ GOOD -->
@@ -119,7 +119,7 @@ This rule reports ???.
 
 \`\`\`json
 {
-  "@intlify/vue-i18n/${ruleId}": ["error", {
+  "vue-i18n-ex/${ruleId}": ["error", {
 
   }]
 }
