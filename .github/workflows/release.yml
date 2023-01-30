@@ -21,6 +21,7 @@ jobs:
           else
             npm install
           fi
+      - run: node -v
       - run: npm run release:trigger
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
