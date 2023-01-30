@@ -1,5 +1,5 @@
 {
-  "name": "@its-lee/eslint-plugin-vue-i18n",
+  "name": "eslint-plugin-vue-i18n-with-file-keys",
   "description": "ESLint plugin for Vue I18n - fork from v2.0.0 of @intify/eslint-plugin-vue-i18n",
   "version": "2.0.1",
   "author": {
