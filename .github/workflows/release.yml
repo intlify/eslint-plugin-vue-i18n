@@ -8,7 +8,7 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    if: github.actor == 'its-lee2'
+    if: github.actor == 'its-lee'
     steps:
       - uses: actions/checkout@v1
       - uses: actions/setup-node@v1
