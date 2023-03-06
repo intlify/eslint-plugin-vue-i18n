@@ -181,4 +181,4 @@ See also: "[Use together with custom parsers](#use-together-with-custom-parsers)
 
 2. Make sure your tool is set to lint `.vue` and `.json` files.
 
-- CLI targets only `.js` files by default. You have to specify additional extensions by `--ext` option or glob patterns. E.g. `eslint "src/**/*.{js,vue,json}"` or `eslint src --ext .vue,.json`.o
+- CLI targets only `.js` files by default. You have to specify additional extensions by `--ext` option or glob patterns. E.g. `eslint "src/**/*.{js,vue,json}"` or `eslint src --ext .vue,.json`.
