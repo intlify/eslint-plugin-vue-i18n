@@ -29,7 +29,7 @@ locale messages:
 {
   "hello": "Hello! DIO!",
   "hi": "Hi! <span>DIO!</span>",
-  "contenst": {
+  "contents": {
     "banner": "banner: <iframe src=\"https://banner.domain.com\" frameBorder=\"0\" style=\"z-index:100001;position:fixed;bottom:0;right:0\"/>",
     "modal": "modal: <span onmouseover=\"alert(document.cookie);\">modal content</span>"
   }
