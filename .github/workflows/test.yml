@@ -18,6 +18,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
+      - name: Enable corepack
+        run: corepack enable
       - name: Install
         run: pnpm install
       - name: Lint
@@ -38,6 +40,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
+      - name: Enable corepack
+        run: corepack enable
       - name: Install
         run: pnpm install
       - name: Test
@@ -61,6 +65,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
+      - name: Enable corepack
+        run: corepack enable
       - name: Install
         run: pnpm add eslint@${{ matrix.eslint }}
       - name: Install ts-eslint v5
