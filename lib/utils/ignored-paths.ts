@@ -179,7 +179,7 @@ export class IgnoredPaths {
           ignorePath = options.ignorePath
         } catch (
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          e: any
+          e
         ) {
           e.message = `Cannot read ignore file: ${options.ignorePath}\nError: ${e.message}`
           throw e
@@ -214,7 +214,7 @@ export class IgnoredPaths {
               )
             } catch (
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              e: any
+              e
             ) {
               debug(
                 'Could not read package.json file to check eslintIgnore property'

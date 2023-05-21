@@ -8,7 +8,8 @@ export = createRule({
     docs: {
       description: 'require or disallow the locale attribute on `<i18n>` block',
       category: 'Stylistic Issues',
-      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/sfc-locale-attr.html',
+      url:
+        'https://eslint-plugin-vue-i18n.intlify.dev/rules/sfc-locale-attr.html',
       recommended: false
     },
     fixable: null,

@@ -247,7 +247,8 @@ export = createRule({
     docs: {
       description: 'enforce linked key to be enclosed in parentheses',
       category: 'Stylistic Issues',
-      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/prefer-linked-key-with-paren.html',
+      url:
+        'https://eslint-plugin-vue-i18n.intlify.dev/rules/prefer-linked-key-with-paren.html',
       recommended: false
     },
     fixable: 'code',

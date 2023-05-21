@@ -127,7 +127,8 @@ export = createRule({
     docs: {
       description: 'disallow localization dynamic keys at localization methods',
       category: 'Best Practices',
-      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-dynamic-keys.html',
+      url:
+        'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-dynamic-keys.html',
       recommended: false
     },
     fixable: null,

@@ -75,8 +75,9 @@ function create(context: RuleContext): RuleListener {
       parent: JSONAST.JSONNode
     ) {
       let message
-      let getReportOffset: ((error: CompileError) => number | null) | null =
-        null
+      let getReportOffset:
+        | ((error: CompileError) => number | null)
+        | null = null
       if (node) {
         if (
           node.type === 'JSONArrayExpression' ||
@@ -126,8 +127,9 @@ function create(context: RuleContext): RuleListener {
       parent: YAMLAST.YAMLNode
     ) {
       let message
-      let getReportOffset: ((error: CompileError) => number | null) | null =
-        null
+      let getReportOffset:
+        | ((error: CompileError) => number | null)
+        | null = null
       if (node) {
         const valueNode = node.type === 'YAMLWithMeta' ? node.value : node
         if (
@@ -203,7 +205,8 @@ export = createRule({
     docs: {
       description: 'disallow invalid message syntax',
       category: 'Recommended',
-      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/valid-message-syntax.html',
+      url:
+        'https://eslint-plugin-vue-i18n.intlify.dev/rules/valid-message-syntax.html',
       // TODO To avoid breaking changes, include it in the configuration at the time of version upgrade.
       recommended: false
     },

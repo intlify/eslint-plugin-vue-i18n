@@ -228,9 +228,9 @@ export function listFilesToProcess(
           pathDescriptor => pathDescriptor.behavior === SILENTLY_IGNORE
         )
       ) {
-        throw new (
-          pathsForCurrentGlob.length ? AllFilesIgnoredError : NoFilesFoundError
-        )(globPatterns[index])
+        throw new (pathsForCurrentGlob.length
+          ? AllFilesIgnoredError
+          : NoFilesFoundError)(globPatterns[index])
       }
 
       pathsForCurrentGlob.forEach(pathDescriptor => {
