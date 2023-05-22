@@ -178,7 +178,7 @@ export class IgnoredPaths {
           statSync(options.ignorePath)
           ignorePath = options.ignorePath
         } catch (
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any, prettier/prettier
           e: any
         ) {
           e.message = `Cannot read ignore file: ${options.ignorePath}\nError: ${e.message}`
@@ -213,7 +213,7 @@ export class IgnoredPaths {
                 readFileSync(packageJSONPath, 'utf8')
               )
             } catch (
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any, prettier/prettier
               e: any
             ) {
               debug(
