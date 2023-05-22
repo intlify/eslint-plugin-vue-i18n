@@ -66,6 +66,9 @@ devDependencies:
   '@types/js-yaml':
     specifier: ^4.0.0
     version: 4.0.0
+  '@types/json-schema':
+    specifier: ^7.0.11
+    version: 7.0.11
   '@types/json5':
     specifier: ^0.0.30
     version: 0.0.30
@@ -117,6 +120,9 @@ devDependencies:
   eslint4b:
     specifier: ^7.16.0
     version: 7.16.0
+  json-schema:
+    specifier: ^0.4.0
+    version: 0.4.0
   lerna-changelog:
     specifier: ^2.0.0
     version: 2.0.0
