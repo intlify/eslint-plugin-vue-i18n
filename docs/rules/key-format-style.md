@@ -50,7 +50,7 @@ Also, the following localization key definitions are reported as errors, because
     "camelCase" | "kebab-case" | "snake_case",
     {
       "allowArray": false,
-      "splitByDots": false,
+      "splitByDots": false
     }
   ]
 }
