@@ -17,8 +17,8 @@ dependencies:
     specifier: ^8.0.0
     version: 8.0.1
   ignore:
-    specifier: ^5.0.5
-    version: 5.0.5
+    specifier: ^5.2.4
+    version: 5.2.4
   is-language-code:
     specifier: ^3.1.0
     version: 3.1.0
@@ -60,6 +60,9 @@ devDependencies:
   '@types/eslint-visitor-keys':
     specifier: ^1.0.0
     version: 1.0.0
+  '@types/glob':
+    specifier: ^8.1.0
+    version: 8.1.0
   '@types/js-yaml':
     specifier: ^4.0.0
     version: 4.0.0
@@ -72,6 +75,9 @@ devDependencies:
   '@types/mocha':
     specifier: ^10.0.0
     version: 10.0.0
+  '@types/node':
+    specifier: ^20.2.3
+    version: 20.2.3
   '@types/parse5':
     specifier: ^6.0.0
     version: 6.0.0
@@ -1724,6 +1730,13 @@ packages:
 
   /@types/glob@7.2.0:
     resolution: {integrity: sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==}
+    dependencies:
+      '@types/minimatch': 5.1.2
+      '@types/node': 20.2.3
+    dev: true
+
+  /@types/glob@8.1.0:
+    resolution: {integrity: sha512-IO+MJPVhoqz+28h1qLAcBEH2+xHMK6MTyHJc7MTnnYb6wsoLR29POVGJ7LycmVXIqyy/4/2ShP5sUwTXuOwb/w==}
     dependencies:
       '@types/minimatch': 5.1.2
       '@types/node': 20.2.3
@@ -6499,15 +6512,9 @@ packages:
     resolution: {integrity: sha512-cyFDKrqc/YdcWFniJhzI42+AzS+gNwmUzOSFcRCQYwySuBBBy/KjuxWLZ/FHEH6Moq1NizMOBWyTcv8O4OZIMg==}
     engines: {node: '>= 4'}
 
-  /ignore@5.0.5:
-    resolution: {integrity: sha512-kOC8IUb8HSDMVcYrDVezCxpJkzSQWTAzf3olpKM6o9rM5zpojx23O0Fl8Wr4+qJ6ZbPEHqf1fdwev/DS7v7pmA==}
-    engines: {node: '>= 4'}
-    dev: false
-
   /ignore@5.2.4:
     resolution: {integrity: sha512-MAb38BcSbH0eHNBxn7ql2NH/kX33OkB3lZ1BNdh7ENeRChHTYsTvWrMubiIAMNS2llXEEgZ1MUOBtXChP3kaFQ==}
     engines: {node: '>= 4'}
-    dev: true
 
   /immediate@3.3.0:
     resolution: {integrity: sha512-HR7EVodfFUdQCTIeySw+WDRFJlPcLOJbXfwwZ7Oom6tjsvZ3bOkCDJHehQC3nxJrv7+f9XecwazynjU8e4Vw3Q==}
