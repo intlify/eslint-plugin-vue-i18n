@@ -18,7 +18,7 @@ const allowedCaseOptions = [
   'snake_case',
   'SCREAMING_SNAKE_CASE'
 ] as const
-type CaseOption = typeof allowedCaseOptions[number]
+type CaseOption = (typeof allowedCaseOptions)[number]
 
 function create(context: RuleContext): RuleListener {
   const filename = context.getFilename()
@@ -290,8 +290,7 @@ export = createRule({
     docs: {
       description: 'enforce specific casing for localization keys',
       category: 'Best Practices',
-      url:
-        'https://eslint-plugin-vue-i18n.intlify.dev/rules/key-format-style.html',
+      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/key-format-style.html',
       recommended: false
     },
     fixable: null,

@@ -77,9 +77,7 @@ const PARSERS = {
   '.yaml': require.resolve('yaml-eslint-parser'),
   '.yml': require.resolve('yaml-eslint-parser')
 }
-function* extractTargetFiles(
-  dir: string
-): IterableIterator<{
+function* extractTargetFiles(dir: string): IterableIterator<{
   filename: string
   relative: string
   parser: string | undefined

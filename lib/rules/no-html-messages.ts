@@ -123,8 +123,7 @@ export = createRule({
     docs: {
       description: 'disallow use HTML localization messages',
       category: 'Recommended',
-      url:
-        'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-html-messages.html',
+      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-html-messages.html',
       recommended: true
     },
     fixable: null,
