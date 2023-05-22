@@ -128,9 +128,7 @@ export interface SourceCode extends TokenStore {
   getText(node?: MaybeNode, beforeCount?: number, afterCount?: number): string
   getLines(): string[]
   getAllComments(): MaybeToken[]
-  getComments(
-    node: MaybeNode
-  ): {
+  getComments(node: MaybeNode): {
     leading: MaybeToken[]
     trailing: MaybeToken[]
   }

@@ -28,7 +28,8 @@ function create(context: RuleContext): RuleListener {
               if (langAttrs) {
                 return fixer.replaceTextRange(langAttrs.range, 'lang="json"')
               }
-              const tokenStore = context.parserServices.getTemplateBodyTokenStore()
+              const tokenStore =
+                context.parserServices.getTemplateBodyTokenStore()
               const closeToken = tokenStore.getLastToken(i18n.startTag)
               const beforeToken = tokenStore.getTokenBefore(closeToken)
               return fixer.insertTextBeforeRange(
@@ -50,8 +51,7 @@ export = createRule({
     docs: {
       description: 'require lang attribute on `<i18n>` block',
       category: 'Best Practices',
-      url:
-        'https://eslint-plugin-vue-i18n.intlify.dev/rules/prefer-sfc-lang-attr.html',
+      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/prefer-sfc-lang-attr.html',
       recommended: false
     },
     fixable: 'code',

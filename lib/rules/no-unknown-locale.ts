@@ -244,8 +244,7 @@ export = createRule({
     docs: {
       description: 'disallow unknown locale name',
       category: 'Best Practices',
-      url:
-        'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-unknown-locale.html',
+      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-unknown-locale.html',
       recommended: false
     },
     fixable: null,

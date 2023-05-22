@@ -89,8 +89,7 @@ export = createRule({
       description:
         'disallow using deprecated `<i18n>` components (in Vue I18n 9.0.0+)',
       category: 'Recommended',
-      url:
-        'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-deprecated-i18n-component.html',
+      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-deprecated-i18n-component.html',
       recommended: false
     },
     fixable: 'code',

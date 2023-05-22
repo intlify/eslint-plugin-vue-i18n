@@ -192,17 +192,13 @@ export default {
       )
     })
     // Load linter.
-    const [
-      { Linter },
-      vueESLintParser,
-      jsoncESLintParser,
-      yamlESLintParser
-    ] = await Promise.all([
-      import('eslint'),
-      import('espree').then(() => import('vue-eslint-parser')),
-      import('espree').then(() => import('jsonc-eslint-parser')),
-      import('yaml-eslint-parser')
-    ])
+    const [{ Linter }, vueESLintParser, jsoncESLintParser, yamlESLintParser] =
+      await Promise.all([
+        import('eslint'),
+        import('espree').then(() => import('vue-eslint-parser')),
+        import('espree').then(() => import('jsonc-eslint-parser')),
+        import('yaml-eslint-parser')
+      ])
 
     const linter = (this.linter = new Linter({ cwd: '/path' }))
 

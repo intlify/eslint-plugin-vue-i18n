@@ -333,8 +333,7 @@ export = createRule({
     docs: {
       description: 'disallow missing locale message keys in other locales',
       category: 'Best Practices',
-      url:
-        'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-missing-keys-in-other-locales.html',
+      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-missing-keys-in-other-locales.html',
       recommended: false
     },
     fixable: null,
