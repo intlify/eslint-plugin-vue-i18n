@@ -3,8 +3,8 @@
  * @author kazuya kawaguchi (a.k.a. kazupon)
  * Forked by https://github.com/mysticatea/eslint-plugin-eslint-comments/tree/master/scripts/lib/rules.js
  */
-import { readdirSync } from 'fs'
-import { resolve, basename } from 'path'
+
+import rulesImported from '../../lib/rules'
 
 export type RuleInfo = {
   id: string
@@ -17,22 +17,20 @@ export type RuleInfo = {
   replacedBy: string[] | null
 }
 
-const rules: RuleInfo[] = readdirSync(resolve(__dirname, '../../lib/rules'))
-  .map(fileName => basename(fileName, '.ts'))
-  .map(name => {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const meta = require(`../../lib/rules/${name}`).meta
-    return {
-      id: `@intlify/vue-i18n/${name}`,
-      name,
-      category: String(meta.docs.category),
-      description: String(meta.docs.description),
-      recommended: Boolean(meta.docs.recommended),
-      fixable: Boolean(meta.fixable),
-      deprecated: Boolean(meta.deprecated),
-      replacedBy: (meta.docs.replacedBy as string[]) || null
-    }
-  })
+const rules = Object.entries(rulesImported).map(rule => {
+  const name = rule[0]
+  const meta = rule[1].meta
+  return {
+    id: `@intlify/vue-i18n/${name}`,
+    name,
+    category: String(meta.docs.category),
+    description: String(meta.docs.description),
+    recommended: Boolean(meta.docs.recommended),
+    fixable: Boolean(meta.fixable),
+    deprecated: Boolean(meta.deprecated),
+    replacedBy: meta.docs.replacedBy
+  } as RuleInfo
+})
 
 export default rules
 export const withCategories = [

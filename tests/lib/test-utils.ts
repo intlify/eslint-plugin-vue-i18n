@@ -1,3 +1,4 @@
+import { createRequire } from 'node:module'
 import fs from 'fs'
 import path from 'path'
 import type { SettingsVueI18nLocaleDir } from '../../lib/types'
@@ -69,6 +70,7 @@ export function* getTestCasesFromFixtures(
   }
 }
 
+const require = createRequire(import.meta.url)
 const PARSERS = {
   '.js': undefined,
   '.vue': require.resolve('vue-eslint-parser'),

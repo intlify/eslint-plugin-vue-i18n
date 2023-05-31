@@ -10,14 +10,14 @@ import type {
   LocaleKeyType
 } from '../types'
 import { extname } from 'path'
-import fs from 'fs'
+import { readFileSync } from 'fs'
 import {
   parseYamlValuesInI18nBlock,
   parseJsonValuesInI18nBlock
 } from './parsers'
 import { ResourceLoader } from './resource-loader'
-import JSON5 from 'json5'
-import yaml from 'js-yaml'
+import { parse } from 'json5'
+import { load } from 'js-yaml'
 import { joinPath, parsePath } from './key-path'
 
 // see https://github.com/kazupon/vue-cli-plugin-i18n/blob/e9519235a454db52fdafcd0517ce6607821ef0b4/generator/templates/js/src/i18n.js#L10
@@ -222,9 +222,9 @@ export class FileLocaleMessage extends LocaleMessage {
         delete require.cache[key]
         return require(fileName)
       } else if (ext === '.yaml' || ext === '.yml') {
-        return yaml.load(fs.readFileSync(fileName, 'utf8'))
+        return load(readFileSync(fileName, 'utf8'))
       } else if (ext === '.json' || ext === '.json5') {
-        return JSON5.parse(fs.readFileSync(fileName, 'utf8'))
+        return parse(readFileSync(fileName, 'utf8'))
       }
     })
   }

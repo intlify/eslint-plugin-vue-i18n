@@ -4,7 +4,7 @@
  * @see https://github.com/eslint/eslint/blob/v5.2.0/lib/util/glob-util.js
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
-import lodash from 'lodash'
+import { uniqBy } from 'lodash'
 import { existsSync, statSync, realpathSync } from 'fs'
 import { resolve } from 'path'
 import { globSync } from 'glob'
@@ -270,7 +270,7 @@ export function listFilesToProcess(
     }[]
   )
 
-  const ret = lodash.uniqBy(
+  const ret = uniqBy(
     allPathDescriptors,
     pathDescriptor => pathDescriptor.filename
   )

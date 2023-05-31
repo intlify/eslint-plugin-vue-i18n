@@ -17,10 +17,14 @@
 </template>
 
 <script>
+import { createRequire } from 'node:module'
+
 import EslintEditor from 'vue-eslint-editor'
 import { rules } from '../../../'
 import { setTimeouts } from '../../../dist/utils/default-timeouts'
 import { setFileContents } from '../shim/fs/fake-fs'
+
+const require = createRequire(import.meta.url)
 
 setTimeouts({ CACHE_LOADER: -1, MTIME_MS_CHECK: -1 })
 export default {

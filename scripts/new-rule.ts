@@ -1,7 +1,9 @@
-import path from 'path'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import fs from 'fs'
 import cp from 'child_process'
 const logger = console
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 // main
 ;(ruleId => {
@@ -16,16 +18,16 @@ const logger = console
     return
   }
 
-  const ruleFile = path.resolve(__dirname, `../lib/rules/${ruleId}.ts`)
-  const testFile = path.resolve(__dirname, `../tests/lib/rules/${ruleId}.ts`)
-  const docFile = path.resolve(__dirname, `../docs/rules/${ruleId}.md`)
+  const ruleFile = resolve(__dirname, `../lib/rules/${ruleId}.ts`)
+  const testFile = resolve(__dirname, `../tests/lib/rules/${ruleId}.ts`)
+  const docFile = resolve(__dirname, `../docs/rules/${ruleId}.md`)
 
   fs.writeFileSync(
     ruleFile,
     `import type { RuleContext, RuleListener } from '../types'
 import { createRule } from '../utils/rule'
 
-export = createRule({
+export default createRule({
   meta: {
     type: '...',
     docs: {
@@ -46,7 +48,8 @@ export = createRule({
   fs.writeFileSync(
     testFile,
     `import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/${ruleId}')
+import rule from '../../../lib/rules/${ruleId}'
+
 const vueParser = require.resolve('vue-eslint-parser')
 
 const tester = new RuleTester({

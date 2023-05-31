@@ -1,14 +1,20 @@
 /**
  * @author Yosuke Ota
  */
-import { join } from 'path'
+import { createRequire } from 'node:module'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
 import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/key-format-style')
+
+import rule from '../../../lib/rules/key-format-style'
 import type { SettingsVueI18nLocaleDirObject } from '../../../lib/types'
 
+const require = createRequire(import.meta.url)
 const vueParser = require.resolve('vue-eslint-parser')
 const jsonParser = require.resolve('jsonc-eslint-parser')
 const yamlParser = require.resolve('yaml-eslint-parser')
+const __dirname = dirname(fileURLToPath(import.meta.url))
 const fileLocalesRoot = join(__dirname, '../../fixtures/key-format-style/file')
 const keyLocalesRoot = join(__dirname, '../../fixtures/key-format-style/key')
 

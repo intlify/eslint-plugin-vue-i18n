@@ -1,9 +1,13 @@
 /**
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
-import path from 'path'
+import { createRequire } from 'node:module'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/no-missing-keys')
+import rule from '../../../lib/rules/no-missing-keys'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const localeDirs = [
   './tests/fixtures/no-missing-keys/vue-cli-format/locales/*.{json,yaml,yml}',
@@ -44,6 +48,7 @@ function buildTestsForLocales<
   return [...result, ...otherTestcases]
 }
 
+const require = createRequire(import.meta.url)
 const tester = new RuleTester({
   parser: require.resolve('vue-eslint-parser'),
   parserOptions: { ecmaVersion: 2015, sourceType: 'module' }
@@ -122,7 +127,7 @@ tester.run('no-missing-keys', rule as never, {
       },
       {
         // sfc with src
-        filename: path.join(
+        filename: join(
           __dirname,
           '../../fixtures/no-missing-keys/sfc/src/Test.vue'
         ),
@@ -133,7 +138,7 @@ tester.run('no-missing-keys', rule as never, {
       },
       {
         // sfc with src and locale
-        filename: path.join(
+        filename: join(
           __dirname,
           '../../fixtures/no-missing-keys/sfc/src/Test.vue'
         ),
@@ -145,7 +150,7 @@ tester.run('no-missing-keys', rule as never, {
       },
       {
         // yaml
-        filename: path.join(
+        filename: join(
           __dirname,
           '../../fixtures/no-missing-keys/sfc/src/Test.vue'
         ),
@@ -325,7 +330,7 @@ tester.run('no-missing-keys', rule as never, {
       },
       {
         // sfc with src
-        filename: path.join(
+        filename: join(
           __dirname,
           '../../fixtures/no-missing-keys/sfc/src/Test.vue'
         ),
@@ -337,7 +342,7 @@ tester.run('no-missing-keys', rule as never, {
       },
       {
         // sfc with src and locale
-        filename: path.join(
+        filename: join(
           __dirname,
           '../../fixtures/no-missing-keys/sfc/src/Test.vue'
         ),
@@ -350,7 +355,7 @@ tester.run('no-missing-keys', rule as never, {
       },
       {
         // yaml
-        filename: path.join(
+        filename: join(
           __dirname,
           '../../fixtures/no-missing-keys/sfc/src/Test.vue'
         ),

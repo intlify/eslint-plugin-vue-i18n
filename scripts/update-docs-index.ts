@@ -5,11 +5,13 @@
  */
 import prettier from 'prettier'
 import { writeFileSync, readFileSync } from 'fs'
-import { resolve, join } from 'path'
+import { dirname, join, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import yaml from 'js-yaml'
 import type { RuleInfo } from './lib/rules'
 import { withCategories } from './lib/rules'
 
+const __dirname = dirname(fileURLToPath(import.meta.url))
 const prettierrc = yaml.load(
   readFileSync(join(__dirname, '../.prettierrc.yaml'), 'utf8')
 ) as prettier.Options
@@ -18,7 +20,7 @@ function toTableRow(rule: RuleInfo) {
   const mark = `${rule.recommended ? ':star:' : ''}${
     rule.fixable ? ':black_nib:' : ''
   }`
-  const link = `[@intlify/vue-i18n/<wbr>${rule.name}](./${rule.name}.html)`
+  const link = `[@intlify/vue-i18n/<wbr>${rule.name}](./rules/${rule.name}.html)`
   const description = rule.description || '(no description)'
   return `| ${link} | ${description} | ${mark} |`
 }
@@ -39,7 +41,7 @@ ${rules.map(toTableRow).join('\n')}
 `
 }
 
-const filePath = resolve(__dirname, '../docs/rules/README.md')
+const filePath = resolve(__dirname, '../docs/rules.md')
 const content = `# Available Rules
 
 - :star: mark: the rule which is enabled by \`plugin:@intlify/vue-i18n/recommended\` preset.

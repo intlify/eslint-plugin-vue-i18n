@@ -5,12 +5,14 @@
  */
 import prettier from 'prettier'
 import { writeFileSync, readFileSync } from 'fs'
-import { join } from 'path'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import yaml from 'js-yaml'
 import type { RuleInfo } from './lib/rules'
 import rules from './lib/rules'
 const PLACE_HOLDER = /#[^\n]*\n+> .+\n+(?:- .+\n)*\n*/u
 
+const __dirname = dirname(fileURLToPath(import.meta.url))
 const prettierrc = yaml.load(
   readFileSync(join(__dirname, '../.prettierrc.yaml'), 'utf8')
 ) as prettier.Options

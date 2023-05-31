@@ -1,6 +1,8 @@
 /** DON'T EDIT THIS FILE; was created by scripts. */
-export = {
-  extends: [require.resolve('./base')],
+import base from './base'
+
+export default {
+  extends: [base],
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module',

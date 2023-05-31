@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress'
 import { withCategories } from '../../scripts/lib/rules'
-// import '../../scripts/update-rule-docs'
-// import '../../scripts/update-docs-index'
+import '../../scripts/update-rule-docs'
+import '../../scripts/update-docs-index'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -50,8 +50,11 @@ export default defineConfig({
       },
       ...withCategories.map(({ category, rules }) => ({
         text: `Rules in ${category}`,
-        collapsable: false,
-        children: rules.map(rule => `/rules/${rule.name}`)
+        collapsed: false,
+        items: rules.map(rule => ({
+          text: rule.name,
+          link: `/rules/${rule.name}`
+        }))
       }))
     ],
     socialLinks: [

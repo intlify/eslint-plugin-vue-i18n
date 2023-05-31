@@ -1,5 +1,5 @@
 import type { RuleContext } from '../../types'
-import semver from 'semver'
+import { Range, intersects } from 'semver'
 import type { AST as JSONAST } from 'jsonc-eslint-parser'
 import type { AST as YAMLAST } from 'yaml-eslint-parser'
 
@@ -51,10 +51,10 @@ export function getMessageSyntaxVersions(
       }
     }
   }
-  const range = new semver.Range(messageSyntaxVersion)
+  const range = new Range(messageSyntaxVersion)
   return {
-    v8: semver.intersects(range, '^8.0.0 || <=8.0.0'),
-    v9: semver.intersects(range, '>=9.0.0-0'),
+    v8: intersects(range, '^8.0.0 || <=8.0.0'),
+    v9: intersects(range, '>=9.0.0-0'),
     isNotSet: false,
     reportIfMissingSetting: () => false
   }

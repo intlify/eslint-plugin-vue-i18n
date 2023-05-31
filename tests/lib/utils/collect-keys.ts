@@ -2,15 +2,17 @@
  * @author Yosuke Ota
  */
 import fs from 'fs'
-import path from 'path'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import assert from 'assert'
 import { usedKeysCache } from '../../../lib/utils/collect-keys'
 import { setTimeouts } from '../../../lib/utils/default-timeouts'
 import semver from 'semver'
+import eslintPackageJson from 'eslint/package.json' assert { type: 'json' }
 
 describe('usedKeysCache', () => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires -- ignore
-  if (!semver.satisfies(require('eslint/package.json').version, '>=6')) {
+  if (!semver.satisfies(eslintPackageJson.version, '>=6')) {
     return
   }
   before(() => {
@@ -27,7 +29,8 @@ describe('usedKeysCache', () => {
     })
   })
 
-  const filesDir = path.join(__dirname, '../../fixtures/utils/collect-keys/src')
+  const __dirname = dirname(fileURLToPath(import.meta.url))
+  const filesDir = join(__dirname, '../../fixtures/utils/collect-keys/src')
 
   function collectKeysFromFiles() {
     return usedKeysCache.collectKeysFromFiles(
@@ -37,11 +40,11 @@ describe('usedKeysCache', () => {
     )
   }
   it('should be refresh with change files.', async () => {
-    const vuePath = path.join(
+    const vuePath = join(
       __dirname,
       '../../fixtures/utils/collect-keys/src/App.vue'
     )
-    const jsPath = path.join(
+    const jsPath = join(
       __dirname,
       '../../fixtures/utils/collect-keys/src/main.js'
     )

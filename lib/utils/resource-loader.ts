@@ -3,7 +3,7 @@
  * @author Yosuke Ota
  */
 
-import fs from 'fs'
+import { statSync } from 'fs'
 import { CacheLoader } from './cache-loader'
 import { MTIME_MS_CHECK } from './default-timeouts'
 
@@ -30,7 +30,7 @@ export class ResourceLoader<R> {
     this._resource = null
     this._mtimeLoader = new CacheLoader(() => {
       try {
-        const stat = fs.statSync(this.filename)
+        const stat = statSync(this.filename)
         return stat.mtimeMs
       } catch (_e) {
         // ignore

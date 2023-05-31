@@ -1,13 +1,17 @@
 /**
  * @author Yosuke Ota
  */
-import { join } from 'path'
+import { createRequire } from 'node:module'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/prefer-linked-key-with-paren')
+import rule from '../../../lib/rules/prefer-linked-key-with-paren'
 
+const require = createRequire(import.meta.url)
 const vueParser = require.resolve('vue-eslint-parser')
 const jsonParser = require.resolve('jsonc-eslint-parser')
 const yamlParser = require.resolve('yaml-eslint-parser')
+const __dirname = dirname(fileURLToPath(import.meta.url))
 const FIXTURES_ROOT = join(
   __dirname,
   '../../fixtures/prefer-linked-key-with-paren'

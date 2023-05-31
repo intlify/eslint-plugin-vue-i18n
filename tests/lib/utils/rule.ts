@@ -1,5 +1,5 @@
 import assert from 'assert'
-import plugin = require('../../../lib/index')
+import plugin from '../../../lib/index'
 const { rules } = plugin
 
 describe('valid rule meta', () => {
