@@ -57,9 +57,6 @@ devDependencies:
   '@types/eslint-scope':
     specifier: ^3.7.4
     version: 3.7.4
-  '@types/eslint-visitor-keys':
-    specifier: ^3.3.0
-    version: 3.3.0
   '@types/glob':
     specifier: ^8.1.0
     version: 8.1.0
@@ -69,9 +66,6 @@ devDependencies:
   '@types/json-schema':
     specifier: ^7.0.12
     version: 7.0.12
-  '@types/json5':
-    specifier: ^2.2.0
-    version: 2.2.0
   '@types/lodash':
     specifier: ^4.14.195
     version: 4.14.195
@@ -81,9 +75,6 @@ devDependencies:
   '@types/node':
     specifier: ^20.2.5
     version: 20.2.5
-  '@types/parse5':
-    specifier: ^7.0.0
-    version: 7.0.0
   '@types/prettier':
     specifier: ^2.7.3
     version: 2.7.3
@@ -1112,13 +1103,6 @@ packages:
       '@types/estree': 1.0.1
     dev: true
 
-  /@types/eslint-visitor-keys@3.3.0:
-    resolution: {integrity: sha512-Occsmzv0PEJYna7gJdHg28/LNm/Ur+ivQRqvN12bfUiAuNKtUzMzGl/nzc59IJfjRbng4eul/0mEYyMDpaWKBw==}
-    deprecated: This is a stub types definition. eslint-visitor-keys provides its own type definitions, so you do not need this installed.
-    dependencies:
-      eslint-visitor-keys: 3.4.1
-    dev: true
-
   /@types/eslint@8.40.0:
     resolution: {integrity: sha512-nbq2mvc/tBrK9zQQuItvjJl++GTN5j06DaPtp3hZCpngmG6Q3xoyEmd0TwZI0gAy/G1X0zhGBbr2imsGFdFV0g==}
     dependencies:
@@ -1150,13 +1134,6 @@ packages:
 
   /@types/json-schema@7.0.12:
     resolution: {integrity: sha512-Hr5Jfhc9eYOQNPYO5WLDq/n4jqijdHNlDXjuAQkkt+mWdQR+XJToOHrsD4cPaMXpn6KO7y2+wM8AZEs8VpBLVA==}
-    dev: true
-
-  /@types/json5@2.2.0:
-    resolution: {integrity: sha512-NrVug5woqbvNZ0WX+Gv4R+L4TGddtmFek2u8RtccAgFZWtS9QXF2xCXY22/M4nzkaKF0q9Fc6M/5rxLDhfwc/A==}
-    deprecated: This is a stub types definition. json5 provides its own type definitions, so you do not need this installed.
-    dependencies:
-      json5: 2.2.3
     dev: true
 
   /@types/lodash@4.14.195:
@@ -1191,13 +1168,6 @@ packages:
 
   /@types/normalize-package-data@2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
-    dev: true
-
-  /@types/parse5@7.0.0:
-    resolution: {integrity: sha512-f2SeAxumolBmhuR62vNGTsSAvdz/Oj0k682xNrcKJ4dmRnTPODB74j6CPoNPzBPTHsu7Y7W7u93Mgp8Ovo8vWw==}
-    deprecated: This is a stub types definition. parse5 provides its own type definitions, so you do not need this installed.
-    dependencies:
-      parse5: 7.1.2
     dev: true
 
   /@types/prettier@2.7.3:
@@ -4243,6 +4213,7 @@ packages:
     resolution: {integrity: sha512-Czj1WaSVpaoj0wbhMzLmWD69anp2WH7FXMB9n1Sy8/ZFF9jolSQVMu1Ij5WIyGmcBmhk7EOndpO4mIpihVqAXw==}
     dependencies:
       entities: 4.5.0
+    dev: false
 
   /pascal-case@3.1.2:
     resolution: {integrity: sha512-uWlGT3YSnK9x3BQJaOdcZwrnV6hPpd8jFH1/ucpiLRPh/2zCVJKS19E4GvYHvaCcACn3foXZ0cLB9Wrx1KGe5g==}
