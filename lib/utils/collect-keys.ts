@@ -73,7 +73,9 @@ function getKeyFromI18nComponent(node: VAST.VAttribute) {
   }
 }
 
-function getParser(parser: string | undefined): {
+function getParser(
+  parser: string | undefined
+): {
   parseForESLint?: typeof parseForESLint
   parse: (code: string, options: unknown) => VAST.ESLintProgram
 } {

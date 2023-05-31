@@ -24,7 +24,7 @@ function create(context: RuleContext): RuleListener {
       },
 
       ["VElement:matches([name=i18n], [name=i18n-t]) > VStartTag > VAttribute[key.name='path']," +
-        "VElement[name=i18n-t] > VStartTag > VAttribute[key.name='keypath']"](
+      "VElement[name=i18n-t] > VStartTag > VAttribute[key.name='keypath']"](
         node: VAST.VAttribute
       ) {
         checkComponent(context, node)
@@ -138,7 +138,8 @@ export = createRule({
       description:
         'disallow missing locale message key at localization methods',
       category: 'Recommended',
-      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-missing-keys.html',
+      url:
+        'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-missing-keys.html',
       recommended: true
     },
     fixable: null,

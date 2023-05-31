@@ -33,8 +33,10 @@ module.exports = {
           esquery$: require.resolve('esquery/dist/esquery'),
           parse5$: require.resolve('parse5'),
           fs: require.resolve('./shim/fs'),
-          [path.resolve(__dirname, '../../dist/utils/glob-utils')]:
-            require.resolve('./shim/eslint-plugin-vue-i18n/utils/glob-utils')
+          [path.resolve(
+            __dirname,
+            '../../dist/utils/glob-utils'
+          )]: require.resolve('./shim/eslint-plugin-vue-i18n/utils/glob-utils')
         }
       }
     }

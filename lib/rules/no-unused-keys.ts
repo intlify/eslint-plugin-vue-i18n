@@ -566,7 +566,8 @@ export = createRule({
     docs: {
       description: 'disallow unused localization keys',
       category: 'Best Practices',
-      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-unused-keys.html',
+      url:
+        'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-unused-keys.html',
       recommended: false
     },
     fixable: 'code',
