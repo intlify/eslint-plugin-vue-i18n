@@ -72,7 +72,7 @@
     "nyc": "^15.1.0",
     "opener": "^1.5.2",
     "prettier": "^2.8.8",
-    "rimraf": "^4.4.1",
+    "rimraf": "^5.0.0",
     "shipjs": "^0.26.3",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4",
