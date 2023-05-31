@@ -28,7 +28,7 @@
     "@intlify/core-base": "^9.2.2",
     "@intlify/message-compiler": "^9.2.2",
     "debug": "^4.3.4",
-    "glob": "^8.1.0",
+    "glob": "^10.0.0",
     "ignore": "^5.2.4",
     "is-language-code": "^3.1.0",
     "js-yaml": "^4.1.0",
