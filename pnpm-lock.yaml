@@ -118,9 +118,6 @@ devDependencies:
   eslint-plugin-vue:
     specifier: ^9.13.0
     version: 9.13.0(eslint@8.41.0)
-  eslint-plugin-vue-libs:
-    specifier: ^4.0.0
-    version: 4.0.0(eslint@8.41.0)
   eslint4b:
     specifier: ^7.32.0
     version: 7.32.0
@@ -2770,14 +2767,6 @@ packages:
       negotiator: 0.6.3
     dev: true
 
-  /acorn-jsx@5.3.2(acorn@6.4.2):
-    resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
-    peerDependencies:
-      acorn: ^6.0.0 || ^7.0.0 || ^8.0.0
-    dependencies:
-      acorn: 6.4.2
-    dev: true
-
   /acorn-jsx@5.3.2(acorn@7.4.1):
     resolution: {integrity: sha512-rq9s+JNhf0IChjtDXxllJ7g41oZk5SlXtp0LHwyA5cejwn7vKmKp4pPri6YEePv2PU65sAsegbXtIinmDFDXgQ==}
     peerDependencies:
@@ -3178,24 +3167,6 @@ packages:
       follow-redirects: 1.15.2(debug@4.3.4)
     transitivePeerDependencies:
       - debug
-    dev: true
-
-  /babel-eslint@10.1.0(eslint@8.41.0):
-    resolution: {integrity: sha512-ifWaTHQ0ce+448CYop8AdrQiBsGrnC+bMgfyKFdi6EsPLTAWG+QfyDeM6OH+FmWnKvEq5NnBMLvlBUPKQZoDSg==}
-    engines: {node: '>=6'}
-    deprecated: babel-eslint is now @babel/eslint-parser. This package will no longer receive updates.
-    peerDependencies:
-      eslint: '>= 4.12.1'
-    dependencies:
-      '@babel/code-frame': 7.21.4
-      '@babel/parser': 7.21.8
-      '@babel/traverse': 7.21.5
-      '@babel/types': 7.21.5
-      eslint: 8.41.0
-      eslint-visitor-keys: 1.3.0
-      resolve: 1.22.2
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /babel-loader@8.3.0(@babel/core@7.21.8)(webpack@4.46.0):
@@ -5510,30 +5481,6 @@ packages:
       prettier-linter-helpers: 1.0.0
     dev: true
 
-  /eslint-plugin-vue-libs@4.0.0(eslint@8.41.0):
-    resolution: {integrity: sha512-fWpIju+HfRUsX5cvQNGWgLmcjlUKWvPZlBVKX0ha0D/vKD6s6DxA/XN4Gxu5WpN0f2JfJqMgJs8yt59lMEz3LA==}
-    peerDependencies:
-      eslint: ^5.11.1 || ^6.0.0
-    dependencies:
-      babel-eslint: 10.1.0(eslint@8.41.0)
-      eslint: 8.41.0
-      eslint-plugin-vue: 5.2.3(eslint@8.41.0)
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
-  /eslint-plugin-vue@5.2.3(eslint@8.41.0):
-    resolution: {integrity: sha512-mGwMqbbJf0+VvpGR5Lllq0PMxvTdrZ/ZPjmhkacrCHbubJeJOt+T6E3HUzAifa2Mxi7RSdJfC9HFpOeSYVMMIw==}
-    engines: {node: '>=6.5'}
-    peerDependencies:
-      eslint: ^5.0.0
-    dependencies:
-      eslint: 8.41.0
-      vue-eslint-parser: 5.0.0(eslint@8.41.0)
-    transitivePeerDependencies:
-      - supports-color
-    dev: true
-
   /eslint-plugin-vue@9.13.0(eslint@8.41.0):
     resolution: {integrity: sha512-aBz9A8WB4wmpnVv0pYUt86cmH9EkcwWzgEwecBxMoRNhQjTL5i4sqadnwShv/hOdr8Hbl8XANGV7dtX9UQIAyA==}
     engines: {node: ^14.17.0 || >=16.0.0}
@@ -5670,15 +5617,6 @@ packages:
   /esm@3.2.25:
     resolution: {integrity: sha512-U1suiZ2oDVWv4zPO56S0NcR5QriEahGtdN2OR6FiOG4WJvcjBVFB0qI4+eKoWFH483PKGuLuu6V8Z4T5g63UVA==}
     engines: {node: '>=6'}
-    dev: true
-
-  /espree@4.1.0:
-    resolution: {integrity: sha512-I5BycZW6FCVIub93TeVY1s7vjhP9CY6cXCznIRfiig7nRviKZYdRnj/sHEWC6A7WE9RDWOFq9+7OsWSYz8qv2w==}
-    engines: {node: '>=6.0.0'}
-    dependencies:
-      acorn: 6.4.2
-      acorn-jsx: 5.3.2(acorn@6.4.2)
-      eslint-visitor-keys: 1.3.0
     dev: true
 
   /espree@7.3.1:
@@ -11857,23 +11795,6 @@ packages:
   /vue-eslint-editor@1.1.0:
     resolution: {integrity: sha512-LAnb83COow880jrxkinvy6MTxS3Ozzb3BnkwN+UVz1OabDHhObfhU+LnXa/ZY1PnUht8rnAlxcR89V+utYKgGA==}
     engines: {node: '>=10.0.0'}
-    dev: true
-
-  /vue-eslint-parser@5.0.0(eslint@8.41.0):
-    resolution: {integrity: sha512-JlHVZwBBTNVvzmifwjpZYn0oPWH2SgWv5dojlZBsrhablDu95VFD+hriB1rQGwbD+bms6g+rAFhQHk6+NyiS6g==}
-    engines: {node: '>=6.5'}
-    peerDependencies:
-      eslint: ^5.0.0
-    dependencies:
-      debug: 4.3.4(supports-color@6.1.0)
-      eslint: 8.41.0
-      eslint-scope: 4.0.3
-      eslint-visitor-keys: 1.3.0
-      espree: 4.1.0
-      esquery: 1.5.0
-      lodash: 4.17.21
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /vue-eslint-parser@9.3.0(eslint@8.41.0):
