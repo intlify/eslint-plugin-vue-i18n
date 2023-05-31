@@ -12,7 +12,7 @@ describe('Integration with "plugin:@intlify/vue-i18n/recommended"', () => {
   before(() => {
     originalCwd = process.cwd()
     process.chdir(TEST_CWD)
-    cp.execSync('yarn', { stdio: 'inherit' })
+    cp.execSync('pnpm install', { stdio: 'inherit' })
   })
   after(() => {
     process.chdir(originalCwd)

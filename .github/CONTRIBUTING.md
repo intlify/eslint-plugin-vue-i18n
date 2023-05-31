@@ -30,7 +30,7 @@
 
 - It's OK to have multiple small commits as you work on the PR - we will let GitHub automatically squash it before merging.
 
-- Make sure `yarn test` passes. (see [development setup](#development-setup))
+- Make sure `pnpm test` passes. (see [development setup](#development-setup))
 
 - If adding new feature:
 
@@ -52,23 +52,23 @@
 
 ## Development Setup
 
-You will need [Node.js](http://nodejs.org) and [Yarn](https://yarnpkg.com/en/)
+You will need [Node.js](http://nodejs.org) and [pnpm](https://pnpm.io/)
 
 After cloning the repo, run:
 
-    $ yarn
+    $ pnpm install
 
-### Commonly used scirpt with Yarn
+### Commonly used scirpt with `pnpm`
 
     # lint source codes and docs
-    $ yarn lint
-    $ yarn lint:docs
+    $ pnpm lint
+    $ pnpm lint:docs
 
     # run the vuepress
-    $ yarn docs
+    $ pnpm docs
 
     # run the test suite
-    $ yarn test
+    $ pnpm test
 
 There are some other scripts available in the `scripts` section of the `package.json` file.
 
