@@ -1,4 +1,8 @@
-export = {
+import { createRequire } from 'node:module'
+
+const require = createRequire(import.meta.url)
+
+export default {
   parser: require.resolve('vue-eslint-parser'),
   plugins: ['@intlify/vue-i18n'],
   overrides: [

@@ -2,7 +2,9 @@
  * @author Yosuke Ota
  */
 import fs from 'fs'
-import path from 'path'
+import { createRequire } from 'node:module'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import assert from 'assert'
 import { getLocaleMessages } from '../../../lib/utils/index'
 import { setTimeouts } from '../../../lib/utils/default-timeouts'
@@ -10,6 +12,9 @@ import type {
   RuleContext,
   I18nLocaleMessageDictionary
 } from '../../../lib/types'
+
+const require = createRequire(import.meta.url)
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 describe('getLocaleMessages', () => {
   before(() => {
@@ -54,11 +59,11 @@ describe('getLocaleMessages', () => {
     return r
   }
   it('should be refresh with change files.', async () => {
-    const enJsonPath = path.join(
+    const enJsonPath = join(
       __dirname,
       '../../fixtures/utils/get-locale-messages/locales/en.json'
     )
-    const jaJsonPath = path.join(
+    const jaJsonPath = join(
       __dirname,
       '../../fixtures/utils/get-locale-messages/locales/ja.json'
     )

@@ -560,7 +560,7 @@ function create(context: RuleContext): RuleListener {
   }
 }
 
-export = createRule({
+export default createRule({
   meta: {
     type: 'suggestion',
     docs: {

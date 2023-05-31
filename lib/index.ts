@@ -5,7 +5,7 @@
 import configs from './configs'
 import rules from './rules'
 
-export = {
+export default {
   configs,
   rules
 }

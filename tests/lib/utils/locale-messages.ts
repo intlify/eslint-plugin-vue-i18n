@@ -1,14 +1,17 @@
 /**
  * @author Kazuya Kawaguchi
  */
-import path from 'path'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import assert from 'assert'
 import { FileLocaleMessage } from '../../../lib/utils/locale-messages'
+
+const __dirname = dirname(fileURLToPath(import.meta.url))
 
 describe('FileLocaleMessage', () => {
   describe('localeKey: "file"', () => {
     it('locales should be resolved', () => {
-      const testFilePath = path.resolve(
+      const testFilePath = resolve(
         __dirname,
         '../../fixtures/utils/locale-messages/locales/en.yaml'
       )
@@ -22,7 +25,7 @@ describe('FileLocaleMessage', () => {
 
   describe('localeKey: "path"', () => {
     it('locales should be resolved', () => {
-      const testFilePath = path.resolve(
+      const testFilePath = resolve(
         __dirname,
         '../../fixtures/utils/locale-messages/locales/en/message.json'
       )
@@ -37,7 +40,7 @@ describe('FileLocaleMessage', () => {
 
   describe('localeKey: "key"', () => {
     it('locales should be resolved', () => {
-      const testFilePath = path.resolve(
+      const testFilePath = resolve(
         __dirname,
         '../../fixtures/utils/locale-messages/locales/message.json5'
       )

@@ -111,6 +111,7 @@
     "url": "git+https://github.com/intlify/eslint-plugin-vue-i18n.git"
   },
   "packageManager": "pnpm@8.5.1",
+  "type": "module",
   "scripts": {
     "build": "tsc --project ./tsconfig.build.json",
     "clean": "rimraf .nyc_output coverage dist docs/.vuepress/dist",
@@ -127,7 +128,7 @@
     "test": "mocha --require ts-node/register \"./tests/**/*.ts\"",
     "test:debug": "mocha --require ts-node/register/transpile-only \"./tests/**/*.ts\"",
     "test:coverage": "nyc mocha --require ts-node/register \"./tests/**/*.ts\" --timeout 60000",
-    "test:integrations": "mocha ./tests-integrations/*.js --timeout 60000",
+    "test:integrations": "mocha ./tests-integrations/*.cjs --timeout 60000",
     "new": "ts-node ./scripts/new-rule.ts"
   }
 }

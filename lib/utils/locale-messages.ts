@@ -2,6 +2,7 @@
  * @fileoverview Classes that acquires and manages localization messages
  * @author Yosuke Ota
  */
+import { createRequire } from 'node:module'
 import type { AST as VAST } from 'vue-eslint-parser'
 import type {
   RuleContext,
@@ -30,6 +31,8 @@ const DEFAULT_LOCALE_CAPTURE_REGEX = new RegExp(
   `^.*\/(?<locale>${DEFAULT_LOCALE_PATTERN})\.(json5?|ya?ml)$`,
   'i'
 )
+
+const require = createRequire(import.meta.url)
 
 /**
  * The localization message class

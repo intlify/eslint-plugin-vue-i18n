@@ -327,7 +327,7 @@ function create(context: RuleContext): RuleListener {
   }
 }
 
-export = createRule({
+export default createRule({
   meta: {
     type: 'layout',
     docs: {

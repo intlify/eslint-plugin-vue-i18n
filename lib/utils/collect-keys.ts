@@ -2,6 +2,7 @@
  * @fileoverview Collect localization keys
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
+import { createRequire } from 'node:module'
 import type { Linter } from 'eslint'
 import { parseForESLint, AST as VAST } from 'vue-eslint-parser'
 import { readFileSync } from 'fs'
@@ -16,8 +17,10 @@ import type { RuleContext, VisitorKeys } from '../types'
 import { Legacy } from '@eslint/eslintrc'
 import { getCwd } from './get-cwd'
 import { isStaticLiteral, getStaticLiteralValue } from './index'
+import index from '../index'
 const debug = debugBuilder('eslint-plugin-vue-i18n:collect-keys')
 const { CascadingConfigArrayFactory } = Legacy
+const require = createRequire(import.meta.url)
 
 /**
  *
@@ -137,13 +140,13 @@ function collectKeyResourcesFromFiles(fileNames: string[], cwd: string) {
   debug('collectKeysFromFiles', fileNames)
 
   const configArrayFactory = new CascadingConfigArrayFactory({
-    additionalPluginPool: new Map([['@intlify/vue-i18n', require('../index')]]),
+    additionalPluginPool: new Map([['@intlify/vue-i18n', index]]),
     cwd,
-    getEslintRecommendedConfig() {
-      return require('../../files/empty.json')
+    async getEslintRecommendedConfig() {
+      return await import('../../files/empty.json')
     },
-    getEslintAllConfig() {
-      return require('../../files/empty.json')
+    async getEslintAllConfig() {
+      return await import('../../files/empty.json')
     },
     eslintRecommendedPath: require.resolve('../../files/empty.json'),
     eslintAllPath: require.resolve('../../files/empty.json')

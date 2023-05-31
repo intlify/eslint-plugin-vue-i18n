@@ -8,5 +8,6 @@
   "devDependencies": {
     "@intlify/eslint-plugin-vue-i18n": "file:../..",
     "eslint": "^8.0.0"
-  }
+  },
+  "type": "module"
 }

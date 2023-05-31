@@ -1,12 +1,16 @@
 /**
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
+import { createRequire } from 'node:module'
 import { RuleTester } from 'eslint'
-import { join } from 'path'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import fs from 'fs'
-import rule = require('../../../lib/rules/no-html-messages')
+import rule from '../../../lib/rules/no-html-messages'
 import { getTestCasesFromFixtures } from '../test-utils'
 
+const require = createRequire(import.meta.url)
+const __dirname = dirname(fileURLToPath(import.meta.url))
 const cwdRoot = join(__dirname, '../../fixtures/no-html-messages')
 
 new RuleTester({

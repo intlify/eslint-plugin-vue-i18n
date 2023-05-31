@@ -1,13 +1,18 @@
 /**
  * @author Yosuke Ota
  */
+import { createRequire } from 'node:module'
 import fs from 'fs'
-import path from 'path'
+import { dirname, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import assert from 'assert'
 import { ResourceLoader } from '../../../lib/utils/resource-loader'
 
+const require = createRequire(import.meta.url)
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
 describe('ResourceLoader', () => {
-  const testFilename = path.resolve(
+  const testFilename = resolve(
     __dirname,
     '../../fixtures/utils/resource-loader/test.json'
   )

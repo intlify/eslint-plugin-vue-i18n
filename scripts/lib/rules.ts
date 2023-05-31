@@ -4,7 +4,8 @@
  * Forked by https://github.com/mysticatea/eslint-plugin-eslint-comments/tree/master/scripts/lib/rules.js
  */
 import { readdirSync } from 'fs'
-import { resolve, basename } from 'path'
+import { dirname, resolve, basename } from 'node:path'
+import { fileURLToPath } from 'node:url'
 
 export type RuleInfo = {
   id: string
@@ -17,9 +18,11 @@ export type RuleInfo = {
   replacedBy: string[] | null
 }
 
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
 const rules: RuleInfo[] = readdirSync(resolve(__dirname, '../../lib/rules'))
   .map(fileName => basename(fileName, '.ts'))
-  .map(name => {
+  .map(async name => {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const meta = require(`../../lib/rules/${name}`).meta
     return {

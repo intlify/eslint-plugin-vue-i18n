@@ -1,5 +1,8 @@
+import { createRequire } from 'node:module'
 import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/sfc-locale-attr')
+import rule from '../../../lib/rules/sfc-locale-attr'
+
+const require = createRequire(import.meta.url)
 const vueParser = require.resolve('vue-eslint-parser')
 
 const tester = new RuleTester({

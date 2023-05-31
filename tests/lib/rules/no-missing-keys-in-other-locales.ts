@@ -1,33 +1,37 @@
 /**
  * @author Yosuke Ota
  */
-import path from 'path'
+import { createRequire } from 'node:module'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/no-missing-keys-in-other-locales')
+import rule from '../../../lib/rules/no-missing-keys-in-other-locales'
 
+const require = createRequire(import.meta.url)
 const vueParser = require.resolve('vue-eslint-parser')
 const jsonParser = require.resolve('jsonc-eslint-parser')
 const yamlParser = require.resolve('yaml-eslint-parser')
 
-const FIXTURES_ROOT = path.join(
+const __dirname = dirname(fileURLToPath(import.meta.url))
+const FIXTURES_ROOT = join(
   __dirname,
   '../../fixtures/no-missing-keys-in-other-locales'
 )
 
-const JSON_FILENAME_LOCALE_KEY_TYPE_FILE = path.join(
+const JSON_FILENAME_LOCALE_KEY_TYPE_FILE = join(
   FIXTURES_ROOT,
   'vue-cli-format/locales/test.json'
 )
-const YAML_FILENAME_LOCALE_KEY_TYPE_FILE = path.join(
+const YAML_FILENAME_LOCALE_KEY_TYPE_FILE = join(
   FIXTURES_ROOT,
   'vue-cli-format/locales/test.yaml'
 )
 
-const JSON_FILENAME_LOCALE_KEY_TYPE_KEY = path.join(
+const JSON_FILENAME_LOCALE_KEY_TYPE_KEY = join(
   FIXTURES_ROOT,
   'constructor-option-format/locales/test.json'
 )
-const YAML_FILENAME_LOCALE_KEY_TYPE_KEY = path.join(
+const YAML_FILENAME_LOCALE_KEY_TYPE_KEY = join(
   FIXTURES_ROOT,
   'constructor-option-format/locales/test.yaml'
 )
@@ -36,15 +40,14 @@ const SETTINGS = {
   FILE: {
     'vue-i18n': {
       localeDir:
-        path.join(FIXTURES_ROOT, 'vue-cli-format/locales') +
-        '/*.{json,yaml,yml}'
+        join(FIXTURES_ROOT, 'vue-cli-format/locales') + '/*.{json,yaml,yml}'
     }
   },
   KEY: {
     'vue-i18n': {
       localeDir: {
         pattern:
-          path.join(FIXTURES_ROOT, 'constructor-option-format/locales') +
+          join(FIXTURES_ROOT, 'constructor-option-format/locales') +
           '/*.{json,yaml,yml}',
         localeKey: 'key'
       }

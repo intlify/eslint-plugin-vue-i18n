@@ -5,11 +5,13 @@
  */
 import prettier from 'prettier'
 import { writeFileSync, readFileSync } from 'fs'
-import { resolve, join } from 'path'
+import { dirname, join, resolve } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import yaml from 'js-yaml'
 import type { RuleInfo } from './lib/rules'
 import { withCategories } from './lib/rules'
 
+const __dirname = dirname(fileURLToPath(import.meta.url))
 const prettierrc = yaml.load(
   readFileSync(join(__dirname, '../.prettierrc.yaml'), 'utf8')
 ) as prettier.Options

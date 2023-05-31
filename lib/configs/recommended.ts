@@ -1,5 +1,9 @@
 /** DON'T EDIT THIS FILE; was created by scripts. */
-export = {
+import { createRequire } from 'node:module'
+
+const require = createRequire(import.meta.url)
+
+export default {
   extends: [require.resolve('./base')],
   parserOptions: {
     ecmaVersion: 2018,
