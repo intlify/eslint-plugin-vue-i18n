@@ -61,7 +61,7 @@ describe('usedKeysCache', () => {
 
       fs.writeFileSync(jsPath, "const $t = () => {}\n$t('hello')\n", 'utf8')
       await new Promise(resolve => setTimeout(resolve, 20))
-      assert.deepStrictEqual(collectKeysFromFiles(), ['messages.link', 'hello'])
+      assert.deepStrictEqual(collectKeysFromFiles(), ['hello', 'messages.link'])
     } finally {
       fs.writeFileSync(vuePath, bkVue, 'utf8')
       try {

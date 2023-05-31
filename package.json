@@ -72,6 +72,7 @@
     "monaco-editor": "^0.38.0",
     "nyc": "^15.1.0",
     "opener": "^1.5.2",
+    "path-scurry": "1.9.2",
     "prettier": "^2.8.8",
     "rimraf": "^5.0.1",
     "shipjs": "^0.26.3",

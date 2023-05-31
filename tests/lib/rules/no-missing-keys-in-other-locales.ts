@@ -157,7 +157,7 @@ tester.run('no-missing-keys-in-other-locales', rule as never, {
       ...OPTIONS.JSON_LOCALE_KEY_TYPE_FILE,
       errors: [
         {
-          message: "'missing' does not exist in 'en' and 'ja' locale(s)",
+          message: "'missing' does not exist in 'ja' and 'en' locale(s)",
           line: 1,
           column: 2
         }
@@ -170,7 +170,7 @@ tester.run('no-missing-keys-in-other-locales', rule as never, {
       errors: [
         {
           message:
-            "'missing-nest.missing' does not exist in 'en' and 'ja' locale(s)",
+            "'missing-nest.missing' does not exist in 'ja' and 'en' locale(s)",
           line: 1,
           column: 19
         }
@@ -205,7 +205,7 @@ tester.run('no-missing-keys-in-other-locales', rule as never, {
       ...OPTIONS.YAML_LOCALE_KEY_TYPE_FILE,
       errors: [
         {
-          message: "'missing' does not exist in 'en' and 'ja' locale(s)",
+          message: "'missing' does not exist in 'ja' and 'en' locale(s)",
           line: 1,
           column: 1
         }
@@ -220,7 +220,7 @@ tester.run('no-missing-keys-in-other-locales', rule as never, {
       errors: [
         {
           message:
-            "'missing-nest.missing' does not exist in 'en' and 'ja' locale(s)",
+            "'missing-nest.missing' does not exist in 'ja' and 'en' locale(s)",
           line: 3,
           column: 9
         }

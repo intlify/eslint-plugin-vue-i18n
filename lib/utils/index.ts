@@ -3,7 +3,7 @@
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
 import type { AST as VAST } from 'vue-eslint-parser'
-import glob from 'glob'
+import { sync } from 'glob'
 import { resolve, dirname, extname } from 'path'
 import {
   FileLocaleMessage,
@@ -204,7 +204,7 @@ class LocaleDirLocaleMessagesCache {
   ) => FileLocaleMessage[]
   constructor() {
     this._targetFilesLoader = new CacheLoader((pattern, cwd) =>
-      glob.sync(pattern, { cwd })
+      sync(pattern, { cwd })
     )
 
     this._loadLocaleMessages = defineCacheFunction(

@@ -7,7 +7,7 @@
 import lodash from 'lodash'
 import { existsSync, statSync, realpathSync } from 'fs'
 import { resolve } from 'path'
-import GlobSync from './glob-sync'
+import { globSync } from 'glob'
 import { convertPathToPosix } from './path-utils'
 import { IgnoredPaths } from './ignored-paths'
 import debugBuilder from 'debug'
@@ -203,29 +203,33 @@ export function listFilesToProcess(
 
     const ignoredPaths = getIgnorePaths(newOptions)
     const shouldIgnore = ignoredPaths.getIgnoredFoldersGlobChecker()
-    const globOptions = { nodir: true, dot: true, cwd }
+    const globOptions = {
+      nodir: true,
+      dot: true,
+      cwd,
+      ignore: { ignored: shouldIgnore }
+    }
 
-    return new GlobSync(pattern, globOptions, shouldIgnore).found.map(
-      globMatch => {
-        const relativePath = resolve(cwd, globMatch)
-        return {
-          filename: relativePath,
-          behavior: testFileAgainstIgnorePatterns(
-            relativePath,
-            options,
-            false,
-            ignoredPaths
-          )
-        }
+    return globSync(pattern, globOptions).map(globMatch => {
+      if (typeof globMatch !== 'string') return
+      const relativePath = resolve(cwd, globMatch)
+      return {
+        filename: relativePath,
+        behavior: testFileAgainstIgnorePatterns(
+          relativePath,
+          options,
+          false,
+          ignoredPaths
+        )
       }
-    )
+    })
   })
 
   const allPathDescriptors = resolvedPathsByGlobPattern.reduce(
     (pathsForAllGlobs, pathsForCurrentGlob, index) => {
       if (
         pathsForCurrentGlob.every(
-          pathDescriptor => pathDescriptor.behavior === SILENTLY_IGNORE
+          pathDescriptor => pathDescriptor?.behavior === SILENTLY_IGNORE
         )
       ) {
         throw new (
@@ -234,7 +238,7 @@ export function listFilesToProcess(
       }
 
       pathsForCurrentGlob.forEach(pathDescriptor => {
-        switch (pathDescriptor.behavior) {
+        switch (pathDescriptor?.behavior) {
           case NORMAL_LINT:
             pathsForAllGlobs.push({
               filename: pathDescriptor.filename,
@@ -253,7 +257,7 @@ export function listFilesToProcess(
 
           default:
             throw new Error(
-              `Unexpected file behavior for ${pathDescriptor.filename}`
+              `Unexpected file behavior for ${pathDescriptor?.filename}`
             )
         }
       })
