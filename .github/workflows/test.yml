@@ -18,12 +18,14 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
+      - name: Enable corepack
+        run: corepack enable
       - name: Install
-        run: yarn install
+        run: pnpm install
       - name: Lint
-        run: yarn lint
+        run: pnpm lint
       - name: Lint docs
-        run: yarn lint:docs
+        run: pnpm lint:docs
   test:
     name: 'Test for ESLint 8 on Node.js ${{ matrix.node }} OS: ${{matrix.os}}'
     runs-on: ${{ matrix.os }}
@@ -38,14 +40,16 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
+      - name: Enable corepack
+        run: corepack enable
       - name: Install
-        run: yarn install
+        run: pnpm install
       - name: Test
-        run: yarn test
+        run: pnpm test
       - name: Integration Test
         run: |
-          yarn build
-          yarn test:integrations
+          pnpm build
+          pnpm test:integrations
   test-for-eslint:
     name: 'Test for ESLint ${{ matrix.eslint }} on ${{ matrix.node }} OS: ${{matrix.os}}'
     runs-on: ${{ matrix.os }}
@@ -61,10 +65,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
+      - name: Enable corepack
+        run: corepack enable
       - name: Install
-        run: yarn add eslint@${{ matrix.eslint }}
+        run: pnpm add eslint@${{ matrix.eslint }}
       - name: Install ts-eslint v5
-        run: yarn add @typescript-eslint/parser@4 @typescript-eslint/eslint-plugin@4
+        run: pnpm add @typescript-eslint/parser@4 @typescript-eslint/eslint-plugin@4
         if: matrix.eslint == 5
       - name: Test
-        run: yarn test
+        run: pnpm test

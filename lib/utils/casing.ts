@@ -136,7 +136,7 @@ export const allowedCaseOptions = [
  * Return case checker
  */
 export function getCasingChecker(
-  name: typeof allowedCaseOptions[number]
+  name: (typeof allowedCaseOptions)[number]
 ): (str: string) => boolean {
   return checkersMap[name] || isPascalCase
 }

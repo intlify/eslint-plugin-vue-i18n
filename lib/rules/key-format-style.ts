@@ -18,7 +18,7 @@ const allowedCaseOptions = [
   'snake_case',
   'SCREAMING_SNAKE_CASE'
 ] as const
-type CaseOption = typeof allowedCaseOptions[number]
+type CaseOption = (typeof allowedCaseOptions)[number]
 
 function create(context: RuleContext): RuleListener {
   const filename = context.getFilename()
