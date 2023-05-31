@@ -1,11 +1,9 @@
 /**
  * @author Yosuke Ota
  */
-import { createRequire } from 'node:module'
 import { RuleTester } from 'eslint'
 import rule from '../../../lib/rules/no-i18n-t-path-prop'
 
-const require = createRequire(import.meta.url)
 const tester = new RuleTester({
   parser: require.resolve('vue-eslint-parser'),
   parserOptions: { ecmaVersion: 2015 }

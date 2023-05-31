@@ -1,17 +1,13 @@
 /**
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
-import { createRequire } from 'node:module'
 import { RuleTester } from 'eslint'
-import { dirname, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { join } from 'node:path'
 import rule from '../../../lib/rules/no-unused-keys'
 import { getTestCasesFromFixtures } from '../test-utils'
-import semver from 'semver'
-import eslintPackageJson from 'eslint/package.json' assert { type: 'json' }
+import { satisfies } from 'semver'
+import { version } from 'eslint/package.json'
 
-const require = createRequire(import.meta.url)
-const __dirname = dirname(fileURLToPath(import.meta.url))
 const cwdRoot = join(__dirname, '../../fixtures/no-unused-keys')
 new RuleTester({
   parser: require.resolve('vue-eslint-parser'),
@@ -110,7 +106,7 @@ new RuleTester({
     </script>`
     },
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    ...(semver.satisfies(eslintPackageJson.version, '>=6')
+    ...(satisfies(version, '>=6')
       ? [
           ...getTestCasesFromFixtures({
             cwd: join(cwdRoot, './valid/vue-cli-format'),
@@ -1249,7 +1245,7 @@ ${' '.repeat(6)}
       }
     ),
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    ...(semver.satisfies(eslintPackageJson.version, '>=6')
+    ...(satisfies(version, '>=6')
       ? [
           ...getTestCasesFromFixtures(
             {

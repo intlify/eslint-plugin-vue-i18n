@@ -1,17 +1,13 @@
 /**
  * @author Yosuke Ota
  */
-import { createRequire } from 'node:module'
-import { dirname, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { join } from 'node:path'
 import { RuleTester } from 'eslint'
 import rule from '../../../lib/rules/valid-message-syntax'
 
-const require = createRequire(import.meta.url)
 const vueParser = require.resolve('vue-eslint-parser')
 const jsonParser = require.resolve('jsonc-eslint-parser')
 const yamlParser = require.resolve('yaml-eslint-parser')
-const __dirname = dirname(fileURLToPath(import.meta.url))
 const localesRoot = join(__dirname, '../../fixtures/valid-message-syntax')
 
 const options = {

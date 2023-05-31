@@ -1,6 +1,5 @@
-import { createRequire } from 'node:module'
-import fs from 'fs'
-import path from 'path'
+import { readFileSync, readdirSync, statSync } from 'fs'
+import { join, extname } from 'path'
 import type { SettingsVueI18nLocaleDir } from '../../lib/types'
 import type { RuleTester } from 'eslint'
 
@@ -42,7 +41,7 @@ export function* getTestCasesFromFixtures(
     testOptions.cwd
   )) {
     const data: RuleTester.ValidTestCase = {
-      code: fs.readFileSync(filename, 'utf8'),
+      code: readFileSync(filename, 'utf8'),
       filename,
       options: testOptions.options || [],
       parser,
@@ -70,7 +69,6 @@ export function* getTestCasesFromFixtures(
   }
 }
 
-const require = createRequire(import.meta.url)
 const PARSERS = {
   '.js': undefined,
   '.vue': require.resolve('vue-eslint-parser'),
@@ -84,12 +82,12 @@ function* extractTargetFiles(dir: string): IterableIterator<{
   relative: string
   parser: string | undefined
 }> {
-  for (const relative of fs.readdirSync(dir)) {
+  for (const relative of readdirSync(dir)) {
     if (relative === 'node_modules' || relative === '.eslintrc.js') {
       continue
     }
-    const filename = path.join(dir, relative)
-    const ext = path.extname(relative)
+    const filename = join(dir, relative)
+    const ext = extname(relative)
     if (
       ext === '.js' ||
       ext === '.vue' ||
@@ -101,11 +99,11 @@ function* extractTargetFiles(dir: string): IterableIterator<{
       yield { filename, relative, parser: PARSERS[ext] }
       continue
     }
-    if (fs.statSync(filename).isDirectory()) {
+    if (statSync(filename).isDirectory()) {
       for (const f of extractTargetFiles(filename)) {
         yield {
           filename: f.filename,
-          relative: path.join(relative, f.relative),
+          relative: join(relative, f.relative),
           parser: f.parser
         }
       }

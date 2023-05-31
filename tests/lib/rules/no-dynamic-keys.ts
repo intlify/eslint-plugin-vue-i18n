@@ -1,11 +1,9 @@
 /**
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
-import { createRequire } from 'node:module'
 import { RuleTester } from 'eslint'
 import rule from '../../../lib/rules/no-dynamic-keys'
 
-const require = createRequire(import.meta.url)
 const tester = new RuleTester({
   parser: require.resolve('vue-eslint-parser'),
   parserOptions: { ecmaVersion: 2015 }

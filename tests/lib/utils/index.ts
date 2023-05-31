@@ -1,20 +1,15 @@
 /**
  * @author Yosuke Ota
  */
-import fs from 'fs'
-import { createRequire } from 'node:module'
-import { dirname, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
-import assert from 'assert'
+import { writeFileSync, unlinkSync } from 'fs'
+import { join } from 'node:path'
+import { deepStrictEqual } from 'assert'
 import { getLocaleMessages } from '../../../lib/utils/index'
 import { setTimeouts } from '../../../lib/utils/default-timeouts'
 import type {
   RuleContext,
   I18nLocaleMessageDictionary
 } from '../../../lib/types'
-
-const require = createRequire(import.meta.url)
-const __dirname = dirname(fileURLToPath(import.meta.url))
 
 describe('getLocaleMessages', () => {
   before(() => {
@@ -70,27 +65,27 @@ describe('getLocaleMessages', () => {
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const enJson = require(enJsonPath)
     try {
-      assert.deepStrictEqual(getAllLocaleMessages(), {
+      deepStrictEqual(getAllLocaleMessages(), {
         'en.json': enJson
       })
       const newEnJson = { ...enJson, 'new-message': 'foo' }
-      fs.writeFileSync(enJsonPath, JSON.stringify(newEnJson, null, 2), 'utf8')
+      writeFileSync(enJsonPath, JSON.stringify(newEnJson, null, 2), 'utf8')
       await new Promise(resolve => setTimeout(resolve, 10))
-      assert.deepStrictEqual(getAllLocaleMessages(), {
+      deepStrictEqual(getAllLocaleMessages(), {
         'en.json': newEnJson
       })
 
       const newJaJson = { 'new-message': 'hoge' }
-      fs.writeFileSync(jaJsonPath, JSON.stringify(newJaJson, null, 2), 'utf8')
+      writeFileSync(jaJsonPath, JSON.stringify(newJaJson, null, 2), 'utf8')
       await new Promise(resolve => setTimeout(resolve, 20))
-      assert.deepStrictEqual(getAllLocaleMessages(), {
+      deepStrictEqual(getAllLocaleMessages(), {
         'en.json': newEnJson,
         'ja.json': newJaJson
       })
     } finally {
-      fs.writeFileSync(enJsonPath, JSON.stringify(enJson, null, 2), 'utf8')
+      writeFileSync(enJsonPath, JSON.stringify(enJson, null, 2), 'utf8')
       try {
-        fs.unlinkSync(jaJsonPath)
+        unlinkSync(jaJsonPath)
       } catch (_e) {
         // ignore
       }

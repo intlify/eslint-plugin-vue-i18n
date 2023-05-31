@@ -1,4 +1,4 @@
-export default {
+export = {
   parser: require.resolve('vue-eslint-parser'),
   plugins: ['@intlify/vue-i18n'],
   overrides: [

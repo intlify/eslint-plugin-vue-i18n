@@ -1,7 +1,7 @@
 /**
  * @author Yosuke Ota
  */
-import assert from 'assert'
+import { deepStrictEqual, strictEqual } from 'assert'
 import * as utils from '../../../../lib/utils/message-compiler/utils'
 import type { RuleContext } from '../../../../lib/types'
 import { getStaticYAMLValue, parseYAML } from 'yaml-eslint-parser'
@@ -18,32 +18,32 @@ describe('message-compiler utils', () => {
       return data
     }
     it('should be equal to the expected value', () => {
-      assert.deepStrictEqual(get('^8.0.0'), {
+      deepStrictEqual(get('^8.0.0'), {
         v8: true,
         v9: false,
         isNotSet: false
       })
-      assert.deepStrictEqual(get('^9.0.0'), {
+      deepStrictEqual(get('^9.0.0'), {
         v8: false,
         v9: true,
         isNotSet: false
       })
-      assert.deepStrictEqual(get('^7.0.0'), {
+      deepStrictEqual(get('^7.0.0'), {
         v8: true,
         v9: false,
         isNotSet: false
       })
-      assert.deepStrictEqual(get('^10.0.0'), {
+      deepStrictEqual(get('^10.0.0'), {
         v8: false,
         v9: true,
         isNotSet: false
       })
-      assert.deepStrictEqual(get('>=5.0.0'), {
+      deepStrictEqual(get('>=5.0.0'), {
         v8: true,
         v9: true,
         isNotSet: false
       })
-      assert.deepStrictEqual(get('^9.0.0-beta.8'), {
+      deepStrictEqual(get('^9.0.0-beta.8'), {
         v8: false,
         v9: true,
         isNotSet: false
@@ -67,37 +67,29 @@ describe('message-compiler utils', () => {
       }
       if (!invalid) {
         const val = getStaticJSONValue(parseJSON(`"${raw}"`)) as string
-        assert.strictEqual(result.length, val.length, JSON.stringify(val))
+        strictEqual(result.length, val.length, JSON.stringify(val))
       }
       return result
     }
     it('should be equal to the expected value', () => {
-      assert.strictEqual(utils.getJSONStringOffset(String.raw`a`, 0), 0)
-      assert.strictEqual(utils.getJSONStringOffset(String.raw`\n`, 0), 0)
-      assert.strictEqual(utils.getJSONStringOffset(String.raw`a`, 4), 1)
-      assert.strictEqual(utils.getJSONStringOffset(String.raw`\n`, 4), 2)
-      assert.deepStrictEqual(split`\n`, ['\\n'])
-      assert.deepStrictEqual(split`abc\\def`, [
-        'a',
-        'b',
-        'c',
-        '\\\\',
-        'd',
-        'e',
-        'f'
-      ])
-      assert.deepStrictEqual(split`a\xA9b`, ['a', '\\xA9', 'b'])
-      assert.deepStrictEqual(split`a\u00A9b`, ['a', '\\u00A9', 'b'])
-      assert.deepStrictEqual(split`a\u{A9}b`, ['a', '\\u{A9}', 'b'])
-      assert.deepStrictEqual(split`a\u{00A9}b`, ['a', '\\u{00A9}', 'b'])
-      assert.deepStrictEqual(split`a\u{2F804}b`, ['a', '\\u{2F804}', '', 'b'])
-      assert.deepStrictEqual(split`a\u{10000}b`, ['a', '\\u{10000}', '', 'b'])
-      assert.deepStrictEqual(split`a\u{ffff}b`, ['a', '\\u{ffff}', 'b'])
-      assert.deepStrictEqual(split`a\251b`, ['a', '\\251', 'b'])
-      assert.deepStrictEqual(split`a\0b`, ['a', '\\0', 'b'])
-      assert.deepStrictEqual(split`\7777`, ['\\77', '7', '7'])
-      assert.deepStrictEqual(split`\66A`, ['\\66', 'A'])
-      assert.deepStrictEqual(split`a\n\\\0\q\xA9\u00A9\u{2F804}\251`, [
+      strictEqual(utils.getJSONStringOffset(String.raw`a`, 0), 0)
+      strictEqual(utils.getJSONStringOffset(String.raw`\n`, 0), 0)
+      strictEqual(utils.getJSONStringOffset(String.raw`a`, 4), 1)
+      strictEqual(utils.getJSONStringOffset(String.raw`\n`, 4), 2)
+      deepStrictEqual(split`\n`, ['\\n'])
+      deepStrictEqual(split`abc\\def`, ['a', 'b', 'c', '\\\\', 'd', 'e', 'f'])
+      deepStrictEqual(split`a\xA9b`, ['a', '\\xA9', 'b'])
+      deepStrictEqual(split`a\u00A9b`, ['a', '\\u00A9', 'b'])
+      deepStrictEqual(split`a\u{A9}b`, ['a', '\\u{A9}', 'b'])
+      deepStrictEqual(split`a\u{00A9}b`, ['a', '\\u{00A9}', 'b'])
+      deepStrictEqual(split`a\u{2F804}b`, ['a', '\\u{2F804}', '', 'b'])
+      deepStrictEqual(split`a\u{10000}b`, ['a', '\\u{10000}', '', 'b'])
+      deepStrictEqual(split`a\u{ffff}b`, ['a', '\\u{ffff}', 'b'])
+      deepStrictEqual(split`a\251b`, ['a', '\\251', 'b'])
+      deepStrictEqual(split`a\0b`, ['a', '\\0', 'b'])
+      deepStrictEqual(split`\7777`, ['\\77', '7', '7'])
+      deepStrictEqual(split`\66A`, ['\\66', 'A'])
+      deepStrictEqual(split`a\n\\\0\q\xA9\u00A9\u{2F804}\251`, [
         'a',
         '\\n',
         '\\\\',
@@ -110,15 +102,15 @@ describe('message-compiler utils', () => {
         '\\251'
       ])
       // invalid strings
-      assert.deepStrictEqual(split('\\', true), ['\\'])
-      assert.deepStrictEqual(split('\\x', true), ['\\x'])
-      assert.deepStrictEqual(split('\\x1', true), ['\\x1'])
-      assert.deepStrictEqual(split('\\u', true), ['\\u'])
-      assert.deepStrictEqual(split('\\u0', true), ['\\u0'])
-      assert.deepStrictEqual(split('\\u00', true), ['\\u00'])
-      assert.deepStrictEqual(split('\\u000', true), ['\\u000'])
-      assert.deepStrictEqual(split('\\u{', true), ['\\u{'])
-      assert.deepStrictEqual(split('\\u{123', true), ['\\u{123'])
+      deepStrictEqual(split('\\', true), ['\\'])
+      deepStrictEqual(split('\\x', true), ['\\x'])
+      deepStrictEqual(split('\\x1', true), ['\\x1'])
+      deepStrictEqual(split('\\u', true), ['\\u'])
+      deepStrictEqual(split('\\u0', true), ['\\u0'])
+      deepStrictEqual(split('\\u00', true), ['\\u00'])
+      deepStrictEqual(split('\\u000', true), ['\\u000'])
+      deepStrictEqual(split('\\u{', true), ['\\u{'])
+      deepStrictEqual(split('\\u{123', true), ['\\u{123'])
     })
   })
 
@@ -137,19 +129,19 @@ describe('message-compiler utils', () => {
       }
       if (!invalid) {
         const val = getStaticYAMLValue(parseYAML(`'${code}'`)) as string
-        assert.strictEqual(result.length, val.length, JSON.stringify(val))
+        strictEqual(result.length, val.length, JSON.stringify(val))
       }
       return result
     }
     it('should be equal to the expected value', () => {
-      assert.strictEqual(utils.getYAMLSingleQuotedStringOffset(`a`, 0), 0)
-      assert.strictEqual(utils.getYAMLSingleQuotedStringOffset(`''`, 0), 0)
-      assert.strictEqual(utils.getYAMLSingleQuotedStringOffset(`a`, 4), 1)
-      assert.strictEqual(utils.getYAMLSingleQuotedStringOffset(`''`, 4), 2)
-      assert.deepStrictEqual(split('abc'), ['a', 'b', 'c'])
-      assert.deepStrictEqual(split("''"), ["''"])
-      assert.deepStrictEqual(split("it''s"), ['i', 't', "''", 's'])
-      assert.deepStrictEqual(split(' 1st a\n\n 2nd b \n\t3rd c '), [
+      strictEqual(utils.getYAMLSingleQuotedStringOffset(`a`, 0), 0)
+      strictEqual(utils.getYAMLSingleQuotedStringOffset(`''`, 0), 0)
+      strictEqual(utils.getYAMLSingleQuotedStringOffset(`a`, 4), 1)
+      strictEqual(utils.getYAMLSingleQuotedStringOffset(`''`, 4), 2)
+      deepStrictEqual(split('abc'), ['a', 'b', 'c'])
+      deepStrictEqual(split("''"), ["''"])
+      deepStrictEqual(split("it''s"), ['i', 't', "''", 's'])
+      deepStrictEqual(split(' 1st a\n\n 2nd b \n\t3rd c '), [
         ' ',
         '1',
         's',
@@ -170,7 +162,7 @@ describe('message-compiler utils', () => {
         'c',
         ' '
       ])
-      assert.deepStrictEqual(split('  a  b  '), [
+      deepStrictEqual(split('  a  b  '), [
         ' ',
         ' ',
         'a',
@@ -180,12 +172,12 @@ describe('message-compiler utils', () => {
         ' ',
         ' '
       ])
-      assert.deepStrictEqual(split('b\n  '), ['b', '\n  '])
-      assert.deepStrictEqual(split('b\n\n  '), ['b', '\n\n  '])
-      assert.deepStrictEqual(split('b\n\n\n  '), ['b', '\n\n', '\n  '])
+      deepStrictEqual(split('b\n  '), ['b', '\n  '])
+      deepStrictEqual(split('b\n\n  '), ['b', '\n\n  '])
+      deepStrictEqual(split('b\n\n\n  '), ['b', '\n\n', '\n  '])
 
       // invalid strings
-      assert.deepStrictEqual(split("a'", true), ['a', "'"])
+      deepStrictEqual(split("a'", true), ['a', "'"])
     })
   })
 
@@ -204,28 +196,21 @@ describe('message-compiler utils', () => {
       }
       if (!invalid) {
         const val = getStaticYAMLValue(parseYAML(`"${code}"`)) as string
-        assert.strictEqual(result.length, val.length, JSON.stringify(val))
+        strictEqual(result.length, val.length, JSON.stringify(val))
       }
       return result
     }
     it('should be equal to the expected value', () => {
-      assert.strictEqual(utils.getYAMLDoubleQuotedStringOffset(`a`, 0), 0)
-      assert.strictEqual(utils.getYAMLDoubleQuotedStringOffset(`\\n`, 0), 0)
-      assert.strictEqual(utils.getYAMLDoubleQuotedStringOffset(`a`, 4), 1)
-      assert.strictEqual(utils.getYAMLDoubleQuotedStringOffset(`\\n`, 4), 2)
-      assert.deepStrictEqual(split('abc'), ['a', 'b', 'c'])
-      assert.deepStrictEqual(split('\\t'), ['\\t'])
-      assert.deepStrictEqual(split('a\\tb  c'), [
-        'a',
-        '\\t',
-        'b',
-        ' ',
-        ' ',
-        'c'
-      ])
-      assert.deepStrictEqual(split('a\\\nb'), ['a', '\\\nb'])
-      assert.deepStrictEqual(split('a\\\n     b'), ['a', '\\\n     b'])
-      assert.deepStrictEqual(split('f \nt\t\n \ne \t\\\n \\ \te'), [
+      strictEqual(utils.getYAMLDoubleQuotedStringOffset(`a`, 0), 0)
+      strictEqual(utils.getYAMLDoubleQuotedStringOffset(`\\n`, 0), 0)
+      strictEqual(utils.getYAMLDoubleQuotedStringOffset(`a`, 4), 1)
+      strictEqual(utils.getYAMLDoubleQuotedStringOffset(`\\n`, 4), 2)
+      deepStrictEqual(split('abc'), ['a', 'b', 'c'])
+      deepStrictEqual(split('\\t'), ['\\t'])
+      deepStrictEqual(split('a\\tb  c'), ['a', '\\t', 'b', ' ', ' ', 'c'])
+      deepStrictEqual(split('a\\\nb'), ['a', '\\\nb'])
+      deepStrictEqual(split('a\\\n     b'), ['a', '\\\n     b'])
+      deepStrictEqual(split('f \nt\t\n \ne \t\\\n \\ \te'), [
         'f',
         ' \n',
         't',
@@ -237,7 +222,7 @@ describe('message-compiler utils', () => {
         '\t',
         'e'
       ])
-      assert.deepStrictEqual(split('  a  b  '), [
+      deepStrictEqual(split('  a  b  '), [
         ' ',
         ' ',
         'a',
@@ -247,14 +232,14 @@ describe('message-compiler utils', () => {
         ' ',
         ' '
       ])
-      assert.deepStrictEqual(split('b\n  '), ['b', '\n  '])
-      assert.deepStrictEqual(split('b\n\n  '), ['b', '\n\n  '])
-      assert.deepStrictEqual(split('b\n\n\n  '), ['b', '\n\n', '\n  '])
-      assert.deepStrictEqual(split('\\U000000A9'), ['\\U000000A9'])
-      assert.deepStrictEqual(split('\\U0000FFFF'), ['\\U0000FFFF'])
-      assert.deepStrictEqual(split('\\U000100000'), ['\\U00010000', '', '0'])
-      assert.deepStrictEqual(split('\\U00010000Z'), ['\\U00010000', '', 'Z'])
-      assert.deepStrictEqual(split('a\\xA9\\u00A9\\U0002F804Z'), [
+      deepStrictEqual(split('b\n  '), ['b', '\n  '])
+      deepStrictEqual(split('b\n\n  '), ['b', '\n\n  '])
+      deepStrictEqual(split('b\n\n\n  '), ['b', '\n\n', '\n  '])
+      deepStrictEqual(split('\\U000000A9'), ['\\U000000A9'])
+      deepStrictEqual(split('\\U0000FFFF'), ['\\U0000FFFF'])
+      deepStrictEqual(split('\\U000100000'), ['\\U00010000', '', '0'])
+      deepStrictEqual(split('\\U00010000Z'), ['\\U00010000', '', 'Z'])
+      deepStrictEqual(split('a\\xA9\\u00A9\\U0002F804Z'), [
         'a',
         '\\xA9',
         '\\u00A9',
@@ -262,7 +247,7 @@ describe('message-compiler utils', () => {
         '',
         'Z'
       ])
-      assert.deepStrictEqual(split('a\\xA90\\u00A90\\U0002F8040'), [
+      deepStrictEqual(split('a\\xA90\\u00A90\\U0002F8040'), [
         'a',
         '\\xA9',
         '0',
@@ -274,7 +259,7 @@ describe('message-compiler utils', () => {
       ])
 
       // invalid strings
-      assert.deepStrictEqual(split('a\\', true), ['a', '\\'])
+      deepStrictEqual(split('a\\', true), ['a', '\\'])
     })
   })
 
@@ -293,25 +278,20 @@ describe('message-compiler utils', () => {
       }
       if (!invalid) {
         const val = getStaticYAMLValue(parseYAML(`${code}`)) as string
-        assert.strictEqual(result.length, val.length, JSON.stringify(val))
+        strictEqual(result.length, val.length, JSON.stringify(val))
       }
       return result
     }
     it('should be equal to the expected value', () => {
-      assert.strictEqual(utils.getYAMLPlainStringOffset(`a`, 0), 0)
-      assert.strictEqual(utils.getYAMLPlainStringOffset(`a`, 4), 1)
-      assert.deepStrictEqual(split('abc'), ['a', 'b', 'c'])
-      assert.deepStrictEqual(split('\\t'), ['\\', 't'])
-      assert.deepStrictEqual(split('a b  c'), ['a', ' ', 'b', ' ', ' ', 'c'])
-      assert.deepStrictEqual(split('a\\\nb'), ['a', '\\', '\n', 'b'])
-      assert.deepStrictEqual(split('a\\\n     b'), ['a', '\\', '\n     ', 'b'])
-      assert.deepStrictEqual(split('a\n  \n  \n   b'), [
-        'a',
-        '\n  \n  ',
-        '\n   ',
-        'b'
-      ])
-      assert.deepStrictEqual(split('f \nt\t\n \ne \t\\\n \\ \te'), [
+      strictEqual(utils.getYAMLPlainStringOffset(`a`, 0), 0)
+      strictEqual(utils.getYAMLPlainStringOffset(`a`, 4), 1)
+      deepStrictEqual(split('abc'), ['a', 'b', 'c'])
+      deepStrictEqual(split('\\t'), ['\\', 't'])
+      deepStrictEqual(split('a b  c'), ['a', ' ', 'b', ' ', ' ', 'c'])
+      deepStrictEqual(split('a\\\nb'), ['a', '\\', '\n', 'b'])
+      deepStrictEqual(split('a\\\n     b'), ['a', '\\', '\n     ', 'b'])
+      deepStrictEqual(split('a\n  \n  \n   b'), ['a', '\n  \n  ', '\n   ', 'b'])
+      deepStrictEqual(split('f \nt\t\n \ne \t\\\n \\ \te'), [
         'f',
         ' \n',
         't',
@@ -326,12 +306,12 @@ describe('message-compiler utils', () => {
         '\t',
         'e'
       ])
-      assert.deepStrictEqual(split('a  b'), ['a', ' ', ' ', 'b'])
+      deepStrictEqual(split('a  b'), ['a', ' ', ' ', 'b'])
 
       // invalid strings
-      assert.deepStrictEqual(split('a\\', true), ['a', '\\'])
-      assert.deepStrictEqual(split(' a b ', true), [' ', 'a', ' ', 'b', ' '])
-      assert.deepStrictEqual(split(' a b\n\n\n ', true), [
+      deepStrictEqual(split('a\\', true), ['a', '\\'])
+      deepStrictEqual(split(' a b ', true), [' ', 'a', ' ', 'b', ' '])
+      deepStrictEqual(split(' a b\n\n\n ', true), [
         ' ',
         'a',
         ' ',

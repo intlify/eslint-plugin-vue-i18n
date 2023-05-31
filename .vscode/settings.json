@@ -2,8 +2,8 @@
   "eslint.validate": ["javascript", "typescript", "vue", "markdown"],
   "eslint.alwaysShowStatus": true,
   "eslint.packageManager": "pnpm",
-  // "eslint.run": "onSave",
+  "eslint.run": "onSave",
   "npm.packageManager": "pnpm",
-  // "editor.formatOnSave": true,
+  "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

@@ -801,7 +801,7 @@ function create(context: RuleContext): RuleListener {
   })
 }
 
-export default createRule({
+export = createRule({
   meta: {
     type: 'suggestion',
     docs: {

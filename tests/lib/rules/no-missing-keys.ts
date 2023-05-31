@@ -1,13 +1,9 @@
 /**
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
-import { createRequire } from 'node:module'
-import { dirname, join } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { join } from 'node:path'
 import { RuleTester } from 'eslint'
 import rule from '../../../lib/rules/no-missing-keys'
-
-const __dirname = dirname(fileURLToPath(import.meta.url))
 
 const localeDirs = [
   './tests/fixtures/no-missing-keys/vue-cli-format/locales/*.{json,yaml,yml}',
@@ -48,7 +44,6 @@ function buildTestsForLocales<
   return [...result, ...otherTestcases]
 }
 
-const require = createRequire(import.meta.url)
 const tester = new RuleTester({
   parser: require.resolve('vue-eslint-parser'),
   parserOptions: { ecmaVersion: 2015, sourceType: 'module' }

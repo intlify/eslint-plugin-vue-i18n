@@ -121,8 +121,11 @@ devDependencies:
     specifier: ^7.32.0
     version: 7.32.0
   esquery:
-    specifier: 1.5.0
+    specifier: ^1.5.0
     version: 1.5.0
+  import-fresh:
+    specifier: ^3.3.0
+    version: 3.3.0
   json-schema:
     specifier: ^0.4.0
     version: 0.4.0
@@ -142,7 +145,7 @@ devDependencies:
     specifier: ^1.5.2
     version: 1.5.2
   path-scurry:
-    specifier: 1.9.2
+    specifier: ^1.9.2
     version: 1.9.2
   prettier:
     specifier: ^2.8.8

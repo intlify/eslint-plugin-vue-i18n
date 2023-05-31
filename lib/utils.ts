@@ -17,7 +17,7 @@ import * as regexp from './utils/regexp'
 import * as resourceLoader from './utils/resource-loader'
 import * as rule from './utils/rule'
 
-export default {
+export = {
   'cache-function': cacheFunction,
   'cache-loader': cacheLoader,
   casing,

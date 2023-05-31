@@ -16,7 +16,7 @@ import type { RuleContext, VisitorKeys } from '../types'
 import { Legacy } from '@eslint/eslintrc'
 import { getCwd } from './get-cwd'
 import { isStaticLiteral, getStaticLiteralValue } from './index'
-import index from '../index'
+import importFresh from 'import-fresh'
 const debug = debugBuilder('eslint-plugin-vue-i18n:collect-keys')
 const { CascadingConfigArrayFactory } = Legacy
 
@@ -138,7 +138,9 @@ function collectKeyResourcesFromFiles(fileNames: string[], cwd: string) {
   debug('collectKeysFromFiles', fileNames)
 
   const configArrayFactory = new CascadingConfigArrayFactory({
-    additionalPluginPool: new Map([['@intlify/vue-i18n', index]]),
+    additionalPluginPool: new Map([
+      ['@intlify/vue-i18n', importFresh('../index')]
+    ]),
     cwd,
     async getEslintRecommendedConfig() {
       return await import('../../files/empty.json')

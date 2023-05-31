@@ -1,7 +1,7 @@
 /**
  * @author Yosuke Ota
  */
-import assert from 'assert'
+import { strictEqual } from 'assert'
 import { defineCacheFunction } from '../../../lib/utils/cache-function'
 
 describe('defineCacheFunction', () => {
@@ -12,7 +12,7 @@ describe('defineCacheFunction', () => {
       return res
     })
     const before = fn(1)
-    assert.strictEqual(fn(1), before)
-    assert.strictEqual(fn(2), before + 1)
+    strictEqual(fn(1), before)
+    strictEqual(fn(2), before + 1)
   })
 })

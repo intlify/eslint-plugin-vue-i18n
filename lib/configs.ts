@@ -2,7 +2,7 @@
 import base from './configs/base'
 import recommended from './configs/recommended'
 
-export default {
+export = {
   base,
   recommended
 }

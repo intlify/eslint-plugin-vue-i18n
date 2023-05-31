@@ -2,7 +2,7 @@ import type { RuleContext, RuleListener } from '../types'
 import { isI18nBlock, getAttribute } from '../utils/index'
 import { createRule } from '../utils/rule'
 
-export default createRule({
+export = createRule({
   meta: {
     type: 'suggestion',
     docs: {

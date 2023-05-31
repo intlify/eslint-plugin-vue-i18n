@@ -1,12 +1,9 @@
 /**
  * @author Kazuya Kawaguchi
  */
-import { dirname, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
-import assert from 'assert'
+import { resolve } from 'node:path'
+import { deepStrictEqual } from 'assert'
 import { FileLocaleMessage } from '../../../lib/utils/locale-messages'
-
-const __dirname = dirname(fileURLToPath(import.meta.url))
 
 describe('FileLocaleMessage', () => {
   describe('localeKey: "file"', () => {
@@ -19,7 +16,7 @@ describe('FileLocaleMessage', () => {
         fullpath: testFilePath,
         localeKey: 'file'
       })
-      assert.deepStrictEqual(messages.locales, ['en'])
+      deepStrictEqual(messages.locales, ['en'])
     })
   })
 
@@ -34,7 +31,7 @@ describe('FileLocaleMessage', () => {
         localeKey: 'path',
         localePattern: /^.*\/(?<locale>[A-Za-z0-9-_]+)\/.*\.(json5?|ya?ml)$/
       })
-      assert.deepStrictEqual(messages.locales, ['en'])
+      deepStrictEqual(messages.locales, ['en'])
     })
   })
 
@@ -48,7 +45,7 @@ describe('FileLocaleMessage', () => {
         fullpath: testFilePath,
         localeKey: 'key'
       })
-      assert.deepStrictEqual(messages.locales, ['en', 'ja'])
+      deepStrictEqual(messages.locales, ['en', 'ja'])
     })
   })
 })

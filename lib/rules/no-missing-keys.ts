@@ -131,7 +131,7 @@ function checkCallExpression(
   }
 }
 
-export default createRule({
+export = createRule({
   meta: {
     type: 'problem',
     docs: {

@@ -4,12 +4,9 @@
  * Forked by https://github.com/mysticatea/eslint-plugin-eslint-comments/tree/master/scripts/update-recommended-rules.js
  */
 import { writeFileSync } from 'fs'
-import { dirname, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { resolve } from 'node:path'
 import rules from './lib/rules'
 import { format } from './lib/utils'
-
-const __dirname = dirname(fileURLToPath(import.meta.url))
 
 main()
 

@@ -4,8 +4,7 @@
  * Forked by https://github.com/mysticatea/eslint-plugin-eslint-comments/tree/master/scripts/update.js
  */
 import { writeFileSync } from 'fs'
-import { dirname, resolve } from 'node:path'
-import { fileURLToPath } from 'node:url'
+import { resolve } from 'node:path'
 import { createIndex } from './lib/utils'
 
 // docs.
@@ -15,8 +14,6 @@ import './update-docs-index'
 
 // recommended rules.
 import './update-recommended-rules'
-
-const __dirname = dirname(fileURLToPath(import.meta.url))
 
 main()
 

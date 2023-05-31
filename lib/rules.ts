@@ -18,7 +18,7 @@ import preferSfcLangAttr from './rules/prefer-sfc-lang-attr'
 import sfcLocaleAttr from './rules/sfc-locale-attr'
 import validMessageSyntax from './rules/valid-message-syntax'
 
-export default {
+export = {
   'key-format-style': keyFormatStyle,
   'no-deprecated-i18n-component': noDeprecatedI18nComponent,
   'no-deprecated-i18n-place-attr': noDeprecatedI18nPlaceAttr,
