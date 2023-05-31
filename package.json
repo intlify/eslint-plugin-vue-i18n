@@ -78,9 +78,9 @@
     "shipjs": "^0.26.3",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4",
+    "vitepress": "^1.0.0-beta.1",
     "vue-eslint-editor": "^1.1.0",
-    "vue-github-button": "^3.1.0",
-    "vuepress": "^1.9.9"
+    "vue-github-button": "^3.1.0"
   },
   "engines": {
     "node": "^14.17.0 || >=16.0.0"
@@ -113,10 +113,10 @@
   "packageManager": "pnpm@8.5.1",
   "scripts": {
     "build": "tsc --project ./tsconfig.build.json",
-    "clean": "rimraf .nyc_output coverage dist docs/.vuepress/dist",
+    "clean": "rimraf .nyc_output coverage dist docs/.vitepress/dist",
     "coverage": "nyc report --reporter lcov && opener coverage/lcov-report/index.html",
-    "docs": "npm run build && node --openssl-legacy-provider node_modules/vuepress/cli.js dev docs",
-    "docs:build": "npm run build && node --openssl-legacy-provider node_modules/vuepress/cli.js build docs",
+    "docs": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
     "generate": "ts-node scripts/update.ts",
     "lint": "eslint . --ext js,ts,vue,md --ignore-pattern \"/tests/fixtures\"",
     "lint-fix": "eslint . --ext js,ts,vue,md --ignore-pattern \"/tests/fixtures\" --fix",
