@@ -7,7 +7,7 @@ module.exports = {
     mocha: true
   },
   extends: [
-    'plugin:vue-libs/recommended',
+    'plugin:vue/recommended',
     'plugin:prettier/recommended',
     'plugin:markdown/recommended',
     'prettier'
