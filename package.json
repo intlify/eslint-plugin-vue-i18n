@@ -24,7 +24,7 @@
     }
   },
   "dependencies": {
-    "@eslint/eslintrc": "^1.4.1",
+    "@eslint/eslintrc": "^2.0.0",
     "@intlify/core-base": "^9.2.2",
     "@intlify/message-compiler": "^9.2.2",
     "debug": "^4.3.4",
