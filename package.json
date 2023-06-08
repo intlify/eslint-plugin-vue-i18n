@@ -119,6 +119,7 @@
     "lint-fix": "eslint . --ext js,ts,vue,md --ignore-pattern \"/tests/fixtures\" --fix",
     "lint:docs": "prettier docs --check",
     "format": "prettier . --write",
+    "prepack": "pnpm clean && pnpm build",
     "release:prepare": "shipjs prepare",
     "release:trigger": "shipjs trigger",
     "test": "mocha --require ts-node/register \"./tests/**/*.ts\"",
