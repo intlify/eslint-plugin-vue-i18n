@@ -1,16 +1,17 @@
 /**
  * @author Yosuke Ota
  */
-import fs from 'fs'
-import path from 'path'
-import assert from 'assert'
+import { readFileSync, writeFileSync, unlinkSync } from 'fs'
+import { join } from 'node:path'
+import { deepStrictEqual } from 'assert'
 import { usedKeysCache } from '../../../lib/utils/collect-keys'
 import { setTimeouts } from '../../../lib/utils/default-timeouts'
-import semver from 'semver'
+import { satisfies } from 'semver'
+import { version } from 'eslint/package.json'
 
 describe('usedKeysCache', () => {
   // eslint-disable-next-line @typescript-eslint/no-var-requires -- ignore
-  if (!semver.satisfies(require('eslint/package.json').version, '>=6')) {
+  if (!satisfies(version, '>=6')) {
     return
   }
   before(() => {
@@ -27,7 +28,7 @@ describe('usedKeysCache', () => {
     })
   })
 
-  const filesDir = path.join(__dirname, '../../fixtures/utils/collect-keys/src')
+  const filesDir = join(__dirname, '../../fixtures/utils/collect-keys/src')
 
   function collectKeysFromFiles() {
     return usedKeysCache.collectKeysFromFiles(
@@ -37,35 +38,35 @@ describe('usedKeysCache', () => {
     )
   }
   it('should be refresh with change files.', async () => {
-    const vuePath = path.join(
+    const vuePath = join(
       __dirname,
       '../../fixtures/utils/collect-keys/src/App.vue'
     )
-    const jsPath = path.join(
+    const jsPath = join(
       __dirname,
       '../../fixtures/utils/collect-keys/src/main.js'
     )
-    const bkVue = fs.readFileSync(vuePath, 'utf8')
+    const bkVue = readFileSync(vuePath, 'utf8')
     try {
-      assert.deepStrictEqual(collectKeysFromFiles(), [
+      deepStrictEqual(collectKeysFromFiles(), [
         'hello_dio',
         'messages.link',
         'hello {name}'
       ])
-      fs.writeFileSync(
+      writeFileSync(
         vuePath,
         `<template><div id="app">{{ $t('messages.link') }}</div></template>`
       )
       await new Promise(resolve => setTimeout(resolve, 10))
-      assert.deepStrictEqual(collectKeysFromFiles(), ['messages.link'])
+      deepStrictEqual(collectKeysFromFiles(), ['messages.link'])
 
-      fs.writeFileSync(jsPath, "const $t = () => {}\n$t('hello')\n", 'utf8')
+      writeFileSync(jsPath, "const $t = () => {}\n$t('hello')\n", 'utf8')
       await new Promise(resolve => setTimeout(resolve, 20))
-      assert.deepStrictEqual(collectKeysFromFiles(), ['messages.link', 'hello'])
+      deepStrictEqual(collectKeysFromFiles(), ['hello', 'messages.link'])
     } finally {
-      fs.writeFileSync(vuePath, bkVue, 'utf8')
+      writeFileSync(vuePath, bkVue, 'utf8')
       try {
-        fs.unlinkSync(jsPath)
+        unlinkSync(jsPath)
       } catch (_e) {
         // ignore
       }

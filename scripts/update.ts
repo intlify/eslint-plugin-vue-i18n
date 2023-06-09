@@ -4,7 +4,7 @@
  * Forked by https://github.com/mysticatea/eslint-plugin-eslint-comments/tree/master/scripts/update.js
  */
 import { writeFileSync } from 'fs'
-import { resolve } from 'path'
+import { resolve } from 'node:path'
 import { createIndex } from './lib/utils'
 
 // docs.

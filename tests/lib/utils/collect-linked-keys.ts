@@ -1,7 +1,7 @@
 /**
  * @author Yosuke Ota
  */
-import assert from 'assert'
+import { deepStrictEqual } from 'assert'
 import type { RuleContext } from '../../../lib/types'
 import { collectLinkedKeys } from '../../../lib/utils/collect-linked-keys'
 
@@ -26,7 +26,7 @@ describe('collectLinkedKeys', () => {
     }
 
     const expected = ['message.dio', 'message.the_world']
-    assert.deepStrictEqual(collectLinkedKeys(object, createContext()), expected)
+    deepStrictEqual(collectLinkedKeys(object, createContext()), expected)
   })
   it('should be get the keys used in the formatting linked message.', () => {
     const object = {
@@ -37,7 +37,7 @@ describe('collectLinkedKeys', () => {
     }
 
     const expected = ['message.homeAddress']
-    assert.deepStrictEqual(collectLinkedKeys(object, createContext()), expected)
+    deepStrictEqual(collectLinkedKeys(object, createContext()), expected)
   })
   it('should be get the keys used in the linked message with brackets.', () => {
     const object = {
@@ -48,7 +48,7 @@ describe('collectLinkedKeys', () => {
     }
 
     const expected = ['message.dio']
-    assert.deepStrictEqual(collectLinkedKeys(object, createContext()), expected)
+    deepStrictEqual(collectLinkedKeys(object, createContext()), expected)
   })
   it('should be get the keys used in the linked message for v9.', () => {
     const object = {
@@ -60,7 +60,7 @@ describe('collectLinkedKeys', () => {
     }
 
     const expected = ['message.dio', '42']
-    assert.deepStrictEqual(collectLinkedKeys(object, createContext()), expected)
+    deepStrictEqual(collectLinkedKeys(object, createContext()), expected)
   })
 
   describe('should be get the keys used in the linked message.', () => {
@@ -92,28 +92,28 @@ describe('collectLinkedKeys', () => {
 
     it('v9', () => {
       const expected = ['bar.a', 'bar.c.a', 'bar.d', 'foo.a', 'foo.b']
-      assert.deepStrictEqual(
+      deepStrictEqual(
         collectLinkedKeys(object as never, createContext('^9.0.0')).sort(),
         expected
       )
     })
     it('v8', () => {
       const expected = ['bar.a', 'bar.b', 'bar.c.a', 'foo.a', 'foo.b']
-      assert.deepStrictEqual(
+      deepStrictEqual(
         collectLinkedKeys(object as never, createContext('^8.0.0')).sort(),
         expected
       )
     })
     it('default', () => {
       const expected = ['bar.a', 'bar.b', 'bar.c.a', 'bar.d', 'foo.a', 'foo.b']
-      assert.deepStrictEqual(
+      deepStrictEqual(
         collectLinkedKeys(object as never, createContext()).sort(),
         expected
       )
     })
     it('>=v8', () => {
       const expected = ['bar.a', 'bar.b', 'bar.c.a', 'bar.d', 'foo.a', 'foo.b']
-      assert.deepStrictEqual(
+      deepStrictEqual(
         collectLinkedKeys(object as never, createContext('>=8.0.0')).sort(),
         expected
       )

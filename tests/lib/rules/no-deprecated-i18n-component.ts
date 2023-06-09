@@ -2,7 +2,7 @@
  * @author Yosuke Ota
  */
 import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/no-deprecated-i18n-component')
+import rule from '../../../lib/rules/no-deprecated-i18n-component'
 
 const tester = new RuleTester({
   parser: require.resolve('vue-eslint-parser'),

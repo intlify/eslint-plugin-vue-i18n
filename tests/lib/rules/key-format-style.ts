@@ -1,9 +1,11 @@
 /**
  * @author Yosuke Ota
  */
-import { join } from 'path'
+import { join } from 'node:path'
+
 import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/key-format-style')
+
+import rule from '../../../lib/rules/key-format-style'
 import type { SettingsVueI18nLocaleDirObject } from '../../../lib/types'
 
 const vueParser = require.resolve('vue-eslint-parser')

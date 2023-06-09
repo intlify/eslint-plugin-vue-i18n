@@ -4,7 +4,7 @@
  * Forked by https://github.com/mysticatea/eslint-plugin-eslint-comments/tree/master/scripts/update-recommended-rules.js
  */
 import { writeFileSync } from 'fs'
-import { resolve } from 'path'
+import { resolve } from 'node:path'
 import rules from './lib/rules'
 import { format } from './lib/utils'
 

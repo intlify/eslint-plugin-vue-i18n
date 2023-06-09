@@ -2,10 +2,11 @@
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
 import { RuleTester } from 'eslint'
-import { join } from 'path'
-import rule = require('../../../lib/rules/no-unused-keys')
+import { join } from 'node:path'
+import rule from '../../../lib/rules/no-unused-keys'
 import { getTestCasesFromFixtures } from '../test-utils'
-import semver from 'semver'
+import { satisfies } from 'semver'
+import { version } from 'eslint/package.json'
 
 const cwdRoot = join(__dirname, '../../fixtures/no-unused-keys')
 new RuleTester({
@@ -105,7 +106,7 @@ new RuleTester({
     </script>`
     },
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    ...(semver.satisfies(require('eslint/package.json').version, '>=6')
+    ...(satisfies(version, '>=6')
       ? [
           ...getTestCasesFromFixtures({
             cwd: join(cwdRoot, './valid/vue-cli-format'),
@@ -1244,7 +1245,7 @@ ${' '.repeat(6)}
       }
     ),
     // eslint-disable-next-line @typescript-eslint/no-var-requires
-    ...(semver.satisfies(require('eslint/package.json').version, '>=6')
+    ...(satisfies(version, '>=6')
       ? [
           ...getTestCasesFromFixtures(
             {

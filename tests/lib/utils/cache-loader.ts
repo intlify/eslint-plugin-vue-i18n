@@ -1,7 +1,7 @@
 /**
  * @author Yosuke Ota
  */
-import assert from 'assert'
+import { strictEqual } from 'assert'
 import { CacheLoader } from '../../../lib/utils/cache-loader'
 
 describe('CacheLoader', () => {
@@ -12,9 +12,9 @@ describe('CacheLoader', () => {
       return res
     }, 5)
     const before = loader.get()
-    assert.strictEqual(loader.get(), before)
+    strictEqual(loader.get(), before)
     await new Promise(resolve => setTimeout(resolve, 10))
-    assert.strictEqual(loader.get(), before + 1)
+    strictEqual(loader.get(), before + 1)
   })
   it('should be refresh with change arguments.', () => {
     let count = 0
@@ -23,7 +23,7 @@ describe('CacheLoader', () => {
       return res
     }, 5)
     const before = loader.get(1)
-    assert.strictEqual(loader.get(1), before)
-    assert.strictEqual(loader.get(2), before + 1)
+    strictEqual(loader.get(1), before)
+    strictEqual(loader.get(2), before + 1)
   })
 })

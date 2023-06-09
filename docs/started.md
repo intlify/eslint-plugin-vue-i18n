@@ -74,7 +74,7 @@ module.export = {
 }
 ```
 
-See [the rule list](../rules/)
+See [the rule list](/rules/)
 
 ### `settings['vue-i18n']`
 

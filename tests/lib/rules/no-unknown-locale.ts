@@ -1,7 +1,9 @@
-import { join } from 'path'
+import { join } from 'node:path'
 import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/no-unknown-locale')
+
+import rule from '../../../lib/rules/no-unknown-locale'
 import type { SettingsVueI18nLocaleDirObject } from '../../../lib/types'
+
 const vueParser = require.resolve('vue-eslint-parser')
 const jsonParser = require.resolve('jsonc-eslint-parser')
 const yamlParser = require.resolve('yaml-eslint-parser')

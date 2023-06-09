@@ -2,9 +2,9 @@
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
 import { RuleTester } from 'eslint'
-import { join } from 'path'
-import fs from 'fs'
-import rule = require('../../../lib/rules/no-html-messages')
+import { join } from 'node:path'
+import { readFileSync } from 'fs'
+import rule from '../../../lib/rules/no-html-messages'
 import { getTestCasesFromFixtures } from '../test-utils'
 
 const cwdRoot = join(__dirname, '../../fixtures/no-html-messages')
@@ -17,7 +17,7 @@ new RuleTester({
     {
       // sfc supports
       filename: 'test.vue',
-      code: `<i18n>${fs.readFileSync(
+      code: `<i18n>${readFileSync(
         require.resolve('../../fixtures/no-html-messages/valid/en.json'),
         'utf8'
       )}</i18n>
@@ -46,7 +46,7 @@ new RuleTester({
     {
       // sfc supports
       filename: 'test.vue',
-      code: `<i18n>${fs.readFileSync(
+      code: `<i18n>${readFileSync(
         require.resolve('../../fixtures/no-html-messages/invalid/en.json'),
         'utf8'
       )}</i18n>
@@ -72,7 +72,7 @@ new RuleTester({
     {
       // sfc supports
       filename: 'test.vue',
-      code: `<i18n lang="yaml">${fs.readFileSync(
+      code: `<i18n lang="yaml">${readFileSync(
         require.resolve('../../fixtures/no-html-messages/invalid/en.yaml'),
         'utf8'
       )}</i18n>

@@ -6,7 +6,6 @@ import * as collectKeys from './utils/collect-keys'
 import * as collectLinkedKeys from './utils/collect-linked-keys'
 import * as defaultTimeouts from './utils/default-timeouts'
 import * as getCwd from './utils/get-cwd'
-import * as globSync from './utils/glob-sync'
 import * as globUtils from './utils/glob-utils'
 import * as ignoredPaths from './utils/ignored-paths'
 import * as index from './utils/index'
@@ -26,7 +25,6 @@ export = {
   'collect-linked-keys': collectLinkedKeys,
   'default-timeouts': defaultTimeouts,
   'get-cwd': getCwd,
-  'glob-sync': globSync,
   'glob-utils': globUtils,
   'ignored-paths': ignoredPaths,
   index,

@@ -15,7 +15,7 @@ import type {
   LinkedModifierNode,
   LinkedKeyNode
 } from '@intlify/message-compiler'
-import lodash from 'lodash'
+import { sortedLastIndex } from 'lodash'
 import { NodeTypes } from './utils'
 
 export function parse(code: string): {
@@ -69,7 +69,7 @@ class CodeContext {
         column: this.lines[this.lines.length - 1].length + 1
       }
     }
-    const lineNumber = lodash.sortedLastIndex(this.lineStartIndices, index)
+    const lineNumber = sortedLastIndex(this.lineStartIndices, index)
     return {
       line: lineNumber,
       column: index - this.lineStartIndices[lineNumber - 1] + 1

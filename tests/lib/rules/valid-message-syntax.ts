@@ -1,9 +1,9 @@
 /**
  * @author Yosuke Ota
  */
-import { join } from 'path'
+import { join } from 'node:path'
 import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/valid-message-syntax')
+import rule from '../../../lib/rules/valid-message-syntax'
 
 const vueParser = require.resolve('vue-eslint-parser')
 const jsonParser = require.resolve('jsonc-eslint-parser')

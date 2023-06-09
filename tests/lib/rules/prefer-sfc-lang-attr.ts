@@ -1,5 +1,5 @@
 import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/prefer-sfc-lang-attr')
+import rule from '../../../lib/rules/prefer-sfc-lang-attr'
 
 new RuleTester({
   parser: require.resolve('vue-eslint-parser'),
