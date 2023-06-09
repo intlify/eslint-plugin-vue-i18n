@@ -18,7 +18,7 @@ function toTableRow(rule: RuleInfo) {
   const mark = `${rule.recommended ? ':star:' : ''}${
     rule.fixable ? ':black_nib:' : ''
   }`
-  const link = `[@intlify/vue-i18n/<wbr>${rule.name}](./rules/${rule.name}.html)`
+  const link = `[@intlify/vue-i18n/<wbr>${rule.name}](./${rule.name}.html)`
   const description = rule.description || '(no description)'
   return `| ${link} | ${description} | ${mark} |`
 }
