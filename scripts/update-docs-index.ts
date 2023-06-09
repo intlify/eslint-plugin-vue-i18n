@@ -39,7 +39,7 @@ ${rules.map(toTableRow).join('\n')}
 `
 }
 
-const filePath = resolve(__dirname, '../docs/rules.md')
+const filePath = resolve(__dirname, '../docs/rules/index.md')
 const content = `# Available Rules
 
 - :star: mark: the rule which is enabled by \`plugin:@intlify/vue-i18n/recommended\` preset.
