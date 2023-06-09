@@ -2,7 +2,7 @@
  * @author Yosuke Ota
  */
 import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/no-deprecated-i18n-place-attr')
+import rule from '../../../lib/rules/no-deprecated-i18n-place-attr'
 
 const tester = new RuleTester({
   parser: require.resolve('vue-eslint-parser'),

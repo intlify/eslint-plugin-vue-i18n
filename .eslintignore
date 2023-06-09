@@ -1,11 +1,12 @@
-!/docs/.vuepress
+!/docs/.vitepress
 !/.github
 !/.vscode
 /.nyc_output
 /assets
 /coverage
 /dist
-/docs/.vuepress/dist
+/docs/.vitepress/cache
+/docs/.vitepress/dist
 /node_modules
 # /tests/fixtures Used testcases
 /tests-integrations/config-recommended

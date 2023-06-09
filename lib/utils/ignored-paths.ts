@@ -10,6 +10,7 @@ import { getRelativePath } from './path-utils'
 import type { Ignore } from 'ignore'
 import ignore from 'ignore'
 import debugBuilder from 'debug'
+import type { Path } from 'path-scurry'
 const debug = debugBuilder('eslint-plugin-vue-i18n:ignored-paths')
 
 const ESLINT_IGNORE_FILENAME = '.eslintignore'
@@ -372,7 +373,7 @@ export class IgnoredPaths {
   /**
    * Returns a list of dir patterns for glob to ignore
    */
-  getIgnoredFoldersGlobChecker(): (absolutePath: string) => boolean {
+  getIgnoredFoldersGlobChecker(): (absolutePath: Path) => boolean {
     const baseDir = this.getBaseDir()
     const ig = ignore()
 
@@ -391,8 +392,8 @@ export class IgnoredPaths {
 
     const filter = ig.createFilter()
 
-    return function (absolutePath: string): boolean {
-      const relative = getRelativePath(absolutePath, baseDir)
+    return function (absolutePath: Path): boolean {
+      const relative = getRelativePath(absolutePath.fullpath(), baseDir)
 
       if (!relative) {
         return false

@@ -1,9 +1,9 @@
 /**
  * @author Yosuke Ota
  */
-import { join } from 'path'
+import { join } from 'node:path'
 import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/prefer-linked-key-with-paren')
+import rule from '../../../lib/rules/prefer-linked-key-with-paren'
 
 const vueParser = require.resolve('vue-eslint-parser')
 const jsonParser = require.resolve('jsonc-eslint-parser')

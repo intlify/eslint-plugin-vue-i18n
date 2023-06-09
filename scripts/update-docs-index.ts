@@ -3,16 +3,16 @@
  * @author kazuya kawaguchi (a.k.a. kazupon)
  * Forked by https://github.com/mysticatea/eslint-plugin-eslint-comments/tree/master/scripts/update-docs-index.js
  */
-import prettier from 'prettier'
+import { type Options, format } from 'prettier'
 import { writeFileSync, readFileSync } from 'fs'
-import { resolve, join } from 'path'
-import yaml from 'js-yaml'
+import { join, resolve } from 'node:path'
+import { load } from 'js-yaml'
 import type { RuleInfo } from './lib/rules'
 import { withCategories } from './lib/rules'
 
-const prettierrc = yaml.load(
+const prettierrc = load(
   readFileSync(join(__dirname, '../.prettierrc.yaml'), 'utf8')
-) as prettier.Options
+) as Options
 
 function toTableRow(rule: RuleInfo) {
   const mark = `${rule.recommended ? ':star:' : ''}${
@@ -39,7 +39,7 @@ ${rules.map(toTableRow).join('\n')}
 `
 }
 
-const filePath = resolve(__dirname, '../docs/rules/README.md')
+const filePath = resolve(__dirname, '../docs/rules/index.md')
 const content = `# Available Rules
 
 - :star: mark: the rule which is enabled by \`plugin:@intlify/vue-i18n/recommended\` preset.
@@ -47,7 +47,4 @@ const content = `# Available Rules
 
 ${withCategories.map(toCategorySection).join('\n')}
 `
-writeFileSync(
-  filePath,
-  prettier.format(content, { filepath: filePath, ...prettierrc })
-)
+writeFileSync(filePath, format(content, { filepath: filePath, ...prettierrc }))

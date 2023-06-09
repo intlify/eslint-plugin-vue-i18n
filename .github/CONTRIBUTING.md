@@ -64,7 +64,7 @@ After cloning the repo, run:
     $ pnpm lint
     $ pnpm lint:docs
 
-    # run the vuepress
+    # run vitepress
     $ pnpm docs
 
     # run the test suite

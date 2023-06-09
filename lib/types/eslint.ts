@@ -242,6 +242,7 @@ export interface RuleMetaData {
     description: string
     category: 'Recommended' | 'Best Practices' | 'Stylistic Issues'
     recommended?: boolean
+    replacedBy?: string[]
     url: string
   }
   messages?: { [messageId: string]: string }

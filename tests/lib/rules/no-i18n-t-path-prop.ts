@@ -2,7 +2,7 @@
  * @author Yosuke Ota
  */
 import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/no-i18n-t-path-prop')
+import rule from '../../../lib/rules/no-i18n-t-path-prop'
 
 const tester = new RuleTester({
   parser: require.resolve('vue-eslint-parser'),

@@ -2,9 +2,9 @@
  * @author Yosuke Ota
  */
 import { RuleTester } from 'eslint'
-import { join } from 'path'
+import { join } from 'node:path'
 
-import rule = require('../../../lib/rules/no-duplicate-keys-in-locale')
+import rule from '../../../lib/rules/no-duplicate-keys-in-locale'
 import { getTestCasesFromFixtures } from '../test-utils'
 
 const cwdRoot = join(__dirname, '../../fixtures/no-duplicate-keys-in-locale')

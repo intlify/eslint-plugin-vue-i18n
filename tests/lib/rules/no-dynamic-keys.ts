@@ -2,7 +2,7 @@
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
 import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/no-dynamic-keys')
+import rule from '../../../lib/rules/no-dynamic-keys'
 
 const tester = new RuleTester({
   parser: require.resolve('vue-eslint-parser'),

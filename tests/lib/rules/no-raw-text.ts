@@ -2,7 +2,7 @@
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
 import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/no-raw-text')
+import rule from '../../../lib/rules/no-raw-text'
 
 const tester = new RuleTester({
   parser: require.resolve('vue-eslint-parser'),
