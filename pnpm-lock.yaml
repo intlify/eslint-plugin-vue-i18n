@@ -1,4 +1,4 @@
-lockfileVersion: '6.1'
+lockfileVersion: '6.0'
 
 settings:
   autoInstallPeers: true
@@ -155,8 +155,8 @@ devDependencies:
     specifier: ^5.0.4
     version: 5.0.4
   vitepress:
-    specifier: 1.0.0-beta.1
-    version: 1.0.0-beta.1(@algolia/client-search@4.17.2)(@types/node@20.2.5)(search-insights@2.6.0)
+    specifier: 1.0.0-beta.2
+    version: 1.0.0-beta.2(@algolia/client-search@4.17.2)(@types/node@20.2.5)(search-insights@2.6.0)
   vue-eslint-editor:
     specifier: ^1.1.0
     version: 1.1.0
@@ -5217,8 +5217,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitepress@1.0.0-beta.1(@algolia/client-search@4.17.2)(@types/node@20.2.5)(search-insights@2.6.0):
-    resolution: {integrity: sha512-V2yyCwQ+v9fh7rbnGDLp8M7vHa9sLElexXf/JHtBOsOwv7ed9wt1QI4WUagYgKR3TeoJT9v2s6f0UaQSne0EvQ==}
+  /vitepress@1.0.0-beta.2(@algolia/client-search@4.17.2)(@types/node@20.2.5)(search-insights@2.6.0):
+    resolution: {integrity: sha512-DBXYjtYbm3W1IPPJ2TiCaK/XK+o/2XmL2+jslOGKm+txcbmG0kbeB+vadC5tCUZA9NdA+9Ywj3M4548c7t/SDg==}
     hasBin: true
     dependencies:
       '@docsearch/css': 3.5.0
