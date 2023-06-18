@@ -40,6 +40,7 @@ module.exports = {
   mergeStrategy: { toSameBranch: ['master'] },
   monorepo: undefined,
   updateChangelog: false,
+  installCommand: () => 'pnpm install',
   beforeCommitChanges: ({ nextVersion, exec, dir }) => {
     updateRuleDocs({ nextVersion })
     return new Promise(resolve => {
