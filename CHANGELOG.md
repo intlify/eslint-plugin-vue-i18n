@@ -3,7 +3,7 @@
 
 #### :boom: Breaking Change
 * [#382](https://github.com/intlify/eslint-plugin-vue-i18n/pull/382) feat(deps): update @intlify dependencies to v9.3.0-beta.19 ([@dargmuesli](https://github.com/dargmuesli))
-* [#371](https://github.com/intlify/eslint-plugin-vue-i18n/pull/371) ci: use node 20 ([@dargmuesli](https://github.com/dargmuesli))
+* [#371](https://github.com/intlify/eslint-plugin-vue-i18n/pull/371) ci: use node 20, and drop support for node 14 ([@dargmuesli](https://github.com/dargmuesli))
 
 #### Committers: 4
 - Jonas Thelemann ([@dargmuesli](https://github.com/dargmuesli))
