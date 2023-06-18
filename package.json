@@ -57,8 +57,8 @@
   },
   "dependencies": {
     "@eslint/eslintrc": "^2.0.3",
-    "@intlify/core-base": "^9.2.2",
-    "@intlify/message-compiler": "^9.2.2",
+    "@intlify/core-base": "^9.3.0-beta.19",
+    "@intlify/message-compiler": "^9.3.0-beta.19",
     "debug": "^4.3.4",
     "glob": "^10.2.6",
     "ignore": "^5.2.4",
