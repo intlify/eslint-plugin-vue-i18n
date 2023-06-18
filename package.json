@@ -47,8 +47,8 @@
     "lint-fix": "eslint . --ext js,ts,vue,md --ignore-pattern \"/tests/fixtures\" --fix",
     "lint:docs": "prettier docs --check",
     "format": "prettier . --write",
-    "release:prepare": "shipjs prepare",
-    "release:trigger": "shipjs trigger",
+    "release:prepare": "node shipjs-cli.cjs prepare",
+    "release:trigger": "node shipjs-cli.cjs trigger",
     "test": "mocha --require ts-node/register/transpile-only \"./tests/**/*.ts\"",
     "test:debug": "mocha --require ts-node/register/transpile-only \"./tests/**/*.ts\"",
     "test:coverage": "nyc mocha --require ts-node/register/transpile-only \"./tests/**/*.ts\" --timeout 60000",
@@ -87,6 +87,7 @@
     "@typescript-eslint/eslint-plugin": "^5.59.8",
     "@typescript-eslint/parser": "^5.59.8",
     "entities": "^4.5.0",
+    "esbuild-register": "^3.4.2",
     "eslint": "^8.41.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-markdown": "^3.0.0",
@@ -127,5 +128,9 @@
       "Type: A11y": ":wheelchair: Accessibility",
       "Type: Documentation": ":pencil: Documentation"
     }
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "next"
   }
 }

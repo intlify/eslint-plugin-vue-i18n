@@ -1,4 +1,3 @@
-require('ts-node').register()
 const execa = require(require.resolve('execa'))
 const { promisify } = require('util')
 const fs = require('fs')
