@@ -158,8 +158,8 @@ devDependencies:
     specifier: ^5.0.4
     version: 5.0.4
   vitepress:
-    specifier: 1.0.0-beta.4
-    version: 1.0.0-beta.4(@algolia/client-search@4.17.2)(@types/node@20.2.5)(search-insights@2.6.0)
+    specifier: 1.0.0-beta.5
+    version: 1.0.0-beta.5(@algolia/client-search@4.17.2)(@types/node@20.2.5)(search-insights@2.6.0)
   vue-eslint-editor:
     specifier: ^1.1.0
     version: 1.1.0
@@ -5234,8 +5234,8 @@ packages:
       fsevents: 2.3.2
     dev: true
 
-  /vitepress@1.0.0-beta.4(@algolia/client-search@4.17.2)(@types/node@20.2.5)(search-insights@2.6.0):
-    resolution: {integrity: sha512-dpWnpdUFrKU9spTAHaxfkYauFAaIokQwr/1Kx2ipGvHDij47ebuHXF/O7gD+5xnpwV3eUb8Z2zPVZn1kbGu9lQ==}
+  /vitepress@1.0.0-beta.5(@algolia/client-search@4.17.2)(@types/node@20.2.5)(search-insights@2.6.0):
+    resolution: {integrity: sha512-/RjqqRsSEKkzF6HhK5e5Ij+bZ7ETb9jNCRRgIMm10gJ+ZLC3D1OqkE465lEqCeJUgt2HZ6jmWjDqIBfrJSpv7w==}
     hasBin: true
     dependencies:
       '@docsearch/css': 3.5.1
