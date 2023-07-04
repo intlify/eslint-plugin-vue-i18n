@@ -167,7 +167,7 @@ tester.run('no-missing-keys', rule as never, {
         code: `
         <i18n locale="en">{"hello": "hello"}</i18n>
         <template>
-          <i18n-t keypath="'hello'"></i18n-t>
+          <i18n-t keypath="hello"></i18n-t>
         </template>`
       },
       {
@@ -270,6 +270,13 @@ tester.run('no-missing-keys', rule as never, {
       </div>
     </template>`,
         errors: [`'missing' does not exist in localization message resources`]
+      },
+      {
+        // missing ending with a dot
+        code: `$t('missing.')`,
+        errors: [
+          `'["missing."]' does not exist in localization message resources`
+        ]
       },
       {
         // nested basic
