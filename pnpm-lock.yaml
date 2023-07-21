@@ -12,8 +12,8 @@ dependencies:
     specifier: 9.3.0-beta.14-77e850b
     version: 9.3.0-beta.14-77e850b
   '@intlify/message-compiler':
-    specifier: 9.3.0-beta.19
-    version: 9.3.0-beta.19
+    specifier: 9.3.0-beta.14-77e850b
+    version: 9.3.0-beta.14-77e850b
   debug:
     specifier: ^4.3.4
     version: 4.3.4(supports-color@8.1.1)
@@ -843,22 +843,9 @@ packages:
       source-map: 0.6.1
     dev: false
 
-  /@intlify/message-compiler@9.3.0-beta.19:
-    resolution: {integrity: sha512-5RBn5tMOsWh5FqM65IfEJvfpRS8R0lHEUVNDa2rNc9Y7oGEI7swezlbFqU9Kc5FyHy5Kx2jHtdgFIipDwnIYFQ==}
-    engines: {node: '>= 16'}
-    dependencies:
-      '@intlify/shared': 9.3.0-beta.19
-      source-map: 0.6.1
-    dev: false
-
   /@intlify/shared@9.3.0-beta.14-77e850b:
     resolution: {integrity: sha512-aHZYRM0sJN+YSUnoC5Dv4L1TFYtP23kdTkrK5cHSEqUbI5UXc8FbnXPal0lJliMhO0ED7Ic7aEOeQX84BM3xCQ==}
     engines: {node: '>= 14'}
-    dev: false
-
-  /@intlify/shared@9.3.0-beta.19:
-    resolution: {integrity: sha512-+lhQggrLvlQ/O5OmIYAc9gadcYXMoaDi0Doef+X/f6TLZFr9PTMjOpBWmpwNNHi026e54jckntUn6GzqDtIN4w==}
-    engines: {node: '>= 16'}
     dev: false
 
   /@intlify/vue-devtools@9.3.0-beta.14-77e850b:
