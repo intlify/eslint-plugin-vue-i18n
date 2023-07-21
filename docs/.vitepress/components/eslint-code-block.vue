@@ -2,9 +2,9 @@
   <div class="eslint-code-container">
     <eslint-editor
       ref="editor"
+      v-model="code"
       :linter="linter"
       :config="config"
-      v-model="code"
       :style="{ height }"
       class="eslint-code-block"
       :filename="'/path/' + resplvedFilename"
@@ -69,14 +69,6 @@ export default {
         tabSize: 2
       },
       code: ''
-    }
-  },
-
-  watch: {
-    code(newCode) {
-      if (this.$resourceGroup) {
-        this.$resourceGroup.set(this.resplvedFilename, newCode)
-      }
     }
   },
 
@@ -160,22 +152,11 @@ export default {
     }
   },
 
-  methods: {
-    computeCodeFromSlot(nodes) {
-      if (!Array.isArray(nodes)) {
-        return ''
+  watch: {
+    code(newCode) {
+      if (this.$resourceGroup) {
+        this.$resourceGroup.set(this.resplvedFilename, newCode)
       }
-      return nodes
-        .map(node => node.text || this.computeCodeFromSlot(node.children))
-        .join('')
-    },
-    verifyHook() {
-      setFileContents(
-        this.$resourceGroup ? this.$resourceGroup.getFileContents() : {}
-      )
-    },
-    lint() {
-      this.$refs.editor.lint()
     }
   },
 
@@ -220,6 +201,25 @@ export default {
     linter.verifyAndFix = function (...args) {
       verifyHook()
       return verifyAndFix.apply(this, args)
+    }
+  },
+
+  methods: {
+    computeCodeFromSlot(nodes) {
+      if (!Array.isArray(nodes)) {
+        return ''
+      }
+      return nodes
+        .map(node => node.text || this.computeCodeFromSlot(node.children))
+        .join('')
+    },
+    verifyHook() {
+      setFileContents(
+        this.$resourceGroup ? this.$resourceGroup.getFileContents() : {}
+      )
+    },
+    lint() {
+      this.$refs.editor.lint()
     }
   }
 }
