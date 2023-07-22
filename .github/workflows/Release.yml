@@ -21,6 +21,9 @@ jobs:
         with:
           node-version: 16
 
+      - name: Enable corepack
+        run: corepack enable
+
       - name: Install Dependencies
         run: pnpm install
       - name: Build
