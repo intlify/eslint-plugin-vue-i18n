@@ -36,8 +36,7 @@
   ],
   "main": "dist/lib/index.js",
   "scripts": {
-    "build": "tsc",
-    "build:prod": "tsc --project ./tsconfig.build.json",
+    "build": "tsc --project ./tsconfig.build.json",
     "clean": "rimraf .nyc_output coverage dist docs/.vitepress/dist",
     "coverage": "nyc report --reporter lcov && opener coverage/lcov-report/index.html",
     "docs": "vitepress dev docs",
@@ -47,13 +46,15 @@
     "lint-fix": "eslint . --ext js,ts,vue,md --ignore-pattern \"/tests/fixtures\" --fix",
     "lint:docs": "prettier docs --check",
     "format": "prettier . --write",
-    "release:prepare": "node shipjs-cli.cjs prepare",
-    "release:trigger": "node shipjs-cli.cjs trigger",
+    "prerelease": "pnpm run test && pnpm run build",
+    "release": "changeset publish",
     "test": "mocha --require ts-node/register/transpile-only \"./tests/**/*.ts\"",
     "test:debug": "mocha --require ts-node/register/transpile-only \"./tests/**/*.ts\"",
     "test:coverage": "nyc mocha --require ts-node/register/transpile-only \"./tests/**/*.ts\" --timeout 60000",
     "test:integrations": "mocha ./tests-integrations/*.cjs --timeout 60000",
-    "new": "ts-node ./scripts/new-rule.ts"
+    "new": "ts-node ./scripts/new-rule.ts",
+    "version:ci": "env-cmd -e version-ci pnpm run generate && changeset version",
+    "changeset": "changeset"
   },
   "dependencies": {
     "@eslint/eslintrc": "^2.1.0",
@@ -73,6 +74,8 @@
     "yaml-eslint-parser": "^1.2.2"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "^0.4.6",
+    "@changesets/cli": "^2.24.2",
     "@types/debug": "^4.1.8",
     "@types/eslint": "^8.44.0",
     "@types/eslint-scope": "^3.7.4",
@@ -87,7 +90,7 @@
     "@typescript-eslint/eslint-plugin": "^6.0.0",
     "@typescript-eslint/parser": "^6.0.0",
     "entities": "^4.5.0",
-    "esbuild-register": "^3.4.2",
+    "env-cmd": "^10.1.0",
     "eslint": "^8.44.0",
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-markdown": "^3.0.0",
@@ -105,7 +108,6 @@
     "path-scurry": "^1.10.1",
     "prettier": "^2.8.8",
     "rimraf": "^5.0.1",
-    "shipjs": "^0.26.3",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.6",
     "vitepress": "1.0.0-beta.5",
@@ -130,7 +132,6 @@
     }
   },
   "publishConfig": {
-    "access": "public",
-    "tag": "next"
+    "access": "public"
   }
 }
