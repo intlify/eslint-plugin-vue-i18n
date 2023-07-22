@@ -14,3 +14,4 @@
 /CHANGELOG.md
 /.github/ISSUE_TEMPLATE/
 /pnpm-lock.yaml
+/.changeset
