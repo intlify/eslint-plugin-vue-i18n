@@ -1,5 +1,11 @@
 ## 3.0.0-next.2
 
+## 3.0.0-next.3
+
+### Patch Changes
+
+- [#413](https://github.com/intlify/eslint-plugin-vue-i18n/pull/413) [`0fadd81`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/0fadd81f0551c380514744573b4c3fdac9b9d4fa) Thanks [@dargmuesli](https://github.com/dargmuesli)! - Pin `@intlify` dependencies to tag `beta` to try to prevent renovate from downgrading.
+
 ### Patch Changes
 
 - [#394](https://github.com/intlify/eslint-plugin-vue-i18n/pull/394) [`3774e88`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/3774e88ba06335efe2112594d0c92b8ac4e5d242) Thanks [@wolfgangwalther](https://github.com/wolfgangwalther)! - fix: no-missing-keys rule reports false positive with trailing dot
