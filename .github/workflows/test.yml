@@ -27,7 +27,7 @@ jobs:
       - name: Lint docs
         run: pnpm lint:docs
   test:
-    name: 'Test for ESLint 8 on Node.js ${{ matrix.node }} OS: ${{matrix.os}}'
+    name: 'Test for Node.js ${{ matrix.node }} on ${{ matrix.os }}'
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -51,7 +51,7 @@ jobs:
           pnpm build
           pnpm test:integrations
   test-for-eslint:
-    name: 'Test for ESLint ${{ matrix.eslint }} on ${{ matrix.node }} OS: ${{matrix.os}}'
+    name: 'Test for ESLint ${{ matrix.eslint }} on ${{ matrix.os }} using Node.js ${{ matrix.node }}'
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
