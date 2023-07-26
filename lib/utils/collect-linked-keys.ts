@@ -59,7 +59,7 @@ function extractUsedKeysFromAST(ast: ResourceNode): Set<string> {
     if (node.type === NodeTypes.Linked) {
       if (node.key.type === NodeTypes.LinkedKey) {
         keys.add(node.key.value)
-      } else if (node.key.type === NodeTypes.Literal) {
+      } else if (node.key.type === NodeTypes.Literal && node.key.value) {
         keys.add(node.key.value)
       } else if (node.key.type === NodeTypes.List) {
         keys.add(String(node.key.index))
