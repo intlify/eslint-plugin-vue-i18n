@@ -8,7 +8,7 @@
   ],
   "commit": false,
   "linked": [],
-  "baseBranch": "main",
+  "baseBranch": "master",
   "updateInternalDependencies": "patch",
   "bumpVersionsWithWorkspaceProtocolOnly": true,
   "ignore": []
