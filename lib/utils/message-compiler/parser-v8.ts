@@ -90,7 +90,7 @@ class CodeContext {
   }
   setEndLoc(
     node: {
-      end: number
+      end?: number
       loc?: SourceLocation
     },
     end: number
