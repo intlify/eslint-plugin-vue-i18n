@@ -29,7 +29,7 @@
   "engines": {
     "node": ">=16.0.0"
   },
-  "packageManager": "pnpm@8.7.0",
+  "packageManager": "pnpm@8.7.1",
   "type": "commonjs",
   "files": [
     "dist"
