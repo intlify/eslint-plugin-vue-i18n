@@ -23,6 +23,9 @@ dependencies:
   ignore:
     specifier: ^5.2.4
     version: 5.2.4
+  import-fresh:
+    specifier: ^3.3.0
+    version: 3.3.0
   is-language-code:
     specifier: ^3.1.0
     version: 3.1.0
@@ -124,9 +127,6 @@ devDependencies:
   esquery:
     specifier: ^1.5.0
     version: 1.5.0
-  import-fresh:
-    specifier: ^3.3.0
-    version: 3.3.0
   json-schema:
     specifier: ^0.4.0
     version: 0.4.0
