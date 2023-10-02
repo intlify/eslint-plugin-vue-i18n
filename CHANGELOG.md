@@ -1,5 +1,11 @@
 ## 3.0.0-next.2
 
+## 3.0.0-next.4
+
+### Patch Changes
+
+- [#433](https://github.com/intlify/eslint-plugin-vue-i18n/pull/433) [`68a4a1b`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/68a4a1b098ff54433fbd9ee427bead82e0ff3867) Thanks [@wolfgangwalther](https://github.com/wolfgangwalther)! - fix(deps): Make import-fresh a proper dependency
+
 ## 3.0.0-next.3
 
 ### Patch Changes
