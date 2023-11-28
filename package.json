@@ -75,7 +75,7 @@
     "yaml-eslint-parser": "^1.2.2"
   },
   "devDependencies": {
-    "@changesets/changelog-github": "^0.4.8",
+    "@changesets/changelog-github": "^0.5.0",
     "@changesets/cli": "^2.26.2",
     "@types/debug": "^4.1.8",
     "@types/eslint": "^8.44.1",
