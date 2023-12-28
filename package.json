@@ -57,7 +57,7 @@
     "changeset": "changeset"
   },
   "dependencies": {
-    "@eslint/eslintrc": "^2.1.0",
+    "@eslint/eslintrc": "^3.0.0",
     "@intlify/core-base": "beta",
     "@intlify/message-compiler": "beta",
     "debug": "^4.3.4",
