@@ -25,7 +25,7 @@ import type {
 import * as jsoncESLintParser from 'jsonc-eslint-parser'
 import * as yamlESLintParser from 'yaml-eslint-parser'
 import { getCwd } from './get-cwd'
-import { getSourceCode } from './compat'
+import { getFilename, getSourceCode } from './compat'
 
 interface LocaleFiles {
   files: string[]
@@ -45,7 +45,7 @@ export function defineTemplateBodyVisitor(
 ): RuleListener {
   const sourceCode = getSourceCode(context)
   if (sourceCode.parserServices.defineTemplateBodyVisitor == null) {
-    const filename = context.getFilename()
+    const filename = getFilename(context)
     if (extname(filename) === '.vue') {
       context.report({
         loc: UNEXPECTED_ERROR_LOCATION,
@@ -268,12 +268,12 @@ function getLocaleMessagesFromI18nBlocks(
   context: RuleContext,
   i18nBlocks: VAST.VElement[]
 ) {
-  const sourceCode = context.getSourceCode()
+  const sourceCode = getSourceCode(context)
   let localeMessages = i18nBlockLocaleMessages.get(sourceCode.ast)
   if (localeMessages) {
     return localeMessages
   }
-  const filename = context.getFilename()
+  const filename = getFilename(context)
   localeMessages = i18nBlocks
     .map(block => {
       const attrs = getStaticAttributes(block)
@@ -387,7 +387,7 @@ export function getVueObjectType(
   const parent = node.parent
   if (parent.type === 'ExportDefaultDeclaration') {
     // export default {} in .vue || .jsx
-    const ext = extname(context.getFilename()).toLowerCase()
+    const ext = extname(getFilename(context)).toLowerCase()
     if (
       (ext === '.vue' || ext === '.jsx' || !ext) &&
       skipTSAsExpression(parent.declaration) === node
@@ -443,7 +443,7 @@ export function getVueObjectType(
       (pp.key.type === 'Identifier'
         ? pp.key.name
         : pp.key.type === 'Literal'
-        ? pp.key.value + ''
+        ? `${pp.key.value}`
         : '') === 'components'
     ) {
       return 'components-option'
@@ -667,7 +667,7 @@ function getComponentComments(context: RuleContext) {
   if (tokens) {
     return tokens
   }
-  const sourceCode = context.getSourceCode()
+  const sourceCode = getSourceCode(context)
   tokens = sourceCode
     .getAllComments()
     .filter(comment => /@vue\/component/g.test(comment.value))
