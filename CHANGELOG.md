@@ -1,5 +1,15 @@
 ## 3.0.0-next.2
 
+## 3.0.0-next.5
+
+### Minor Changes
+
+- [#463](https://github.com/intlify/eslint-plugin-vue-i18n/pull/463) [`a488f15`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/a488f15f35190ea4803ba9716e6ffc207277d7d2) Thanks [@ota-meshi](https://github.com/ota-meshi)! - feat: add support for eslint v9
+
+### Patch Changes
+
+- [#459](https://github.com/intlify/eslint-plugin-vue-i18n/pull/459) [`8b3d347`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/8b3d347e9e10b4cce0b8527675c230654d8e28bd) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @eslint/eslintrc to v3
+
 ## 3.0.0-next.4
 
 ### Patch Changes

@@ -4,6 +4,7 @@ import * as cacheLoader from './utils/cache-loader'
 import * as casing from './utils/casing'
 import * as collectKeys from './utils/collect-keys'
 import * as collectLinkedKeys from './utils/collect-linked-keys'
+import * as compat from './utils/compat'
 import * as defaultTimeouts from './utils/default-timeouts'
 import * as getCwd from './utils/get-cwd'
 import * as globUtils from './utils/glob-utils'
@@ -23,6 +24,7 @@ export = {
   casing,
   'collect-keys': collectKeys,
   'collect-linked-keys': collectLinkedKeys,
+  compat,
   'default-timeouts': defaultTimeouts,
   'get-cwd': getCwd,
   'glob-utils': globUtils,
