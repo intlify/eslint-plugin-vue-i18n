@@ -609,14 +609,15 @@ function* generateFixAddI18nBlock(
     for (const objectNode of objects) {
       const first = objectNode.properties[0]
 
-      let indent =
+      let indent = `${
         /^\s*/.exec(
           sourceCode.lines[offsets.getLoc(objectNode.range[0]).line - 1]
-        )![0] + '  '
+        )![0]
+      }  `
       let next = ''
       if (first) {
         if (objectNode.loc.start.line === first.loc.start.line) {
-          next = ',\n' + indent
+          next = `,\n${indent}`
         } else {
           indent = /^\s*/.exec(
             sourceCode.lines[offsets.getLoc(first.range[0]).line - 1]

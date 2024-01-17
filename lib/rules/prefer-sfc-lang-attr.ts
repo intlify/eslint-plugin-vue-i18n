@@ -36,8 +36,9 @@ function create(context: RuleContext): RuleListener {
               const beforeToken = tokenStore.getTokenBefore(closeToken)
               return fixer.insertTextBeforeRange(
                 closeToken.range,
-                (beforeToken.range[1] < closeToken.range[0] ? '' : ' ') +
-                  'lang="json" '
+                `${
+                  beforeToken.range[1] < closeToken.range[0] ? '' : ' '
+                }lang="json" `
               )
             }
           })

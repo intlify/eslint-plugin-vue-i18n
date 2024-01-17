@@ -52,7 +52,7 @@ export function* getTestCasesFromFixtures(
       code: readFileSync(filename, 'utf8'),
       filename,
       options: testOptions.options || [],
-      // @ts-expect-error
+      // @ts-expect-error -- Type error for eslint v9
       languageOptions: {
         ...testOptions.languageOptions,
         ...(parser ? { parser } : {})

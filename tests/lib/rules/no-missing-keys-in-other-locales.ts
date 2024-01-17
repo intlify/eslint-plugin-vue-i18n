@@ -34,16 +34,19 @@ const YAML_FILENAME_LOCALE_KEY_TYPE_KEY = join(
 const SETTINGS = {
   FILE: {
     'vue-i18n': {
-      localeDir:
-        join(FIXTURES_ROOT, 'vue-cli-format/locales') + '/*.{json,yaml,yml}'
+      localeDir: `${join(
+        FIXTURES_ROOT,
+        'vue-cli-format/locales'
+      )}/*.{json,yaml,yml}`
     }
   },
   KEY: {
     'vue-i18n': {
       localeDir: {
-        pattern:
-          join(FIXTURES_ROOT, 'constructor-option-format/locales') +
-          '/*.{json,yaml,yml}',
+        pattern: `${join(
+          FIXTURES_ROOT,
+          'constructor-option-format/locales'
+        )}/*.{json,yaml,yml}`,
         localeKey: 'key'
       }
     }

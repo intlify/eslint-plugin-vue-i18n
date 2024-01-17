@@ -1,9 +1,9 @@
 import * as compat from 'eslint-compat-utils'
-import { RuleContext, SourceCode } from '../types'
+import type { RuleContext, SourceCode } from '../types'
 
-export function getFilename(context: RuleContext) {
-  return compat.getFilename(context as any)
+export function getFilename(context: RuleContext): string {
+  return compat.getFilename(context as never)
 }
 export function getSourceCode(context: RuleContext): SourceCode {
-  return compat.getSourceCode(context as any) as any
+  return compat.getSourceCode(context as never) as never
 }

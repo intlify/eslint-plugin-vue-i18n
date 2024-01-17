@@ -35,7 +35,7 @@ interface PathStack {
 function getMessageFilepath(fullPath: string, context: RuleContext) {
   const cwd = getCwd(context)
   if (fullPath.startsWith(cwd)) {
-    return fullPath.replace(cwd + '/', './')
+    return fullPath.replace(`${cwd}/`, './')
   }
   return fullPath
 }
@@ -131,7 +131,7 @@ function create(context: RuleContext): RuleListener {
           }
           if (typeof value.value !== 'object') {
             reportFiles.push(
-              '"' + getMessageFilepath(value.source.fullpath, context) + '"'
+              `"${getMessageFilepath(value.source.fullpath, context)}"`
             )
           } else {
             nextOtherDictionaries.push({
@@ -147,7 +147,7 @@ function create(context: RuleContext): RuleListener {
             message: `duplicate key '${keyPathStr}' in '${pathStack.locale}'. ${
               reportFiles.length === 0
                 ? last
-                : reportFiles.join(', ') + ', and ' + last
+                : `${reportFiles.join(', ')}, and ${last}`
             } has the same key`,
             loc: reportNode.loc
           })

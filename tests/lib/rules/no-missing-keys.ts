@@ -3,10 +3,10 @@
  */
 import { join } from 'node:path'
 import { RuleTester } from '../eslint-compat'
-import { RuleTester as RawRuleTester } from 'eslint'
+import type { RuleTester as RawRuleTester } from 'eslint'
 import rule from '../../../lib/rules/no-missing-keys'
 import * as vueParser from 'vue-eslint-parser'
-// @ts-expect-error
+// @ts-expect-error -- missing type
 import * as espree from 'espree'
 
 const localeDirs = [
@@ -305,7 +305,7 @@ tester.run('no-missing-keys', rule as never, {
         ]
       },
       {
-        // @ts-expect-error
+        // @ts-expect-error -- Type error for eslint v9
         languageOptions: {
           parser: espree
         },
