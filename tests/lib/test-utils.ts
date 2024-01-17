@@ -2,19 +2,26 @@ import { readFileSync, readdirSync, statSync } from 'fs'
 import { join, extname } from 'path'
 import type { SettingsVueI18nLocaleDir } from '../../lib/types'
 import type { RuleTester } from 'eslint'
+import * as vueParser from 'vue-eslint-parser'
+import * as jsonParser from 'jsonc-eslint-parser'
+import * as yamlParser from 'yaml-eslint-parser'
+
+type LanguageOptions = {
+  parser: object
+}
 
 export function getTestCasesFromFixtures(testOptions: {
   cwd: string
   options?: unknown[]
   localeDir?: SettingsVueI18nLocaleDir
-  parserOptions?: RuleTester.ValidTestCase['parserOptions']
+  languageOptions?: LanguageOptions
 }): IterableIterator<RuleTester.ValidTestCase>
 export function getTestCasesFromFixtures(
   testOptions: {
     cwd: string
     options?: unknown[]
     localeDir?: SettingsVueI18nLocaleDir
-    parserOptions?: RuleTester.ValidTestCase['parserOptions']
+    languageOptions?: LanguageOptions
   },
   outputs: {
     [file: string]:
@@ -27,6 +34,7 @@ export function* getTestCasesFromFixtures(
     cwd: string
     options?: unknown[]
     localeDir?: SettingsVueI18nLocaleDir
+    languageOptions?: LanguageOptions
   },
   outputs?: {
     [file: string]:
@@ -44,8 +52,11 @@ export function* getTestCasesFromFixtures(
       code: readFileSync(filename, 'utf8'),
       filename,
       options: testOptions.options || [],
-      parser,
-      parserOptions: {},
+      // @ts-expect-error -- Type error for eslint v9
+      languageOptions: {
+        ...testOptions.languageOptions,
+        ...(parser ? { parser } : {})
+      },
       settings: {
         'vue-i18n': {
           localeDir: testOptions.localeDir,
@@ -69,18 +80,18 @@ export function* getTestCasesFromFixtures(
   }
 }
 
-const PARSERS = {
+const PARSERS: Record<string, object | undefined> = {
   '.js': undefined,
-  '.vue': require.resolve('vue-eslint-parser'),
-  '.json': require.resolve('jsonc-eslint-parser'),
-  '.json5': require.resolve('jsonc-eslint-parser'),
-  '.yaml': require.resolve('yaml-eslint-parser'),
-  '.yml': require.resolve('yaml-eslint-parser')
+  '.vue': vueParser,
+  '.json': jsonParser,
+  '.json5': jsonParser,
+  '.yaml': yamlParser,
+  '.yml': yamlParser
 }
 function* extractTargetFiles(dir: string): IterableIterator<{
   filename: string
   relative: string
-  parser: string | undefined
+  parser: object | undefined
 }> {
   for (const relative of readdirSync(dir)) {
     if (relative === 'node_modules' || relative === '.eslintrc.js') {
@@ -88,14 +99,7 @@ function* extractTargetFiles(dir: string): IterableIterator<{
     }
     const filename = join(dir, relative)
     const ext = extname(relative)
-    if (
-      ext === '.js' ||
-      ext === '.vue' ||
-      ext === '.json' ||
-      ext === '.json5' ||
-      ext === '.yaml' ||
-      ext === '.yml'
-    ) {
+    if (PARSERS[ext]) {
       yield { filename, relative, parser: PARSERS[ext] }
       continue
     }

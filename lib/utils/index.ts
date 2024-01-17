@@ -25,6 +25,7 @@ import type {
 import * as jsoncESLintParser from 'jsonc-eslint-parser'
 import * as yamlESLintParser from 'yaml-eslint-parser'
 import { getCwd } from './get-cwd'
+import { getFilename, getSourceCode } from './compat'
 
 interface LocaleFiles {
   files: string[]
@@ -42,8 +43,9 @@ export function defineTemplateBodyVisitor(
   templateBodyVisitor: TemplateListener,
   scriptVisitor?: RuleListener
 ): RuleListener {
-  if (context.parserServices.defineTemplateBodyVisitor == null) {
-    const filename = context.getFilename()
+  const sourceCode = getSourceCode(context)
+  if (sourceCode.parserServices.defineTemplateBodyVisitor == null) {
+    const filename = getFilename(context)
     if (extname(filename) === '.vue') {
       context.report({
         loc: UNEXPECTED_ERROR_LOCATION,
@@ -53,7 +55,7 @@ export function defineTemplateBodyVisitor(
     }
     return {}
   }
-  return context.parserServices.defineTemplateBodyVisitor(
+  return sourceCode.parserServices.defineTemplateBodyVisitor(
     templateBodyVisitor,
     scriptVisitor
   )
@@ -156,13 +158,14 @@ export function getLocaleMessages(
   context: RuleContext,
   options?: { ignoreMissingSettingsError?: boolean }
 ): LocaleMessages {
+  const sourceCode = getSourceCode(context)
   const { settings } = context
   /** @type {SettingsVueI18nLocaleDir | null} */
   const localeDir =
     (settings['vue-i18n'] && settings['vue-i18n'].localeDir) || null
   const documentFragment =
-    context.parserServices.getDocumentFragment &&
-    context.parserServices.getDocumentFragment()
+    sourceCode.parserServices.getDocumentFragment &&
+    sourceCode.parserServices.getDocumentFragment()
   /** @type {VElement[]} */
   const i18nBlocks =
     (documentFragment &&
@@ -265,12 +268,12 @@ function getLocaleMessagesFromI18nBlocks(
   context: RuleContext,
   i18nBlocks: VAST.VElement[]
 ) {
-  const sourceCode = context.getSourceCode()
+  const sourceCode = getSourceCode(context)
   let localeMessages = i18nBlockLocaleMessages.get(sourceCode.ast)
   if (localeMessages) {
     return localeMessages
   }
-  const filename = context.getFilename()
+  const filename = getFilename(context)
   localeMessages = i18nBlocks
     .map(block => {
       const attrs = getStaticAttributes(block)
@@ -327,10 +330,11 @@ export function defineCustomBlocksVisitor(
   jsonRule: CustomBlockVisitorFactory,
   yamlRule: CustomBlockVisitorFactory
 ): RuleListener {
-  if (!context.parserServices.defineCustomBlocksVisitor) {
+  const sourceCode = getSourceCode(context)
+  if (!sourceCode.parserServices.defineCustomBlocksVisitor) {
     return {}
   }
-  const jsonVisitor = context.parserServices.defineCustomBlocksVisitor(
+  const jsonVisitor = sourceCode.parserServices.defineCustomBlocksVisitor(
     context,
     jsoncESLintParser,
     {
@@ -343,7 +347,7 @@ export function defineCustomBlocksVisitor(
       create: jsonRule
     }
   )
-  const yamlVisitor = context.parserServices.defineCustomBlocksVisitor(
+  const yamlVisitor = sourceCode.parserServices.defineCustomBlocksVisitor(
     context,
     yamlESLintParser,
     {
@@ -383,7 +387,7 @@ export function getVueObjectType(
   const parent = node.parent
   if (parent.type === 'ExportDefaultDeclaration') {
     // export default {} in .vue || .jsx
-    const ext = extname(context.getFilename()).toLowerCase()
+    const ext = extname(getFilename(context)).toLowerCase()
     if (
       (ext === '.vue' || ext === '.jsx' || !ext) &&
       skipTSAsExpression(parent.declaration) === node
@@ -439,7 +443,7 @@ export function getVueObjectType(
       (pp.key.type === 'Identifier'
         ? pp.key.name
         : pp.key.type === 'Literal'
-        ? pp.key.value + ''
+        ? `${pp.key.value}`
         : '') === 'components'
     ) {
       return 'components-option'
@@ -463,9 +467,10 @@ export function getVueObjectType(
 export function getScriptSetupElement(
   context: RuleContext
 ): VAST.VElement | null {
+  const sourceCode = getSourceCode(context)
   const df =
-    context.parserServices.getDocumentFragment &&
-    context.parserServices.getDocumentFragment()
+    sourceCode.parserServices.getDocumentFragment &&
+    sourceCode.parserServices.getDocumentFragment()
   if (!df) {
     return null
   }
@@ -662,7 +667,7 @@ function getComponentComments(context: RuleContext) {
   if (tokens) {
     return tokens
   }
-  const sourceCode = context.getSourceCode()
+  const sourceCode = getSourceCode(context)
   tokens = sourceCode
     .getAllComments()
     .filter(comment => /@vue\/component/g.test(comment.value))

@@ -14,7 +14,7 @@ export default {
     return {
       $resourceGroup: {
         async set(fileName, code) {
-          Vue.set(data.fileContents, '/path/' + fileName, code)
+          Vue.set(data.fileContents, `/path/${fileName}`, code)
 
           const timeSeq = ++waitSeq
           await Vue.nextTick()

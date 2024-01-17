@@ -2,41 +2,41 @@
  * @author Yosuke Ota
  */
 import { join } from 'node:path'
-import { RuleTester } from 'eslint'
+import { RuleTester, TEST_RULE_ID_PREFIX } from '../eslint-compat'
 import rule from '../../../lib/rules/valid-message-syntax'
+import * as vueParser from 'vue-eslint-parser'
+import * as jsonParser from 'jsonc-eslint-parser'
+import * as yamlParser from 'yaml-eslint-parser'
 
-const vueParser = require.resolve('vue-eslint-parser')
-const jsonParser = require.resolve('jsonc-eslint-parser')
-const yamlParser = require.resolve('yaml-eslint-parser')
 const localesRoot = join(__dirname, '../../fixtures/valid-message-syntax')
 
 const options = {
   json: {
     default: {
-      parser: jsonParser,
+      languageOptions: { parser: jsonParser },
       filename: join(localesRoot, 'test.json'),
       settings: {
         'vue-i18n': {
-          localeDir: localesRoot + '/*.{json,yaml,yml}'
+          localeDir: `${localesRoot}/*.{json,yaml,yml}`
         }
       }
     },
     v8: {
-      parser: jsonParser,
+      languageOptions: { parser: jsonParser },
       filename: join(localesRoot, 'test.json'),
       settings: {
         'vue-i18n': {
-          localeDir: localesRoot + '/*.{json,yaml,yml}',
+          localeDir: `${localesRoot}/*.{json,yaml,yml}`,
           messageSyntaxVersion: '^8.0.0'
         }
       }
     },
     v9: {
-      parser: jsonParser,
+      languageOptions: { parser: jsonParser },
       filename: join(localesRoot, 'test.json'),
       settings: {
         'vue-i18n': {
-          localeDir: localesRoot + '/*.{json,yaml,yml}',
+          localeDir: `${localesRoot}/*.{json,yaml,yml}`,
           messageSyntaxVersion: '^9.0.0'
         }
       }
@@ -44,30 +44,30 @@ const options = {
   },
   yaml: {
     default: {
-      parser: yamlParser,
+      languageOptions: { parser: yamlParser },
       filename: join(localesRoot, 'test.yaml'),
       settings: {
         'vue-i18n': {
-          localeDir: localesRoot + '/*.{json,yaml,yml}'
+          localeDir: `${localesRoot}/*.{json,yaml,yml}`
         }
       }
     },
     v8: {
-      parser: yamlParser,
+      languageOptions: { parser: yamlParser },
       filename: join(localesRoot, 'test.yaml'),
       settings: {
         'vue-i18n': {
-          localeDir: localesRoot + '/*.{json,yaml,yml}',
+          localeDir: `${localesRoot}/*.{json,yaml,yml}`,
           messageSyntaxVersion: '^8.0.0'
         }
       }
     },
     v9: {
-      parser: yamlParser,
+      languageOptions: { parser: yamlParser },
       filename: join(localesRoot, 'test.yaml'),
       settings: {
         'vue-i18n': {
-          localeDir: localesRoot + '/*.{json,yaml,yml}',
+          localeDir: `${localesRoot}/*.{json,yaml,yml}`,
           messageSyntaxVersion: '^9.0.0'
         }
       }
@@ -75,20 +75,20 @@ const options = {
   },
   vue: {
     default: {
-      parser: vueParser,
+      languageOptions: { parser: vueParser },
       filename: join(localesRoot, 'test.vue'),
       settings: {
         'vue-i18n': {
-          localeDir: localesRoot + '/*.{json,yaml,yml}'
+          localeDir: `${localesRoot}/*.{json,yaml,yml}`
         }
       }
     },
     v9: {
-      parser: vueParser,
+      languageOptions: { parser: vueParser },
       filename: join(localesRoot, 'test.vue'),
       settings: {
         'vue-i18n': {
-          localeDir: localesRoot + '/*.{json,yaml,yml}',
+          localeDir: `${localesRoot}/*.{json,yaml,yml}`,
           messageSyntaxVersion: '^9.0.0'
         }
       }
@@ -97,8 +97,7 @@ const options = {
 }
 
 const tester = new RuleTester({
-  parser: vueParser,
-  parserOptions: { ecmaVersion: 2015 }
+  languageOptions: { parser: vueParser, ecmaVersion: 2015 }
 })
 
 tester.run('valid-message-syntax', rule as never, {
@@ -156,8 +155,7 @@ tester.run('valid-message-syntax', rule as never, {
       ...options.json.default,
       errors: [
         {
-          message:
-            "If you want to use 'valid-message-syntax' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n' documentation",
+          message: `If you want to use '${TEST_RULE_ID_PREFIX}valid-message-syntax' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n' documentation`,
           line: 1,
           column: 1
         },
@@ -232,8 +230,7 @@ tester.run('valid-message-syntax', rule as never, {
       ...options.yaml.default,
       errors: [
         {
-          message:
-            "If you want to use 'valid-message-syntax' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n' documentation",
+          message: `If you want to use '${TEST_RULE_ID_PREFIX}valid-message-syntax' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n' documentation`,
           line: 1,
           column: 1
         },
@@ -251,8 +248,7 @@ tester.run('valid-message-syntax', rule as never, {
       ...options.yaml.default,
       errors: [
         {
-          message:
-            "If you want to use 'valid-message-syntax' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n' documentation",
+          message: `If you want to use '${TEST_RULE_ID_PREFIX}valid-message-syntax' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n' documentation`,
           line: 1,
           column: 1
         },
@@ -374,8 +370,7 @@ tester.run('valid-message-syntax', rule as never, {
       ...options.vue.default,
       errors: [
         {
-          message:
-            "If you want to use 'valid-message-syntax' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n' documentation",
+          message: `If you want to use '${TEST_RULE_ID_PREFIX}valid-message-syntax' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n' documentation`,
           line: 1,
           column: 1
         },

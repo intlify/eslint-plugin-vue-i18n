@@ -1,11 +1,10 @@
-import { RuleTester } from 'eslint'
+import { RuleTester } from '../eslint-compat'
 import rule from '../../../lib/rules/sfc-locale-attr'
-
-const vueParser = require.resolve('vue-eslint-parser')
+import * as vueParser from 'vue-eslint-parser'
 
 const tester = new RuleTester({
-  parser: vueParser,
-  parserOptions: {
+  languageOptions: {
+    parser: vueParser,
     ecmaVersion: 2020,
     sourceType: 'module'
   }

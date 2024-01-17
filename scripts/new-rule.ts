@@ -45,7 +45,7 @@ export = createRule({
   )
   writeFileSync(
     testFile,
-    `import { RuleTester } from 'eslint'
+    `import { RuleTester } from '../eslint-compat'
 import rule from '../../../lib/rules/${ruleId}'
 
 const vueParser = require.resolve('vue-eslint-parser')

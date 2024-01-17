@@ -10,6 +10,7 @@ import type { RuleContext, RuleListener } from '../types'
 import { getCasingChecker } from '../utils/casing'
 import type { LocaleMessage } from '../utils/locale-messages'
 import { createRule } from '../utils/rule'
+import { getFilename, getSourceCode } from '../utils/compat'
 const debug = debugBuilder('eslint-plugin-vue-i18n:key-format-style')
 
 const allowedCaseOptions = [
@@ -21,7 +22,8 @@ const allowedCaseOptions = [
 type CaseOption = (typeof allowedCaseOptions)[number]
 
 function create(context: RuleContext): RuleListener {
-  const filename = context.getFilename()
+  const filename = getFilename(context)
+  const sourceCode = getSourceCode(context)
   const expectCasing: CaseOption = context.options[0] ?? 'camelCase'
   const checker = getCasingChecker(expectCasing)
   const allowArray: boolean = context.options[1]?.allowArray
@@ -115,7 +117,6 @@ function create(context: RuleContext): RuleListener {
         if (cachedLoc) {
           return cachedLoc
         }
-        const sourceCode = context.getSourceCode()
         return (cachedLoc = {
           start: sourceCode.getLocFromIndex(offset + start),
           end: sourceCode.getLocFromIndex(offset + end)
@@ -264,7 +265,10 @@ function create(context: RuleContext): RuleListener {
         return createVisitorForYaml(targetLocaleMessage)
       }
     )
-  } else if (context.parserServices.isJSON || context.parserServices.isYAML) {
+  } else if (
+    sourceCode.parserServices.isJSON ||
+    sourceCode.parserServices.isYAML
+  ) {
     const localeMessages = getLocaleMessages(context)
     const targetLocaleMessage = localeMessages.findExistLocaleMessage(filename)
     if (!targetLocaleMessage) {
@@ -272,9 +276,9 @@ function create(context: RuleContext): RuleListener {
       return {}
     }
 
-    if (context.parserServices.isJSON) {
+    if (sourceCode.parserServices.isJSON) {
       return createVisitorForJson(targetLocaleMessage)
-    } else if (context.parserServices.isYAML) {
+    } else if (sourceCode.parserServices.isYAML) {
       return createVisitorForYaml(targetLocaleMessage)
     }
     return {}

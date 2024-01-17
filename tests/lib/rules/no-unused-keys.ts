@@ -1,17 +1,22 @@
 /**
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
-import { RuleTester } from 'eslint'
+import { RuleTester } from '../eslint-compat'
 import { join } from 'node:path'
 import rule from '../../../lib/rules/no-unused-keys'
 import { getTestCasesFromFixtures } from '../test-utils'
 import { satisfies } from 'semver'
 import { version } from 'eslint/package.json'
+import * as vueParser from 'vue-eslint-parser'
+import * as tsParser from '@typescript-eslint/parser'
 
 const cwdRoot = join(__dirname, '../../fixtures/no-unused-keys')
 new RuleTester({
-  parser: require.resolve('vue-eslint-parser'),
-  parserOptions: { ecmaVersion: 2015, sourceType: 'module' }
+  languageOptions: {
+    parser: vueParser,
+    ecmaVersion: 2020,
+    sourceType: 'module'
+  }
 }).run('no-unused-keys', rule as never, {
   valid: [
     {
@@ -1992,8 +1997,8 @@ hello_dio: "こんにちは、アンダースコア DIO！"
                   enableFix: true
                 }
               ],
-              parserOptions: {
-                parser: '@typescript-eslint/parser'
+              languageOptions: {
+                parser: tsParser
               }
             },
             {

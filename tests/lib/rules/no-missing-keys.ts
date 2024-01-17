@@ -2,8 +2,12 @@
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
 import { join } from 'node:path'
-import { RuleTester } from 'eslint'
+import { RuleTester } from '../eslint-compat'
+import type { RuleTester as RawRuleTester } from 'eslint'
 import rule from '../../../lib/rules/no-missing-keys'
+import * as vueParser from 'vue-eslint-parser'
+// @ts-expect-error -- missing type
+import * as espree from 'espree'
 
 const localeDirs = [
   './tests/fixtures/no-missing-keys/vue-cli-format/locales/*.{json,yaml,yml}',
@@ -28,7 +32,7 @@ const localeDirs = [
 ]
 
 function buildTestsForLocales<
-  T extends RuleTester.ValidTestCase | RuleTester.InvalidTestCase
+  T extends RawRuleTester.ValidTestCase | RawRuleTester.InvalidTestCase
 >(testcases: T[], otherTestcases: T[]): T[] {
   const result: T[] = []
   for (const testcase of testcases) {
@@ -45,8 +49,11 @@ function buildTestsForLocales<
 }
 
 const tester = new RuleTester({
-  parser: require.resolve('vue-eslint-parser'),
-  parserOptions: { ecmaVersion: 2015, sourceType: 'module' }
+  languageOptions: {
+    parser: vueParser,
+    ecmaVersion: 2015,
+    sourceType: 'module'
+  }
 })
 
 tester.run('no-missing-keys', rule as never, {
@@ -232,7 +239,7 @@ tester.run('no-missing-keys', rule as never, {
     ]
   ),
 
-  invalid: buildTestsForLocales<RuleTester.InvalidTestCase>(
+  invalid: buildTestsForLocales<RawRuleTester.InvalidTestCase>(
     [
       {
         // basic
@@ -298,7 +305,10 @@ tester.run('no-missing-keys', rule as never, {
         ]
       },
       {
-        parser: require.resolve('espree'),
+        // @ts-expect-error -- Type error for eslint v9
+        languageOptions: {
+          parser: espree
+        },
         code: `$t('messages.missing')`,
         errors: [
           `'messages.missing' does not exist in localization message resources`
