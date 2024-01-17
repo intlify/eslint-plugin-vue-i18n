@@ -16,6 +16,7 @@ import type {
 import { joinPath } from '../utils/key-path'
 import { getCwd } from '../utils/get-cwd'
 import { createRule } from '../utils/rule'
+import { getFilename, getSourceCode } from '../utils/compat'
 const debug = debugBuilder('eslint-plugin-vue-i18n:no-duplicate-keys-in-locale')
 
 interface DictData {
@@ -40,7 +41,8 @@ function getMessageFilepath(fullPath: string, context: RuleContext) {
 }
 
 function create(context: RuleContext): RuleListener {
-  const filename = context.getFilename()
+  const filename = getFilename(context)
+  const sourceCode = getSourceCode(context)
   const options = (context.options && context.options[0]) || {}
   const ignoreI18nBlock = Boolean(options.ignoreI18nBlock)
 
@@ -316,7 +318,7 @@ function create(context: RuleContext): RuleListener {
               lm => lm !== targetLocaleMessage
             )
         return createVisitorForJson(
-          ctx.getSourceCode(),
+          getSourceCode(ctx),
           targetLocaleMessage,
           otherLocaleMessages
         )
@@ -335,13 +337,16 @@ function create(context: RuleContext): RuleListener {
               lm => lm !== targetLocaleMessage
             )
         return createVisitorForYaml(
-          ctx.getSourceCode(),
+          getSourceCode(ctx),
           targetLocaleMessage,
           otherLocaleMessages
         )
       }
     )
-  } else if (context.parserServices.isJSON || context.parserServices.isYAML) {
+  } else if (
+    sourceCode.parserServices.isJSON ||
+    sourceCode.parserServices.isYAML
+  ) {
     const localeMessages = getLocaleMessages(context)
     const targetLocaleMessage = localeMessages.findExistLocaleMessage(filename)
     if (!targetLocaleMessage) {
@@ -349,17 +354,16 @@ function create(context: RuleContext): RuleListener {
       return {}
     }
 
-    const sourceCode = context.getSourceCode()
     const otherLocaleMessages: LocaleMessage[] =
       localeMessages.localeMessages.filter(lm => lm !== targetLocaleMessage)
 
-    if (context.parserServices.isJSON) {
+    if (sourceCode.parserServices.isJSON) {
       return createVisitorForJson(
         sourceCode,
         targetLocaleMessage,
         otherLocaleMessages
       )
-    } else if (context.parserServices.isYAML) {
+    } else if (sourceCode.parserServices.isYAML) {
       return createVisitorForYaml(
         sourceCode,
         targetLocaleMessage,

@@ -1,17 +1,21 @@
 /**
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
-import { RuleTester } from 'eslint'
+import { RuleTester } from '../eslint-compat'
 import { join } from 'node:path'
 import { readFileSync } from 'fs'
 import rule from '../../../lib/rules/no-html-messages'
 import { getTestCasesFromFixtures } from '../test-utils'
+import * as vueParser from 'vue-eslint-parser'
 
 const cwdRoot = join(__dirname, '../../fixtures/no-html-messages')
 
 new RuleTester({
-  parser: require.resolve('vue-eslint-parser'),
-  parserOptions: { ecmaVersion: 2015, sourceType: 'module' }
+  languageOptions: {
+    parser: vueParser,
+    ecmaVersion: 2015,
+    sourceType: 'module'
+  }
 }).run('no-html-messages', rule as never, {
   valid: [
     {

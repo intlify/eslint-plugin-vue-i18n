@@ -1,19 +1,19 @@
 import { join } from 'node:path'
-import { RuleTester } from 'eslint'
+import { RuleTester } from '../eslint-compat'
 
 import rule from '../../../lib/rules/no-unknown-locale'
 import type { SettingsVueI18nLocaleDirObject } from '../../../lib/types'
+import * as vueParser from 'vue-eslint-parser'
+import * as jsonParser from 'jsonc-eslint-parser'
+import * as yamlParser from 'yaml-eslint-parser'
 
-const vueParser = require.resolve('vue-eslint-parser')
-const jsonParser = require.resolve('jsonc-eslint-parser')
-const yamlParser = require.resolve('yaml-eslint-parser')
 const fileLocalesRoot = join(__dirname, '../../fixtures/no-unknown-locale/file')
 const keyLocalesRoot = join(__dirname, '../../fixtures/no-unknown-locale/key')
 
 const options = {
   json: {
     fileTest: {
-      parser: jsonParser,
+      languageOptions: { parser: jsonParser },
       filename: join(fileLocalesRoot, 'test.json'),
       settings: {
         'vue-i18n': {
@@ -22,7 +22,7 @@ const options = {
       }
     },
     fileEn: {
-      parser: jsonParser,
+      languageOptions: { parser: jsonParser },
       filename: join(fileLocalesRoot, 'en.json'),
       settings: {
         'vue-i18n': {
@@ -31,7 +31,7 @@ const options = {
       }
     },
     key: {
-      parser: jsonParser,
+      languageOptions: { parser: jsonParser },
       filename: join(keyLocalesRoot, 'test.json'),
       settings: {
         'vue-i18n': {
@@ -45,7 +45,7 @@ const options = {
   },
   yaml: {
     fileTest: {
-      parser: yamlParser,
+      languageOptions: { parser: yamlParser },
       filename: join(fileLocalesRoot, 'test.yaml'),
       settings: {
         'vue-i18n': {
@@ -54,7 +54,7 @@ const options = {
       }
     },
     fileEn: {
-      parser: yamlParser,
+      languageOptions: { parser: yamlParser },
       filename: join(fileLocalesRoot, 'en.yaml'),
       settings: {
         'vue-i18n': {
@@ -63,7 +63,7 @@ const options = {
       }
     },
     key: {
-      parser: yamlParser,
+      languageOptions: { parser: yamlParser },
       filename: join(keyLocalesRoot, 'test.yaml'),
       settings: {
         'vue-i18n': {
@@ -78,8 +78,8 @@ const options = {
 }
 
 const tester = new RuleTester({
-  parser: vueParser,
-  parserOptions: {
+  languageOptions: {
+    parser: vueParser,
     ecmaVersion: 2020,
     sourceType: 'module'
   }

@@ -17,11 +17,12 @@ import { parse } from '../utils/message-compiler/parser'
 import { parse as parseForV8 } from '../utils/message-compiler/parser-v8'
 import type { CompileError } from '@intlify/message-compiler'
 import { createRule } from '../utils/rule'
+import { getFilename, getSourceCode } from '../utils/compat'
 const debug = debugBuilder('eslint-plugin-vue-i18n:valid-message-syntax')
 
 function create(context: RuleContext): RuleListener {
-  const filename = context.getFilename()
-  const sourceCode = context.getSourceCode()
+  const filename = getFilename(context)
+  const sourceCode = getSourceCode(context)
   const allowNotString = Boolean(context.options[0]?.allowNotString)
   const messageSyntaxVersions = getMessageSyntaxVersions(context)
 
@@ -177,7 +178,10 @@ function create(context: RuleContext): RuleListener {
       createVisitorForJson,
       createVisitorForYaml
     )
-  } else if (context.parserServices.isJSON || context.parserServices.isYAML) {
+  } else if (
+    sourceCode.parserServices.isJSON ||
+    sourceCode.parserServices.isYAML
+  ) {
     const localeMessages = getLocaleMessages(context)
     const targetLocaleMessage = localeMessages.findExistLocaleMessage(filename)
     if (!targetLocaleMessage) {
@@ -185,9 +189,9 @@ function create(context: RuleContext): RuleListener {
       return {}
     }
 
-    if (context.parserServices.isJSON) {
+    if (sourceCode.parserServices.isJSON) {
       return createVisitorForJson()
-    } else if (context.parserServices.isYAML) {
+    } else if (sourceCode.parserServices.isYAML) {
       return createVisitorForYaml()
     }
     return {}

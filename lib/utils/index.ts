@@ -25,6 +25,7 @@ import type {
 import * as jsoncESLintParser from 'jsonc-eslint-parser'
 import * as yamlESLintParser from 'yaml-eslint-parser'
 import { getCwd } from './get-cwd'
+import { getSourceCode } from './compat'
 
 interface LocaleFiles {
   files: string[]
@@ -42,7 +43,8 @@ export function defineTemplateBodyVisitor(
   templateBodyVisitor: TemplateListener,
   scriptVisitor?: RuleListener
 ): RuleListener {
-  if (context.parserServices.defineTemplateBodyVisitor == null) {
+  const sourceCode = getSourceCode(context)
+  if (sourceCode.parserServices.defineTemplateBodyVisitor == null) {
     const filename = context.getFilename()
     if (extname(filename) === '.vue') {
       context.report({
@@ -53,7 +55,7 @@ export function defineTemplateBodyVisitor(
     }
     return {}
   }
-  return context.parserServices.defineTemplateBodyVisitor(
+  return sourceCode.parserServices.defineTemplateBodyVisitor(
     templateBodyVisitor,
     scriptVisitor
   )
@@ -156,13 +158,14 @@ export function getLocaleMessages(
   context: RuleContext,
   options?: { ignoreMissingSettingsError?: boolean }
 ): LocaleMessages {
+  const sourceCode = getSourceCode(context)
   const { settings } = context
   /** @type {SettingsVueI18nLocaleDir | null} */
   const localeDir =
     (settings['vue-i18n'] && settings['vue-i18n'].localeDir) || null
   const documentFragment =
-    context.parserServices.getDocumentFragment &&
-    context.parserServices.getDocumentFragment()
+    sourceCode.parserServices.getDocumentFragment &&
+    sourceCode.parserServices.getDocumentFragment()
   /** @type {VElement[]} */
   const i18nBlocks =
     (documentFragment &&
@@ -327,10 +330,11 @@ export function defineCustomBlocksVisitor(
   jsonRule: CustomBlockVisitorFactory,
   yamlRule: CustomBlockVisitorFactory
 ): RuleListener {
-  if (!context.parserServices.defineCustomBlocksVisitor) {
+  const sourceCode = getSourceCode(context)
+  if (!sourceCode.parserServices.defineCustomBlocksVisitor) {
     return {}
   }
-  const jsonVisitor = context.parserServices.defineCustomBlocksVisitor(
+  const jsonVisitor = sourceCode.parserServices.defineCustomBlocksVisitor(
     context,
     jsoncESLintParser,
     {
@@ -343,7 +347,7 @@ export function defineCustomBlocksVisitor(
       create: jsonRule
     }
   )
-  const yamlVisitor = context.parserServices.defineCustomBlocksVisitor(
+  const yamlVisitor = sourceCode.parserServices.defineCustomBlocksVisitor(
     context,
     yamlESLintParser,
     {
@@ -463,9 +467,10 @@ export function getVueObjectType(
 export function getScriptSetupElement(
   context: RuleContext
 ): VAST.VElement | null {
+  const sourceCode = getSourceCode(context)
   const df =
-    context.parserServices.getDocumentFragment &&
-    context.parserServices.getDocumentFragment()
+    sourceCode.parserServices.getDocumentFragment &&
+    sourceCode.parserServices.getDocumentFragment()
   if (!df) {
     return null
   }

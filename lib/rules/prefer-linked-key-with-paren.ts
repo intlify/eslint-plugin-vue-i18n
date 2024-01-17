@@ -16,6 +16,7 @@ import { parse } from '../utils/message-compiler/parser'
 import { parse as parseForV8 } from '../utils/message-compiler/parser-v8'
 import { traverseNode } from '../utils/message-compiler/traverser'
 import { createRule } from '../utils/rule'
+import { getFilename, getSourceCode } from '../utils/compat'
 const debug = debugBuilder(
   'eslint-plugin-vue-i18n:prefer-linked-key-with-paren'
 )
@@ -33,8 +34,8 @@ function getSingleQuote(node: JSONAST.JSONStringLiteral | YAMLAST.YAMLScalar) {
 type GetReportOffset = (offset: number) => number | null
 
 function create(context: RuleContext): RuleListener {
-  const filename = context.getFilename()
-  const sourceCode = context.getSourceCode()
+  const filename = getFilename(context)
+  const sourceCode = getSourceCode(context)
   const messageSyntaxVersions = getMessageSyntaxVersions(context)
 
   function verifyForV9(
@@ -221,7 +222,10 @@ function create(context: RuleContext): RuleListener {
       createVisitorForJson,
       createVisitorForYaml
     )
-  } else if (context.parserServices.isJSON || context.parserServices.isYAML) {
+  } else if (
+    sourceCode.parserServices.isJSON ||
+    sourceCode.parserServices.isYAML
+  ) {
     const localeMessages = getLocaleMessages(context)
     const targetLocaleMessage = localeMessages.findExistLocaleMessage(filename)
     if (!targetLocaleMessage) {
@@ -229,9 +233,9 @@ function create(context: RuleContext): RuleListener {
       return {}
     }
 
-    if (context.parserServices.isJSON) {
+    if (sourceCode.parserServices.isJSON) {
       return createVisitorForJson()
-    } else if (context.parserServices.isYAML) {
+    } else if (sourceCode.parserServices.isYAML) {
       return createVisitorForYaml()
     }
     return {}

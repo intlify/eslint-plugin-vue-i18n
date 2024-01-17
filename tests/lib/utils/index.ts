@@ -27,16 +27,18 @@ describe('getLocaleMessages', () => {
   })
 
   const localeDir = 'tests/fixtures/utils/get-locale-messages/**/*.json'
+  const parserServices = {}
   const dummyContext: RuleContext = {
     getFilename() {
       return 'input.vue'
     },
     getSourceCode() {
       return {
-        ast: {}
+        ast: {},
+        parserServices
       }
     },
-    parserServices: {},
+    parserServices,
     settings: {
       'vue-i18n': {
         localeDir

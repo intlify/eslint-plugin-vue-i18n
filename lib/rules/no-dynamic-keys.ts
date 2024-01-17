@@ -5,12 +5,13 @@ import { defineTemplateBodyVisitor, isStaticLiteral } from '../utils/index'
 import type { RuleContext, RuleListener } from '../types'
 import type { AST as VAST } from 'vue-eslint-parser'
 import { createRule } from '../utils/rule'
+import { getSourceCode } from '../utils/compat'
 
 function getNodeName(context: RuleContext, node: VAST.Node): string {
   if (node.type === 'Identifier') {
     return node.name
   }
-  const sourceCode = context.getSourceCode()
+  const sourceCode = getSourceCode(context)
   if (
     sourceCode.ast.range[0] <= node.range[0] &&
     node.range[1] <= sourceCode.ast.range[1]
@@ -20,7 +21,7 @@ function getNodeName(context: RuleContext, node: VAST.Node): string {
       .map(t => t.value)
       .join('')
   }
-  const tokenStore = context.parserServices.getTemplateBodyTokenStore()
+  const tokenStore = sourceCode.parserServices.getTemplateBodyTokenStore()
   return tokenStore
     .getTokens(node)
     .map(t => t.value)

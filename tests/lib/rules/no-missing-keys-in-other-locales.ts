@@ -2,12 +2,11 @@
  * @author Yosuke Ota
  */
 import { join } from 'node:path'
-import { RuleTester } from 'eslint'
+import { RuleTester } from '../eslint-compat'
 import rule from '../../../lib/rules/no-missing-keys-in-other-locales'
-
-const vueParser = require.resolve('vue-eslint-parser')
-const jsonParser = require.resolve('jsonc-eslint-parser')
-const yamlParser = require.resolve('yaml-eslint-parser')
+import * as vueParser from 'vue-eslint-parser'
+import * as jsonParser from 'jsonc-eslint-parser'
+import * as yamlParser from 'yaml-eslint-parser'
 
 const FIXTURES_ROOT = join(
   __dirname,
@@ -54,29 +53,28 @@ const SETTINGS = {
 const OPTIONS = {
   JSON_LOCALE_KEY_TYPE_FILE: {
     filename: JSON_FILENAME_LOCALE_KEY_TYPE_FILE,
-    parser: jsonParser,
+    languageOptions: { parser: jsonParser },
     settings: SETTINGS.FILE
   },
   JSON_LOCALE_KEY_TYPE_KEY: {
     filename: JSON_FILENAME_LOCALE_KEY_TYPE_KEY,
-    parser: jsonParser,
+    languageOptions: { parser: jsonParser },
     settings: SETTINGS.KEY
   },
   YAML_LOCALE_KEY_TYPE_FILE: {
     filename: YAML_FILENAME_LOCALE_KEY_TYPE_FILE,
-    parser: yamlParser,
+    languageOptions: { parser: yamlParser },
     settings: SETTINGS.FILE
   },
   YAML_LOCALE_KEY_TYPE_KEY: {
     filename: YAML_FILENAME_LOCALE_KEY_TYPE_KEY,
-    parser: yamlParser,
+    languageOptions: { parser: yamlParser },
     settings: SETTINGS.KEY
   }
 }
 
 const tester = new RuleTester({
-  parser: vueParser,
-  parserOptions: { ecmaVersion: 2015 }
+  languageOptions: { parser: vueParser, ecmaVersion: 2015 }
 })
 
 tester.run('no-missing-keys-in-other-locales', rule as never, {

@@ -24,6 +24,7 @@ import { joinPath, parsePath } from '../utils/key-path'
 import { getCwd } from '../utils/get-cwd'
 import { createRule } from '../utils/rule'
 import { toRegExp } from '../utils/regexp'
+import { getFilename, getSourceCode } from '../utils/compat'
 const debug = debugBuilder('eslint-plugin-vue-i18n:no-unused-keys')
 
 type UsedKeys = {
@@ -76,7 +77,7 @@ function getUsedKeysMap(
 }
 
 function create(context: RuleContext): RuleListener {
-  const filename = context.getFilename()
+  const filename = getFilename(context)
   const options = (context.options && context.options[0]) || {}
   const enableFix = options.enableFix
   const ignores = ((options.ignores || []) as string[]).map(toRegExp)
@@ -491,6 +492,7 @@ function create(context: RuleContext): RuleListener {
     }
   }
 
+  const sourceCode = getSourceCode(context)
   if (extname(filename) === '.vue') {
     const createCustomBlockRule = (
       createVisitor: (
@@ -501,8 +503,8 @@ function create(context: RuleContext): RuleListener {
       return ctx => {
         const localeMessages = getLocaleMessages(context)
         const usedLocaleMessageKeys = collectKeysFromAST(
-          context.getSourceCode().ast as VAST.ESLintProgram,
-          context.getSourceCode().visitorKeys
+          sourceCode.ast as VAST.ESLintProgram,
+          sourceCode.visitorKeys
         )
         const targetLocaleMessage = localeMessages.findBlockLocaleMessage(
           ctx.parserServices.customBlock
@@ -517,7 +519,7 @@ function create(context: RuleContext): RuleListener {
           context
         )
 
-        return createVisitor(ctx.getSourceCode(), usedKeys)
+        return createVisitor(getSourceCode(ctx), usedKeys)
       }
     }
     return defineCustomBlocksVisitor(
@@ -525,7 +527,10 @@ function create(context: RuleContext): RuleListener {
       createCustomBlockRule(createVisitorForJson),
       createCustomBlockRule(createVisitorForYaml)
     )
-  } else if (context.parserServices.isJSON || context.parserServices.isYAML) {
+  } else if (
+    sourceCode.parserServices.isJSON ||
+    sourceCode.parserServices.isYAML
+  ) {
     const localeMessages = getLocaleMessages(context)
     const targetLocaleMessage = localeMessages.findExistLocaleMessage(filename)
     if (!targetLocaleMessage) {
@@ -540,7 +545,6 @@ function create(context: RuleContext): RuleListener {
       extensions,
       context
     )
-    const sourceCode = context.getSourceCode()
 
     const usedKeys = getUsedKeysMap(
       targetLocaleMessage,
@@ -548,9 +552,9 @@ function create(context: RuleContext): RuleListener {
       usedLocaleMessageKeys,
       context
     )
-    if (context.parserServices.isJSON) {
+    if (sourceCode.parserServices.isJSON) {
       return createVisitorForJson(sourceCode, usedKeys)
-    } else if (context.parserServices.isYAML) {
+    } else if (sourceCode.parserServices.isYAML) {
       return createVisitorForYaml(sourceCode, usedKeys)
     }
     return {}

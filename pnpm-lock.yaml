@@ -17,6 +17,9 @@ dependencies:
   debug:
     specifier: ^4.3.4
     version: 4.3.4(supports-color@8.1.1)
+  eslint-compat-utils:
+    specifier: ^0.4.1
+    version: 0.4.1(eslint@8.45.0)
   glob:
     specifier: ^10.3.3
     version: 10.3.3
@@ -124,6 +127,9 @@ devDependencies:
   eslint4b:
     specifier: ^7.32.0
     version: 7.32.0
+  espree:
+    specifier: ^9.6.1
+    version: 9.6.1
   esquery:
     specifier: ^1.5.0
     version: 1.5.0
@@ -2491,6 +2497,16 @@ packages:
   /escape-string-regexp@4.0.0:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
+
+  /eslint-compat-utils@0.4.1(eslint@8.45.0):
+    resolution: {integrity: sha512-5N7ZaJG5pZxUeNNJfUchurLVrunD1xJvyg5kYOIVF8kg1f3ajTikmAu/5fZ9w100omNPOoMjngRszh/Q/uFGMg==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      eslint: '>=6.0.0'
+    dependencies:
+      eslint: 8.45.0
+      semver: 7.5.4
+    dev: false
 
   /eslint-config-prettier@9.0.0(eslint@8.45.0):
     resolution: {integrity: sha512-IcJsTkJae2S35pRsRAwoCE+925rJJStOdkKnLVgtE+tEpqU0EVVM7OqrwxqgptKdX29NUwC82I5pXsGFIgSevw==}

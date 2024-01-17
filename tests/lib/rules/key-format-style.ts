@@ -3,21 +3,21 @@
  */
 import { join } from 'node:path'
 
-import { RuleTester } from 'eslint'
+import { RuleTester } from '../eslint-compat'
 
 import rule from '../../../lib/rules/key-format-style'
 import type { SettingsVueI18nLocaleDirObject } from '../../../lib/types'
+import * as vueParser from 'vue-eslint-parser'
+import * as jsonParser from 'jsonc-eslint-parser'
+import * as yamlParser from 'yaml-eslint-parser'
 
-const vueParser = require.resolve('vue-eslint-parser')
-const jsonParser = require.resolve('jsonc-eslint-parser')
-const yamlParser = require.resolve('yaml-eslint-parser')
 const fileLocalesRoot = join(__dirname, '../../fixtures/key-format-style/file')
 const keyLocalesRoot = join(__dirname, '../../fixtures/key-format-style/key')
 
 const options = {
   json: {
     file: {
-      parser: jsonParser,
+      languageOptions: { parser: jsonParser },
       filename: join(fileLocalesRoot, 'test.json'),
       settings: {
         'vue-i18n': {
@@ -26,7 +26,7 @@ const options = {
       }
     },
     key: {
-      parser: jsonParser,
+      languageOptions: { parser: jsonParser },
       filename: join(keyLocalesRoot, 'test.json'),
       settings: {
         'vue-i18n': {
@@ -40,7 +40,7 @@ const options = {
   },
   yaml: {
     file: {
-      parser: yamlParser,
+      languageOptions: { parser: yamlParser },
       filename: join(fileLocalesRoot, 'test.yaml'),
       settings: {
         'vue-i18n': {
@@ -49,7 +49,7 @@ const options = {
       }
     },
     key: {
-      parser: yamlParser,
+      languageOptions: { parser: yamlParser },
       filename: join(keyLocalesRoot, 'test.yaml'),
       settings: {
         'vue-i18n': {
@@ -64,8 +64,7 @@ const options = {
 }
 
 const tester = new RuleTester({
-  parser: vueParser,
-  parserOptions: { ecmaVersion: 2015 }
+  languageOptions: { parser: vueParser, ecmaVersion: 2015 }
 })
 
 tester.run('key-format-style', rule as never, {

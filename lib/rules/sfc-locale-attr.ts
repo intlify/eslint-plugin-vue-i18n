@@ -1,4 +1,5 @@
 import type { RuleContext, RuleListener } from '../types'
+import { getSourceCode } from '../utils/compat'
 import { isI18nBlock, getAttribute } from '../utils/index'
 import { createRule } from '../utils/rule'
 
@@ -23,7 +24,8 @@ export = createRule({
     }
   },
   create(context: RuleContext): RuleListener {
-    const df = context.parserServices.getDocumentFragment?.()
+    const sourceCode = getSourceCode(context)
+    const df = sourceCode.parserServices.getDocumentFragment?.()
     if (!df) {
       return {}
     }

@@ -1,17 +1,21 @@
 /**
  * @author Yosuke Ota
  */
-import { RuleTester } from 'eslint'
+import { RuleTester } from '../eslint-compat'
 import { join } from 'node:path'
 
 import rule from '../../../lib/rules/no-duplicate-keys-in-locale'
 import { getTestCasesFromFixtures } from '../test-utils'
+import * as vueParser from 'vue-eslint-parser'
 
 const cwdRoot = join(__dirname, '../../fixtures/no-duplicate-keys-in-locale')
 
 new RuleTester({
-  parser: require.resolve('vue-eslint-parser'),
-  parserOptions: { ecmaVersion: 2015, sourceType: 'module' }
+  languageOptions: {
+    parser: vueParser,
+    ecmaVersion: 2015,
+    sourceType: 'module'
+  }
 }).run('no-duplicate-keys-in-locale', rule as never, {
   valid: [
     {
