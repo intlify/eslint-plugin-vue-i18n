@@ -95,6 +95,22 @@ new RuleTester({
     `
     },
     {
+      // <I18nT> component
+      filename: 'test.vue',
+      code: `
+    <template>
+      <I18nT keypath="message_key" tag="p" />
+    </template>
+    <i18n>
+    {
+      "en": {
+        "message_key": "hi"
+      }
+    }
+    </i18n>
+    `
+    },
+    {
       // yaml supports
       filename: 'test.vue',
       code: `
