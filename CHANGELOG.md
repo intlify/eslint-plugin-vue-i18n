@@ -1,5 +1,11 @@
 # @intlify/eslint-plugin-vue-i18n
 
+## 3.0.0-next.7
+
+### Patch Changes
+
+- [#474](https://github.com/intlify/eslint-plugin-vue-i18n/pull/474) [`ebd7353`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/ebd7353ada4d65eec0f504887db0911a80819979) Thanks [@ota-meshi](https://github.com/ota-meshi)! - fix: wrong suggestion for remove all unused keys in `vue-i18n/no-unused-keys` rule
+
 ## 3.0.0-next.6
 
 ### Minor Changes
