@@ -1045,17 +1045,688 @@ ${' '.repeat(6)}
             }
           ]
         },
-        "unused 'flow-block.unuse1' key",
-        "unused 'flow-block.unuse2' key",
-        "unused 'flow-seq[0]' key",
-        "unused 'flow-seq[1]' key",
-        "unused 'seq-unuse[0]' key",
-        "unused '{foo:bar}' key",
-        "unused 'hi' key",
-        "unused '[0]' key",
-        "unused 'hello' key",
-        "unused 'unuse' key",
-        "unused 'array-unuse[0]' key"
+        {
+          message: "unused 'flow-block.unuse1' key",
+          suggestions: [
+            {
+              desc: "Remove the 'flow-block.unuse1' key.",
+              output: `
+    <i18n locale="en" lang="yaml">
+      hello: "hi DIO!"
+      flow-block: {
+        "unuse2": "unuse"
+      }
+      flow-seq: [
+        "unuse",
+        "unuse",
+      ]
+      seq-unuse:
+        - "unuse"
+      ? {foo:bar}
+      : value
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      hi: "你好"
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      - "하이"
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {
+      hello: "hi DIO!",
+      unuse: "unuse",
+      "array-unuse": [
+        "unuse"
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`
+            },
+            {
+              desc: 'Remove all unused keys.',
+              output: `
+    <i18n locale="en" lang="yaml">
+${' '.repeat(6)}
+      flow-block: {}
+      flow-seq: []
+      seq-unuse: []
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      hi: "你好"
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      - "하이"
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {
+      hello: "hi DIO!",
+      unuse: "unuse",
+      "array-unuse": [
+        "unuse"
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`
+            }
+          ]
+        },
+        {
+          message: "unused 'flow-block.unuse2' key",
+          suggestions: [
+            {
+              desc: "Remove the 'flow-block.unuse2' key.",
+              output: `
+    <i18n locale="en" lang="yaml">
+      hello: "hi DIO!"
+      flow-block: {
+        "unuse1": "unuse"
+      }
+      flow-seq: [
+        "unuse",
+        "unuse",
+      ]
+      seq-unuse:
+        - "unuse"
+      ? {foo:bar}
+      : value
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      hi: "你好"
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      - "하이"
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {
+      hello: "hi DIO!",
+      unuse: "unuse",
+      "array-unuse": [
+        "unuse"
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`
+            },
+            {
+              desc: 'Remove all unused keys.',
+              output: `
+    <i18n locale="en" lang="yaml">
+${' '.repeat(6)}
+      flow-block: {}
+      flow-seq: []
+      seq-unuse: []
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      hi: "你好"
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      - "하이"
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {
+      hello: "hi DIO!",
+      unuse: "unuse",
+      "array-unuse": [
+        "unuse"
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`
+            }
+          ]
+        },
+        {
+          message: "unused 'flow-seq[0]' key",
+          suggestions: [
+            {
+              desc: "Remove the 'flow-seq[0]' key.",
+              output: `
+    <i18n locale="en" lang="yaml">
+      hello: "hi DIO!"
+      flow-block: {
+        "unuse1": "unuse",
+        "unuse2": "unuse"
+      }
+      flow-seq: [
+        "unuse",
+      ]
+      seq-unuse:
+        - "unuse"
+      ? {foo:bar}
+      : value
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      hi: "你好"
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      - "하이"
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {
+      hello: "hi DIO!",
+      unuse: "unuse",
+      "array-unuse": [
+        "unuse"
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`
+            },
+            {
+              desc: 'Remove all unused keys.',
+              output: `
+    <i18n locale="en" lang="yaml">
+${' '.repeat(6)}
+      flow-block: {}
+      flow-seq: []
+      seq-unuse: []
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      hi: "你好"
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      - "하이"
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {
+      hello: "hi DIO!",
+      unuse: "unuse",
+      "array-unuse": [
+        "unuse"
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`
+            }
+          ]
+        },
+        {
+          message: "unused 'flow-seq[1]' key",
+          suggestions: [
+            {
+              desc: "Remove the 'flow-seq[1]' key.",
+              output: `
+    <i18n locale="en" lang="yaml">
+      hello: "hi DIO!"
+      flow-block: {
+        "unuse1": "unuse",
+        "unuse2": "unuse"
+      }
+      flow-seq: [
+        "unuse"
+      ]
+      seq-unuse:
+        - "unuse"
+      ? {foo:bar}
+      : value
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      hi: "你好"
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      - "하이"
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {
+      hello: "hi DIO!",
+      unuse: "unuse",
+      "array-unuse": [
+        "unuse"
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`
+            },
+            {
+              desc: 'Remove all unused keys.',
+              output: `
+    <i18n locale="en" lang="yaml">
+${' '.repeat(6)}
+      flow-block: {}
+      flow-seq: []
+      seq-unuse: []
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      hi: "你好"
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      - "하이"
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {
+      hello: "hi DIO!",
+      unuse: "unuse",
+      "array-unuse": [
+        "unuse"
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`
+            }
+          ]
+        },
+        {
+          message: "unused 'seq-unuse[0]' key",
+          suggestions: [
+            {
+              desc: "Remove the 'seq-unuse[0]' key.",
+              output: `
+    <i18n locale="en" lang="yaml">
+      hello: "hi DIO!"
+      flow-block: {
+        "unuse1": "unuse",
+        "unuse2": "unuse"
+      }
+      flow-seq: [
+        "unuse",
+        "unuse",
+      ]
+      seq-unuse: []
+      ? {foo:bar}
+      : value
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      hi: "你好"
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      - "하이"
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {
+      hello: "hi DIO!",
+      unuse: "unuse",
+      "array-unuse": [
+        "unuse"
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`
+            },
+            {
+              desc: 'Remove all unused keys.',
+              output: `
+    <i18n locale="en" lang="yaml">
+${' '.repeat(6)}
+      flow-block: {}
+      flow-seq: []
+      seq-unuse: []
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      hi: "你好"
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      - "하이"
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {
+      hello: "hi DIO!",
+      unuse: "unuse",
+      "array-unuse": [
+        "unuse"
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`
+            }
+          ]
+        },
+        {
+          message: "unused '{foo:bar}' key",
+          suggestions: [
+            {
+              desc: "Remove the '{foo:bar}' key.",
+              output: `
+    <i18n locale="en" lang="yaml">
+      hello: "hi DIO!"
+      flow-block: {
+        "unuse1": "unuse",
+        "unuse2": "unuse"
+      }
+      flow-seq: [
+        "unuse",
+        "unuse",
+      ]
+      seq-unuse:
+        - "unuse"
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      hi: "你好"
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      - "하이"
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {
+      hello: "hi DIO!",
+      unuse: "unuse",
+      "array-unuse": [
+        "unuse"
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`
+            },
+            {
+              desc: 'Remove all unused keys.',
+              output: `
+    <i18n locale="en" lang="yaml">
+${' '.repeat(6)}
+      flow-block: {}
+      flow-seq: []
+      seq-unuse: []
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      hi: "你好"
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      - "하이"
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {
+      hello: "hi DIO!",
+      unuse: "unuse",
+      "array-unuse": [
+        "unuse"
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`
+            }
+          ]
+        },
+        {
+          message: "unused 'hi' key",
+          suggestions: [
+            {
+              desc: "Remove the 'hi' key.",
+              output: `
+    <i18n locale="en" lang="yaml">
+      hello: "hi DIO!"
+      flow-block: {
+        "unuse1": "unuse",
+        "unuse2": "unuse"
+      }
+      flow-seq: [
+        "unuse",
+        "unuse",
+      ]
+      seq-unuse:
+        - "unuse"
+      ? {foo:bar}
+      : value
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      {}
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      - "하이"
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {
+      hello: "hi DIO!",
+      unuse: "unuse",
+      "array-unuse": [
+        "unuse"
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`
+            }
+          ]
+        },
+        {
+          message: "unused '[0]' key",
+          suggestions: [
+            {
+              desc: "Remove the '[0]' key.",
+              output: `
+    <i18n locale="en" lang="yaml">
+      hello: "hi DIO!"
+      flow-block: {
+        "unuse1": "unuse",
+        "unuse2": "unuse"
+      }
+      flow-seq: [
+        "unuse",
+        "unuse",
+      ]
+      seq-unuse:
+        - "unuse"
+      ? {foo:bar}
+      : value
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      hi: "你好"
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      []
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {
+      hello: "hi DIO!",
+      unuse: "unuse",
+      "array-unuse": [
+        "unuse"
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`
+            }
+          ]
+        },
+        {
+          message: "unused 'hello' key",
+          suggestions: [
+            {
+              desc: "Remove the 'hello' key.",
+              output: `
+    <i18n locale="en" lang="yaml">
+      hello: "hi DIO!"
+      flow-block: {
+        "unuse1": "unuse",
+        "unuse2": "unuse"
+      }
+      flow-seq: [
+        "unuse",
+        "unuse",
+      ]
+      seq-unuse:
+        - "unuse"
+      ? {foo:bar}
+      : value
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      hi: "你好"
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      - "하이"
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {
+      unuse: "unuse",
+      "array-unuse": [
+        "unuse"
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`
+            },
+            {
+              desc: 'Remove all unused keys.',
+              output: `
+    <i18n locale="en" lang="yaml">
+      hello: "hi DIO!"
+      flow-block: {
+        "unuse1": "unuse",
+        "unuse2": "unuse"
+      }
+      flow-seq: [
+        "unuse",
+        "unuse",
+      ]
+      seq-unuse:
+        - "unuse"
+      ? {foo:bar}
+      : value
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      hi: "你好"
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      - "하이"
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {,
+      "array-unuse": [
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`
+            }
+          ]
+        },
+        {
+          message: "unused 'unuse' key",
+          suggestions: [
+            {
+              desc: "Remove the 'unuse' key.",
+              output: `
+    <i18n locale="en" lang="yaml">
+      hello: "hi DIO!"
+      flow-block: {
+        "unuse1": "unuse",
+        "unuse2": "unuse"
+      }
+      flow-seq: [
+        "unuse",
+        "unuse",
+      ]
+      seq-unuse:
+        - "unuse"
+      ? {foo:bar}
+      : value
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      hi: "你好"
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      - "하이"
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {
+      hello: "hi DIO!",
+      "array-unuse": [
+        "unuse"
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`
+            },
+            {
+              desc: 'Remove all unused keys.',
+              output: `
+    <i18n locale="en" lang="yaml">
+      hello: "hi DIO!"
+      flow-block: {
+        "unuse1": "unuse",
+        "unuse2": "unuse"
+      }
+      flow-seq: [
+        "unuse",
+        "unuse",
+      ]
+      seq-unuse:
+        - "unuse"
+      ? {foo:bar}
+      : value
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      hi: "你好"
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      - "하이"
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {,
+      "array-unuse": [
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`
+            }
+          ]
+        },
+        {
+          message: "unused 'array-unuse[0]' key",
+          suggestions: [
+            {
+              desc: "Remove the 'array-unuse[0]' key.",
+              output: `
+    <i18n locale="en" lang="yaml">
+      hello: "hi DIO!"
+      flow-block: {
+        "unuse1": "unuse",
+        "unuse2": "unuse"
+      }
+      flow-seq: [
+        "unuse",
+        "unuse",
+      ]
+      seq-unuse:
+        - "unuse"
+      ? {foo:bar}
+      : value
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      hi: "你好"
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      - "하이"
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {
+      hello: "hi DIO!",
+      unuse: "unuse",
+      "array-unuse": [
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`
+            },
+            {
+              desc: 'Remove all unused keys.',
+              output: `
+    <i18n locale="en" lang="yaml">
+      hello: "hi DIO!"
+      flow-block: {
+        "unuse1": "unuse",
+        "unuse2": "unuse"
+      }
+      flow-seq: [
+        "unuse",
+        "unuse",
+      ]
+      seq-unuse:
+        - "unuse"
+      ? {foo:bar}
+      : value
+    </i18n>
+    <i18n locale="zh" lang="yaml">
+      hi: "你好"
+    </i18n>
+    <i18n locale="ko" lang="yaml">
+      - "하이"
+    </i18n>
+    <i18n locale="ja" lang="json5">
+    {,
+      "array-unuse": [
+      ]
+    }
+    </i18n>
+    <template><div id="app"> {{ $t('messages.hello') }}</div></template><script></script>`
+            }
+          ]
+        }
       ]
     },
     {
@@ -1112,7 +1783,23 @@ ${' '.repeat(6)}
     </i18n>
     <template></template>
     <script></script>`,
-      errors: [`unused '["[{foo: bar}]"].foo' key`]
+      errors: [
+        {
+          message: `unused '["[{foo: bar}]"].foo' key`,
+          suggestions: [
+            {
+              desc: `Remove the '["[{foo: bar}]"].foo' key.`,
+              output: `
+    <i18n locale="en" lang="yaml">
+    ? [{foo: bar}]
+    : {}
+    </i18n>
+    <template></template>
+    <script></script>`
+            }
+          ]
+        }
+      ]
     },
     {
       filename: 'test.vue',
@@ -1142,12 +1829,102 @@ ${' '.repeat(6)}
         {
           message: "unused 'bar.not_ignore' key",
           line: 8,
-          column: 9
+          column: 9,
+          suggestions: [
+            {
+              desc: "Remove the 'bar.not_ignore' key.",
+              output: `
+    <i18n locale="en">
+    {
+      "foo": "foo",
+      "bar": {
+        "nest": "nest",
+        "ignore": "ignore"
+      },
+      "ignore": "ignore",
+      "not_ignore": "not_ignore",
+    }
+    </i18n>
+    <script>
+    export default {
+      created () {
+        this.$t('foo')
+        this.$t('bar.nest')
+      }
+    }
+    </script>`
+            },
+            {
+              desc: 'Remove all unused keys.',
+              output: `
+    <i18n locale="en">
+    {
+      "foo": "foo",
+      "bar": {
+        "nest": "nest"
+      }
+    }
+    </i18n>
+    <script>
+    export default {
+      created () {
+        this.$t('foo')
+        this.$t('bar.nest')
+      }
+    }
+    </script>`
+            }
+          ]
         },
         {
           message: "unused 'not_ignore' key",
           line: 11,
-          column: 7
+          column: 7,
+          suggestions: [
+            {
+              desc: "Remove the 'not_ignore' key.",
+              output: `
+    <i18n locale="en">
+    {
+      "foo": "foo",
+      "bar": {
+        "nest": "nest",
+        "ignore": "ignore",
+        "not_ignore": "not_ignore",
+      },
+      "ignore": "ignore"
+    }
+    </i18n>
+    <script>
+    export default {
+      created () {
+        this.$t('foo')
+        this.$t('bar.nest')
+      }
+    }
+    </script>`
+            },
+            {
+              desc: 'Remove all unused keys.',
+              output: `
+    <i18n locale="en">
+    {
+      "foo": "foo",
+      "bar": {
+        "nest": "nest"
+      }
+    }
+    </i18n>
+    <script>
+    export default {
+      created () {
+        this.$t('foo')
+        this.$t('bar.nest')
+      }
+    }
+    </script>`
+            }
+          ]
         }
       ]
     },
@@ -1179,12 +1956,102 @@ ${' '.repeat(6)}
         {
           message: "unused 'bar.no_hit_pattern_foo' key",
           line: 8,
-          column: 9
+          column: 9,
+          suggestions: [
+            {
+              desc: "Remove the 'bar.no_hit_pattern_foo' key.",
+              output: `
+    <i18n locale="en">
+    {
+      "foo": "foo",
+      "bar": {
+        "nest": "nest",
+        "ptn_foo": "ignore"
+      },
+      "ptn_bar": "ignore",
+      "no_hit_pattern_bar": "not_ignore"
+    }
+    </i18n>
+    <script>
+    export default {
+      created () {
+        this.$t('foo')
+        this.$t('bar.nest')
+      }
+    }
+    </script>`
+            },
+            {
+              desc: 'Remove all unused keys.',
+              output: `
+    <i18n locale="en">
+    {
+      "foo": "foo",
+      "bar": {
+        "nest": "nest"
+      }
+    }
+    </i18n>
+    <script>
+    export default {
+      created () {
+        this.$t('foo')
+        this.$t('bar.nest')
+      }
+    }
+    </script>`
+            }
+          ]
         },
         {
           message: "unused 'no_hit_pattern_bar' key",
           line: 11,
-          column: 7
+          column: 7,
+          suggestions: [
+            {
+              desc: "Remove the 'no_hit_pattern_bar' key.",
+              output: `
+    <i18n locale="en">
+    {
+      "foo": "foo",
+      "bar": {
+        "nest": "nest",
+        "ptn_foo": "ignore",
+        "no_hit_pattern_foo": "not_ignore"
+      },
+      "ptn_bar": "ignore"
+    }
+    </i18n>
+    <script>
+    export default {
+      created () {
+        this.$t('foo')
+        this.$t('bar.nest')
+      }
+    }
+    </script>`
+            },
+            {
+              desc: 'Remove all unused keys.',
+              output: `
+    <i18n locale="en">
+    {
+      "foo": "foo",
+      "bar": {
+        "nest": "nest"
+      }
+    }
+    </i18n>
+    <script>
+    export default {
+      created () {
+        this.$t('foo')
+        this.$t('bar.nest')
+      }
+    }
+    </script>`
+            }
+          ]
         }
       ]
     },

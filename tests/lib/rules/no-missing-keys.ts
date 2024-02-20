@@ -298,13 +298,6 @@ tester.run('no-missing-keys', rule as never, {
         ]
       },
       {
-        // nested missing
-        code: `$t('messages.missing')`,
-        errors: [
-          `'messages.missing' does not exist in localization message resources`
-        ]
-      },
-      {
         // @ts-expect-error -- Type error for eslint v9
         languageOptions: {
           parser: espree

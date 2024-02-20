@@ -1,4 +1,4 @@
-## 3.0.0-next.2
+# @intlify/eslint-plugin-vue-i18n
 
 ## 3.0.0-next.6
 
@@ -27,6 +27,8 @@
 ### Patch Changes
 
 - [#413](https://github.com/intlify/eslint-plugin-vue-i18n/pull/413) [`0fadd81`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/0fadd81f0551c380514744573b4c3fdac9b9d4fa) Thanks [@dargmuesli](https://github.com/dargmuesli)! - Pin `@intlify` dependencies to tag `beta` to try to prevent renovate from downgrading.
+
+## 3.0.0-next.2
 
 ### Patch Changes
 
