@@ -208,36 +208,44 @@ function create(context: RuleContext): RuleListener {
     }
 
     function* fixAllRemoveKeys(fixer: RuleFixer, nodes: JSONAST.JSONNode[]) {
-      const ranges = nodes.map(node => fixRemoveRange(node))
-
+      const removed = new Set<JSONAST.JSONNode>()
       let preLast = 0
-      for (const range of ranges) {
-        yield fixer.removeRange([Math.max(preLast, range[0]), range[1]])
+      for (const node of nodes) {
+        const range = fixRemoveRange(node, removed)
+        const start = Math.max(preLast, range[0])
+        yield fixer.removeRange([start, range[1]])
         preLast = range[1]
       }
     }
 
-    /**
-     * @param {JSONNode} node
-     */
-    function fixRemoveRange(node: JSONAST.JSONNode): Range {
+    function fixRemoveRange(
+      node: JSONAST.JSONNode,
+      removedNodes: Set<JSONAST.JSONNode> = new Set()
+    ): Range {
       const parent = node.parent!
       let removeNode
       let isFirst = false
       let isLast = false
       if (parent.type === 'JSONProperty') {
         removeNode = parent
-        const index = parent.parent.properties.indexOf(parent)
+        const properties = parent.parent.properties.filter(
+          p => !removedNodes.has(p)
+        )
+        const index = properties.indexOf(parent)
         isFirst = index === 0
-        isLast = index === parent.parent.properties.length - 1
+        isLast = index === properties.length - 1
       } else {
         removeNode = node
         if (parent.type === 'JSONArrayExpression') {
-          const index = parent.elements.indexOf(node as never)
+          const elements = parent.elements.filter(
+            e => e == null || !removedNodes.has(e)
+          )
+          const index = elements.indexOf(node as never)
           isFirst = index === 0
-          isLast = index === parent.elements.length - 1
+          isLast = index === elements.length - 1
         }
       }
+      removedNodes.add(removeNode)
       const range: Range = [...removeNode.range]
 
       if (isLast || isFirst) {

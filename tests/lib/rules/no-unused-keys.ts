@@ -1576,7 +1576,7 @@ ${' '.repeat(6)}
       - "하이"
     </i18n>
     <i18n locale="ja" lang="json5">
-    {,
+    {
       "array-unuse": [
       ]
     }
@@ -1647,7 +1647,7 @@ ${' '.repeat(6)}
       - "하이"
     </i18n>
     <i18n locale="ja" lang="json5">
-    {,
+    {
       "array-unuse": [
       ]
     }
@@ -1718,7 +1718,7 @@ ${' '.repeat(6)}
       - "하이"
     </i18n>
     <i18n locale="ja" lang="json5">
-    {,
+    {
       "array-unuse": [
       ]
     }
