@@ -1,5 +1,11 @@
 ## 3.0.0-next.2
 
+## 3.0.0-next.6
+
+### Minor Changes
+
+- [#471](https://github.com/intlify/eslint-plugin-vue-i18n/pull/471) [`a12cbec`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/a12cbecf17a9886076da6c31db4d219a5c176d70) Thanks [@advisciglio](https://github.com/advisciglio)! - fix: adds I18nT keyword into key collection
+
 ## 3.0.0-next.5
 
 ### Minor Changes
