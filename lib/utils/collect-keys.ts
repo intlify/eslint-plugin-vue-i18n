@@ -212,11 +212,14 @@ export function collectKeysFromAST(
         if (
           (node.key.name === 'path' &&
             (node.parent.parent.name === 'i18n' ||
-              node.parent.parent.name === 'i18n-t')) ||
-          (node.key.name === 'keypath' && node.parent.parent.name === 'i18n-t')
+              node.parent.parent.name === 'i18n-t' ||
+              node.parent.parent.rawName === 'I18nT')) ||
+          (node.key.name === 'keypath' &&
+            (node.parent.parent.name === 'i18n-t' ||
+              node.parent.parent.rawName === 'I18nT'))
         ) {
           debug(
-            "call VElement:matches([name=i18n], [name=i18n-t]) > VStartTag > VAttribute[key.name='path'] handling ..."
+            "call VElement:matches([name=i18n], [name=i18n-t], [name=I18nT]) > VStartTag > VAttribute[key.name='path'] handling ..."
           )
 
           const key = getKeyFromI18nComponent(node)
