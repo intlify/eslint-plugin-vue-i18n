@@ -143,8 +143,8 @@ devDependencies:
     specifier: ^10.2.0
     version: 10.2.0
   monaco-editor:
-    specifier: ^0.46.0
-    version: 0.46.0
+    specifier: ^0.47.0
+    version: 0.47.0
   nyc:
     specifier: ^15.1.0
     version: 15.1.0
@@ -3960,8 +3960,8 @@ packages:
       yargs-unparser: 2.0.0
     dev: true
 
-  /monaco-editor@0.46.0:
-    resolution: {integrity: sha512-ADwtLIIww+9FKybWscd7OCfm9odsFYHImBRI1v9AviGce55QY8raT+9ihH8jX/E/e6QVSGM+pKj4jSUSRmALNQ==}
+  /monaco-editor@0.47.0:
+    resolution: {integrity: sha512-VabVvHvQ9QmMwXu4du008ZDuyLnHs9j7ThVFsiJoXSOQk18+LF89N4ADzPbFenm0W4V2bGHnFBztIRQTgBfxzw==}
     dev: true
 
   /ms@2.1.2:
