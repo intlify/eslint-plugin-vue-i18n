@@ -18,8 +18,8 @@ dependencies:
     specifier: ^4.3.4
     version: 4.3.4(supports-color@8.1.1)
   eslint-compat-utils:
-    specifier: ^0.4.1
-    version: 0.4.1(eslint@8.45.0)
+    specifier: ^0.5.0
+    version: 0.5.0(eslint@8.45.0)
   glob:
     specifier: ^10.3.3
     version: 10.3.3
@@ -2498,8 +2498,8 @@ packages:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
 
-  /eslint-compat-utils@0.4.1(eslint@8.45.0):
-    resolution: {integrity: sha512-5N7ZaJG5pZxUeNNJfUchurLVrunD1xJvyg5kYOIVF8kg1f3ajTikmAu/5fZ9w100omNPOoMjngRszh/Q/uFGMg==}
+  /eslint-compat-utils@0.5.0(eslint@8.45.0):
+    resolution: {integrity: sha512-dc6Y8tzEcSYZMHa+CMPLi/hyo1FzNeonbhJL7Ol0ccuKQkwopJcJBA9YL/xmMTLU1eKigXo9vj9nALElWYSowg==}
     engines: {node: '>=12'}
     peerDependencies:
       eslint: '>=6.0.0'

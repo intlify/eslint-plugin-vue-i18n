@@ -61,7 +61,7 @@
     "@intlify/core-base": "beta",
     "@intlify/message-compiler": "beta",
     "debug": "^4.3.4",
-    "eslint-compat-utils": "^0.4.1",
+    "eslint-compat-utils": "^0.5.0",
     "glob": "^10.3.3",
     "ignore": "^5.2.4",
     "import-fresh": "^3.3.0",
