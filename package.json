@@ -102,7 +102,6 @@
     "espree": "^9.6.1",
     "esquery": "^1.5.0",
     "json-schema": "^0.4.0",
-    "lerna-changelog": "^2.2.0",
     "mocha": "^10.2.0",
     "monaco-editor": "^0.47.0",
     "nyc": "^15.1.0",
@@ -118,20 +117,6 @@
   },
   "peerDependencies": {
     "eslint": "^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0-0"
-  },
-  "changelog": {
-    "labels": {
-      "Type: Feature": ":star: Features",
-      "Type: Bug": ":bug: Bug Fixes",
-      "Type: Security": ":lock: Security Fixes",
-      "Type: Performance": ":chart_with_upwards_trend: Performance Fixes",
-      "Type: Improvement": ":zap: Improvement Features",
-      "Type: Breaking": ":boom: Breaking Change",
-      "Type: Deprecated": ":warning: Deprecated Features",
-      "Type: I18n": ":globe_with_meridians: Internationalization",
-      "Type: A11y": ":wheelchair: Accessibility",
-      "Type: Documentation": ":pencil: Documentation"
-    }
   },
   "publishConfig": {
     "access": "public"
