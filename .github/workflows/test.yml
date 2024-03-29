@@ -24,8 +24,6 @@ jobs:
         run: pnpm install
       - name: Lint
         run: pnpm lint
-      - name: Lint docs
-        run: pnpm lint:docs
   test:
     name: 'Test for Node.js ${{ matrix.node }} on ${{ matrix.os }}'
     runs-on: ${{ matrix.os }}
