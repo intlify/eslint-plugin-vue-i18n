@@ -102,6 +102,7 @@
     "espree": "^9.6.1",
     "esquery": "^1.5.0",
     "json-schema": "^0.4.0",
+    "lint-staged": "^15.0.0",
     "mocha": "^10.2.0",
     "monaco-editor": "^0.47.0",
     "nyc": "^15.1.0",
@@ -119,5 +120,18 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "lint-staged": {
+    "*.{json,md,yml}": [
+      "prettier --write"
+    ],
+    "*.{js?(x)}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.ts?(x)": [
+      "prettier --parser=typescript --write",
+      "eslint --fix"
+    ]
   }
 }
