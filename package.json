@@ -43,7 +43,7 @@
     "docs:build": "vitepress build docs",
     "generate": "ts-node scripts/update.ts",
     "fix": "run-p fix:*",
-    "fix:eslint": "pnpm lint:eslint --fix",
+    "fix:eslint": "pnpm run lint:eslint --fix",
     "fix:prettier": "prettier --write .",
     "lint": "run-s lint:*",
     "lint:eslint": "eslint . --ext js,ts,vue,md --ignore-pattern \"/tests/fixtures\"",
