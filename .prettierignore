@@ -9,6 +9,7 @@
 /node_modules
 /tests/fixtures
 /tests-integrations/config-recommended
+/docs/.vitepress/cache
 
 # ignore files
 /CHANGELOG.md
