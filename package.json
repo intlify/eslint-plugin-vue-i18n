@@ -37,7 +37,7 @@
   "main": "dist/lib/index.js",
   "scripts": {
     "build": "tsc --project ./tsconfig.build.json",
-    "clean": "rimraf .nyc_output coverage dist docs/.vitepress/dist",
+    "clean": "git clean -fx .nyc_output coverage dist docs/.vitepress/dist",
     "coverage": "nyc report --reporter lcov && opener coverage/lcov-report/index.html",
     "docs": "vitepress dev docs",
     "docs:build": "vitepress build docs",
@@ -108,7 +108,6 @@
     "opener": "^1.5.2",
     "path-scurry": "^1.10.1",
     "prettier": "^2.8.8",
-    "rimraf": "^5.0.1",
     "ts-node": "^10.9.1",
     "typescript": "^5.1.6",
     "vitepress": "1.0.0-beta.7",
