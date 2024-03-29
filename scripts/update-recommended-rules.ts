@@ -3,19 +3,14 @@
  * @author kazuya kawaguchi (a.k.a. kazupon)
  * Forked by https://github.com/mysticatea/eslint-plugin-eslint-comments/tree/master/scripts/update-recommended-rules.js
  */
-import { writeFileSync } from 'fs'
+import fs from 'node:fs/promises'
 import { resolve } from 'node:path'
 import rules from './lib/rules'
-import { format } from './lib/utils'
+import { format as lintWithFix } from './lib/utils'
 
-main()
-
-async function main() {
+export async function update() {
   // recommended.ts
-  writeFileSync(
-    resolve(__dirname, '../lib/configs/recommended.ts'),
-    await format(
-      `/** DON'T EDIT THIS FILE; was created by scripts. */
+  const raw = `/** DON'T EDIT THIS FILE; was created by scripts. */
 export = {
   extends: [require.resolve('./base')],
   parserOptions: {
@@ -35,8 +30,14 @@ export = {
       .map(rule => `'${rule.id}': 'warn',`)
       .join('\n        ')}
   },
-}`,
-      resolve(__dirname, '../lib/configs/recommended.ts')
-    )
+}`
+
+  const content = await lintWithFix(
+    raw,
+    resolve(__dirname, '../lib/configs/recommended.ts')
+  )
+  await fs.writeFile(
+    resolve(__dirname, '../lib/configs/recommended.ts'),
+    content
   )
 }

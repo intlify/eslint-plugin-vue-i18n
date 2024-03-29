@@ -4,7 +4,7 @@
  * Forked by https://github.com/mysticatea/eslint-plugin-eslint-comments/tree/master/scripts/update-docs-headers.js
  */
 import { type Options, format } from 'prettier'
-import { writeFileSync, readFileSync } from 'fs'
+import { writeFileSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { load } from 'js-yaml'
 import type { RuleInfo } from './lib/rules'
@@ -164,7 +164,7 @@ This rule was introduced in \`@intlify/eslint-plugin-vue-i18n\` ${this.since}
   }
 }
 
-export async function updateRuleDocs(): Promise<void> {
+export async function update(): Promise<void> {
   for (const rule of rules) {
     const doc = await new DocFile(rule).init()
     doc
