@@ -1,14 +1,13 @@
 import { strictEqual } from 'assert'
-import rules from '../../../lib/rules'
+import { getRules } from '../../../scripts/lib/rules'
 
-describe('valid rule meta', () => {
-  for (const ruleId of Object.keys(rules)) {
-    const rule = rules[ruleId as keyof typeof rules]
-
-    it(`should be valid rule url for ${ruleId}.`, () => {
+describe('valid rule meta', async () => {
+  const rules = await getRules()
+  for (const rule of rules) {
+    it(`should be valid rule url for ${rule.id}.`, () => {
       strictEqual(
-        rule.meta.docs.url,
-        `https://eslint-plugin-vue-i18n.intlify.dev/rules/${ruleId}.html`
+        rule.url,
+        `https://eslint-plugin-vue-i18n.intlify.dev/rules/${rule.name}.html`
       )
     })
   }

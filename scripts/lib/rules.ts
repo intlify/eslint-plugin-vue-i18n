@@ -7,6 +7,7 @@ export type RuleInfo = {
   name: string
   category: string
   description: string
+  url: string
   recommended: boolean
   fixable: boolean
   deprecated: boolean
@@ -41,6 +42,7 @@ async function getRules() {
         name,
         category: String(meta.docs.category),
         description: String(meta.docs.description),
+        url: String(meta.docs.url),
         recommended: Boolean(meta.docs.recommended),
         fixable: Boolean(meta.fixable),
         deprecated: Boolean(meta.deprecated),
@@ -49,6 +51,11 @@ async function getRules() {
     })
   )
   return _rules
+}
+
+async function getRuleNames() {
+  const rules = await getRules()
+  return rules.map(rule => rule.name)
 }
 
 async function getRulesWithCategories() {
@@ -70,4 +77,4 @@ const disableRules = {
   'spaced-comment': 'off'
 }
 
-export { getRules, getRulesWithCategories, disableRules }
+export { getRules, getRuleNames, getRulesWithCategories, disableRules }

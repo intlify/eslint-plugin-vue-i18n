@@ -1,8 +1,3 @@
-/**
- * @fileoverview Update docs index script
- * @author kazuya kawaguchi (a.k.a. kazupon)
- * Forked by https://github.com/mysticatea/eslint-plugin-eslint-comments/tree/master/scripts/update-docs-index.js
- */
 import { type Options, format } from 'prettier'
 import fs from 'node:fs/promises'
 import { join, resolve } from 'node:path'

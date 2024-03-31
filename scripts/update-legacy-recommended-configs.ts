@@ -23,7 +23,7 @@ export = {
     ${rules
       .filter(rule => rule.recommended)
       .map(rule => `'${rule.id}': 'warn',`)
-      .join('\n        ')}
+      .join('\n')}
   },
 }`
 

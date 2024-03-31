@@ -65,6 +65,7 @@
     "debug": "^4.3.4",
     "eslint-compat-utils": "^0.5.0",
     "glob": "^10.3.3",
+    "globals": "^15.0.0",
     "ignore": "^5.2.4",
     "import-fresh": "^3.3.0",
     "is-language-code": "^3.1.0",
