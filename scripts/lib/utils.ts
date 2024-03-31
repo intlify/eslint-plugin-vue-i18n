@@ -1,9 +1,5 @@
-/**
- * @fileoverview Utility script library
- * @author kazuya kawaguchi (a.k.a. kazupon)
- * Forked by https://github.com/mysticatea/eslint-plugin-eslint-comments/tree/master/scripts/lib/utils.js
- */
-import { readdirSync, existsSync } from 'fs'
+import { existsSync } from 'node:fs'
+import fs from 'node:fs/promises'
 import { basename, extname, join } from 'path'
 import { ESLint } from '../lib/eslint-compat'
 const eslint = new ESLint({ fix: true })
@@ -13,33 +9,22 @@ async function format(text: string, filename: string): Promise<string> {
   return lintResults[0].output || text
 }
 
-/**
- * Convert text to camelCase
- */
 function camelCase(str: string) {
   return str.replace(/[-_](\w)/gu, (_, c) => (c ? c.toUpperCase() : ''))
 }
 
-async function createIndex(dirPath: string): Promise<string> {
-  const dirName = basename(dirPath)
-  const tsFiles = readdirSync(dirPath)
+async function getFiles(dirPath: string): Promise<string[]> {
+  return (await fs.readdir(dirPath))
     .filter(
       file =>
         file.endsWith('.ts') || existsSync(join(dirPath, file, 'index.ts'))
     )
     .map(file => basename(file, extname(file)))
-  return format(
-    `/** DON'T EDIT THIS FILE; was created by scripts. */
-${tsFiles
-  .map(id => `import ${camelCase(id)} from './${dirName}/${id}';`)
-  .join('\n')}
-
-export = {
-    ${tsFiles.map(id => `'${id}': ${camelCase(id)},`).join('\n    ')}
-  }
-  `,
-    'input.ts'
-  )
 }
 
-export { createIndex, format }
+async function writeFile(filePath: string, content: string) {
+  const formated = await format(content, filePath)
+  await fs.writeFile(filePath, formated)
+}
+
+export { writeFile, getFiles, camelCase }

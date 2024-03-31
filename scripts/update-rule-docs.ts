@@ -8,7 +8,7 @@ import { writeFileSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { load } from 'js-yaml'
 import type { RuleInfo } from './lib/rules'
-import rules from './lib/rules'
+import { getRules } from './lib/rules'
 import { getNewVersion } from './lib/changesets-util'
 const PLACE_HOLDER = /#[^\n]*\n+> .+\n+(?:- .+\n)*\n*/u
 
@@ -165,7 +165,7 @@ This rule was introduced in \`@intlify/eslint-plugin-vue-i18n\` ${this.since}
 }
 
 export async function update(): Promise<void> {
-  for (const rule of rules) {
+  for (const rule of await getRules()) {
     const doc = await new DocFile(rule).init()
     doc
       .updateFileIntro()

@@ -8,7 +8,7 @@ import fs from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import { load } from 'js-yaml'
 import type { RuleInfo } from './lib/rules'
-import { withCategories } from './lib/rules'
+import { getRulesWithCategories } from './lib/rules'
 
 function toTableRow(rule: RuleInfo) {
   const mark = `${rule.recommended ? ':star:' : ''}${
@@ -40,6 +40,9 @@ export async function update() {
   const prettierrc = load(
     await fs.readFile(join(__dirname, '../.prettierrc.yaml'), 'utf8')
   ) as Options
+
+  // get rules with categories
+  const withCategories = await getRulesWithCategories()
 
   // generate docs index
   const filePath = resolve(__dirname, '../docs/rules/index.md')
