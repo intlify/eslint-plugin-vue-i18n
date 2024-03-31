@@ -33,8 +33,8 @@ export = {
     recommended,
 
     // flat configs
-    'flat-base': flatBase,
-    'flat-recommended': flatRecommended
+    'flat/base': flatBase,
+    'flat/recommended': flatRecommended
   },
   rules: {
     'key-format-style': keyFormatStyle,

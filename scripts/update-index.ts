@@ -29,7 +29,7 @@ export = {
 
     // flat configs
     ${PRESETS.map(
-      preset => `'flat-${preset}': ${camelCase(`flat-${preset}`)},`
+      preset => `'flat/${preset}': ${camelCase(`flat-${preset}`)},`
     ).join('\n')}
   },
   rules: {
