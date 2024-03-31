@@ -20,11 +20,7 @@ function camelCase(str: string) {
   return str.replace(/[-_](\w)/gu, (_, c) => (c ? c.toUpperCase() : ''))
 }
 
-async function createIndex(
-  dirPath: string,
-  prefix = '',
-  all = false
-): Promise<string> {
+async function createIndex(dirPath: string): Promise<string> {
   const dirName = basename(dirPath)
   const tsFiles = readdirSync(dirPath)
     .filter(
@@ -35,14 +31,11 @@ async function createIndex(
   return format(
     `/** DON'T EDIT THIS FILE; was created by scripts. */
 ${tsFiles
-  .map(
-    id =>
-      `import ${all ? '* as ' : ''}${camelCase(id)} from './${dirName}/${id}';`
-  )
+  .map(id => `import ${camelCase(id)} from './${dirName}/${id}';`)
   .join('\n')}
 
 export = {
-    ${tsFiles.map(id => `'${prefix}${id}': ${camelCase(id)},`).join('\n    ')}
+    ${tsFiles.map(id => `'${id}': ${camelCase(id)},`).join('\n    ')}
   }
   `,
     'input.ts'

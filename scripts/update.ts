@@ -19,13 +19,11 @@ async function main() {
   await updateRecommentedRules()
 
   // indices.
-  for (const pairs of [
-    [resolve(__dirname, '../lib/configs')],
-    [resolve(__dirname, '../lib/rules')],
-    [resolve(__dirname, '../lib/utils'), '', true]
+  for (const dirPath of [
+    resolve(__dirname, '../lib/configs'),
+    resolve(__dirname, '../lib/rules')
   ] as const) {
-    const [dirPath, prefix, all] = pairs
-    const content = await createIndex(dirPath, prefix, all)
+    const content = await createIndex(dirPath)
     await fs.writeFile(`${dirPath}.ts`, content)
   }
 }
