@@ -16,21 +16,21 @@ export = [
   },
   {
     name: "@intlify/vue-i18n:base:setup:json",
-    files: ['*.json', '*.json5'],
+    files: ['*.json', '**/*.json', '*.json5', '**/*.json5'],
     languageOptions: {
-      parser: require.resolve('vue-eslint-parser'),
+      parser: require('vue-eslint-parser'),
       parserOptions: {
-        parser: require.resolve('jsonc-eslint-parser')
+        parser: require('jsonc-eslint-parser')
       }
     }
   },
   {
     name: "@intlify/vue-i18n:base:setup:yaml",
-    files: ['*.yaml', '*.yml'],
+    files: ['*.yaml', '**/*.yaml', '*.yml', '**/*.yml'],
     languageOptions: {
-      parser: require.resolve('vue-eslint-parser'),
+      parser: require('vue-eslint-parser'),
       parserOptions: {
-        parser: require.resolve('yaml-eslint-parser')
+        parser: require('yaml-eslint-parser')
       }
     },
     rules: ${JSON.stringify(disableRules, null, 2)}

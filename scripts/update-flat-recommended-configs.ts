@@ -16,21 +16,23 @@ export = [
     languageOptions: {
       ecmaVersion: 2018,
       sourceType: 'module',
-      ecmaFeatures: {
-        jsx: true
+      globals: globals.browser,
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true
+        },
       },
-      globals: globals.browser
     },
   },
   {
     name: "@intlify/vue-i18n:recommended:rules",
     rules: {
       ${rules
-        .filter(rule => rule.recommended)
-        .map(rule => `'${rule.id}': 'warn',`)
-        .join('\n')}
+      .filter(rule => rule.recommended)
+      .map(rule => `'${rule.id}': 'warn',`)
+      .join('\n')}
     },
-  }
+  },
 ]`
 
   await writeFile(
