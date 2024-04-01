@@ -113,7 +113,7 @@ devDependencies:
     specifier: ^10.1.0
     version: 10.1.0
   eslint:
-    specifier: ^8.47.0
+    specifier: ^8.57.0
     version: 8.57.0
   eslint-config-prettier:
     specifier: ^9.0.0
