@@ -9,5 +9,5 @@
 /docs/.vitepress/dist
 /lib/configs/**/*.ts
 /node_modules
-# /tests/fixtures Used testcases
-/tests-integrations/config-recommended
+/tests/fixtures
+/tests/integrations
