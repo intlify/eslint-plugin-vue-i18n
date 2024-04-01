@@ -8,7 +8,7 @@ since: v0.2.0
 
 > disallow to string literal in template or JSX
 
-- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` property in a configuration file enables this rule.
+- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` or `*.configs["flat/recommended"]` property in a configuration file enables this rule.
 
 This rule warns the usage of literal the bellow:
 

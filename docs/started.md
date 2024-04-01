@@ -17,7 +17,83 @@ npm install --save-dev eslint @intlify/eslint-plugin-vue-i18n
 
 ## :rocket: Usage
 
-Configure your `.eslintrc.*` file.
+### Configuration `eslint.config.[c|m]js`
+
+Use `eslint.config.[c|m]js` file to configure rules. This is the default in ESLint v9, but can be used starting from ESLint v8.57.0. See also: https://eslint.org/docs/latest/use/configure/configuration-files-new.
+
+Example eslint.config.js:
+
+```js
+import vueI18n from '@intlify/eslint-plugin-vue-i18n'
+
+export default [
+  // add more generic rulesets here, such as:
+  // js.configs.recommended, // '@eslint/js'
+  // ...vue.configs['flat/recommended'], // 'eslint-plugin-vue'
+
+  ...vueI18n.configs['flat/recommended'],
+  {
+    rules: {
+      // Optional.
+      '@intlify/vue-i18n/no-dynamic-keys': 'error',
+      '@intlify/vue-i18n/no-unused-keys': [
+        'error',
+        {
+          extensions: ['.js', '.vue']
+        }
+      ]
+    },
+    settings: {
+      'vue-i18n': {
+        localeDir: './path/to/locales/*.{json,json5,yaml,yml}', // extension is glob formatting!
+        // or
+        // localeDir: {
+        //   pattern: './path/to/locales/*.{json,json5,yaml,yml}', // extension is glob formatting!
+        //   localeKey: 'file' // or 'path' or 'key'
+        // }
+        // or
+        // localeDir: [
+        //   {
+        //     // 'file' case
+        //     pattern: './path/to/locales1/*.{json,json5,yaml,yml}',
+        //     localeKey: 'file'
+        //   },
+        //   {
+        //     // 'path' case
+        //     pattern: './path/to/locales2/*.{json,json5,yaml,yml}',
+        //     localePattern: /^.*\/(?<locale>[A-Za-z0-9-_]+)\/.*\.(json5?|ya?ml)$/,
+        //     localeKey: 'path'
+        //   },
+        //   {
+        //     // 'key' case
+        //     pattern: './path/to/locales3/*.{json,json5,yaml,yml}',
+        //     localeKey: 'key'
+        //   },
+        // ]
+
+        // Specify the version of `vue-i18n` you are using.
+        // If not specified, the message will be parsed twice.
+        messageSyntaxVersion: '^9.0.0'
+      }
+    }
+  }
+]
+```
+
+See the [rule list](./rules/index.md) to get the `configs` & `rules` that this plugin provides.
+
+#### Bundle Configurations `eslint.config.[c|m]js`
+
+This plugin provides some predefined configs. You can use the following configs by adding them to `eslint.config.[c|m]js`. (All flat configs in this plugin are provided as arrays, so spread syntax is required when combining them with other configs.)
+
+- `*.configs["flat/base"]`: Settings and rules to enable correct ESLint parsing.
+- `*.configs["flat/recommended"]`: Above, plus rules to enforce subjective community defaults to ensure consistency.
+
+### Configuration `.eslintrc.*`
+
+Use `.eslintrc.*` file to configure rules in ESLint < v9. See also: https://eslint.org/docs/latest/use/configure/.
+
+Example `.eslintrc.js`:
 
 For example:
 
@@ -74,7 +150,14 @@ module.export = {
 }
 ```
 
-See [the rule list](/rules/)
+See the [rule list](./rules/index.md) to get the `configs` & `rules` that this plugin provides.
+
+#### Bundle Configurations `.eslintrc.*`
+
+This plugin provides some predefined configs. You can use the following configs by adding them to `.eslintrc.*`. (All flat configs in this plugin are provided as arrays, so spread syntax is required when combining them with other configs.)
+
+- `"plugin:@intlify/vue-i18n/base"`: Settings and rules to enable correct ESLint parsing.
+- `"plugin:@intlify/vue-i18n/recommended"`: Above, plus rules to enforce subjective community defaults to ensure consistency.
 
 ### `settings['vue-i18n']`
 
@@ -102,7 +185,7 @@ If you want to run `eslint` from command line, make sure you include the `.vue`,
 
 Examples:
 
-```bash
+```sh
 eslint --ext .js,.vue,.json src
 eslint "src/**/*.{js,vue,json}"
 # Specify the extension you use.

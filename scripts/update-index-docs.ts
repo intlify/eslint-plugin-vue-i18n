@@ -43,7 +43,7 @@ export async function update() {
   const filePath = resolve(__dirname, '../docs/rules/index.md')
   const content = `# Available Rules
 
-- :star: mark: the rule which is enabled by \`plugin:@intlify/vue-i18n/recommended\` preset.
+- :star: mark: the rule which is enabled by \`plugin:@intlify/vue-i18n/recommended\` or \`*.configs["flat/recommended"]\` preset.
 - :black_nib: mark: the rule which is fixable by \`eslint --fix\` command.
 
 ${withCategories.map(toCategorySection).join('\n')}
