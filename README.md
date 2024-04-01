@@ -11,7 +11,7 @@
 
 <h2 align="center">Supporting Intlify Project</h2>
 
-Intlify Project is an open source project that is included Vue I18n and i18n tooling and libralies with its ongoing development made possible entirely by the support of Sponsors. If you would like to become a sponsor, please consider:
+Intlify Project is an open source project that is included Vue I18n and i18n tooling and libraries with its ongoing development made possible entirely by the support of Sponsors. If you would like to become a sponsor, please consider:
 
 - [Become a Sponsor on GitHub](https://github.com/sponsors/ota-meshi)
 
