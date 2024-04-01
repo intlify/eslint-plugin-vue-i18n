@@ -28,9 +28,9 @@ export = [
     name: "@intlify/vue-i18n:recommended:rules",
     rules: {
       ${rules
-      .filter(rule => rule.recommended)
-      .map(rule => `'${rule.id}': 'warn',`)
-      .join('\n')}
+        .filter(rule => rule.recommended)
+        .map(rule => `'${rule.id}': 'warn',`)
+        .join('\n')}
     },
   },
 ]`

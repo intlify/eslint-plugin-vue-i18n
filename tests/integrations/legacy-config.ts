@@ -22,7 +22,9 @@ describe('Integration with legacy config', () => {
     if (
       !semver.satisfies(
         process.version,
-        readPackageJson(path.resolve(__dirname, 'legacy-config/node_modules/eslint')).engines.node
+        readPackageJson(
+          path.resolve(__dirname, 'legacy-config/node_modules/eslint')
+        ).engines.node
       )
     ) {
       return
