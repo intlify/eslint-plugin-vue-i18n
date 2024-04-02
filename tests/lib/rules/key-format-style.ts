@@ -131,6 +131,41 @@ tester.run('key-format-style', rule as never, {
     },
     {
       code: `
+      lowercase:
+        foobar: kebab-value
+      `,
+      ...options.yaml.file
+    },
+    {
+      code: `{
+        "lowercase": {
+          "foobar": "kebab-value"
+        }
+      }
+      `,
+      ...options.json.file
+    },
+    {
+      code: `
+      en-US:
+        lowercase:
+          foobar: kebab-value
+      `,
+      ...options.yaml.key
+    },
+    {
+      code: `{
+        "en-US": {
+          "lowercase": {
+            "foobar": "kebab-value"
+          }
+        }
+      }
+      `,
+      ...options.json.key
+    },
+    {
+      code: `
       snake_case:
         foo_bar: camelValue
       `,
@@ -375,6 +410,136 @@ tester.run('key-format-style', rule as never, {
         },
         {
           message: '"camelCase" is not snake_case',
+          line: 3
+        }
+      ]
+    },
+    {
+      code: `
+      foo-bar: baz
+      `,
+      ...options.yaml.file,
+      options: ['lowercase'],
+      errors: [
+        {
+          message: '"foo-bar" is not lowercase',
+          line: 2
+        }
+      ]
+    },
+    {
+      code: `
+      en-US:
+        foo-bar: baz
+      `,
+      ...options.yaml.key,
+      options: ['lowercase'],
+      errors: [
+        {
+          message: '"foo-bar" is not lowercase',
+          line: 3
+        }
+      ]
+    },
+    {
+      code: `
+      {"foo-bar": "baz"}
+      `,
+      ...options.json.file,
+      options: ['lowercase'],
+      errors: [
+        {
+          message: '"foo-bar" is not lowercase',
+          line: 2
+        }
+      ]
+    },
+    {
+      code: `
+      {"en-US": {
+        "foo-bar": "baz"
+      }}`,
+      ...options.json.key,
+      options: ['lowercase'],
+      errors: [
+        {
+          message: '"foo-bar" is not lowercase',
+          line: 3
+        }
+      ]
+    },
+    {
+      code: `
+      kebab-case:
+        snake_case: camelCase
+      `,
+      ...options.yaml.file,
+      options: ['lowercase'],
+      errors: [
+        {
+          message: '"kebab-case" is not lowercase',
+          line: 2
+        },
+        {
+          message: '"snake_case" is not lowercase',
+          line: 3
+        }
+      ]
+    },
+    {
+      code: `{
+        "kebab-case": {
+          "snake_case": "camelCase"
+        }
+      }
+      `,
+      ...options.json.file,
+      options: ['lowercase'],
+      errors: [
+        {
+          message: '"kebab-case" is not lowercase',
+          line: 2
+        },
+        {
+          message: '"snake_case" is not lowercase',
+          line: 3
+        }
+      ]
+    },
+    {
+      code: `
+      SCREAMING_SNAKE_CASE:
+        PascalCase: camelCase
+      `,
+      ...options.yaml.file,
+      options: ['lowercase'],
+      errors: [
+        {
+          message: '"SCREAMING_SNAKE_CASE" is not lowercase',
+          line: 2
+        },
+        {
+          message: '"PascalCase" is not lowercase',
+          line: 3
+        }
+      ]
+    },
+    {
+      code: `{
+        "SCREAMING_SNAKE_CASE": {
+          "PascalCase": "camelCase"
+        }
+      }
+      `,
+      ...options.json.file,
+      options: ['lowercase'],
+      errors: [
+        {
+          message: '"SCREAMING_SNAKE_CASE" is not lowercase',
+          line: 2
+        },
+        {
+          message: '"PascalCase" is not lowercase',
           line: 3
         }
       ]

@@ -16,6 +16,7 @@ const debug = debugBuilder('eslint-plugin-vue-i18n:key-format-style')
 const allowedCaseOptions = [
   'camelCase',
   'kebab-case',
+  'lowercase',
   'snake_case',
   'SCREAMING_SNAKE_CASE'
 ] as const
