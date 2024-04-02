@@ -59,7 +59,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['*.ts'],
+      files: ['*.ts', '*.mts'],
       extends: ['plugin:@typescript-eslint/recommended'],
       parser: 'vue-eslint-parser',
       parserOptions: {
