@@ -115,7 +115,7 @@
     "path-scurry": "^1.10.1",
     "prettier": "^2.8.8",
     "typescript": "^5.1.6",
-    "vitepress": "1.0.0",
+    "vitepress": "^1.0.0",
     "vue-eslint-editor": "^1.1.0",
     "vue-github-button": "^3.1.0"
   },
