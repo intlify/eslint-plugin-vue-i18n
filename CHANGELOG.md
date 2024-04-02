@@ -1,5 +1,11 @@
 # @intlify/eslint-plugin-vue-i18n
 
+## 3.0.0-next.8
+
+### Minor Changes
+
+- [#487](https://github.com/intlify/eslint-plugin-vue-i18n/pull/487) [`01324a0`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/01324a037a7ca3357a14e942e90b298424290a9a) Thanks [@kazupon](https://github.com/kazupon)! - feat: support flat config
+
 ## 3.0.0-next.7
 
 ### Patch Changes
