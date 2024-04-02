@@ -1,0 +1,10 @@
+{
+  "name": "integration-test-for-legacy-config",
+  "version": "1.0.0",
+  "private": true,
+  "devDependencies": {
+    "eslint-plugin-vue": "^9.24.0",
+    "@intlify/eslint-plugin-vue-i18n": "file:../../..",
+    "eslint": "^8.57.0"
+  }
+}

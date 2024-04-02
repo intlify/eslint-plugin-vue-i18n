@@ -1,4 +1,10 @@
-/** DON'T EDIT THIS FILE; was created by scripts. */
+import path from 'node:path'
+import { disableRules } from './lib/rules'
+import { writeFile } from './lib/utils'
+
+export async function update() {
+  // base.ts
+  const raw = `/** DON'T EDIT THIS FILE; was created by scripts. */
 export = {
   parser: require.resolve('vue-eslint-parser'),
   plugins: ['@intlify/vue-i18n'],
@@ -16,10 +22,10 @@ export = {
       parserOptions: {
         parser: require.resolve('yaml-eslint-parser')
       },
-      rules: {
-        'no-irregular-whitespace': 'off',
-        'spaced-comment': 'off'
-      }
+      rules: ${JSON.stringify(disableRules, null, 2)}
     }
   ]
+}`
+
+  await writeFile(path.resolve(__dirname, '../lib/configs/base.ts'), raw)
 }

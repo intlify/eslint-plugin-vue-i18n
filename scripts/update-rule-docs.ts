@@ -4,11 +4,11 @@
  * Forked by https://github.com/mysticatea/eslint-plugin-eslint-comments/tree/master/scripts/update-docs-headers.js
  */
 import { type Options, format } from 'prettier'
-import { writeFileSync, readFileSync } from 'fs'
+import { writeFileSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { load } from 'js-yaml'
 import type { RuleInfo } from './lib/rules'
-import rules from './lib/rules'
+import { getRules } from './lib/rules'
 import { getNewVersion } from './lib/changesets-util'
 const PLACE_HOLDER = /#[^\n]*\n+> .+\n+(?:- .+\n)*\n*/u
 
@@ -102,7 +102,7 @@ class DocFile {
       }
     } else if (rule.recommended) {
       headerLines.push(
-        '- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` property in a configuration file enables this rule.'
+        '- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` or `*.configs["flat/recommended"]` property in a configuration file enables this rule.'
       )
     }
 
@@ -164,8 +164,8 @@ This rule was introduced in \`@intlify/eslint-plugin-vue-i18n\` ${this.since}
   }
 }
 
-export async function updateRuleDocs(): Promise<void> {
-  for (const rule of rules) {
+export async function update(): Promise<void> {
+  for (const rule of await getRules()) {
     const doc = await new DocFile(rule).init()
     doc
       .updateFileIntro()
