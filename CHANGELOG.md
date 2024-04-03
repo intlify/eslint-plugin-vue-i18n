@@ -1,5 +1,11 @@
 # @intlify/eslint-plugin-vue-i18n
 
+## 3.0.0-next.9
+
+### Minor Changes
+
+- [#492](https://github.com/intlify/eslint-plugin-vue-i18n/pull/492) [`30ad848`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/30ad84859d21d12b9882c3d03dd411360e804bea) Thanks [@oikalyptus](https://github.com/oikalyptus)! - add lowercase option to key-format-style rule
+
 ## 3.0.0-next.8
 
 ### Minor Changes
