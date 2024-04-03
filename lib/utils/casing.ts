@@ -76,6 +76,20 @@ export function isCamelCase(str: string): boolean {
 }
 
 /**
+ * Checks whether the given string is lowercase.
+ */
+export function isLowerCase(str: string): boolean {
+  if (
+    hasSymbols(str) ||
+    hasUpper(str) ||
+    /-|_|\s/u.exec(str) // kebab or snake or space
+  ) {
+    return false
+  }
+  return true
+}
+
+/**
  * Checks whether the given string is PascalCase.
  */
 export function isPascalCase(str: string): boolean {
@@ -104,6 +118,7 @@ const checkersMap = {
   'kebab-case': isKebabCase,
   snake_case: isSnakeCase,
   camelCase: isCamelCase,
+  lowercase: isLowerCase,
   PascalCase: isPascalCase,
   SCREAMING_SNAKE_CASE: isScreamingSnakeCase
 }
@@ -127,6 +142,7 @@ export function pascalCase(str: string): string {
 export const allowedCaseOptions = [
   'camelCase',
   'kebab-case',
+  'lowercase',
   'PascalCase',
   'snake_case',
   'SCREAMING_SNAKE_CASE'
