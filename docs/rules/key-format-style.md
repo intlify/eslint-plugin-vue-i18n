@@ -113,6 +113,8 @@ appTitle: I18N Management System
 app_title: I18N Management System
 ```
 
+</eslint-code-block>
+
 :+1: Examples of **correct** code for this rule with `"lowercase"`:
 
 <eslint-code-block language="yaml">
