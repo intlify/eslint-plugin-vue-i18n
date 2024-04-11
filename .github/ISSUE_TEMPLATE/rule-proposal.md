@@ -16,10 +16,10 @@ about: Suggest an idea for a new rule
 **What category should the rule belong to?**
 <!-- (place an "X" next to just one item) -->
 
-[ ] Enforces code style (layout)
-[ ] Warns about a potential error (problem)
-[ ] Suggests an alternate way of doing something (suggestion)
-[ ] Other (please specify:)
+- [ ] Enforces code style (layout)
+- [ ] Warns about a potential error (problem)
+- [ ] Suggests an alternate way of doing something (suggestion)
+- [ ] Other (please specify:)
 
 **Provide 2-3 code examples that this rule should warn about:**
 
