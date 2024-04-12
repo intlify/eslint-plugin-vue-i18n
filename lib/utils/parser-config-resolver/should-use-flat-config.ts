@@ -38,29 +38,35 @@ export function findFlatConfigFile(cwd: string) {
 
 /** We used https://github.com/sindresorhus/find-up/blob/b733bb70d3aa21b22fa011be8089110d467c317f/index.js#L94 as a reference */
 function findUp(names: string[], options: { cwd: string }) {
-  let directory = path.resolve(options.cwd)
-  const { root } = path.parse(directory)
-  const stopAt = path.resolve(directory, root)
-  // eslint-disable-next-line no-constant-condition -- ignore
-  while (true) {
-    for (const name of names) {
-      const target = path.resolve(directory, name)
-      const stat = fs.existsSync(target)
-        ? fs.statSync(target, {
-            throwIfNoEntry: false
-          })
-        : null
-      if (stat?.isFile()) {
-        return target
+  try {
+    let directory = path.resolve(options.cwd)
+    const { root } = path.parse(directory)
+    const stopAt = path.resolve(directory, root)
+    // eslint-disable-next-line no-constant-condition -- ignore
+    while (true) {
+      for (const name of names) {
+        const target = path.resolve(directory, name)
+        const stat = fs.existsSync(target)
+          ? fs.statSync(target, {
+              throwIfNoEntry: false
+            })
+          : null
+        if (stat?.isFile()) {
+          return target
+        }
       }
+
+      if (directory === stopAt) {
+        break
+      }
+
+      directory = path.dirname(directory)
     }
 
-    if (directory === stopAt) {
-      break
-    }
-
-    directory = path.dirname(directory)
+    return null
+  } catch (e) {
+    console.log('Error in should-use-flat-config')
+    console.error(e)
+    throw e
   }
-
-  return null
 }
