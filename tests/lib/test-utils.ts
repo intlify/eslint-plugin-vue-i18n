@@ -5,23 +5,29 @@ import type { RuleTester } from 'eslint'
 import * as vueParser from 'vue-eslint-parser'
 import * as jsonParser from 'jsonc-eslint-parser'
 import * as yamlParser from 'yaml-eslint-parser'
+import { satisfies } from 'semver'
+import { version } from 'eslint/package.json'
 
 type LanguageOptions = {
   parser: object
 }
 
 export function getTestCasesFromFixtures(testOptions: {
+  eslint?: string
   cwd: string
   options?: unknown[]
   localeDir?: SettingsVueI18nLocaleDir
   languageOptions?: LanguageOptions
+  only?: boolean
 }): IterableIterator<RuleTester.ValidTestCase>
 export function getTestCasesFromFixtures(
   testOptions: {
+    eslint?: string
     cwd: string
     options?: unknown[]
     localeDir?: SettingsVueI18nLocaleDir
     languageOptions?: LanguageOptions
+    only?: boolean
   },
   outputs: {
     [file: string]:
@@ -31,10 +37,12 @@ export function getTestCasesFromFixtures(
 ): IterableIterator<RuleTester.InvalidTestCase>
 export function* getTestCasesFromFixtures(
   testOptions: {
+    eslint?: string
     cwd: string
     options?: unknown[]
     localeDir?: SettingsVueI18nLocaleDir
     languageOptions?: LanguageOptions
+    only?: boolean
   },
   outputs?: {
     [file: string]:
@@ -43,6 +51,9 @@ export function* getTestCasesFromFixtures(
   }
 ): IterableIterator<RuleTester.ValidTestCase | RuleTester.InvalidTestCase> {
   if (!testOptions) {
+    return
+  }
+  if (testOptions.eslint && !satisfies(version, testOptions.eslint)) {
     return
   }
   for (const { filename, relative, parser } of extractTargetFiles(
@@ -62,7 +73,8 @@ export function* getTestCasesFromFixtures(
           localeDir: testOptions.localeDir,
           cwd: testOptions.cwd
         }
-      }
+      },
+      only: testOptions.only
     }
     if (outputs) {
       const output = outputs[relative]
