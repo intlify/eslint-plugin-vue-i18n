@@ -19,9 +19,7 @@ export function buildParserUsingLegacyConfig(cwd: string): Parser {
     },
     getEslintAllConfig() {
       return {}
-    },
-    eslintRecommendedPath: require.resolve('../../../files/empty.json'),
-    eslintAllPath: require.resolve('../../../files/empty.json')
+    }
   })
 
   function getConfigForFile(filePath: string) {
