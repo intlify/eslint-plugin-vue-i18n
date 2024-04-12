@@ -101,7 +101,7 @@
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-markdown": "^3.0.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "eslint-plugin-vue": "^9.15.1",
+    "eslint-plugin-vue": "^9.24.1",
     "eslint4b": "^7.32.0",
     "espree": "^9.6.1",
     "esquery": "^1.5.0",
