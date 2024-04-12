@@ -74,7 +74,7 @@ export function* getTestCasesFromFixtures(
           cwd: testOptions.cwd
         }
       },
-      only: testOptions.only
+      ...(testOptions.only ? { only: true } : {})
     }
     if (outputs) {
       const output = outputs[relative]
