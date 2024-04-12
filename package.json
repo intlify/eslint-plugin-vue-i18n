@@ -34,7 +34,7 @@
   "files": [
     "dist"
   ],
-  "main": "dist/lib/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "build": "tsc --project ./tsconfig.build.json",
     "clean": "git clean -fx .nyc_output coverage dist docs/.vitepress/dist",
