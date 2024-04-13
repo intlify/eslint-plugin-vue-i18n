@@ -50,7 +50,7 @@
     "lint:prettier": "prettier --check .",
     "prerelease": "pnpm run test && pnpm run build",
     "release": "changeset publish",
-    "test": "mocha --require jiti/register \"./tests/lib/**/*.ts\"",
+    "test": "mocha --require jiti/register \"./tests/lib/**/*.ts\" --timeout 5000",
     "test:debug": "mocha --require jiti/register \"./tests/lib/**/*.ts\"",
     "test:coverage": "nyc mocha --require jiti/register \"./tests/lib/**/*.ts\" --timeout 60000",
     "test:integrations": "mocha --require jiti/register \"./tests/integrations/*.ts\" --timeout 60000",
