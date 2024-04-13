@@ -1,5 +1,11 @@
 # @intlify/eslint-plugin-vue-i18n
 
+## 3.0.0-next.10
+
+### Minor Changes
+
+- [#497](https://github.com/intlify/eslint-plugin-vue-i18n/pull/497) [`c392a38`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/c392a38591c19b406453df69e82225b8fc9ca076) Thanks [@ota-meshi](https://github.com/ota-meshi)! - fix: `no-unused-keys` rule not working when using flat config
+
 ## 3.0.0-next.9
 
 ### Minor Changes
