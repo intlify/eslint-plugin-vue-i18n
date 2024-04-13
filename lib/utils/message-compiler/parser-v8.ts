@@ -212,6 +212,9 @@ function parseAST(code: string, errors: CompileError[]): ResourceNode {
             key: trimmedKeyValue,
             ...ctx.getNodeLoc(endOffset - 1, placeholderEndOffset)
           }
+          if (key === '%{') {
+            namedNode.modulo = true
+          }
           if (!/^[a-zA-Z][a-zA-Z0-9_$]*$/.test(namedNode.key)) {
             errors.push(
               ctx.createCompileError('Unexpected placeholder key', endOffset)
