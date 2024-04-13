@@ -55,4 +55,4 @@ export type CustomBlockVisitorFactory = (
   context: RuleContext & {
     parserServices: SourceCode['parserServices'] & { customBlock: VElement }
   }
-) => RuleListener | null
+) => RuleListener
