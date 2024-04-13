@@ -2,9 +2,7 @@
  * @fileoverview Collect localization keys
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
-import type { Linter } from 'eslint'
-import { parseForESLint, AST as VAST } from 'vue-eslint-parser'
-import { readFileSync } from 'fs'
+import { AST as VAST } from 'vue-eslint-parser'
 import { resolve, extname } from 'path'
 import { listFilesToProcess } from './glob-utils'
 import { ResourceLoader } from './resource-loader'
@@ -12,13 +10,11 @@ import { CacheLoader } from './cache-loader'
 import { defineCacheFunction } from './cache-function'
 import debugBuilder from 'debug'
 import type { RuleContext, VisitorKeys } from '../types'
-// @ts-expect-error -- ignore
-import { Legacy } from '@eslint/eslintrc'
 import { getCwd } from './get-cwd'
 import { isStaticLiteral, getStaticLiteralValue } from './index'
-import importFresh from 'import-fresh'
+import type { Parser } from './parser-config-resolver'
+import { buildParserFromConfig } from './parser-config-resolver'
 const debug = debugBuilder('eslint-plugin-vue-i18n:collect-keys')
-const { CascadingConfigArrayFactory } = Legacy
 
 /**
  *
@@ -74,56 +70,20 @@ function getKeyFromI18nComponent(node: VAST.VAttribute) {
   }
 }
 
-function getParser(parser: string | undefined): {
-  parseForESLint?: typeof parseForESLint
-  parse: (code: string, options: unknown) => VAST.ESLintProgram
-} {
-  if (parser) {
-    try {
-      return require(parser)
-    } catch (_e) {
-      // ignore
-    }
-  }
-  return {
-    parseForESLint,
-    parse(code: string, options: unknown) {
-      return parseForESLint(code, options).ast
-    }
-  }
-}
-
 /**
  * Collect the used keys from source code text.
  * @param {string} text
  * @param {string} filename
  * @returns {string[]}
  */
-function collectKeysFromText(
-  text: string,
-  filename: string,
-  getConfigForFile: (filePath: string) => Linter.Config<Linter.RulesRecord>
-) {
+function collectKeysFromText(filename: string, parser: Parser) {
   const effectiveFilename = filename || '<text>'
   debug(`collectKeysFromFile ${effectiveFilename}`)
-  const config = getConfigForFile(effectiveFilename)
-  const parser = getParser(config.parser)
-
-  const parserOptions = Object.assign({}, config.parserOptions, {
-    loc: true,
-    range: true,
-    raw: true,
-    tokens: true,
-    comment: true,
-    eslintVisitorKeys: true,
-    eslintScopeManager: true,
-    filePath: effectiveFilename
-  })
   try {
-    const parseResult =
-      typeof parser.parseForESLint === 'function'
-        ? parser.parseForESLint(text, parserOptions)
-        : { ast: parser.parse(text, parserOptions) }
+    const parseResult = parser(filename)
+    if (!parseResult) {
+      return []
+    }
     return collectKeysFromAST(parseResult.ast, parseResult.visitorKeys)
   } catch (_e) {
     return []
@@ -137,20 +97,7 @@ function collectKeysFromText(
 function collectKeyResourcesFromFiles(fileNames: string[], cwd: string) {
   debug('collectKeysFromFiles', fileNames)
 
-  const configArrayFactory = new CascadingConfigArrayFactory({
-    additionalPluginPool: new Map([
-      ['@intlify/vue-i18n', importFresh('../index')]
-    ]),
-    cwd,
-    async getEslintRecommendedConfig() {
-      return await import('../../files/empty.json')
-    },
-    async getEslintAllConfig() {
-      return await import('../../files/empty.json')
-    },
-    eslintRecommendedPath: require.resolve('../../files/empty.json'),
-    eslintAllPath: require.resolve('../../files/empty.json')
-  })
+  const parser = buildParserFromConfig(cwd)
 
   const results = []
 
@@ -160,21 +107,12 @@ function collectKeyResourcesFromFiles(fileNames: string[], cwd: string) {
 
     results.push(
       new ResourceLoader(resolve(filename), () => {
-        const text = readFileSync(resolve(filename), 'utf8')
-        return collectKeysFromText(text, filename, getConfigForFile)
+        return collectKeysFromText(filename, parser)
       })
     )
   }
 
   return results
-
-  function getConfigForFile(filePath: string) {
-    const absolutePath = resolve(cwd, filePath)
-    return configArrayFactory
-      .getConfigArrayForFile(absolutePath)
-      .extractConfig(absolutePath)
-      .toCompatibleObjectAsConfigFileContent()
-  }
 }
 
 /**
