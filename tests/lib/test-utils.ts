@@ -12,6 +12,53 @@ type LanguageOptions = {
   parser: object
 }
 
+export function getRuleTesterTestCaseOptions(
+  root: string,
+  filebaseName: string = 'test'
+) {
+  return {
+    json(messageSyntaxVersion: string | null = '^9.0.0') {
+      return {
+        languageOptions: { parser: jsonParser },
+        filename: join(root, `${filebaseName}.json`),
+        settings: {
+          'vue-i18n': {
+            localeDir: {
+              pattern: `${root}/*.{json,yaml,yml}`
+            },
+            messageSyntaxVersion
+          }
+        }
+      }
+    },
+    yaml(messageSyntaxVersion: string | null = '^9.0.0') {
+      return {
+        languageOptions: { parser: yamlParser },
+        filename: join(root, `${filebaseName}.yaml`),
+        settings: {
+          'vue-i18n': {
+            localeDir: {
+              pattern: `${root}/*.{json,yaml,yml}`
+            },
+            messageSyntaxVersion
+          }
+        }
+      }
+    },
+    vue(messageSyntaxVersion: string | null = '^9.0.0') {
+      return {
+        languageOptions: { parser: vueParser },
+        filename: join(root, `${filebaseName}.vue`),
+        settings: {
+          'vue-i18n': {
+            messageSyntaxVersion
+          }
+        }
+      }
+    }
+  }
+}
+
 export function getTestCasesFromFixtures(testOptions: {
   eslint?: string
   cwd: string

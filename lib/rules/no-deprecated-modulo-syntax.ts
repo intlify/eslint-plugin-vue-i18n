@@ -1,5 +1,5 @@
 /**
- * @author Yosuke Ota
+ * @author kazuya kawaguchi (a.k.a. kazupon)
  */
 import type { AST as JSONAST } from 'jsonc-eslint-parser'
 import type { AST as YAMLAST } from 'yaml-eslint-parser'
@@ -8,34 +8,21 @@ import type { GetReportOffset } from '../utils/rule'
 import type { CustomBlockVisitorFactory } from '../types/vue-parser-services'
 import { extname } from 'node:path'
 import debugBuilder from 'debug'
-import {
-  createRule,
-  defineCreateVisitorForJson,
-  defineCreateVisitorForYaml
-} from '../utils/rule'
 import { defineCustomBlocksVisitor, getLocaleMessages } from '../utils/index'
 import {
   getMessageSyntaxVersions,
   NodeTypes
 } from '../utils/message-compiler/utils'
 import { parse } from '../utils/message-compiler/parser'
-import { parse as parseForV8 } from '../utils/message-compiler/parser-v8'
 import { traverseNode } from '../utils/message-compiler/traverser'
+import {
+  createRule,
+  defineCreateVisitorForJson,
+  defineCreateVisitorForYaml
+} from '../utils/rule'
 import { getFilename, getSourceCode } from '../utils/compat'
 
-const debug = debugBuilder(
-  'eslint-plugin-vue-i18n:prefer-linked-key-with-paren'
-)
-
-function getSingleQuote(node: JSONAST.JSONStringLiteral | YAMLAST.YAMLScalar) {
-  if (node.type === 'JSONLiteral') {
-    return node.raw[0] !== "'" ? "'" : "\\'"
-  }
-  if (node.style === 'single-quoted') {
-    return "''"
-  }
-  return "'"
-}
+const debug = debugBuilder('eslint-plugin-vue-i18n:no-deprecated-modulo-syntax')
 
 function create(context: RuleContext): RuleListener {
   const filename = getFilename(context)
@@ -52,14 +39,15 @@ function create(context: RuleContext): RuleListener {
       return
     }
     traverseNode(ast, node => {
-      if (node.type !== NodeTypes.LinkedKey) {
+      if (node.type !== NodeTypes.Named || !node.modulo) {
         return
       }
       let range: [number, number] | null = null
       const start = getReportOffset(node.loc!.start.offset)
       const end = getReportOffset(node.loc!.end.offset)
       if (start != null && end != null) {
-        range = [start, end]
+        // Subtract `%` length (1), because we want to fix modulo
+        range = [start - 1, end]
       }
       context.report({
         loc: range
@@ -68,59 +56,10 @@ function create(context: RuleContext): RuleListener {
               end: sourceCode.getLocFromIndex(range[1])
             }
           : reportNode.loc,
-        message: 'The linked message key must be enclosed in brackets.',
+        message:
+          'The modulo interpolation must be enforced to named interpolation.',
         fix(fixer) {
-          if (!range) {
-            return null
-          }
-          const single = getSingleQuote(reportNode)
-          return [
-            fixer.insertTextBeforeRange(range, `{${single}`),
-            fixer.insertTextAfterRange(range, `${single}}`)
-          ]
-        }
-      })
-    })
-  }
-
-  function verifyForV8(
-    message: string,
-    reportNode: JSONAST.JSONStringLiteral | YAMLAST.YAMLScalar,
-    getReportOffset: GetReportOffset
-  ) {
-    const { ast, errors } = parseForV8(message)
-    if (errors.length) {
-      return
-    }
-    traverseNode(ast, node => {
-      if (node.type !== NodeTypes.LinkedKey) {
-        return
-      }
-      if (message[node.loc!.start.offset - 1] === '(') {
-        return
-      }
-      let range: [number, number] | null = null
-      const start = getReportOffset(node.loc!.start.offset)
-      const end = getReportOffset(node.loc!.end.offset)
-      if (start != null && end != null) {
-        range = [start, end]
-      }
-      context.report({
-        loc: range
-          ? {
-              start: sourceCode.getLocFromIndex(range[0]),
-              end: sourceCode.getLocFromIndex(range[1])
-            }
-          : reportNode.loc,
-        message: 'The linked message key must be enclosed in parentheses.',
-        fix(fixer) {
-          if (!range) {
-            return null
-          }
-          return [
-            fixer.insertTextBeforeRange(range, '('),
-            fixer.insertTextAfterRange(range, ')')
-          ]
+          return range ? fixer.removeRange([range[0], range[0] + 1]) : null
         }
       })
     })
@@ -134,15 +73,10 @@ function create(context: RuleContext): RuleListener {
     if (messageSyntaxVersions.reportIfMissingSetting()) {
       return
     }
-    if (messageSyntaxVersions.v9 && messageSyntaxVersions.v8) {
-      // This rule cannot support two versions in the same project.
-      return
-    }
-
     if (messageSyntaxVersions.v9) {
       verifyForV9(message, reportNode, getReportOffset)
     } else if (messageSyntaxVersions.v8) {
-      verifyForV8(message, reportNode, getReportOffset)
+      return
     }
   }
 
@@ -162,7 +96,7 @@ function create(context: RuleContext): RuleListener {
     const localeMessages = getLocaleMessages(context)
     const targetLocaleMessage = localeMessages.findExistLocaleMessage(filename)
     if (!targetLocaleMessage) {
-      debug(`ignore ${filename} in prefer-linked-key-with-paren`)
+      debug(`ignore ${filename} in no-deprecated-modulo-syntax`)
       return {}
     }
 
@@ -177,18 +111,18 @@ function create(context: RuleContext): RuleListener {
     }
     return {}
   } else {
-    debug(`ignore ${filename} in prefer-linked-key-with-paren`)
+    debug(`ignore ${filename} in no-deprecated-modulo-syntax`)
     return {}
   }
 }
 
 export = createRule({
   meta: {
-    type: 'layout',
+    type: 'problem',
     docs: {
-      description: 'enforce linked key to be enclosed in parentheses',
-      category: 'Stylistic Issues',
-      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/prefer-linked-key-with-paren.html',
+      description: 'enforce modulo interpolation to be named interpolation',
+      category: 'Recommended',
+      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-deprecated-modulo-syntax.html',
       recommended: false
     },
     fixable: 'code',

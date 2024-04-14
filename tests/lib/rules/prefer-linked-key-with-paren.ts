@@ -3,57 +3,16 @@
  */
 import { join } from 'node:path'
 import { RuleTester, TEST_RULE_ID_PREFIX } from '../eslint-compat'
+import { getRuleTesterTestCaseOptions } from '../test-utils'
 import rule from '../../../lib/rules/prefer-linked-key-with-paren'
 import * as vueParser from 'vue-eslint-parser'
-import * as jsonParser from 'jsonc-eslint-parser'
-import * as yamlParser from 'yaml-eslint-parser'
 
 const FIXTURES_ROOT = join(
   __dirname,
   '../../fixtures/prefer-linked-key-with-paren'
 )
 
-const options = {
-  json(messageSyntaxVersion: string | null = '^9.0.0') {
-    return {
-      languageOptions: { parser: jsonParser },
-      filename: join(FIXTURES_ROOT, 'test.json'),
-      settings: {
-        'vue-i18n': {
-          localeDir: {
-            pattern: `${FIXTURES_ROOT}/*.{json,yaml,yml}`
-          },
-          messageSyntaxVersion
-        }
-      }
-    }
-  },
-  yaml(messageSyntaxVersion: string | null = '^9.0.0') {
-    return {
-      languageOptions: { parser: yamlParser },
-      filename: join(FIXTURES_ROOT, 'test.yaml'),
-      settings: {
-        'vue-i18n': {
-          localeDir: {
-            pattern: `${FIXTURES_ROOT}/*.{json,yaml,yml}`
-          },
-          messageSyntaxVersion
-        }
-      }
-    }
-  },
-  vue(messageSyntaxVersion: string | null = '^9.0.0') {
-    return {
-      languageOptions: { parser: vueParser },
-      filename: join(FIXTURES_ROOT, 'test.vue'),
-      settings: {
-        'vue-i18n': {
-          messageSyntaxVersion
-        }
-      }
-    }
-  }
-}
+const options = getRuleTesterTestCaseOptions(FIXTURES_ROOT)
 
 const tester = new RuleTester({
   languageOptions: { parser: vueParser, ecmaVersion: 2015 }
