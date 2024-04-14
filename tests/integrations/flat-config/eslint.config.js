@@ -10,7 +10,8 @@ export default [
     },
     settings: {
       'vue-i18n': {
-        localeDir: './src/resources/*.json'
+        localeDir: './src/resources/*.json',
+        messageSyntaxVersion: '^9.0.0'
       }
     }
   }
