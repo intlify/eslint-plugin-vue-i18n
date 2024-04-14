@@ -1,5 +1,11 @@
 # @intlify/eslint-plugin-vue-i18n
 
+## 3.0.0-next.11
+
+### Minor Changes
+
+- [#499](https://github.com/intlify/eslint-plugin-vue-i18n/pull/499) [`296e6f6`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/296e6f6edbb43080f4e64f75aa8c8df7f9b80c96) Thanks [@kazupon](https://github.com/kazupon)! - feat: `no-deprecated-modulo-syntax` rule
+
 ## 3.0.0-next.10
 
 ### Minor Changes
