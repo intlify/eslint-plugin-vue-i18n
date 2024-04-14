@@ -37,7 +37,7 @@ locale messages (for vue-i18n v9+):
 <eslint-code-block fix message-syntax-version="^9" language="json">
 
 ```json
-/* eslint @intlify/vue-i18n/prefer-linked-key-with-paren: 'error' */
+/* eslint @intlify/vue-i18n/no-deprecated-modulo-syntax: 'error' */
 {
   /* ✓ GOOD */
   "hello": "{msg} world"
