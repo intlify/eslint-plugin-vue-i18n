@@ -18,6 +18,9 @@ export default async () => {
           'https://github.com/intlify/eslint-plugin-vue-i18n/edit/master/docs/:path',
         text: 'Edit this page on GitHub'
       },
+      search: {
+        provider: 'local'
+      },
       nav: [
         {
           text: 'Support Intlify',
