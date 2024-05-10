@@ -11,6 +11,7 @@ import noDeprecatedI18nComponent from './rules/no-deprecated-i18n-component'
 import noDeprecatedI18nPlaceAttr from './rules/no-deprecated-i18n-place-attr'
 import noDeprecatedI18nPlacesProp from './rules/no-deprecated-i18n-places-prop'
 import noDeprecatedModuloSyntax from './rules/no-deprecated-modulo-syntax'
+import noDeprecatedTc from './rules/no-deprecated-tc'
 import noDuplicateKeysInLocale from './rules/no-duplicate-keys-in-locale'
 import noDynamicKeys from './rules/no-dynamic-keys'
 import noHtmlMessages from './rules/no-html-messages'
@@ -43,6 +44,7 @@ export = {
     'no-deprecated-i18n-place-attr': noDeprecatedI18nPlaceAttr,
     'no-deprecated-i18n-places-prop': noDeprecatedI18nPlacesProp,
     'no-deprecated-modulo-syntax': noDeprecatedModuloSyntax,
+    'no-deprecated-tc': noDeprecatedTc,
     'no-duplicate-keys-in-locale': noDuplicateKeysInLocale,
     'no-dynamic-keys': noDynamicKeys,
     'no-html-messages': noHtmlMessages,

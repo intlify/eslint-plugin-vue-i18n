@@ -25,6 +25,7 @@
 | Rule ID | Description |    |
 |:--------|:------------|:---|
 | [@intlify/vue-i18n/<wbr>key-format-style](./key-format-style.html) | enforce specific casing for localization keys |  |
+| [@intlify/vue-i18n/<wbr>no-deprecated-tc](./no-deprecated-tc.html) | disallow using deprecated `tc` or `$tc` (Deprecated in Vue I18n 10.0.0, removed fully in Vue I18n 11.0.0) |  |
 | [@intlify/vue-i18n/<wbr>no-duplicate-keys-in-locale](./no-duplicate-keys-in-locale.html) | disallow duplicate localization keys within the same locale |  |
 | [@intlify/vue-i18n/<wbr>no-dynamic-keys](./no-dynamic-keys.html) | disallow localization dynamic keys at localization methods |  |
 | [@intlify/vue-i18n/<wbr>no-missing-keys-in-other-locales](./no-missing-keys-in-other-locales.html) | disallow missing locale message keys in other locales |  |
