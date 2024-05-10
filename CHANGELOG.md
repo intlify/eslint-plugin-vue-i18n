@@ -1,5 +1,11 @@
 # @intlify/eslint-plugin-vue-i18n
 
+## 3.0.0-next.12
+
+### Minor Changes
+
+- [#510](https://github.com/intlify/eslint-plugin-vue-i18n/pull/510) [`61b0c94`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/61b0c944ada23408b8943658e4e9473af3733202) Thanks [@kazupon](https://github.com/kazupon)! - feat: add `no-deprecated-tc` rule
+
 ## 3.0.0-next.11
 
 ### Minor Changes
