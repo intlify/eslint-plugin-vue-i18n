@@ -19,6 +19,7 @@ export = [
   {
     name: '@intlify/vue-i18n:recommended:rules',
     rules: {
+      '@intlify/vue-i18n/no-deprecated-tc': 'warn',
       '@intlify/vue-i18n/no-html-messages': 'warn',
       '@intlify/vue-i18n/no-missing-keys': 'warn',
       '@intlify/vue-i18n/no-raw-text': 'warn',

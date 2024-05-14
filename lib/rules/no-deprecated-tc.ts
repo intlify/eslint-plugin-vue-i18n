@@ -45,13 +45,13 @@ function create(context: RuleContext): RuleListener {
 
 export = createRule({
   meta: {
-    type: 'suggestion',
+    type: 'problem',
     docs: {
       description:
         'disallow using deprecated `tc` or `$tc` (Deprecated in Vue I18n 10.0.0, removed fully in Vue I18n 11.0.0)',
-      category: 'Best Practices',
+      category: 'Recommended',
       url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-deprecated-tc.html',
-      recommended: false
+      recommended: true
     },
     fixable: null,
     schema: []
