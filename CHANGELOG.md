@@ -1,5 +1,17 @@
 # @intlify/eslint-plugin-vue-i18n
 
+## 3.0.0-next.13
+
+### Major Changes
+
+- [#513](https://github.com/intlify/eslint-plugin-vue-i18n/pull/513) [`3f0c57f`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/3f0c57f097dc90ec05ae5545c5c4b4f2016c74a7) Thanks [@kazupon](https://github.com/kazupon)! - breaking: drop support for versions less than node v18
+
+- [#514](https://github.com/intlify/eslint-plugin-vue-i18n/pull/514) [`e45f983`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/e45f98300385bc0a1d53f28d6ee062a9878307e1) Thanks [@kazupon](https://github.com/kazupon)! - breaking: drop support for versions less than eslint v8
+
+### Patch Changes
+
+- [#515](https://github.com/intlify/eslint-plugin-vue-i18n/pull/515) [`b451cdb`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/b451cdba894dba2d60c9d8a498c3e319709e8910) Thanks [@kazupon](https://github.com/kazupon)! - fix: `no-deprecated-tc` rule wrong category
+
 ## 3.0.0-next.12
 
 ### Minor Changes
