@@ -12,6 +12,7 @@
 | [@intlify/vue-i18n/<wbr>no-deprecated-i18n-place-attr](./no-deprecated-i18n-place-attr.html) | disallow using deprecated `place` attribute (Removed in Vue I18n 9.0.0+) |  |
 | [@intlify/vue-i18n/<wbr>no-deprecated-i18n-places-prop](./no-deprecated-i18n-places-prop.html) | disallow using deprecated `places` prop (Removed in Vue I18n 9.0.0+) |  |
 | [@intlify/vue-i18n/<wbr>no-deprecated-modulo-syntax](./no-deprecated-modulo-syntax.html) | enforce modulo interpolation to be named interpolation | :black_nib: |
+| [@intlify/vue-i18n/<wbr>no-deprecated-tc](./no-deprecated-tc.html) | disallow using deprecated `tc` or `$tc` (Deprecated in Vue I18n 10.0.0, removed fully in Vue I18n 11.0.0) | :star: |
 | [@intlify/vue-i18n/<wbr>no-html-messages](./no-html-messages.html) | disallow use HTML localization messages | :star: |
 | [@intlify/vue-i18n/<wbr>no-i18n-t-path-prop](./no-i18n-t-path-prop.html) | disallow using `path` prop with `<i18n-t>` | :black_nib: |
 | [@intlify/vue-i18n/<wbr>no-missing-keys](./no-missing-keys.html) | disallow missing locale message key at localization methods | :star: |
@@ -25,7 +26,6 @@
 | Rule ID | Description |    |
 |:--------|:------------|:---|
 | [@intlify/vue-i18n/<wbr>key-format-style](./key-format-style.html) | enforce specific casing for localization keys |  |
-| [@intlify/vue-i18n/<wbr>no-deprecated-tc](./no-deprecated-tc.html) | disallow using deprecated `tc` or `$tc` (Deprecated in Vue I18n 10.0.0, removed fully in Vue I18n 11.0.0) |  |
 | [@intlify/vue-i18n/<wbr>no-duplicate-keys-in-locale](./no-duplicate-keys-in-locale.html) | disallow duplicate localization keys within the same locale |  |
 | [@intlify/vue-i18n/<wbr>no-dynamic-keys](./no-dynamic-keys.html) | disallow localization dynamic keys at localization methods |  |
 | [@intlify/vue-i18n/<wbr>no-missing-keys-in-other-locales](./no-missing-keys-in-other-locales.html) | disallow missing locale message keys in other locales |  |
