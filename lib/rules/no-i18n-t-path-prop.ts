@@ -42,7 +42,7 @@ export = createRule({
       description: 'disallow using `path` prop with `<i18n-t>`',
       category: 'Recommended',
       url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-i18n-t-path-prop.html',
-      recommended: false
+      recommended: true
     },
     fixable: 'code',
     schema: [],

@@ -8,6 +8,8 @@ since: v0.10.0
 
 > disallow invalid message syntax
 
+- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` or `*.configs["flat/recommended"]` property in a configuration file enables this rule.
+
 This rule warns invalid message syntax.
 
 This rule is useful localization leaks with incorrect message syntax.

@@ -123,7 +123,7 @@ export = createRule({
       description: 'enforce modulo interpolation to be named interpolation',
       category: 'Recommended',
       url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-deprecated-modulo-syntax.html',
-      recommended: false
+      recommended: true
     },
     fixable: 'code',
     schema: []

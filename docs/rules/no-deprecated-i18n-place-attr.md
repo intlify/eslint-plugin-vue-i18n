@@ -8,6 +8,8 @@ since: v0.11.0
 
 > disallow using deprecated `place` attribute (Removed in Vue I18n 9.0.0+)
 
+- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` or `*.configs["flat/recommended"]` property in a configuration file enables this rule.
+
 If you are migrating from Vue I18n v8 to v9, the `place` attribute should be replaced with the `v-slot`.
 
 ## :book: Rule Details
