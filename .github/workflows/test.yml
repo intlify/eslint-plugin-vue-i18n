@@ -48,13 +48,13 @@ jobs:
         run: |
           pnpm build
           pnpm test:integrations
-  test-for-eslint:
+  test-for-old-eslint:
     name: 'Test for ESLint ${{ matrix.eslint }} on ${{ matrix.os }} using Node.js ${{ matrix.node }}'
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest]
-        eslint: [8, ^9.0.0-0]
+        eslint: [8]
         node: [20]
     steps:
       - name: Checkout

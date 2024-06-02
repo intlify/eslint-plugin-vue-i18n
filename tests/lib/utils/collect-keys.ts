@@ -10,7 +10,6 @@ import { satisfies } from 'semver'
 import { version } from 'eslint/package.json'
 
 describe('usedKeysCache', () => {
-  // eslint-disable-next-line @typescript-eslint/no-var-requires -- ignore
   if (!satisfies(version, '>=6')) {
     return
   }

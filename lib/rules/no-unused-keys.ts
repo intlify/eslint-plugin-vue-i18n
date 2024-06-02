@@ -456,8 +456,8 @@ function create(context: RuleContext): RuleListener {
             before
               ? before.range[1]
               : hyphen
-              ? hyphen.range[0]
-              : removeNode.range[0],
+                ? hyphen.range[0]
+                : removeNode.range[0],
             removeNode.range[1]
           ])
         }

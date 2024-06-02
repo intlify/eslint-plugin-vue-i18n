@@ -44,12 +44,15 @@ function getESLintClassForV6(): typeof eslint.ESLint {
           : undefined,
         plugins: plugins || [],
         rules: rules
-          ? Object.entries(rules).reduce((o, [ruleId, opt]) => {
-              if (opt) {
-                o[ruleId] = opt
-              }
-              return o
-            }, {} as NonNullable<ESLintCLIEngine['Options']['rules']>)
+          ? Object.entries(rules).reduce(
+              (o, [ruleId, opt]) => {
+                if (opt) {
+                  o[ruleId] = opt
+                }
+                return o
+              },
+              {} as NonNullable<ESLintCLIEngine['Options']['rules']>
+            )
           : undefined,
         ...overrideConfig
       }

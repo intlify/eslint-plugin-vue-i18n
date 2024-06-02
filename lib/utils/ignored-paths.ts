@@ -64,7 +64,6 @@ function mergeDefaultOptions<O>(
   return mergedOptions as never
 }
 
-/* eslint-disable valid-jsdoc */
 /**
  * Normalize the path separators in a given string.
  * On Windows environment, this replaces `\` by `/`.
@@ -77,7 +76,6 @@ const normalizePathSeps =
         null,
         new RegExp(`\\${sep}`, 'g')
       )
-/* eslint-enable valid-jsdoc */
 
 /**
  * Converts a glob pattern to a new glob pattern relative to a different directory
@@ -179,7 +177,7 @@ export class IgnoredPaths {
           statSync(options.ignorePath)
           ignorePath = options.ignorePath
         } catch (
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any, prettier/prettier
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           e: any
         ) {
           e.message = `Cannot read ignore file: ${options.ignorePath}\nError: ${e.message}`
@@ -214,7 +212,7 @@ export class IgnoredPaths {
                 readFileSync(packageJSONPath, 'utf8')
               )
             } catch (
-              // eslint-disable-next-line @typescript-eslint/no-explicit-any, prettier/prettier
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
               e: any
             ) {
               debug(
