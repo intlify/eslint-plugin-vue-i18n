@@ -46,7 +46,7 @@
     "fix:eslint": "pnpm run lint:eslint --fix",
     "fix:prettier": "prettier --write .",
     "lint": "run-s lint:*",
-    "lint:eslint": "eslint .",
+    "lint:eslint": "eslint .  --ignore-pattern \"tests/fixtures/\"",
     "lint:prettier": "prettier --check .",
     "prerelease": "pnpm run test && pnpm run build",
     "release": "changeset publish",

@@ -86,8 +86,8 @@ export default [
       'docs/.vitepress/dist/',
       'lib/configs/**/*.ts',
       'node_modules/',
-      'tests/integrations/',
-      'tests/fixtures/'
+      'tests/integrations/'
+      // 'tests/fixtures/' // Do not specify it here for the test to work.
     ]
   }
 ]
