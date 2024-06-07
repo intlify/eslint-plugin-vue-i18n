@@ -13,7 +13,6 @@ const FLAT_CONFIG_FILENAMES = [
  * @returns {Promise<boolean>} Whether flat config should be used.
  */
 export function shouldUseFlatConfig(cwd: string): boolean {
-  // eslint-disable-next-line no-process-env -- ignore
   switch (process.env.ESLINT_USE_FLAT_CONFIG) {
     case 'true':
       return true
@@ -41,7 +40,6 @@ function findUp(names: string[], options: { cwd: string }) {
   let directory = path.resolve(options.cwd)
   const { root } = path.parse(directory)
   const stopAt = path.resolve(directory, root)
-  // eslint-disable-next-line no-constant-condition -- ignore
   while (true) {
     for (const name of names) {
       const target = path.resolve(directory, name)

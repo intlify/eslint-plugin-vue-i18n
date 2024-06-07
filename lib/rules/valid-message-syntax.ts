@@ -45,8 +45,8 @@ function create(context: RuleContext): RuleListener {
           message === null
             ? 'null'
             : message instanceof RegExp
-            ? 'RegExp'
-            : typeof message
+              ? 'RegExp'
+              : typeof message
         context.report({
           message: `Unexpected '${type}' message`,
           loc: reportNode.loc

@@ -29,12 +29,12 @@ describe('Integration with legacy config', () => {
     ) {
       return
     }
+    const cliResult = cp.execSync(`${ESLINT} src/* --format=json`, {
+      encoding: 'utf-8',
+      env: { ESLINT_USE_FLAT_CONFIG: 'false' }
+    })
 
-    const result = JSON.parse(
-      cp.execSync(`${ESLINT} src/* --format=json`, {
-        encoding: 'utf-8'
-      })
-    )
+    const result = JSON.parse(cliResult)
     const enJson = result.find(r => path.basename(r.filePath) === 'en.json')
     assert.strictEqual(enJson.messages.length, 1)
     assert.strictEqual(

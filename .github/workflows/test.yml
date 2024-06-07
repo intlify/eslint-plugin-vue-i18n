@@ -16,8 +16,6 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Node.js
         uses: actions/setup-node@v4
-        with:
-          node-version: 18
       - name: Enable corepack
         run: corepack enable
       - name: Install
@@ -48,13 +46,13 @@ jobs:
         run: |
           pnpm build
           pnpm test:integrations
-  test-for-eslint:
+  test-for-old-eslint:
     name: 'Test for ESLint ${{ matrix.eslint }} on ${{ matrix.os }} using Node.js ${{ matrix.node }}'
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest]
-        eslint: [8, ^9.0.0-0]
+        eslint: [8]
         node: [20]
     steps:
       - name: Checkout
@@ -67,8 +65,5 @@ jobs:
         run: corepack enable
       - name: Install
         run: pnpm add eslint@${{ matrix.eslint }}
-      - name: Install ts-eslint v5
-        run: pnpm add @typescript-eslint/parser@4 @typescript-eslint/eslint-plugin@4
-        if: matrix.eslint == 5
       - name: Test
         run: pnpm test

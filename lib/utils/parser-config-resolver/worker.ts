@@ -8,9 +8,8 @@ const ESLint = getESLint()
 
 runAsWorker(async (cwd: string, filePath: string): Promise<ParseResult> => {
   const eslint = new ESLint({ cwd })
-  const config: Linter.FlatConfig = await eslint.calculateConfigForFile(
-    filePath
-  )
+  const config: Linter.FlatConfig =
+    await eslint.calculateConfigForFile(filePath)
   const languageOptions = config.languageOptions || {}
   const parserOptions = Object.assign(
     {

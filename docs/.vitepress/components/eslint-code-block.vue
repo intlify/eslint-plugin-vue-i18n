@@ -45,7 +45,8 @@ export default {
       }
     },
     filename: {
-      type: String
+      type: String,
+      default: undefined
     },
     language: {
       type: String,
@@ -82,10 +83,10 @@ export default {
         (this.language === 'json'
           ? 'example.json'
           : this.language === 'yaml'
-          ? 'example.yaml'
-          : this.language === 'javascript'
-          ? 'example.js'
-          : 'example.vue')
+            ? 'example.yaml'
+            : this.language === 'javascript'
+              ? 'example.js'
+              : 'example.vue')
       )
     },
     config() {
@@ -121,8 +122,8 @@ export default {
           this.language === 'json'
             ? 'jsonc-eslint-parser'
             : this.language === 'yaml'
-            ? 'yaml-eslint-parser'
-            : 'vue-eslint-parser',
+              ? 'yaml-eslint-parser'
+              : 'vue-eslint-parser',
         parserOptions: {
           ecmaVersion: 2020,
           sourceType: 'module',
@@ -137,8 +138,8 @@ export default {
                   .getFiles()
                   .filter(file => /\.(?:json5?|ya?ml)$/i.test(file))
               : this.isResource
-              ? [this.resplvedFilename]
-              : []
+                ? [this.resplvedFilename]
+                : []
             ).map(pattern => ({ pattern, localeKey: this.localeKey })),
             messageSyntaxVersion: this.messageSyntaxVersion
           }

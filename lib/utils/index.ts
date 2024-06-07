@@ -443,8 +443,8 @@ export function getVueObjectType(
       (pp.key.type === 'Identifier'
         ? pp.key.name
         : pp.key.type === 'Literal'
-        ? `${pp.key.value}`
-        : '') === 'components'
+          ? `${pp.key.value}`
+          : '') === 'components'
     ) {
       return 'components-option'
     }
