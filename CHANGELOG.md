@@ -1,5 +1,11 @@
 # @intlify/eslint-plugin-vue-i18n
 
+## 3.0.0-next.14
+
+### Major Changes
+
+- [#520](https://github.com/intlify/eslint-plugin-vue-i18n/pull/520) [`7642d29`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/7642d299937afdbdfac77e886e977340eccfc1cb) Thanks [@ota-meshi](https://github.com/ota-meshi)! - feat!: update recommended config
+
 ## 3.0.0-next.13
 
 ### Major Changes
