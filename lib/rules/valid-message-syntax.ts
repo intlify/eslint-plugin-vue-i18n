@@ -208,8 +208,7 @@ export = createRule({
       description: 'disallow invalid message syntax',
       category: 'Recommended',
       url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/valid-message-syntax.html',
-      // TODO To avoid breaking changes, include it in the configuration at the time of version upgrade.
-      recommended: false
+      recommended: true
     },
     fixable: null,
     schema: [

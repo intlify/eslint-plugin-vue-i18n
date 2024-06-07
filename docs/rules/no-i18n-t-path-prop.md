@@ -8,6 +8,7 @@ since: v0.11.0
 
 > disallow using `path` prop with `<i18n-t>`
 
+- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` or `*.configs["flat/recommended"]` property in a configuration file enables this rule.
 - :black_nib:️ The `--fix` option on the [command line](http://eslint.org/docs/user-guide/command-line-interface#fix) can automatically fix some of the problems reported by this rule.
 
 You cannot use `path` prop with `<i18n-t>` component. Perhaps it's an old habit mistake.
