@@ -10,7 +10,6 @@
 /tests/fixtures
 /tests-integrations/config-recommended
 /docs/.vitepress/cache
-/scripts/update-**.ts
 
 # ignore files
 /CHANGELOG.md

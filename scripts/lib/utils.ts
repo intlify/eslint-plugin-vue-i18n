@@ -21,7 +21,7 @@ async function writeFile(filePath: string, content: string) {
   ) as Options
   await fs.writeFile(
     filePath,
-    format(linted, { filepath: filePath, ...prettierrc })
+    await format(linted, { filepath: filePath, ...prettierrc })
   )
 }
 

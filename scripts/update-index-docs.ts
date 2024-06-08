@@ -52,6 +52,6 @@ ${withCategories.map(toCategorySection).join('\n')}
   // write docs index
   await fs.writeFile(
     filePath,
-    format(content, { filepath: filePath, ...prettierrc })
+    await format(content, { filepath: filePath, ...prettierrc })
   )
 }

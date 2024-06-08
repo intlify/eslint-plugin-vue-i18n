@@ -48,10 +48,10 @@ class DocFile {
     return this
   }
 
-  write() {
+  async write() {
     writeFileSync(
       this.filePath,
-      format(this.content, {
+      await format(this.content, {
         filepath: this.filePath,
         ...prettierrc
       })
@@ -167,7 +167,7 @@ This rule was introduced in \`@intlify/eslint-plugin-vue-i18n\` ${this.since}
 export async function update(): Promise<void> {
   for (const rule of await getRules()) {
     const doc = await new DocFile(rule).init()
-    doc
+    await doc
       .updateFileIntro()
       .updateHeader()
       .updateCodeBlocks()
