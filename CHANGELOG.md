@@ -1,5 +1,45 @@
 # @intlify/eslint-plugin-vue-i18n
 
+## 3.0.0
+
+### Major Changes
+
+- [#513](https://github.com/intlify/eslint-plugin-vue-i18n/pull/513) [`3f0c57f`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/3f0c57f097dc90ec05ae5545c5c4b4f2016c74a7) Thanks [@kazupon](https://github.com/kazupon)! - breaking: drop support for versions less than node v18
+
+- [#520](https://github.com/intlify/eslint-plugin-vue-i18n/pull/520) [`7642d29`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/7642d299937afdbdfac77e886e977340eccfc1cb) Thanks [@ota-meshi](https://github.com/ota-meshi)! - breaking: update recommended config
+
+- [#514](https://github.com/intlify/eslint-plugin-vue-i18n/pull/514) [`e45f983`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/e45f98300385bc0a1d53f28d6ee062a9878307e1) Thanks [@kazupon](https://github.com/kazupon)! - breaking: drop support for versions less than eslint v8
+
+### Minor Changes
+
+- [#499](https://github.com/intlify/eslint-plugin-vue-i18n/pull/499) [`296e6f6`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/296e6f6edbb43080f4e64f75aa8c8df7f9b80c96) Thanks [@kazupon](https://github.com/kazupon)! - feat: `no-deprecated-modulo-syntax` rule
+
+- [#471](https://github.com/intlify/eslint-plugin-vue-i18n/pull/471) [`a12cbec`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/a12cbecf17a9886076da6c31db4d219a5c176d70) Thanks [@advisciglio](https://github.com/advisciglio)! - fix: adds I18nT keyword into key collection
+
+- [#492](https://github.com/intlify/eslint-plugin-vue-i18n/pull/492) [`30ad848`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/30ad84859d21d12b9882c3d03dd411360e804bea) Thanks [@oikalyptus](https://github.com/oikalyptus)! - add lowercase option to key-format-style rule
+
+- [#510](https://github.com/intlify/eslint-plugin-vue-i18n/pull/510) [`61b0c94`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/61b0c944ada23408b8943658e4e9473af3733202) Thanks [@kazupon](https://github.com/kazupon)! - feat: add `no-deprecated-tc` rule
+
+- [#487](https://github.com/intlify/eslint-plugin-vue-i18n/pull/487) [`01324a0`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/01324a037a7ca3357a14e942e90b298424290a9a) Thanks [@kazupon](https://github.com/kazupon)! - feat: support flat config
+
+- [#463](https://github.com/intlify/eslint-plugin-vue-i18n/pull/463) [`a488f15`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/a488f15f35190ea4803ba9716e6ffc207277d7d2) Thanks [@ota-meshi](https://github.com/ota-meshi)! - feat: add support for eslint v9
+
+- [#497](https://github.com/intlify/eslint-plugin-vue-i18n/pull/497) [`c392a38`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/c392a38591c19b406453df69e82225b8fc9ca076) Thanks [@ota-meshi](https://github.com/ota-meshi)! - fix: `no-unused-keys` rule not working when using flat config
+
+### Patch Changes
+
+- [#394](https://github.com/intlify/eslint-plugin-vue-i18n/pull/394) [`3774e88`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/3774e88ba06335efe2112594d0c92b8ac4e5d242) Thanks [@wolfgangwalther](https://github.com/wolfgangwalther)! - fix: no-missing-keys rule reports false positive with trailing dot
+
+- [#459](https://github.com/intlify/eslint-plugin-vue-i18n/pull/459) [`8b3d347`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/8b3d347e9e10b4cce0b8527675c230654d8e28bd) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @eslint/eslintrc to v3
+
+- [#474](https://github.com/intlify/eslint-plugin-vue-i18n/pull/474) [`ebd7353`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/ebd7353ada4d65eec0f504887db0911a80819979) Thanks [@ota-meshi](https://github.com/ota-meshi)! - fix: wrong suggestion for remove all unused keys in `vue-i18n/no-unused-keys` rule
+
+- [#413](https://github.com/intlify/eslint-plugin-vue-i18n/pull/413) [`0fadd81`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/0fadd81f0551c380514744573b4c3fdac9b9d4fa) Thanks [@dargmuesli](https://github.com/dargmuesli)! - Pin `@intlify` dependencies to tag `beta` to try to prevent renovate from downgrading.
+
+- [#515](https://github.com/intlify/eslint-plugin-vue-i18n/pull/515) [`b451cdb`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/b451cdba894dba2d60c9d8a498c3e319709e8910) Thanks [@kazupon](https://github.com/kazupon)! - fix: `no-deprecated-tc` rule wrong category
+
+- [#433](https://github.com/intlify/eslint-plugin-vue-i18n/pull/433) [`68a4a1b`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/68a4a1b098ff54433fbd9ee427bead82e0ff3867) Thanks [@wolfgangwalther](https://github.com/wolfgangwalther)! - fix(deps): Make import-fresh a proper dependency
+
 ## 3.0.0-next.14
 
 ### Major Changes
