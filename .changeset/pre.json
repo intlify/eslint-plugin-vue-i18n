@@ -1,5 +1,5 @@
 {
-  "mode": "pre",
+  "mode": "exit",
   "tag": "next",
   "initialVersions": {
     "@intlify/eslint-plugin-vue-i18n": "3.0.0-beta.1"
