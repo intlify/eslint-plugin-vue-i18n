@@ -173,7 +173,7 @@ This plugin provides some predefined configs. You can use the following configs 
   - Array option ... An array of String option and Object option. Useful if you have multiple locale directories.
 - `messageSyntaxVersion` (Optional) ... Specify the version of `vue-i18n` you are using. If not specified, the message will be parsed twice. Also, some rules require this setting.
 
-::: warn NOTE
+::: warning NOTE
 
 The `localePattern` options does not support SFC i18n custom blocks (`src` attribute), only for resources of files to import when specified in VueI18n's `messages` options (VueI18n v9 and later, `messages` specified in `createI18n`) for resources of files to import.
 
