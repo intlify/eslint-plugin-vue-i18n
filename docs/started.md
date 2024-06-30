@@ -154,7 +154,7 @@ See the [rule list](./rules/index.md) to get the `configs` & `rules` that this p
 
 #### Bundle Configurations `.eslintrc.*`
 
-This plugin provides some predefined configs. You can use the following configs by adding them to `.eslintrc.*`. (All flat configs in this plugin are provided as arrays, so spread syntax is required when combining them with other configs.)
+This plugin provides some predefined configs. You can use the following configs by adding them to `.eslintrc.*`.
 
 - `"plugin:@intlify/vue-i18n/base"`: Settings and rules to enable correct ESLint parsing.
 - `"plugin:@intlify/vue-i18n/recommended"`: Above, plus rules to enforce subjective community defaults to ensure consistency.
