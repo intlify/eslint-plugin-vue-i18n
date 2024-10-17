@@ -15,8 +15,8 @@ importers:
         specifier: ^9.12.0
         version: 9.12.0
       '@intlify/message-compiler':
-        specifier: ^9.12.0
-        version: 9.12.0
+        specifier: ^10.0.0
+        version: 10.0.4
       debug:
         specifier: ^4.3.4
         version: 4.3.4(supports-color@8.1.1)
@@ -650,8 +650,16 @@ packages:
     resolution: {integrity: sha512-6EnWQXHnCh2bMiXT5N/IWwkcYQXjmF8nnEZ3YhTm23h1ZfOylz83D7pJYhcU8CsTiEdgbGiNdqyZPKwrHw03Ng==}
     engines: {node: '>= 16'}
 
+  '@intlify/message-compiler@10.0.4':
+    resolution: {integrity: sha512-AFbhEo10DP095/45EauinQJ5hJ3rJUmuuqltGguvc3WsvezZN+g8qNHLGWKu60FHQVizMrQY7VJ+zVlBXlQQkQ==}
+    engines: {node: '>= 16'}
+
   '@intlify/message-compiler@9.12.0':
     resolution: {integrity: sha512-2c6VwhvVJ1nur+2cN2NjdrmrV6vXjvyxYVvtUYMXKsWSUwoNURHGds0xJVJmWxbF8qV9oGepcVV6xl9bvadEIg==}
+    engines: {node: '>= 16'}
+
+  '@intlify/shared@10.0.4':
+    resolution: {integrity: sha512-ukFn0I01HsSgr3VYhYcvkTCLS7rGa0gw4A4AMpcy/A9xx/zRJy7PS2BElMXLwUazVFMAr5zuiTk3MQeoeGXaJg==}
     engines: {node: '>= 16'}
 
   '@intlify/shared@9.12.0':
@@ -3798,10 +3806,17 @@ snapshots:
       '@intlify/message-compiler': 9.12.0
       '@intlify/shared': 9.12.0
 
+  '@intlify/message-compiler@10.0.4':
+    dependencies:
+      '@intlify/shared': 10.0.4
+      source-map-js: 1.2.0
+
   '@intlify/message-compiler@9.12.0':
     dependencies:
       '@intlify/shared': 9.12.0
       source-map-js: 1.2.0
+
+  '@intlify/shared@10.0.4': {}
 
   '@intlify/shared@9.12.0': {}
 
