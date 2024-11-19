@@ -1,5 +1,11 @@
 # @intlify/eslint-plugin-vue-i18n
 
+## 3.1.0
+
+### Minor Changes
+
+- [#567](https://github.com/intlify/eslint-plugin-vue-i18n/pull/567) [`4ae81b0`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/4ae81b0145295b0a519454e31abe5b21599330b9) Thanks [@absidue](https://github.com/absidue)! - fix: Bump tsconfig target to es2017 to avoid polyfilling await
+
 ## 3.0.0
 
 ### Major Changes
