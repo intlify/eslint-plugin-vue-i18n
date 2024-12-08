@@ -14,7 +14,11 @@ const tester = new RuleTester({
 })
 
 tester.run('no-deprecated-v-t', rule as never, {
-  valid: [],
+  valid: [
+    {
+      code: `<template><p v-html="$t('hello')"></p></template>`
+    }
+  ],
   invalid: [
     {
       code: `<template><p v-t="'banana'"></p></template>`,
