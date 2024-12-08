@@ -18,6 +18,7 @@ export = {
     '@intlify/vue-i18n/no-deprecated-i18n-places-prop': 'warn',
     '@intlify/vue-i18n/no-deprecated-modulo-syntax': 'warn',
     '@intlify/vue-i18n/no-deprecated-tc': 'warn',
+    '@intlify/vue-i18n/no-deprecated-v-t': 'warn',
     '@intlify/vue-i18n/no-html-messages': 'warn',
     '@intlify/vue-i18n/no-i18n-t-path-prop': 'warn',
     '@intlify/vue-i18n/no-missing-keys': 'warn',
