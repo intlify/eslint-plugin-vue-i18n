@@ -42,7 +42,7 @@ function create(context: RuleContext): RuleListener {
   const sourceCode = getSourceCode(context)
   const messageSyntaxVersions = getMessageSyntaxVersions(context)
 
-  function verifyForV9(
+  function verifyForNewSyntax(
     message: string,
     reportNode: JSONAST.JSONStringLiteral | YAMLAST.YAMLScalar,
     getReportOffset: GetReportOffset
@@ -134,14 +134,16 @@ function create(context: RuleContext): RuleListener {
     if (messageSyntaxVersions.reportIfMissingSetting()) {
       return
     }
-    if (messageSyntaxVersions.v9 && messageSyntaxVersions.v8) {
+    const newSyntax = messageSyntaxVersions.v9 || messageSyntaxVersions.v10
+    const v8Syntax = messageSyntaxVersions.v8
+    if (newSyntax && v8Syntax) {
       // This rule cannot support two versions in the same project.
       return
     }
 
-    if (messageSyntaxVersions.v9) {
-      verifyForV9(message, reportNode, getReportOffset)
-    } else if (messageSyntaxVersions.v8) {
+    if (newSyntax) {
+      verifyForNewSyntax(message, reportNode, getReportOffset)
+    } else if (v8Syntax) {
       verifyForV8(message, reportNode, getReportOffset)
     }
   }

@@ -18,7 +18,7 @@ const tester = new RuleTester({
   languageOptions: { parser: vueParser, ecmaVersion: 2015 }
 })
 
-tester.run('no-deprecated-module-syntax', rule as never, {
+tester.run('no-deprecated-modulo-syntax', rule as never, {
   valid: [
     // text only
     {

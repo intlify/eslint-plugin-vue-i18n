@@ -13,7 +13,7 @@ import {
   getMessageSyntaxVersions,
   NodeTypes
 } from '../utils/message-compiler/utils'
-import { parse } from '../utils/message-compiler/parser'
+import { parse } from '../utils/message-compiler/parser-v9'
 import { traverseNode } from '../utils/message-compiler/traverser'
 import {
   createRule,
@@ -75,8 +75,6 @@ function create(context: RuleContext): RuleListener {
     }
     if (messageSyntaxVersions.v9) {
       verifyForV9(message, reportNode, getReportOffset)
-    } else if (messageSyntaxVersions.v8) {
-      return
     }
   }
 

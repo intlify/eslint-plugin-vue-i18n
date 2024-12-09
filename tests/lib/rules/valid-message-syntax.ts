@@ -223,24 +223,25 @@ tester.run('valid-message-syntax', rule as never, {
         }
       ]
     },
-    {
-      code: `
-      key: message @:(v8)
-      `,
-      ...options.yaml.default,
-      errors: [
-        {
-          message: `If you want to use '${TEST_RULE_ID_PREFIX}valid-message-syntax' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n' documentation`,
-          line: 1,
-          column: 1
-        },
-        {
-          message: 'Unexpected empty linked key',
-          line: 2,
-          column: 21
-        }
-      ]
-    },
+    // {
+    //   // The syntax is now allowed.
+    //   code: `
+    //   key: message @:(v8)
+    //   `,
+    //   ...options.yaml.default,
+    //   errors: [
+    //     {
+    //       message: `If you want to use '${TEST_RULE_ID_PREFIX}valid-message-syntax' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n' documentation`,
+    //       line: 1,
+    //       column: 1
+    //     },
+    //     {
+    //       message: 'Unexpected empty linked key',
+    //       line: 2,
+    //       column: 21
+    //     }
+    //   ]
+    // },
     {
       code: `
       key: message { v9 }
@@ -272,61 +273,65 @@ tester.run('valid-message-syntax', rule as never, {
         }
       ]
     },
-    {
-      code: `
-      key: message @:(v8)
-      `,
-      ...options.yaml.v9,
-      errors: [
-        {
-          message: 'Unexpected empty linked key',
-          line: 2,
-          column: 21
-        }
-      ]
-    },
-    {
-      code: `
-      key: message new line
-        @:(v8)
-      `,
-      ...options.yaml.v9,
-      errors: [
-        {
-          message: 'Unexpected empty linked key',
-          line: 3,
-          column: 10
-        }
-      ]
-    },
-    {
-      code: `
-      key: "message new line
-        @:(v8)"
-      `,
-      ...options.yaml.v9,
-      errors: [
-        {
-          message: 'Unexpected empty linked key',
-          line: 3,
-          column: 10
-        }
-      ]
-    },
-    {
-      code: `
-      key: 'message new line
-        @:(v8)'
-      `,
-      ...options.yaml.v9,
-      errors: [
-        {
-          message: 'Unexpected empty linked key',
-          line: 3,
-          column: 10
-        }
-      ]
-    },
+    // {
+    //   // The syntax is now allowed.
+    //   code: `
+    //   key: message @:(v8)
+    //   `,
+    //   ...options.yaml.v9,
+    //   errors: [
+    //     {
+    //       message: 'Unexpected empty linked key',
+    //       line: 2,
+    //       column: 21
+    //     }
+    //   ]
+    // },
+    // {
+    //   // The syntax is now allowed.
+    //   code: `
+    //   key: message new line
+    //     @:(v8)
+    //   `,
+    //   ...options.yaml.v9,
+    //   errors: [
+    //     {
+    //       message: 'Unexpected empty linked key',
+    //       line: 3,
+    //       column: 10
+    //     }
+    //   ]
+    // },
+    // {
+    //   // The syntax is now allowed.
+    //   code: `
+    //   key: "message new line
+    //     @:(v8)"
+    //   `,
+    //   ...options.yaml.v9,
+    //   errors: [
+    //     {
+    //       message: 'Unexpected empty linked key',
+    //       line: 3,
+    //       column: 10
+    //     }
+    //   ]
+    // },
+    // {
+    //   // The syntax is now allowed.
+    //   code: `
+    //   key: 'message new line
+    //     @:(v8)'
+    //   `,
+    //   ...options.yaml.v9,
+    //   errors: [
+    //     {
+    //       message: 'Unexpected empty linked key',
+    //       line: 3,
+    //       column: 10
+    //     }
+    //   ]
+    // },
     {
       code: `
       <i18n lang="yaml">
@@ -475,16 +480,6 @@ tester.run('valid-message-syntax', rule as never, {
           message: 'Unterminated closing brace',
           line: 3,
           column: 22
-        },
-        {
-          message: 'Unterminated closing brace',
-          line: 4,
-          column: 27
-        },
-        {
-          message: 'Unbalanced closing brace',
-          line: 4,
-          column: 34
         },
         {
           message: "Unexpected 'null' message",

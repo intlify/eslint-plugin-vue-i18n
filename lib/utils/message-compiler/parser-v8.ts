@@ -17,6 +17,7 @@ import type {
 } from '@intlify/message-compiler'
 import { sortedLastIndex } from 'lodash'
 import { NodeTypes } from './utils'
+import type { ModuloNamedNode } from './parser-v9'
 
 export function parse(code: string): {
   ast: ResourceNode
@@ -207,7 +208,7 @@ function parseAST(code: string, errors: CompileError[]): ResourceNode {
           node = listNode
         }
         if (!node) {
-          const namedNode: NamedNode = {
+          const namedNode: ModuloNamedNode = {
             type: NodeTypes.Named,
             key: trimmedKeyValue,
             ...ctx.getNodeLoc(endOffset - 1, placeholderEndOffset)
