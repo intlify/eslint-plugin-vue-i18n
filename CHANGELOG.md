@@ -1,5 +1,11 @@
 # @intlify/eslint-plugin-vue-i18n
 
+## 3.2.0
+
+### Minor Changes
+
+- [#580](https://github.com/intlify/eslint-plugin-vue-i18n/pull/580) [`14dfda5`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/14dfda5f54cf6e721967b83a6b7e6fbfd77841a7) Thanks [@kazupon](https://github.com/kazupon)! - feat: add `no-deprecated-v-t` rule
+
 ## 3.1.0
 
 ### Minor Changes
