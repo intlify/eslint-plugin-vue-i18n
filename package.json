@@ -113,7 +113,7 @@
     "npm-run-all2": "7.0.1",
     "nyc": "^17.0.0",
     "opener": "^1.5.2",
-    "path-scurry": "^1.10.1",
+    "path-scurry": "^2.0.0",
     "prettier": "^3.4.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.1.6",
