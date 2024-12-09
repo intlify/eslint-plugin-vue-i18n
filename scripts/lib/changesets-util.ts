@@ -5,6 +5,7 @@ import path from 'path'
 export async function getNewVersion(): Promise<string> {
   const releasePlan = await getReleasePlan(path.resolve(__dirname, '../..'))
 
-  return releasePlan.releases.find(({ name }) => name === 'eslint-plugin-css')!
-    .newVersion
+  return releasePlan.releases.find(
+    ({ name }) => name === '@intlify/eslint-plugin-vue-i18n'
+  )!.newVersion
 }
