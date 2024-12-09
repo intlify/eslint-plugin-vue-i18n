@@ -4,5 +4,9 @@
   "initialVersions": {
     "@intlify/eslint-plugin-vue-i18n": "3.2.0"
   },
-  "changesets": []
+  "changesets": [
+    "afraid-queens-shave",
+    "new-ligers-tan",
+    "old-islands-admire"
+  ]
 }
