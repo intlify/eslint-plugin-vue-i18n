@@ -3,7 +3,7 @@ import vueI18n from '@intlify/eslint-plugin-vue-i18n'
 
 export default [
   ...vue.configs['flat/recommended'],
-  ...vueI18n.configs['flat/recommended'],
+  ...vueI18n.configs.recommended,
   {
     rules: {
       'vue/multi-word-component-names': 'off'
