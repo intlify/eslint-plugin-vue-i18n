@@ -1,7 +1,6 @@
 ---
 title: '@intlify/vue-i18n/no-deprecated-v-t'
 description: disallow using deprecated `v-t` custom directive (Deprecated in Vue I18n 11.0.0, removed fully in Vue I18n 12.0.0)
-since: v3.0.0
 ---
 
 # @intlify/vue-i18n/no-deprecated-v-t
