@@ -9,11 +9,11 @@ export async function update() {
   const raw = `/** DON'T EDIT THIS FILE; was created by scripts. */
 // configs
 ${PRESETS.map(
-  preset => `import ${camelCase(preset)} from './configs/${preset}';`
+  preset =>
+    `import ${camelCase(`${preset}-legacy`)} from './configs/${preset}';`
 ).join('\n')}
 ${PRESETS.map(
-  preset =>
-    `import ${camelCase(`flat-${preset}`)} from './configs/flat/${preset}';`
+  preset => `import ${camelCase(`${preset}`)} from './configs/flat/${preset}';`
 ).join('\n')}
 
 // rules
@@ -25,12 +25,12 @@ ${ruleNames
 export = {
   configs: {
     // eslintrc configs
-    ${PRESETS.map(preset => `'${preset}': ${camelCase(preset)},`).join('\n')}
+    ${PRESETS.map(preset => `'${preset}-legacy': ${camelCase(`${preset}-legacy`)},`).join('\n')}
 
     // flat configs
-    ${PRESETS.map(
-      preset => `'flat/${preset}': ${camelCase(`flat-${preset}`)},`
-    ).join('\n')}
+    ${PRESETS.map(preset => `'${preset}': ${camelCase(preset)},`).join('\n')}
+    // flat configs (Backward compatibility)
+    ${PRESETS.map(preset => `'flat/${preset}': ${camelCase(preset)},`).join('\n')}
   },
   rules: {
     ${ruleNames

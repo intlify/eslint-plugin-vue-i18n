@@ -29,9 +29,9 @@ import vueI18n from '@intlify/eslint-plugin-vue-i18n'
 export default [
   // add more generic rulesets here, such as:
   // js.configs.recommended, // '@eslint/js'
-  // ...vue.configs['flat/recommended'], // 'eslint-plugin-vue'
+  // ...vue.configs.['flat/recommended'], // 'eslint-plugin-vue'
 
-  ...vueI18n.configs['flat/recommended'],
+  ...vueI18n.configs.recommended,
   {
     rules: {
       // Optional.
@@ -86,8 +86,8 @@ See the [rule list](./rules/index.md) to get the `configs` & `rules` that this p
 
 This plugin provides some predefined configs. You can use the following configs by adding them to `eslint.config.[c|m]js`. (All flat configs in this plugin are provided as arrays, so spread syntax is required when combining them with other configs.)
 
-- `*.configs["flat/base"]`: Settings and rules to enable correct ESLint parsing.
-- `*.configs["flat/recommended"]`: Above, plus rules to enforce subjective community defaults to ensure consistency.
+- `*.configs.base`: Settings and rules to enable correct ESLint parsing.
+- `*.configs.recommended`: Above, plus rules to enforce subjective community defaults to ensure consistency.
 
 ### Configuration `.eslintrc.*`
 
@@ -102,7 +102,7 @@ module.export = {
   extends: [
     'eslint:recommended',
     // Recommended
-    'plugin:@intlify/vue-i18n/recommended'
+    'plugin:@intlify/vue-i18n/recommended-legacy'
   ],
   rules: {
     // Optional.
@@ -156,8 +156,8 @@ See the [rule list](./rules/index.md) to get the `configs` & `rules` that this p
 
 This plugin provides some predefined configs. You can use the following configs by adding them to `.eslintrc.*`.
 
-- `"plugin:@intlify/vue-i18n/base"`: Settings and rules to enable correct ESLint parsing.
-- `"plugin:@intlify/vue-i18n/recommended"`: Above, plus rules to enforce subjective community defaults to ensure consistency.
+- `"plugin:@intlify/vue-i18n/base-legacy"`: Settings and rules to enable correct ESLint parsing.
+- `"plugin:@intlify/vue-i18n/recommended-legacy"`: Above, plus rules to enforce subjective community defaults to ensure consistency.
 
 ### `settings['vue-i18n']`
 
@@ -201,24 +201,21 @@ eslint "src/**/*.{js,vue,json}"
 
 If you want to use custom parsers such as [babel-eslint](https://www.npmjs.com/package/babel-eslint) or [typescript-eslint-parser](https://www.npmjs.com/package/typescript-eslint-parser), you have to use `parserOptions.parser` option instead of `parser` option. Because this plugin requires [vue-eslint-parser](https://www.npmjs.com/package/vue-eslint-parser) to parse `.vue` files, so this plugin doesn't work if you overwrote `parser` option.
 
-Also, `parserOptions` configured at the top level affect `.json` and `.yaml`. This plugin needs to use special parsers to parse `.json` and `.yaml`, so to correctly parse each extension, use the `overrides` option and overwrite the options again.
-
 ```diff
-- "parser": "babel-eslint",
-  "parserOptions": {
-+     "parser": "babel-eslint",
+import vueEslintParser from "vue-eslint-parser"
+import babelEslint from "babel-eslint"
+
+export default {
+  "files": ["**/*.vue"],
+  "languageOptions": {
+-   "parser": babelEslint,
++   "parser": vueEslintParser,
+    "parserOptions": {
++     "parser": babelEslint,
       "sourceType": "module"
-  },
-+ "overrides": [
-+     {
-+         "files": ["*.json", "*.json5"],
-+         "extends": ["plugin:@intlify/vue-i18n/base"],
-+     },
-+     {
-+         "files": ["*.yaml", "*.yml"],
-+         "extends": ["plugin:@intlify/vue-i18n/base"],
-+     }
-+ ]
+    },
+  }
+}
 ```
 
 ### More lint on JSON and YAML in `<i18n>` block
@@ -233,34 +230,23 @@ You can also use [jsonc/vue-custom-block/no-parsing-error](https://ota-meshi.git
 
 The most rules of `eslint-plugin-vue-i18n` require `vue-eslint-parser` to check `<template>` ASTs.
 
-Make sure you have one of the following settings in your **.eslintrc**:
+Make sure you have one of the following settings in your **eslint.config.js**:
 
-- `"extends": ["plugin:@intlify/vue-i18n/recommended"]`
-- `"extends": ["plugin:@intlify/vue-i18n/base"]`
+- `plugin.configs.base`
+- `plugin.configs.recommended`
 
-If you already use other parser (e.g. `"parser": "babel-eslint"`), please move it into `parserOptions`, so it doesn't collide with the `vue-eslint-parser` used by this plugin's configuration:
-
-```diff
-- "parser": "babel-eslint",
-  "parserOptions": {
-+     "parser": "babel-eslint",
-      "ecmaVersion": 2017,
-      "sourceType": "module"
-  }
-```
-
-See also: "[Use together with custom parsers](#use-together-with-custom-parsers)" section.
+See also: "[How to use custom parser](#how-to-use-custom-parser)" section.
 
 ### Why doesn't it work on .vue file?
 
 1. Make sure you don't have `eslint-plugin-html` in your config. The `eslint-plugin-html` extracts the content from `<script>` tags, but `eslint-plugin-vue` requires `<script>` tags and `<template>` tags in order to distinguish template and script in single file components.
 
-```diff
-  "plugins": [
-    "vue",
--   "html"
-  ]
-```
+   ```diff
+     "plugins": [
+       "vue",
+   -   "html"
+     ]
+   ```
 
 2. Make sure your tool is set to lint `.vue` and `.json` files.
 
