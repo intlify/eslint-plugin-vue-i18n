@@ -13,7 +13,7 @@
 | [@intlify/vue-i18n/<wbr>no-deprecated-i18n-places-prop](./no-deprecated-i18n-places-prop.html) | disallow using deprecated `places` prop (Removed in Vue I18n 9.0.0+) | :star: |
 | [@intlify/vue-i18n/<wbr>no-deprecated-modulo-syntax](./no-deprecated-modulo-syntax.html) | enforce modulo interpolation to be named interpolation | :star::black_nib: |
 | [@intlify/vue-i18n/<wbr>no-deprecated-tc](./no-deprecated-tc.html) | disallow using deprecated `tc` or `$tc` (Deprecated in Vue I18n 10.0.0, removed fully in Vue I18n 11.0.0) | :star: |
-| [@intlify/vue-i18n/<wbr>no-deprecated-v-t](./no-deprecated-v-t.html) | disallow using deprecated `v-t` custom directive (Deprecated in Vue I18n 11.0.0, removed fully in Vue I18n 12.0.0) |  |
+| [@intlify/vue-i18n/<wbr>no-deprecated-v-t](./no-deprecated-v-t.html) | disallow using deprecated `v-t` custom directive (Deprecated in Vue I18n 11.0.0, removed fully in Vue I18n 12.0.0) | :star: |
 | [@intlify/vue-i18n/<wbr>no-html-messages](./no-html-messages.html) | disallow use HTML localization messages | :star: |
 | [@intlify/vue-i18n/<wbr>no-i18n-t-path-prop](./no-i18n-t-path-prop.html) | disallow using `path` prop with `<i18n-t>` | :star::black_nib: |
 | [@intlify/vue-i18n/<wbr>no-missing-keys](./no-missing-keys.html) | disallow missing locale message key at localization methods | :star: |
