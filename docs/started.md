@@ -29,7 +29,7 @@ import vueI18n from '@intlify/eslint-plugin-vue-i18n'
 export default [
   // add more generic rulesets here, such as:
   // js.configs.recommended, // '@eslint/js'
-  // ...vue.configs.['flat/recommended'], // 'eslint-plugin-vue'
+  // ...vue.configs['flat/recommended'], // 'eslint-plugin-vue'
 
   ...vueI18n.configs.recommended,
   {
