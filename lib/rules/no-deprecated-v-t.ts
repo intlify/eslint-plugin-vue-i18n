@@ -34,7 +34,7 @@ export = createRule({
         'disallow using deprecated `v-t` custom directive (Deprecated in Vue I18n 11.0.0, removed fully in Vue I18n 12.0.0)',
       category: 'Recommended',
       url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-deprecated-v-t.html',
-      recommended: false
+      recommended: true
     },
     fixable: null,
     schema: []
