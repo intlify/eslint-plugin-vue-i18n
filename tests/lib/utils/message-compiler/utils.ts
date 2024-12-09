@@ -21,31 +21,37 @@ describe('message-compiler utils', () => {
       deepStrictEqual(get('^8.0.0'), {
         v8: true,
         v9: false,
+        v10: false,
         isNotSet: false
       })
       deepStrictEqual(get('^9.0.0'), {
         v8: false,
         v9: true,
+        v10: false,
         isNotSet: false
       })
       deepStrictEqual(get('^7.0.0'), {
         v8: true,
         v9: false,
+        v10: false,
         isNotSet: false
       })
       deepStrictEqual(get('^10.0.0'), {
         v8: false,
-        v9: true,
+        v9: false,
+        v10: true,
         isNotSet: false
       })
       deepStrictEqual(get('>=5.0.0'), {
         v8: true,
         v9: true,
+        v10: true,
         isNotSet: false
       })
       deepStrictEqual(get('^9.0.0-beta.8'), {
         v8: false,
         v9: true,
+        v10: false,
         isNotSet: false
       })
     })

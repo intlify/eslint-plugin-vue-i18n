@@ -19,6 +19,7 @@ export const NodeTypes = {
 export type MessageSyntaxVersions = {
   v8: boolean
   v9: boolean
+  v10: boolean
   isNotSet: boolean
   reportIfMissingSetting: () => boolean
 }
@@ -37,6 +38,7 @@ export function getMessageSyntaxVersions(
     return {
       v8: true,
       v9: true,
+      v10: true,
       isNotSet: true,
       reportIfMissingSetting: () => {
         if (!puttedSettingsError.has(context)) {
@@ -54,7 +56,8 @@ export function getMessageSyntaxVersions(
   const range = new Range(messageSyntaxVersion)
   return {
     v8: intersects(range, '^8.0.0 || <=8.0.0'),
-    v9: intersects(range, '>=9.0.0-0'),
+    v9: intersects(range, '^9.0.0-0'),
+    v10: intersects(range, '>=10.0.0-0'),
     isNotSet: false,
     reportIfMissingSetting: () => false
   }

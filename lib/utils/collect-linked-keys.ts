@@ -6,6 +6,7 @@ import type { ResourceNode } from '@intlify/message-compiler'
 import { traverseNode } from './message-compiler/traverser'
 import type { I18nLocaleMessageDictionary, RuleContext } from '../types'
 import { parse } from './message-compiler/parser'
+import { parse as parseForV9 } from './message-compiler/parser-v9'
 import { parse as parseForV8 } from './message-compiler/parser-v8'
 import type { MessageSyntaxVersions } from './message-compiler/utils'
 import { NodeTypes } from './message-compiler/utils'
@@ -27,8 +28,11 @@ function* extractUsedKeysFromLinks(
     if (typeof value === 'object') {
       yield* extractUsedKeysFromLinks(value, messageSyntaxVersions)
     } else if (typeof value === 'string') {
-      if (messageSyntaxVersions.v9) {
+      if (messageSyntaxVersions.v10) {
         yield* extractUsedKeysFromAST(parse(value).ast)
+      }
+      if (messageSyntaxVersions.v9) {
+        yield* extractUsedKeysFromAST(parseForV9(value).ast)
       }
       if (messageSyntaxVersions.v8) {
         yield* extractUsedKeysFromAST(parseForV8(value).ast)

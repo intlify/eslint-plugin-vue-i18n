@@ -3,7 +3,7 @@
  */
 import { deepStrictEqual } from 'assert'
 import { parse } from '../../../../lib/utils/message-compiler/parser-v8'
-import { parse as parseForV9 } from '../../../../lib/utils/message-compiler/parser'
+import { parse as parseForV9 } from '../../../../lib/utils/message-compiler/parser-v9'
 import { errorsFixtures } from './parser-v8-data'
 
 describe('parser-v8', () => {

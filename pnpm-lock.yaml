@@ -15,7 +15,7 @@ importers:
         specifier: ^10.0.0
         version: 10.0.5
       '@intlify/message-compiler':
-        specifier: ^10.0.0
+        specifier: ^10.0.5
         version: 10.0.5
       debug:
         specifier: ^4.3.4
