@@ -98,7 +98,7 @@ Example `.eslintrc.js`:
 For example:
 
 ```js
-module.export = {
+module.exports = {
   extends: [
     'eslint:recommended',
     // Recommended
