@@ -36,8 +36,8 @@ importers:
         specifier: ^3.3.0
         version: 3.3.0
       is-language-code:
-        specifier: ^3.1.0
-        version: 3.1.0
+        specifier: ^5.0.0
+        version: 5.0.12
       js-yaml:
         specifier: ^4.1.0
         version: 4.1.0
@@ -1284,6 +1284,10 @@ packages:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
 
+  codsen-utils@1.6.4:
+    resolution: {integrity: sha512-PDyvQ5f2PValmqZZIJATimcokDt4JjIev8cKbZgEOoZm+U1IJDYuLeTcxZPQdep99R/X0RIlQ6ReQgPOVnPbNw==}
+    engines: {node: '>=14.18.0'}
+
   color-convert@1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}
 
@@ -1993,8 +1997,9 @@ packages:
   is-hexadecimal@1.0.4:
     resolution: {integrity: sha512-gyPJuv83bHMpocVYoqof5VDiZveEoGoFL8m3BXNb2VW8Xs+rz9kqO8LOQ5DH6EsuvilT1ApazU0pyl+ytbPtlw==}
 
-  is-language-code@3.1.0:
-    resolution: {integrity: sha512-zJdQ3QTeLye+iphMeK3wks+vXSRFKh68/Pnlw7aOfApFSEIOhYa8P9vwwa6QrImNNBMJTiL1PpYF0f4BxDuEgA==}
+  is-language-code@5.0.12:
+    resolution: {integrity: sha512-kla/HWPPsCBQWfWf1Bo7XAj4viZy0NRg3k2KMECgurjGl863zc/vMnxA3uEHUXwtftci9haRM+Vf7U1d4pqbOg==}
+    engines: {node: '>=14.18.0'}
 
   is-negative-zero@2.0.2:
     resolution: {integrity: sha512-dqJvarLawXsFbNDeJW7zAz8ItJ9cd28YufuuFzh0G8pNHjJMnY08Dv7sYX2uF5UpQOwieAeOExEYAWWfu7ZZUA==}
@@ -4503,6 +4508,10 @@ snapshots:
 
   clone@1.0.4: {}
 
+  codsen-utils@1.6.4:
+    dependencies:
+      rfdc: 1.3.1
+
   color-convert@1.9.3:
     dependencies:
       color-name: 1.1.3
@@ -5267,9 +5276,9 @@ snapshots:
 
   is-hexadecimal@1.0.4: {}
 
-  is-language-code@3.1.0:
+  is-language-code@5.0.12:
     dependencies:
-      '@babel/runtime': 7.22.6
+      codsen-utils: 1.6.4
 
   is-negative-zero@2.0.2: {}
 
