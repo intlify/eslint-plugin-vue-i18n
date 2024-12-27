@@ -105,7 +105,7 @@
     "eslint4b": "^7.32.0",
     "espree": "^10.0.0",
     "esquery": "^1.5.0",
-    "jiti": "^1.21.0",
+    "jiti": "^2.0.0",
     "json-schema": "^0.4.0",
     "lint-staged": "^15.0.0",
     "mocha": "^11.0.0",
