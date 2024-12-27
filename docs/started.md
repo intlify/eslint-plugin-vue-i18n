@@ -1,6 +1,6 @@
 # Getting Started
 
-## :cd: Installation
+## 💿 Installation
 
 Use [npm](https://www.npmjs.com/) or a compatible tool.
 
@@ -15,7 +15,7 @@ npm install --save-dev eslint @intlify/eslint-plugin-vue-i18n
 
 :::
 
-## :rocket: Usage
+## 🚀 Usage
 
 ### Configuration `eslint.config.[c|m]js`
 
@@ -224,7 +224,18 @@ You can install [eslint-plugin-jsonc](https://ota-meshi.github.io/eslint-plugin-
 
 You can also use [jsonc/vue-custom-block/no-parsing-error](https://ota-meshi.github.io/eslint-plugin-jsonc/rules/vue-custom-block/no-parsing-error.html) and [yml/vue-custom-block/no-parsing-error](https://ota-meshi.github.io/eslint-plugin-yml/rules/vue-custom-block/no-parsing-error.html) rules to find JSON and YAML parsing errors.
 
-## :question: FAQ
+## 🚥 Versioning policy
+
+This plugin follows [Semantic Versioning].
+However, please note that we do not follow [ESLint's Semantic Versioning Policy].
+In minor version releases, this plugin may change the sharable configs provided by the plugin or the default behavior of the plugin's rules in order to add features to the plugin. Because we want to add many features to the plugin soon, so that users can easily take advantage of new features in Vue I18n, Vue and Nuxt.
+
+According to our policy, any minor update may report more linting errors than the previous release. As such, we recommend using the [tilde (`~`)](https://semver.npmjs.com/#syntax-examples) in `package.json` to guarantee the results of your builds.
+
+[Semantic Versioning]: https://semver.org/
+[ESLint's Semantic Versioning Policy]: https://github.com/eslint/eslint#semantic-versioning-policy
+
+## ❓ FAQ
 
 ### What is the "Use the latest vue-eslint-parser" error?
 
