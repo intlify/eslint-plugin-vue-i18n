@@ -1,5 +1,15 @@
 # @intlify/eslint-plugin-vue-i18n
 
+## 4.0.0-next.1
+
+### Major Changes
+
+- [#595](https://github.com/intlify/eslint-plugin-vue-i18n/pull/595) [`384dd5c`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/384dd5c903c8d0d6eadd36667710a0c4d5ea381e) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @intlify/message-compiler to v11
+
+- [#583](https://github.com/intlify/eslint-plugin-vue-i18n/pull/583) [`9a5601e`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/9a5601e9e2d0b30c31cee363e4b7b6aef26c1c79) Thanks [@ota-meshi](https://github.com/ota-meshi)! - docs!: Add Versioning Policy
+
+- [#587](https://github.com/intlify/eslint-plugin-vue-i18n/pull/587) [`9baee55`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/9baee551c0a6e88920ea9ab3a37f9b7d35100042) Thanks [@ota-meshi](https://github.com/ota-meshi)! - feat!: rename configs
+
 ## 4.0.0-next.0
 
 ### Major Changes

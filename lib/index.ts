@@ -38,6 +38,7 @@ export = {
     // flat configs
     base,
     recommended,
+    // flat configs (Backward compatibility)
     'flat/base': base,
     'flat/recommended': recommended
   },
