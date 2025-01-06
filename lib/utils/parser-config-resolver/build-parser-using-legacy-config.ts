@@ -10,9 +10,7 @@ const { CascadingConfigArrayFactory } = Legacy
  */
 export function buildParserUsingLegacyConfig(cwd: string): Parser {
   const configArrayFactory = new CascadingConfigArrayFactory({
-    additionalPluginPool: new Map([
-      ['@intlify/vue-i18n', require('../../index')]
-    ]),
+    additionalPluginPool: new Map([['vue-i18n-ex', require('../../index')]]),
     cwd,
     getEslintRecommendedConfig() {
       return {}

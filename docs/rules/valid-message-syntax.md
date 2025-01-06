@@ -1,14 +1,14 @@
 ---
-title: '@intlify/vue-i18n/valid-message-syntax'
+title: 'vue-i18n-ex/valid-message-syntax'
 description: disallow invalid message syntax
 since: v0.10.0
 ---
 
-# @intlify/vue-i18n/valid-message-syntax
+# vue-i18n-ex/valid-message-syntax
 
 > disallow invalid message syntax
 
-- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` or `*.configs["flat/recommended"]` property in a configuration file enables this rule.
+- :star: The `"extends": "plugin:vue-i18n-ex/recommended"` or `*.configs["flat/recommended"]` property in a configuration file enables this rule.
 
 This rule warns invalid message syntax.
 
@@ -21,7 +21,7 @@ This rule is useful localization leaks with incorrect message syntax.
 <eslint-code-block language="json">
 
 ```json
-/* eslint @intlify/vue-i18n/valid-message-syntax: 'error' */
+/* eslint vue-i18n-ex/valid-message-syntax: 'error' */
 
 /* ✗ BAD */
 {
@@ -37,7 +37,7 @@ This rule is useful localization leaks with incorrect message syntax.
 <eslint-code-block language="json">
 
 ```json
-/* eslint @intlify/vue-i18n/valid-message-syntax: 'error' */
+/* eslint vue-i18n-ex/valid-message-syntax: 'error' */
 
 /* ✓ GOOD */
 {
@@ -51,11 +51,11 @@ This rule is useful localization leaks with incorrect message syntax.
 
 ## :couple: Related Rules
 
-- [@intlify/vue-i18n/no-html-messages](./no-html-messages.md)
+- [vue-i18n-ex/no-html-messages](./no-html-messages.md)
 
 ## :rocket: Version
 
-This rule was introduced in `@intlify/eslint-plugin-vue-i18n-ex` v0.10.0
+This rule was introduced in `eslint-plugin-vue-i18n-ex` v0.10.0
 
 ## :mag: Implementation
 

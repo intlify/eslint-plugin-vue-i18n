@@ -38,8 +38,8 @@ jobs:
           version: pnpm run version:ci
           # This expects you to have a script called release which does a build for your packages and calls changeset publish
           publish: pnpm run release
-          commit: 'chore: release `@intlify/eslint-plugin-vue-i18n-ex`'
-          title: 'chore: release `@intlify/eslint-plugin-vue-i18n-ex`'
+          commit: 'chore: release `eslint-plugin-vue-i18n-ex`'
+          title: 'chore: release `eslint-plugin-vue-i18n-ex`'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

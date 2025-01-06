@@ -40,7 +40,7 @@ function buildTestsForLocales<
       result.push({
         ...testcase,
         settings: {
-          'vue-i18n': { localeDir }
+          'vue-i18n-ex': { localeDir }
         }
       })
     }
@@ -230,7 +230,7 @@ tester.run('no-missing-keys', rule as never, {
           {{$t('nesting01.a.b')}}
         </template>`,
         settings: {
-          'vue-i18n': {
+          'vue-i18n-ex': {
             localeDir:
               './tests/fixtures/no-missing-keys/complex-locales/locales/*.json'
           }
@@ -310,7 +310,7 @@ tester.run('no-missing-keys', rule as never, {
     ],
     [
       {
-        // settings.vue-i18n.localeDir' error
+        // settings.vue-i18n-ex.localeDir' error
         code: `$t('missing')`,
         errors: [
           `You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n-ex' documentation`

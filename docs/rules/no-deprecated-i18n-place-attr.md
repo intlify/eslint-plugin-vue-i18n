@@ -1,14 +1,14 @@
 ---
-title: '@intlify/vue-i18n/no-deprecated-i18n-place-attr'
+title: 'vue-i18n-ex/no-deprecated-i18n-place-attr'
 description: disallow using deprecated `place` attribute (Removed in Vue I18n 9.0.0+)
 since: v0.11.0
 ---
 
-# @intlify/vue-i18n/no-deprecated-i18n-place-attr
+# vue-i18n-ex/no-deprecated-i18n-place-attr
 
 > disallow using deprecated `place` attribute (Removed in Vue I18n 9.0.0+)
 
-- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` or `*.configs["flat/recommended"]` property in a configuration file enables this rule.
+- :star: The `"extends": "plugin:vue-i18n-ex/recommended"` or `*.configs["flat/recommended"]` property in a configuration file enables this rule.
 
 If you are migrating from Vue I18n v8 to v9, the `place` attribute should be replaced with the `v-slot`.
 
@@ -24,7 +24,7 @@ This rule reports use of deprecated `place` attribute (Removed in Vue I18n 9.0.0
 
 ```vue
 <script>
-/* eslint @intlify/vue-i18n/no-deprecated-i18n-place-attr: 'error' */
+/* eslint vue-i18n-ex/no-deprecated-i18n-place-attr: 'error' */
 </script>
 <template>
   <div class="app">
@@ -56,7 +56,7 @@ This rule reports use of deprecated `place` attribute (Removed in Vue I18n 9.0.0
 
 ```vue
 <script>
-/* eslint @intlify/vue-i18n/no-deprecated-i18n-place-attr: 'error' */
+/* eslint vue-i18n-ex/no-deprecated-i18n-place-attr: 'error' */
 </script>
 <template>
   <div class="app">
@@ -89,12 +89,12 @@ This rule reports use of deprecated `place` attribute (Removed in Vue I18n 9.0.0
 
 ## :books: Further reading
 
-- [Vue I18n > Breaking Changes - Remove place syntax with `place` attr and `places` prop](https://vue-i18n.intlify.dev/guide/migration/breaking.html#remove-place-syntax-with-place-attr-and-places-prop)
-- [Vue I18n (v8) > Component interpolation - Places syntax usage](https://kazupon.github.io/vue-i18n/guide/interpolation.html#places-syntax-usage)
+- [Vue I18n > Breaking Changes - Remove place syntax with `place` attr and `places` prop](https://vue-i18n-ex.intlify.dev/guide/migration/breaking.html#remove-place-syntax-with-place-attr-and-places-prop)
+- [Vue I18n (v8) > Component interpolation - Places syntax usage](https://kazupon.github.io/vue-i18n-ex/guide/interpolation.html#places-syntax-usage)
 
 ## :rocket: Version
 
-This rule was introduced in `@intlify/eslint-plugin-vue-i18n-ex` v0.11.0
+This rule was introduced in `eslint-plugin-vue-i18n-ex` v0.11.0
 
 ## :mag: Implementation
 

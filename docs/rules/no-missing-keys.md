@@ -1,14 +1,14 @@
 ---
-title: '@intlify/vue-i18n/no-missing-keys'
+title: 'vue-i18n-ex/no-missing-keys'
 description: disallow missing locale message key at localization methods
 since: v0.1.0
 ---
 
-# @intlify/vue-i18n/no-missing-keys
+# vue-i18n-ex/no-missing-keys
 
 > disallow missing locale message key at localization methods
 
-- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` or `*.configs["flat/recommended"]` property in a configuration file enables this rule.
+- :star: The `"extends": "plugin:vue-i18n-ex/recommended"` or `*.configs["flat/recommended"]` property in a configuration file enables this rule.
 
 This rule warns locale message key missing if the key does not exist in locale messages.
 
@@ -47,7 +47,7 @@ localization codes:
 
 ```vue
 <script>
-/* eslint @intlify/vue-i18n/no-missing-keys: 'error' */
+/* eslint vue-i18n-ex/no-missing-keys: 'error' */
 </script>
 <template>
   <div class="app">
@@ -68,8 +68,8 @@ localization codes:
 <!-- eslint-skip -->
 
 ```js
-/* eslint @intlify/vue-i18n/no-missing-keys: 'error' */
-import VueI18n from 'vue-i18n'
+/* eslint vue-i18n-ex/no-missing-keys: 'error' */
+import VueI18n from 'vue-i18n-ex'
 
 import en from './locales/en.json'
 
@@ -112,7 +112,7 @@ localization codes:
 
 ```vue
 <script>
-/* eslint @intlify/vue-i18n/no-missing-keys: 'error' */
+/* eslint vue-i18n-ex/no-missing-keys: 'error' */
 </script>
 <template>
   <div class="app">
@@ -133,8 +133,8 @@ localization codes:
 <!-- eslint-skip -->
 
 ```js
-/* eslint @intlify/vue-i18n/no-missing-keys: 'error' */
-import VueI18n from 'vue-i18n'
+/* eslint vue-i18n-ex/no-missing-keys: 'error' */
+import VueI18n from 'vue-i18n-ex'
 
 import en from './locales/en.json'
 
@@ -161,7 +161,7 @@ For SFC.
 
 ```vue
 <script>
-/* eslint @intlify/vue-i18n/no-missing-keys: 'error' */
+/* eslint vue-i18n-ex/no-missing-keys: 'error' */
 </script>
 
 <i18n>
@@ -184,12 +184,12 @@ For SFC.
 
 ## :couple: Related Rules
 
-- [@intlify/vue-i18n/no-missing-keys-in-other-locales](./no-missing-keys-in-other-locales.md)
-- [@intlify/vue-i18n/no-unused-keys](./no-unused-keys.md)
+- [vue-i18n-ex/no-missing-keys-in-other-locales](./no-missing-keys-in-other-locales.md)
+- [vue-i18n-ex/no-unused-keys](./no-unused-keys.md)
 
 ## :rocket: Version
 
-This rule was introduced in `@intlify/eslint-plugin-vue-i18n-ex` v0.1.0
+This rule was introduced in `eslint-plugin-vue-i18n-ex` v0.1.0
 
 ## :mag: Implementation
 

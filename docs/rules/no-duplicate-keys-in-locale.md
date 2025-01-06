@@ -1,10 +1,10 @@
 ---
-title: '@intlify/vue-i18n/no-duplicate-keys-in-locale'
+title: 'vue-i18n-ex/no-duplicate-keys-in-locale'
 description: disallow duplicate localization keys within the same locale
 since: v0.9.0
 ---
 
-# @intlify/vue-i18n/no-duplicate-keys-in-locale
+# vue-i18n-ex/no-duplicate-keys-in-locale
 
 > disallow duplicate localization keys within the same locale
 
@@ -25,7 +25,7 @@ locale messages:
 <eslint-code-block language="json" filename="en.1.json">
 
 ```json
-/* eslint @intlify/vue-i18n/no-duplicate-keys-in-locale: 'error' */
+/* eslint vue-i18n-ex/no-duplicate-keys-in-locale: 'error' */
 
 // ✗ BAD
 {
@@ -42,7 +42,7 @@ locale messages:
 <eslint-code-block language="json" filename="en.2.json">
 
 ```json
-/* eslint @intlify/vue-i18n/no-duplicate-keys-in-locale: 'error' */
+/* eslint vue-i18n-ex/no-duplicate-keys-in-locale: 'error' */
 
 // ✗ BAD
 {
@@ -65,7 +65,7 @@ locale messages:
 <eslint-code-block language="json" filename="en.1.json">
 
 ```json
-/* eslint @intlify/vue-i18n/no-duplicate-keys-in-locale: 'error' */
+/* eslint vue-i18n-ex/no-duplicate-keys-in-locale: 'error' */
 
 // ✓ GOOD
 {
@@ -81,7 +81,7 @@ locale messages:
 <eslint-code-block language="json" filename="en.2.json">
 
 ```json
-/* eslint @intlify/vue-i18n/no-duplicate-keys-in-locale: 'error' */
+/* eslint vue-i18n-ex/no-duplicate-keys-in-locale: 'error' */
 
 // ✓ GOOD
 {
@@ -97,7 +97,7 @@ locale messages:
 
 ```json
 {
-  "@intlify/vue-i18n/no-duplicate-keys-in-locale": [
+  "vue-i18n-ex/no-duplicate-keys-in-locale": [
     "error",
     {
       "ignoreI18nBlock": false
@@ -110,11 +110,11 @@ locale messages:
 
 ## :couple: Related Rules
 
-- [@intlify/vue-i18n/no-missing-keys-in-other-locales](./no-missing-keys-in-other-locales.md)
+- [vue-i18n-ex/no-missing-keys-in-other-locales](./no-missing-keys-in-other-locales.md)
 
 ## :rocket: Version
 
-This rule was introduced in `@intlify/eslint-plugin-vue-i18n-ex` v0.9.0
+This rule was introduced in `eslint-plugin-vue-i18n-ex` v0.9.0
 
 ## :mag: Implementation
 

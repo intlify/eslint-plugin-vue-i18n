@@ -16,7 +16,7 @@ const options = {
       languageOptions: { parser: jsonParser },
       filename: join(localesRoot, 'test.json'),
       settings: {
-        'vue-i18n': {
+        'vue-i18n-ex': {
           localeDir: `${localesRoot}/*.{json,yaml,yml}`
         }
       }
@@ -25,7 +25,7 @@ const options = {
       languageOptions: { parser: jsonParser },
       filename: join(localesRoot, 'test.json'),
       settings: {
-        'vue-i18n': {
+        'vue-i18n-ex': {
           localeDir: `${localesRoot}/*.{json,yaml,yml}`,
           messageSyntaxVersion: '^8.0.0'
         }
@@ -35,7 +35,7 @@ const options = {
       languageOptions: { parser: jsonParser },
       filename: join(localesRoot, 'test.json'),
       settings: {
-        'vue-i18n': {
+        'vue-i18n-ex': {
           localeDir: `${localesRoot}/*.{json,yaml,yml}`,
           messageSyntaxVersion: '^9.0.0'
         }
@@ -47,7 +47,7 @@ const options = {
       languageOptions: { parser: yamlParser },
       filename: join(localesRoot, 'test.yaml'),
       settings: {
-        'vue-i18n': {
+        'vue-i18n-ex': {
           localeDir: `${localesRoot}/*.{json,yaml,yml}`
         }
       }
@@ -56,7 +56,7 @@ const options = {
       languageOptions: { parser: yamlParser },
       filename: join(localesRoot, 'test.yaml'),
       settings: {
-        'vue-i18n': {
+        'vue-i18n-ex': {
           localeDir: `${localesRoot}/*.{json,yaml,yml}`,
           messageSyntaxVersion: '^8.0.0'
         }
@@ -66,7 +66,7 @@ const options = {
       languageOptions: { parser: yamlParser },
       filename: join(localesRoot, 'test.yaml'),
       settings: {
-        'vue-i18n': {
+        'vue-i18n-ex': {
           localeDir: `${localesRoot}/*.{json,yaml,yml}`,
           messageSyntaxVersion: '^9.0.0'
         }
@@ -78,7 +78,7 @@ const options = {
       languageOptions: { parser: vueParser },
       filename: join(localesRoot, 'test.vue'),
       settings: {
-        'vue-i18n': {
+        'vue-i18n-ex': {
           localeDir: `${localesRoot}/*.{json,yaml,yml}`
         }
       }
@@ -87,7 +87,7 @@ const options = {
       languageOptions: { parser: vueParser },
       filename: join(localesRoot, 'test.vue'),
       settings: {
-        'vue-i18n': {
+        'vue-i18n-ex': {
           localeDir: `${localesRoot}/*.{json,yaml,yml}`,
           messageSyntaxVersion: '^9.0.0'
         }

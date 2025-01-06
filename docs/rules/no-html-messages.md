@@ -1,14 +1,14 @@
 ---
-title: '@intlify/vue-i18n/no-html-messages'
+title: 'vue-i18n-ex/no-html-messages'
 description: disallow use HTML localization messages
 since: v0.1.0
 ---
 
-# @intlify/vue-i18n/no-html-messages
+# vue-i18n-ex/no-html-messages
 
 > disallow use HTML localization messages
 
-- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` or `*.configs["flat/recommended"]` property in a configuration file enables this rule.
+- :star: The `"extends": "plugin:vue-i18n-ex/recommended"` or `*.configs["flat/recommended"]` property in a configuration file enables this rule.
 
 This rule reports in order to reduce the risk of injecting potentially unsafe localization message into the browser leading to supply-chain attack or XSS attack.
 
@@ -23,7 +23,7 @@ locale messages:
 <eslint-code-block language="json">
 
 ```json
-/* eslint @intlify/vue-i18n/no-html-messages: 'error' */
+/* eslint vue-i18n-ex/no-html-messages: 'error' */
 
 // ✗ BAD
 {
@@ -54,7 +54,7 @@ In localization codes of application:
 
 ```js
 import Vue from 'vue'
-import VueI18n from 'vue-i18n'
+import VueI18n from 'vue-i18n-ex'
 
 import en from './locales/en.json'
 
@@ -78,7 +78,7 @@ locale messages:
 <eslint-code-block language="json">
 
 ```json
-/* eslint @intlify/vue-i18n/no-html-messages: 'error' */
+/* eslint vue-i18n-ex/no-html-messages: 'error' */
 
 // ✓ GOOD
 {
@@ -111,7 +111,7 @@ In localization codes of application:
 
 ```js
 import Vue from 'vue'
-import VueI18n from 'vue-i18n'
+import VueI18n from 'vue-i18n-ex'
 
 import en from './locales/en.json'
 
@@ -148,7 +148,7 @@ If you are certain the localization message is trusted, you can disable this rul
 
 ## :couple: Related Rules
 
-- [@intlify/vue-i18n/valid-message-syntax](./valid-message-syntax.md)
+- [vue-i18n-ex/valid-message-syntax](./valid-message-syntax.md)
 
 ## :books: Further reading
 
@@ -157,7 +157,7 @@ If you are certain the localization message is trusted, you can disable this rul
 
 ## :rocket: Version
 
-This rule was introduced in `@intlify/eslint-plugin-vue-i18n-ex` v0.1.0
+This rule was introduced in `eslint-plugin-vue-i18n-ex` v0.1.0
 
 ## :mag: Implementation
 

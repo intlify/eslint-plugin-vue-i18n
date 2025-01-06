@@ -1,10 +1,10 @@
 ---
-title: '@intlify/vue-i18n/sfc-locale-attr'
+title: 'vue-i18n-ex/sfc-locale-attr'
 description: require or disallow the locale attribute on `<i18n>` block
 since: v1.3.0
 ---
 
-# @intlify/vue-i18n/sfc-locale-attr
+# vue-i18n-ex/sfc-locale-attr
 
 > require or disallow the locale attribute on `<i18n>` block
 
@@ -18,7 +18,7 @@ This rule aims to enforce the `<i18n>` block to use or not the `locale` attribut
 
 ```vue
 <script>
-/* eslint @intlify/vue-i18n/sfc-locale-attr: "error" */
+/* eslint vue-i18n-ex/sfc-locale-attr: "error" */
 </script>
 
 <!-- ✓ GOOD -->
@@ -44,7 +44,7 @@ This rule aims to enforce the `<i18n>` block to use or not the `locale` attribut
 
 ```json
 {
-  "@intlify/vue-i18n/sfc-locale-attr": [
+  "vue-i18n-ex/sfc-locale-attr": [
     "error",
     "always" //"always" or "never"
   ]
@@ -62,7 +62,7 @@ This rule aims to enforce the `<i18n>` block to use or not the `locale` attribut
 
 ```vue
 <script>
-/* eslint @intlify/vue-i18n/sfc-locale-attr: ["error", "never"] */
+/* eslint vue-i18n-ex/sfc-locale-attr: ["error", "never"] */
 </script>
 
 <!-- ✓ GOOD -->
@@ -86,7 +86,7 @@ This rule aims to enforce the `<i18n>` block to use or not the `locale` attribut
 
 ## :rocket: Version
 
-This rule was introduced in `@intlify/eslint-plugin-vue-i18n-ex` v1.3.0
+This rule was introduced in `eslint-plugin-vue-i18n-ex` v1.3.0
 
 ## :mag: Implementation
 

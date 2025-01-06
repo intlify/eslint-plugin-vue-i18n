@@ -1,4 +1,4 @@
-# @intlify/eslint-plugin-vue-i18n-ex
+# eslint-plugin-vue-i18n-ex
 
 ## 4.0.0-next.1
 
@@ -64,7 +64,7 @@
 
 - [#459](https://github.com/intlify/eslint-plugin-vue-i18n-ex/pull/459) [`8b3d347`](https://github.com/intlify/eslint-plugin-vue-i18n-ex/commit/8b3d347e9e10b4cce0b8527675c230654d8e28bd) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @eslint/eslintrc to v3
 
-- [#474](https://github.com/intlify/eslint-plugin-vue-i18n-ex/pull/474) [`ebd7353`](https://github.com/intlify/eslint-plugin-vue-i18n-ex/commit/ebd7353ada4d65eec0f504887db0911a80819979) Thanks [@ota-meshi](https://github.com/ota-meshi)! - fix: wrong suggestion for remove all unused keys in `vue-i18n/no-unused-keys` rule
+- [#474](https://github.com/intlify/eslint-plugin-vue-i18n-ex/pull/474) [`ebd7353`](https://github.com/intlify/eslint-plugin-vue-i18n-ex/commit/ebd7353ada4d65eec0f504887db0911a80819979) Thanks [@ota-meshi](https://github.com/ota-meshi)! - fix: wrong suggestion for remove all unused keys in `vue-i18n-ex/no-unused-keys` rule
 
 - [#413](https://github.com/intlify/eslint-plugin-vue-i18n-ex/pull/413) [`0fadd81`](https://github.com/intlify/eslint-plugin-vue-i18n-ex/commit/0fadd81f0551c380514744573b4c3fdac9b9d4fa) Thanks [@dargmuesli](https://github.com/dargmuesli)! - Pin `@intlify` dependencies to tag `beta` to try to prevent renovate from downgrading.
 
@@ -124,7 +124,7 @@
 
 ### Patch Changes
 
-- [#474](https://github.com/intlify/eslint-plugin-vue-i18n-ex/pull/474) [`ebd7353`](https://github.com/intlify/eslint-plugin-vue-i18n-ex/commit/ebd7353ada4d65eec0f504887db0911a80819979) Thanks [@ota-meshi](https://github.com/ota-meshi)! - fix: wrong suggestion for remove all unused keys in `vue-i18n/no-unused-keys` rule
+- [#474](https://github.com/intlify/eslint-plugin-vue-i18n-ex/pull/474) [`ebd7353`](https://github.com/intlify/eslint-plugin-vue-i18n-ex/commit/ebd7353ada4d65eec0f504887db0911a80819979) Thanks [@ota-meshi](https://github.com/ota-meshi)! - fix: wrong suggestion for remove all unused keys in `vue-i18n-ex/no-unused-keys` rule
 
 ## 3.0.0-next.6
 
@@ -349,7 +349,7 @@
 - [#148](https://github.com/intlify/eslint-plugin-vue-i18n-ex/pull/148) Add `no-missing-keys-in-other-locales` rule ([@ota-meshi](https://github.com/ota-meshi))
 - [#148](https://github.com/intlify/eslint-plugin-vue-i18n-ex/pull/148) Change `no-missing-keys` rule to not report if there is one matching key ([@ota-meshi](https://github.com/ota-meshi))
 - [#147](https://github.com/intlify/eslint-plugin-vue-i18n-ex/pull/147) Add `valid-message-syntax` rule ([@ota-meshi](https://github.com/ota-meshi))
-- [#145](https://github.com/intlify/eslint-plugin-vue-i18n-ex/pull/145) Supports vue-i18n v9 message format ([@ota-meshi](https://github.com/ota-meshi))
+- [#145](https://github.com/intlify/eslint-plugin-vue-i18n-ex/pull/145) Supports vue-i18n-ex v9 message format ([@ota-meshi](https://github.com/ota-meshi))
 
 #### :bug: Bug Fixes
 
@@ -371,8 +371,8 @@
 #### :star: Features
 
 - [#114](https://github.com/intlify/eslint-plugin-vue-i18n-ex/pull/114) Add support for multiple locale directories ([@ota-meshi](https://github.com/ota-meshi))
-- [#116](https://github.com/intlify/eslint-plugin-vue-i18n-ex/pull/116) Add `@intlify/vue-i18n/key-format-style` rule ([@ota-meshi](https://github.com/ota-meshi))
-- [#112](https://github.com/intlify/eslint-plugin-vue-i18n-ex/pull/112) Add `@intlify/vue-i18n/no-duplicate-keys-in-locale` rule and change `@intlify/vue-i18n/no-missing-keys` rule to not report if there is one matching key in each locale ([@ota-meshi](https://github.com/ota-meshi))
+- [#116](https://github.com/intlify/eslint-plugin-vue-i18n-ex/pull/116) Add `vue-i18n-ex/key-format-style` rule ([@ota-meshi](https://github.com/ota-meshi))
+- [#112](https://github.com/intlify/eslint-plugin-vue-i18n-ex/pull/112) Add `vue-i18n-ex/no-duplicate-keys-in-locale` rule and change `vue-i18n-ex/no-missing-keys` rule to not report if there is one matching key in each locale ([@ota-meshi](https://github.com/ota-meshi))
 
 #### :bug: Bug Fixes
 
@@ -425,7 +425,7 @@
 
 #### :star: Features
 
-- [#83](https://github.com/intlify/eslint-plugin-vue-i18n-ex/pull/83) Add `enableFix` option to `@intlify/vue-i18n/no-unused-keys` rule ([@ota-meshi](https://github.com/ota-meshi))
+- [#83](https://github.com/intlify/eslint-plugin-vue-i18n-ex/pull/83) Add `enableFix` option to `vue-i18n-ex/no-unused-keys` rule ([@ota-meshi](https://github.com/ota-meshi))
 - [#80](https://github.com/intlify/eslint-plugin-vue-i18n-ex/pull/80) Add support for `<i18n>` blocks of SFC. ([@ota-meshi](https://github.com/ota-meshi))
 
 #### Committers: 1
@@ -440,7 +440,7 @@
 
 #### :zap: Improvement Features
 
-- [#75](https://github.com/intlify/eslint-plugin-vue-i18n-ex/pull/75) Change "settings['vue-i18n'].localeDir" to can specify object options. ([@ota-meshi](https://github.com/ota-meshi))
+- [#75](https://github.com/intlify/eslint-plugin-vue-i18n-ex/pull/75) Change "settings['vue-i18n-ex'].localeDir" to can specify object options. ([@ota-meshi](https://github.com/ota-meshi))
 
 #### Committers: 1
 

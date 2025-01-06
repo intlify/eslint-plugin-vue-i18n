@@ -16,7 +16,7 @@ const options = {
       languageOptions: { parser: jsonParser },
       filename: join(fileLocalesRoot, 'test.json'),
       settings: {
-        'vue-i18n': {
+        'vue-i18n-ex': {
           localeDir: `${fileLocalesRoot}/*.{json,yaml,yml}`
         }
       }
@@ -25,7 +25,7 @@ const options = {
       languageOptions: { parser: jsonParser },
       filename: join(fileLocalesRoot, 'en.json'),
       settings: {
-        'vue-i18n': {
+        'vue-i18n-ex': {
           localeDir: `${fileLocalesRoot}/*.{json,yaml,yml}`
         }
       }
@@ -34,7 +34,7 @@ const options = {
       languageOptions: { parser: jsonParser },
       filename: join(keyLocalesRoot, 'test.json'),
       settings: {
-        'vue-i18n': {
+        'vue-i18n-ex': {
           localeDir: {
             pattern: `${keyLocalesRoot}/*.{json,yaml,yml}`,
             localeKey: 'key'
@@ -48,7 +48,7 @@ const options = {
       languageOptions: { parser: yamlParser },
       filename: join(fileLocalesRoot, 'test.yaml'),
       settings: {
-        'vue-i18n': {
+        'vue-i18n-ex': {
           localeDir: `${fileLocalesRoot}/*.{json,yaml,yml}`
         }
       }
@@ -57,7 +57,7 @@ const options = {
       languageOptions: { parser: yamlParser },
       filename: join(fileLocalesRoot, 'en.yaml'),
       settings: {
-        'vue-i18n': {
+        'vue-i18n-ex': {
           localeDir: `${fileLocalesRoot}/*.{json,yaml,yml}`
         }
       }
@@ -66,7 +66,7 @@ const options = {
       languageOptions: { parser: yamlParser },
       filename: join(keyLocalesRoot, 'test.yaml'),
       settings: {
-        'vue-i18n': {
+        'vue-i18n-ex': {
           localeDir: {
             pattern: `${keyLocalesRoot}/*.{json,yaml,yml}`,
             localeKey: 'key'

@@ -1,11 +1,11 @@
 <p align="center"><img width="143px" height="130px" src="./assets/eslint-plugin-vue-i18n-ex.svg" alt="ESLint plugin for Vue I18n logo"></p>
 
-<h1 align="center">@intlify/eslint-plugin-vue-i18n-ex</h1>
+<h1 align="center">eslint-plugin-vue-i18n-ex</h1>
 <p align="center">
   <a href="https://github.com/intlify/eslint-plugin-vue-i18n-ex/actions?query=workflow%3ATest"><img src="https://github.com/intlify/eslint-plugin-vue-i18n-ex/workflows/Test/badge.svg?branch=master" alt="Test Status"></a>
 </p>
 <p align="center">
-  <a href="https://www.npmjs.com/package/@intlify/eslint-plugin-vue-i18n-ex"><img src="https://img.shields.io/npm/v/@intlify/eslint-plugin-vue-i18n-ex.svg" alt="NPM"></a>
+  <a href="https://www.npmjs.com/package/eslint-plugin-vue-i18n-ex"><img src="https://img.shields.io/npm/v/eslint-plugin-vue-i18n-ex.svg" alt="NPM"></a>
 </p>
 <p align="center">ESLint plugin for Vue I18n</p>
 

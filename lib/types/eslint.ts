@@ -32,7 +32,7 @@ export interface RuleContext {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   options: any[]
   settings: {
-    'vue-i18n'?: {
+    'vue-i18n-ex'?: {
       localeDir?: SettingsVueI18nLocaleDir
       messageSyntaxVersion?: string
       cwd?: string // for test

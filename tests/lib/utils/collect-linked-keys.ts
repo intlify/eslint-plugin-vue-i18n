@@ -8,7 +8,7 @@ import { collectLinkedKeys } from '../../../lib/utils/collect-linked-keys'
 function createContext(messageSyntaxVersion?: string): RuleContext {
   return {
     settings: {
-      'vue-i18n': {
+      'vue-i18n-ex': {
         messageSyntaxVersion
       }
     }

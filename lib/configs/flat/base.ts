@@ -1,15 +1,15 @@
 /** DON'T EDIT THIS FILE; was created by scripts. */
 export = [
   {
-    name: '@intlify/vue-i18n:base:setup',
+    name: 'vue-i18n-ex:base:setup',
     plugins: {
-      get '@intlify/vue-i18n'() {
+      get 'vue-i18n-ex'() {
         return require('../../index')
       }
     }
   },
   {
-    name: '@intlify/vue-i18n:base:setup:json',
+    name: 'vue-i18n-ex:base:setup:json',
     files: ['*.json', '**/*.json', '*.json5', '**/*.json5'],
     languageOptions: {
       parser: require('vue-eslint-parser'),
@@ -19,7 +19,7 @@ export = [
     }
   },
   {
-    name: '@intlify/vue-i18n:base:setup:yaml',
+    name: 'vue-i18n-ex:base:setup:yaml',
     files: ['*.yaml', '**/*.yaml', '*.yml', '**/*.yml'],
     languageOptions: {
       parser: require('vue-eslint-parser'),

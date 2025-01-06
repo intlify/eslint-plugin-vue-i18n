@@ -1,5 +1,5 @@
 {
-  "name": "@intlify/eslint-plugin-vue-i18n-ex",
+  "name": "eslint-plugin-vue-i18n-ex",
   "description": "ESLint plugin for Vue I18n",
   "version": "4.0.0-next.1",
   "license": "MIT",
@@ -11,7 +11,7 @@
     "i18n",
     "internationalization",
     "vue",
-    "vue-i18n",
+    "vue-i18n-ex",
     "vue.js",
     "vuejs"
   ],

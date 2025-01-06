@@ -1,5 +1,5 @@
 /**
- * A simplified version of the message parser that handles messages like vue-i18n v8.
+ * A simplified version of the message parser that handles messages like vue-i18n-ex v8.
  * This parser probably has poor performance.
  */
 import type {

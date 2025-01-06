@@ -32,7 +32,7 @@ export function getMessageSyntaxVersions(
 ): MessageSyntaxVersions {
   const { settings } = context
   const messageSyntaxVersion =
-    settings['vue-i18n'] && settings['vue-i18n'].messageSyntaxVersion
+    settings['vue-i18n-ex'] && settings['vue-i18n-ex'].messageSyntaxVersion
 
   if (!messageSyntaxVersion) {
     return {

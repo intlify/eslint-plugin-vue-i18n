@@ -1,10 +1,10 @@
 ---
-title: '@intlify/vue-i18n/key-format-style'
+title: 'vue-i18n-ex/key-format-style'
 description: enforce specific casing for localization keys
 since: v0.9.0
 ---
 
-# @intlify/vue-i18n/key-format-style
+# vue-i18n-ex/key-format-style
 
 > enforce specific casing for localization keys
 
@@ -28,7 +28,7 @@ Also, the following localization key definitions are reported as errors, because
 <eslint-code-block language="yaml">
 
 ```yaml
-# eslint @intlify/vue-i18n/key-format-style: 'error'
+# eslint vue-i18n-ex/key-format-style: 'error'
 
 # ✗ BAD: Use array elements.
 - message1
@@ -46,7 +46,7 @@ Also, the following localization key definitions are reported as errors, because
 
 ```json
 {
-  "@intlify/vue-i18n/key-format-style": [
+  "vue-i18n-ex/key-format-style": [
     "error",
     "camelCase" | "kebab-case" | "lowercase" | "snake_case",
     {
@@ -66,7 +66,7 @@ Also, the following localization key definitions are reported as errors, because
 <eslint-code-block language="yaml">
 
 ```yaml
-# eslint @intlify/vue-i18n/key-format-style: ['error', 'camelCase']
+# eslint vue-i18n-ex/key-format-style: ['error', 'camelCase']
 
 # ✓ GOOD
 appTitle: I18N Management System
@@ -79,7 +79,7 @@ appTitle: I18N Management System
 <eslint-code-block language="yaml">
 
 ```yaml
-# eslint @intlify/vue-i18n/key-format-style: ['error', 'camelCase']
+# eslint vue-i18n-ex/key-format-style: ['error', 'camelCase']
 
 # ✗ BAD
 app-title: I18N Management System
@@ -93,7 +93,7 @@ app_title: I18N Management System
 <eslint-code-block language="yaml">
 
 ```yaml
-# eslint @intlify/vue-i18n/key-format-style: ['error', 'kebab-case']
+# eslint vue-i18n-ex/key-format-style: ['error', 'kebab-case']
 
 # ✓ GOOD
 app-title: I18N Management System
@@ -106,7 +106,7 @@ app-title: I18N Management System
 <eslint-code-block language="yaml">
 
 ```yaml
-# eslint @intlify/vue-i18n/key-format-style: ['error', 'kebab-case']
+# eslint vue-i18n-ex/key-format-style: ['error', 'kebab-case']
 
 # ✗ BAD
 appTitle: I18N Management System
@@ -120,7 +120,7 @@ app_title: I18N Management System
 <eslint-code-block language="yaml">
 
 ```yaml
-# eslint @intlify/vue-i18n/key-format-style: ['error', 'lowercase']
+# eslint vue-i18n-ex/key-format-style: ['error', 'lowercase']
 
 # ✓ GOOD
 apptitle: I18N Management System
@@ -133,7 +133,7 @@ apptitle: I18N Management System
 <eslint-code-block language="yaml">
 
 ```yaml
-# eslint @intlify/vue-i18n/key-format-style: ['error', 'lowercase']
+# eslint vue-i18n-ex/key-format-style: ['error', 'lowercase']
 
 # ✗ BAD
 appTitle: I18N Management System
@@ -148,7 +148,7 @@ APP_TITLE: I18N Management System
 <eslint-code-block language="yaml">
 
 ```yaml
-# eslint @intlify/vue-i18n/key-format-style: ['error', 'snake_case']
+# eslint vue-i18n-ex/key-format-style: ['error', 'snake_case']
 
 # ✓ GOOD
 app_title: I18N Management System
@@ -161,7 +161,7 @@ app_title: I18N Management System
 <eslint-code-block language="yaml">
 
 ```yaml
-# eslint @intlify/vue-i18n/key-format-style: ['error', 'snake_case']
+# eslint vue-i18n-ex/key-format-style: ['error', 'snake_case']
 
 # ✗ BAD
 appTitle: I18N Management System
@@ -175,7 +175,7 @@ app-title: I18N Management System
 <eslint-code-block language="yaml">
 
 ```yaml
-# eslint @intlify/vue-i18n/key-format-style: ['error', 'camelCase', {allowArray: true}]
+# eslint vue-i18n-ex/key-format-style: ['error', 'camelCase', {allowArray: true}]
 
 # ✓ GOOD
 - message1
@@ -187,7 +187,7 @@ app-title: I18N Management System
 
 ## :rocket: Version
 
-This rule was introduced in `@intlify/eslint-plugin-vue-i18n-ex` v0.9.0
+This rule was introduced in `eslint-plugin-vue-i18n-ex` v0.9.0
 
 ## :mag: Implementation
 

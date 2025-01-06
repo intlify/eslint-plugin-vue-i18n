@@ -1,7 +1,7 @@
 /** DON'T EDIT THIS FILE; was created by scripts. */
 export = {
   parser: require.resolve('vue-eslint-parser'),
-  plugins: ['@intlify/vue-i18n'],
+  plugins: ['vue-i18n-ex'],
   overrides: [
     {
       files: ['*.json', '*.json5'],

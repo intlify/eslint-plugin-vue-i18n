@@ -9,7 +9,7 @@ function toTableRow(rule: RuleInfo) {
   const mark = `${rule.recommended ? ':star:' : ''}${
     rule.fixable ? ':black_nib:' : ''
   }`
-  const link = `[@intlify/vue-i18n/<wbr>${rule.name}](./${rule.name}.html)`
+  const link = `[vue-i18n-ex/<wbr>${rule.name}](./${rule.name}.html)`
   const description = rule.description || '(no description)'
   return `| ${link} | ${description} | ${mark} |`
 }
@@ -43,7 +43,7 @@ export async function update() {
   const filePath = resolve(__dirname, '../docs/rules/index.md')
   const content = `# Available Rules
 
-- :star: mark: the rule which is enabled by \`plugin:@intlify/vue-i18n/recommended\` or \`*.configs["flat/recommended"]\` preset.
+- :star: mark: the rule which is enabled by \`plugin:vue-i18n-ex/recommended\` or \`*.configs["flat/recommended"]\` preset.
 - :black_nib: mark: the rule which is fixable by \`eslint --fix\` command.
 
 ${withCategories.map(toCategorySection).join('\n')}

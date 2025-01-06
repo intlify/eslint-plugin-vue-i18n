@@ -40,7 +40,7 @@ describe('getLocaleMessages', () => {
     },
     parserServices,
     settings: {
-      'vue-i18n': {
+      'vue-i18n-ex': {
         localeDir
       }
     }

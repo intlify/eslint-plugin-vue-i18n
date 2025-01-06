@@ -132,7 +132,7 @@ export default {
           }
         },
         settings: {
-          'vue-i18n': {
+          'vue-i18n-ex': {
             localeDir: (this.$resourceGroup
               ? this.$resourceGroup
                   .getFiles()
@@ -185,7 +185,7 @@ export default {
     const linter = (this.linter = new Linter({ cwd: '/path' }))
 
     for (const ruleId of Object.keys(rules)) {
-      linter.defineRule(`@intlify/vue-i18n/${ruleId}`, rules[ruleId])
+      linter.defineRule(`vue-i18n-ex/${ruleId}`, rules[ruleId])
     }
     linter.defineParser('vue-eslint-parser', vueESLintParser)
     linter.defineParser('jsonc-eslint-parser', jsoncESLintParser)

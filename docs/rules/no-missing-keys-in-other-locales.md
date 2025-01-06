@@ -1,10 +1,10 @@
 ---
-title: '@intlify/vue-i18n/no-missing-keys-in-other-locales'
+title: 'vue-i18n-ex/no-missing-keys-in-other-locales'
 description: disallow missing locale message keys in other locales
 since: v0.10.0
 ---
 
-# @intlify/vue-i18n/no-missing-keys-in-other-locales
+# vue-i18n-ex/no-missing-keys-in-other-locales
 
 > disallow missing locale message keys in other locales
 
@@ -21,7 +21,7 @@ locale messages:
 <eslint-code-block language="json" locale-key="key">
 
 ```json
-/* eslint @intlify/vue-i18n/no-missing-keys-in-other-locales: 'error' */
+/* eslint vue-i18n-ex/no-missing-keys-in-other-locales: 'error' */
 
 {
   "en": {
@@ -49,7 +49,7 @@ locale messages:
 <eslint-code-block language="json" locale-key="key">
 
 ```json
-/* eslint @intlify/vue-i18n/no-missing-keys-in-other-locales: 'error' */
+/* eslint vue-i18n-ex/no-missing-keys-in-other-locales: 'error' */
 
 {
   "en": {
@@ -72,7 +72,7 @@ locale messages:
 
 ```json
 {
-  "@intlify/vue-i18n/no-missing-keys-in-other-locales": [
+  "vue-i18n-ex/no-missing-keys-in-other-locales": [
     "error",
     {
       "ignoreLocales": []
@@ -85,12 +85,12 @@ locale messages:
 
 ## :couple: Related Rules
 
-- [@intlify/vue-i18n/no-duplicate-keys-in-locale](./no-duplicate-keys-in-locale.md)
-- [@intlify/vue-i18n/no-missing-keys](./no-missing-keys.md)
+- [vue-i18n-ex/no-duplicate-keys-in-locale](./no-duplicate-keys-in-locale.md)
+- [vue-i18n-ex/no-missing-keys](./no-missing-keys.md)
 
 ## :rocket: Version
 
-This rule was introduced in `@intlify/eslint-plugin-vue-i18n-ex` v0.10.0
+This rule was introduced in `eslint-plugin-vue-i18n-ex` v0.10.0
 
 ## :mag: Implementation
 

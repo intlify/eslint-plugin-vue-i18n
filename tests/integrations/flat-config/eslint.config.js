@@ -1,5 +1,5 @@
 import vue from 'eslint-plugin-vue'
-import vueI18n from '@intlify/eslint-plugin-vue-i18n-ex'
+import vueI18n from 'eslint-plugin-vue-i18n-ex'
 
 export default [
   ...vue.configs['flat/recommended'],
@@ -9,7 +9,7 @@ export default [
       'vue/multi-word-component-names': 'off'
     },
     settings: {
-      'vue-i18n': {
+      'vue-i18n-ex': {
         localeDir: './src/resources/*.json',
         messageSyntaxVersion: '^9.0.0'
       }

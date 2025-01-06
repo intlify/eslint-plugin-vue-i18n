@@ -22,7 +22,7 @@ export function getRuleTesterTestCaseOptions(
         languageOptions: { parser: jsonParser },
         filename: join(root, `${filebaseName}.json`),
         settings: {
-          'vue-i18n': {
+          'vue-i18n-ex': {
             localeDir: {
               pattern: `${root}/*.{json,yaml,yml}`
             },
@@ -36,7 +36,7 @@ export function getRuleTesterTestCaseOptions(
         languageOptions: { parser: yamlParser },
         filename: join(root, `${filebaseName}.yaml`),
         settings: {
-          'vue-i18n': {
+          'vue-i18n-ex': {
             localeDir: {
               pattern: `${root}/*.{json,yaml,yml}`
             },
@@ -50,7 +50,7 @@ export function getRuleTesterTestCaseOptions(
         languageOptions: { parser: vueParser },
         filename: join(root, `${filebaseName}.vue`),
         settings: {
-          'vue-i18n': {
+          'vue-i18n-ex': {
             messageSyntaxVersion
           }
         }
@@ -116,7 +116,7 @@ export function* getTestCasesFromFixtures(
         ...(parser ? { parser } : {})
       },
       settings: {
-        'vue-i18n': {
+        'vue-i18n-ex': {
           localeDir: testOptions.localeDir,
           cwd: testOptions.cwd
         }

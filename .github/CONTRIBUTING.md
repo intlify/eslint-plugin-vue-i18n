@@ -8,7 +8,7 @@
 
 - The issue list of this repo is **exclusively** for bug reports and feature requests. Non-conforming issues will be closed immediately.
 
-  - For simple beginner questions, you can get quick answers from [`#vue-i18n` channel of Discord](https://chat.vuejs.org/)
+  - For simple beginner questions, you can get quick answers from [`#vue-i18n-ex` channel of Discord](https://chat.vuejs.org/)
 
   - For more complicated questions, you can use [the official forum](http://forum.vuejs.org/) or StackOverflow. Make sure to provide enough information when asking your questions - this makes it easier for others to help you!
 
@@ -43,12 +43,12 @@
 
 ### Work Step Example
 
-- Fork the repository from [@intlify/eslint-plugin-vue-i18n-ex](https://github.com/intlify/eslint-plugin-vue-i18n-ex) !
+- Fork the repository from [@intlify/eslint-plugin-vue-i18n](https://github.com/intlify/eslint-plugin-vue-i18n-ex) !
 - Create your topic branch from `master`: `git branch my-new-topic origin/master`
 - Add codes and pass tests !
 - Commit your changes: `git commit -am 'Add some topic'`
 - Push to the branch: `git push origin my-new-topic`
-- Submit a pull request to `dev` branch of `@intlify/eslint-plugin-vue-i18n-ex` repository !
+- Submit a pull request to `dev` branch of `@intlify/eslint-plugin-vue-i18n` repository !
 
 ## Development Setup
 

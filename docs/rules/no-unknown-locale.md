@@ -1,10 +1,10 @@
 ---
-title: '@intlify/vue-i18n/no-unknown-locale'
+title: 'vue-i18n-ex/no-unknown-locale'
 description: disallow unknown locale name
 since: v1.3.0
 ---
 
-# @intlify/vue-i18n/no-unknown-locale
+# vue-i18n-ex/no-unknown-locale
 
 > disallow unknown locale name
 
@@ -24,7 +24,7 @@ The rule uses the [is-language-code] package to check if the locale name is comp
 
 ```vue
 <script>
-/* eslint @intlify/vue-i18n/no-unknown-locale: "error" */
+/* eslint vue-i18n-ex/no-unknown-locale: "error" */
 </script>
 
 <!-- ✓ GOOD -->
@@ -48,7 +48,7 @@ The rule uses the [is-language-code] package to check if the locale name is comp
 
 ```json
 {
-  "@intlify/vue-i18n/no-unknown-locale": [
+  "vue-i18n-ex/no-unknown-locale": [
     "error",
     {
       "locales": [],
@@ -63,7 +63,7 @@ The rule uses the [is-language-code] package to check if the locale name is comp
 
 ## :rocket: Version
 
-This rule was introduced in `@intlify/eslint-plugin-vue-i18n-ex` v1.3.0
+This rule was introduced in `eslint-plugin-vue-i18n-ex` v1.3.0
 
 ## :mag: Implementation
 

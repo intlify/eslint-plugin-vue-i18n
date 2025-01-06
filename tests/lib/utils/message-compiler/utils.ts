@@ -11,7 +11,7 @@ describe('message-compiler utils', () => {
   describe('getMessageSyntaxVersions', () => {
     function get(v: string) {
       const data = utils.getMessageSyntaxVersions({
-        settings: { 'vue-i18n': { messageSyntaxVersion: v } }
+        settings: { 'vue-i18n-ex': { messageSyntaxVersion: v } }
       } as RuleContext)
       // @ts-expect-error -- test
       delete data.reportIfMissingSetting

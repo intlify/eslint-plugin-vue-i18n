@@ -1,14 +1,14 @@
 ---
-title: '@intlify/vue-i18n/no-v-html'
+title: 'vue-i18n-ex/no-v-html'
 description: disallow use of localization methods on v-html to prevent XSS attack
 since: v0.1.0
 ---
 
-# @intlify/vue-i18n/no-v-html
+# vue-i18n-ex/no-v-html
 
 > disallow use of localization methods on v-html to prevent XSS attack
 
-- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` or `*.configs["flat/recommended"]` property in a configuration file enables this rule.
+- :star: The `"extends": "plugin:vue-i18n-ex/recommended"` or `*.configs["flat/recommended"]` property in a configuration file enables this rule.
 
 This rule reports all uses of localization methods on `v-html` directive in order to reduce the risk of injecting potentially unsafe / unescaped html into the browser leading to Cross-Site Scripting (XSS) attacks.
 
@@ -39,7 +39,7 @@ localization codes:
 
 ```vue
 <script>
-/* eslint @intlify/vue-i18n/no-v-html: 'error' */
+/* eslint vue-i18n-ex/no-v-html: 'error' */
 </script>
 <template>
   <div class="app">
@@ -70,7 +70,7 @@ localization codes:
 
 ```vue
 <script>
-/* eslint @intlify/vue-i18n/no-v-html: 'error' */
+/* eslint vue-i18n-ex/no-v-html: 'error' */
 </script>
 <template>
   <div class="app">
@@ -94,7 +94,7 @@ If you are certain the content passed to `v-html` is trusted HTML you can disabl
 
 ## :rocket: Version
 
-This rule was introduced in `@intlify/eslint-plugin-vue-i18n-ex` v0.1.0
+This rule was introduced in `eslint-plugin-vue-i18n-ex` v0.1.0
 
 ## :mag: Implementation
 

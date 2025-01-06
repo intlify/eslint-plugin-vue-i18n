@@ -9,7 +9,7 @@
  */
 export type LocaleKeyType = 'file' | 'path' | 'key'
 /**
- * Type of `settings['vue-i18n'].localeDir`
+ * Type of `settings['vue-i18n-ex'].localeDir`
  */
 export type SettingsVueI18nLocaleDir =
   | SettingsVueI18nLocaleDirGlob

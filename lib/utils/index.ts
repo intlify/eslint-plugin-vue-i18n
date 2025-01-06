@@ -162,7 +162,7 @@ export function getLocaleMessages(
   const { settings } = context
   /** @type {SettingsVueI18nLocaleDir | null} */
   const localeDir =
-    (settings['vue-i18n'] && settings['vue-i18n'].localeDir) || null
+    (settings['vue-i18n-ex'] && settings['vue-i18n-ex'].localeDir) || null
   const documentFragment =
     sourceCode.parserServices.getDocumentFragment &&
     sourceCode.parserServices.getDocumentFragment()

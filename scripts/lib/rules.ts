@@ -38,7 +38,7 @@ async function getRules() {
       const rule = dynamicImport()(`${path.join(RULES_DIR, name)}`)
       const meta = { ...rule.meta }
       return {
-        id: `@intlify/vue-i18n/${name}`,
+        id: `vue-i18n-ex/${name}`,
         name,
         category: String(meta.docs.category),
         description: String(meta.docs.description),

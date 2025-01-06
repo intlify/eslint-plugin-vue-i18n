@@ -5,7 +5,7 @@
 Use [npm](https://www.npmjs.com/) or a compatible tool.
 
 ```sh
-npm install --save-dev eslint @intlify/eslint-plugin-vue-i18n-ex
+npm install --save-dev eslint eslint-plugin-vue-i18n-ex
 ```
 
 ::: tip Requirements
@@ -24,7 +24,7 @@ Use `eslint.config.[c|m]js` file to configure rules. This is the default in ESLi
 Example eslint.config.js:
 
 ```js
-import vueI18n from '@intlify/eslint-plugin-vue-i18n-ex'
+import vueI18n from 'eslint-plugin-vue-i18n-ex'
 
 export default [
   // add more generic rulesets here, such as:
@@ -35,8 +35,8 @@ export default [
   {
     rules: {
       // Optional.
-      '@intlify/vue-i18n/no-dynamic-keys': 'error',
-      '@intlify/vue-i18n/no-unused-keys': [
+      'vue-i18n-ex/no-dynamic-keys': 'error',
+      'vue-i18n-ex/no-unused-keys': [
         'error',
         {
           extensions: ['.js', '.vue']
@@ -44,7 +44,7 @@ export default [
       ]
     },
     settings: {
-      'vue-i18n': {
+      'vue-i18n-ex': {
         localeDir: './path/to/locales/*.{json,json5,yaml,yml}', // extension is glob formatting!
         // or
         // localeDir: {
@@ -71,7 +71,7 @@ export default [
         //   },
         // ]
 
-        // Specify the version of `vue-i18n` you are using.
+        // Specify the version of `vue-i18n-ex` you are using.
         // If not specified, the message will be parsed twice.
         messageSyntaxVersion: '^9.0.0'
       }
@@ -102,12 +102,12 @@ module.exports = {
   extends: [
     'eslint:recommended',
     // Recommended
-    'plugin:@intlify/vue-i18n/recommended-legacy'
+    'plugin:vue-i18n-ex/recommended-legacy'
   ],
   rules: {
     // Optional.
-    '@intlify/vue-i18n/no-dynamic-keys': 'error',
-    '@intlify/vue-i18n/no-unused-keys': [
+    'vue-i18n-ex/no-dynamic-keys': 'error',
+    'vue-i18n-ex/no-unused-keys': [
       'error',
       {
         extensions: ['.js', '.vue']
@@ -115,7 +115,7 @@ module.exports = {
     ]
   },
   settings: {
-    'vue-i18n': {
+    'vue-i18n-ex': {
       localeDir: './path/to/locales/*.{json,json5,yaml,yml}', // extension is glob formatting!
       // or
       // localeDir: {
@@ -142,7 +142,7 @@ module.exports = {
       //   },
       // ]
 
-      // Specify the version of `vue-i18n` you are using.
+      // Specify the version of `vue-i18n-ex` you are using.
       // If not specified, the message will be parsed twice.
       messageSyntaxVersion: '^9.0.0'
     }
@@ -156,10 +156,10 @@ See the [rule list](./rules/index.md) to get the `configs` & `rules` that this p
 
 This plugin provides some predefined configs. You can use the following configs by adding them to `.eslintrc.*`.
 
-- `"plugin:@intlify/vue-i18n/base-legacy"`: Settings and rules to enable correct ESLint parsing.
-- `"plugin:@intlify/vue-i18n/recommended-legacy"`: Above, plus rules to enforce subjective community defaults to ensure consistency.
+- `"plugin:vue-i18n-ex/base-legacy"`: Settings and rules to enable correct ESLint parsing.
+- `"plugin:vue-i18n-ex/recommended-legacy"`: Above, plus rules to enforce subjective community defaults to ensure consistency.
 
-### `settings['vue-i18n']`
+### `settings['vue-i18n-ex']`
 
 - `localeDir` ... You can specify a string or an object or an array.
   - String option ... A glob for specifying files that store localization messages of project.
@@ -171,7 +171,7 @@ This plugin provides some predefined configs. You can use the following configs 
       - `'key'` ... Determine the locale name from the root key name of the file contents. The value of that key should only contain messages for that locale. Used when the resource file is in the format given to the `messages` option of the `VueI18n` constructor option.
     - `localePattern` ... Specifies how to determine pattern the locale for localization messages. This option means, when `localeKey` is `'path'`, you will need to capture the locale using a regular expression. You need to use the locale capture as a named capture `?<locale>`, so it’s be able to capture from the path of the locale resources. If you omit it, it will be captured from the resource path with the same regular expression pattern as `vue-cli-plugin-i18n`.
   - Array option ... An array of String option and Object option. Useful if you have multiple locale directories.
-- `messageSyntaxVersion` (Optional) ... Specify the version of `vue-i18n` you are using. If not specified, the message will be parsed twice. Also, some rules require this setting.
+- `messageSyntaxVersion` (Optional) ... Specify the version of `vue-i18n-ex` you are using. If not specified, the message will be parsed twice. Also, some rules require this setting.
 
 ::: warning NOTE
 

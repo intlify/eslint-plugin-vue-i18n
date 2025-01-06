@@ -1,14 +1,14 @@
 ---
-title: '@intlify/vue-i18n/no-raw-text'
+title: 'vue-i18n-ex/no-raw-text'
 description: disallow to string literal in template or JSX
 since: v0.2.0
 ---
 
-# @intlify/vue-i18n/no-raw-text
+# vue-i18n-ex/no-raw-text
 
 > disallow to string literal in template or JSX
 
-- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` or `*.configs["flat/recommended"]` property in a configuration file enables this rule.
+- :star: The `"extends": "plugin:vue-i18n-ex/recommended"` or `*.configs["flat/recommended"]` property in a configuration file enables this rule.
 
 This rule warns the usage of literal the bellow:
 
@@ -28,7 +28,7 @@ This rule encourage i18n in about the application needs to be localized.
 <!-- eslint-skip -->
 
 ```js
-/* eslint @intlify/vue-i18n/no-raw-text: 'error' */
+/* eslint vue-i18n-ex/no-raw-text: 'error' */
 export default Vue.extend({
   // ✗ BAD
   template: '<p>hello</p>'
@@ -46,7 +46,7 @@ export default Vue.extend({
 
 ```vue
 <script>
-/* eslint @intlify/vue-i18n/no-raw-text: 'error' */
+/* eslint vue-i18n-ex/no-raw-text: 'error' */
 </script>
 <template>
   <!-- ✗ BAD -->
@@ -63,7 +63,7 @@ export default Vue.extend({
 <!-- eslint-skip -->
 
 ```js
-/* eslint @intlify/vue-i18n/no-raw-text: 'error' */
+/* eslint vue-i18n-ex/no-raw-text: 'error' */
 export default {
   // ✗ BAD
   render: h => <p>hello</p>
@@ -82,7 +82,7 @@ export default {
 <!-- eslint-skip -->
 
 ```js
-/* eslint @intlify/vue-i18n/no-raw-text: 'error' */
+/* eslint vue-i18n-ex/no-raw-text: 'error' */
 export default Vue.extend({
   // ✓ GOOD
   template: `<p>{{ \$t('hello') }}</p>`
@@ -100,7 +100,7 @@ export default Vue.extend({
 
 ```vue
 <script>
-/* eslint @intlify/vue-i18n/no-raw-text: 'error' */
+/* eslint vue-i18n-ex/no-raw-text: 'error' */
 </script>
 <template>
   <!-- ✓ GOOD -->
@@ -117,7 +117,7 @@ export default Vue.extend({
 <!-- eslint-skip -->
 
 ```js
-/* eslint @intlify/vue-i18n/no-raw-text: 'error' */
+/* eslint vue-i18n-ex/no-raw-text: 'error' */
 export default {
   // ✓ GOOD
   render: h => <p>{this.$t('hello')}</p>
@@ -131,7 +131,7 @@ export default {
 
 ```json
 {
-  "@intlify/vue-i18n/no-raw-text": [
+  "vue-i18n-ex/no-raw-text": [
     "error",
     {
       "attributes": {
@@ -166,7 +166,7 @@ export default {
 
 ```vue
 <script>
-/* eslint @intlify/vue-i18n/no-raw-text: ['error', {attributes: { '/.+/': ['label'] }}] */
+/* eslint vue-i18n-ex/no-raw-text: ['error', {attributes: { '/.+/': ['label'] }}] */
 </script>
 <template>
   <!-- ✗ BAD -->
@@ -183,7 +183,7 @@ export default {
 
 ```vue
 <script>
-/* eslint @intlify/vue-i18n/no-raw-text: ['error', {attributes: { 'MyInput': ['label'] }}] */
+/* eslint vue-i18n-ex/no-raw-text: ['error', {attributes: { 'MyInput': ['label'] }}] */
 </script>
 <template>
   <!-- ✗ BAD -->
@@ -197,7 +197,7 @@ export default {
 
 ## :rocket: Version
 
-This rule was introduced in `@intlify/eslint-plugin-vue-i18n-ex` v0.2.0
+This rule was introduced in `eslint-plugin-vue-i18n-ex` v0.2.0
 
 ## :mag: Implementation
 
