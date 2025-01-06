@@ -8,14 +8,14 @@ export default async () => {
   const rules = await getRulesWithCategories()
   return defineConfig({
     base: '/',
-    title: 'eslint-plugin-vue-i18n',
+    title: 'eslint-plugin-vue-i18n-ex',
     description: 'ESLint plugin for Vue I18n',
     head: [['meta', { name: 'theme-color', content: '#3eaf7c' }]],
     lastUpdated: true,
     themeConfig: {
       editLink: {
         pattern:
-          'https://github.com/intlify/eslint-plugin-vue-i18n/edit/master/docs/:path',
+          'https://github.com/intlify/eslint-plugin-vue-i18n-ex/edit/master/docs/:path',
         text: 'Edit this page on GitHub'
       },
       search: {
@@ -37,7 +37,7 @@ export default async () => {
         },
         {
           text: 'Release Notes',
-          link: 'https://github.com/intlify/eslint-plugin-vue-i18n/releases'
+          link: 'https://github.com/intlify/eslint-plugin-vue-i18n-ex/releases'
         }
       ],
       sidebar: [
@@ -65,7 +65,7 @@ export default async () => {
       socialLinks: [
         {
           icon: 'github',
-          link: 'https://github.com/intlify/eslint-plugin-vue-i18n'
+          link: 'https://github.com/intlify/eslint-plugin-vue-i18n-ex'
         }
       ]
     }

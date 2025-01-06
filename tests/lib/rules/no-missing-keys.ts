@@ -313,7 +313,7 @@ tester.run('no-missing-keys', rule as never, {
         // settings.vue-i18n.localeDir' error
         code: `$t('missing')`,
         errors: [
-          `You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation`
+          `You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n-ex' documentation`
         ]
       },
       {

@@ -114,9 +114,9 @@ locale messages:
 
 ## :rocket: Version
 
-This rule was introduced in `@intlify/eslint-plugin-vue-i18n` v0.9.0
+This rule was introduced in `@intlify/eslint-plugin-vue-i18n-ex` v0.9.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/lib/rules/no-duplicate-keys-in-locale.ts)
-- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n/tree/master/tests/lib/rules/no-duplicate-keys-in-locale.ts)
+- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n-ex/blob/master/lib/rules/no-duplicate-keys-in-locale.ts)
+- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n-ex/tree/master/tests/lib/rules/no-duplicate-keys-in-locale.ts)

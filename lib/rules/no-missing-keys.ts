@@ -138,7 +138,7 @@ export = createRule({
       description:
         'disallow missing locale message key at localization methods',
       category: 'Recommended',
-      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-missing-keys.html',
+      url: 'https://eslint-plugin-vue-i18n-ex.intlify.dev/rules/no-missing-keys.html',
       recommended: true
     },
     fixable: null,

@@ -19,7 +19,7 @@ import { parse as parseForV8 } from '../utils/message-compiler/parser-v8'
 import type { CompileError } from '@intlify/message-compiler'
 import { createRule } from '../utils/rule'
 import { getFilename, getSourceCode } from '../utils/compat'
-const debug = debugBuilder('eslint-plugin-vue-i18n:valid-message-syntax')
+const debug = debugBuilder('eslint-plugin-vue-i18n-ex:valid-message-syntax')
 
 function create(context: RuleContext): RuleListener {
   const filename = getFilename(context)
@@ -215,7 +215,7 @@ export = createRule({
     docs: {
       description: 'disallow invalid message syntax',
       category: 'Recommended',
-      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/valid-message-syntax.html',
+      url: 'https://eslint-plugin-vue-i18n-ex.intlify.dev/rules/valid-message-syntax.html',
       recommended: true
     },
     fixable: null,

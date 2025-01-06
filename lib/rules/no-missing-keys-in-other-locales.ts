@@ -16,7 +16,7 @@ import { joinPath } from '../utils/key-path'
 import { createRule } from '../utils/rule'
 import { getFilename, getSourceCode } from '../utils/compat'
 const debug = debugBuilder(
-  'eslint-plugin-vue-i18n:no-missing-keys-in-other-locales'
+  'eslint-plugin-vue-i18n-ex:no-missing-keys-in-other-locales'
 )
 
 function create(context: RuleContext): RuleListener {
@@ -338,7 +338,7 @@ export = createRule({
     docs: {
       description: 'disallow missing locale message keys in other locales',
       category: 'Best Practices',
-      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-missing-keys-in-other-locales.html',
+      url: 'https://eslint-plugin-vue-i18n-ex.intlify.dev/rules/no-missing-keys-in-other-locales.html',
       recommended: false
     },
     fixable: null,

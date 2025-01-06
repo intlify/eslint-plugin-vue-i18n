@@ -6,7 +6,7 @@ about: Suggest an idea for a new rule
 <!--
   Before proposing new rule, please make sure it hasn't been posted already.
   You can see all open propositions here:
-  https://github.com/intlify/eslint-plugin-vue-i18n/issues?q=is%3Aissue+is%3Aopen+label%3A%22Type%3A+Feature%22
+  https://github.com/intlify/eslint-plugin-vue-i18n-ex/issues?q=is%3Aissue+is%3Aopen+label%3A%22Type%3A+Feature%22
 -->
 
 **Please describe what the rule should do:**

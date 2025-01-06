@@ -1,5 +1,5 @@
 import vue from 'eslint-plugin-vue'
-import vueI18n from '@intlify/eslint-plugin-vue-i18n'
+import vueI18n from '@intlify/eslint-plugin-vue-i18n-ex'
 
 export default [
   ...vue.configs['flat/recommended'],

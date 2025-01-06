@@ -65,9 +65,9 @@ locale messages (for vue-i18n v8):
 
 ## :rocket: Version
 
-This rule was introduced in `@intlify/eslint-plugin-vue-i18n` v0.10.0
+This rule was introduced in `@intlify/eslint-plugin-vue-i18n-ex` v0.10.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/lib/rules/prefer-linked-key-with-paren.ts)
-- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n/tree/master/tests/lib/rules/prefer-linked-key-with-paren.ts)
+- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n-ex/blob/master/lib/rules/prefer-linked-key-with-paren.ts)
+- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n-ex/tree/master/tests/lib/rules/prefer-linked-key-with-paren.ts)

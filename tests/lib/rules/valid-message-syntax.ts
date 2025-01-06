@@ -155,7 +155,7 @@ tester.run('valid-message-syntax', rule as never, {
       ...options.json.default,
       errors: [
         {
-          message: `If you want to use '${TEST_RULE_ID_PREFIX}valid-message-syntax' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n' documentation`,
+          message: `If you want to use '${TEST_RULE_ID_PREFIX}valid-message-syntax' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n-ex' documentation`,
           line: 1,
           column: 1
         },
@@ -231,7 +231,7 @@ tester.run('valid-message-syntax', rule as never, {
     //   ...options.yaml.default,
     //   errors: [
     //     {
-    //       message: `If you want to use '${TEST_RULE_ID_PREFIX}valid-message-syntax' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n' documentation`,
+    //       message: `If you want to use '${TEST_RULE_ID_PREFIX}valid-message-syntax' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n-ex' documentation`,
     //       line: 1,
     //       column: 1
     //     },
@@ -249,7 +249,7 @@ tester.run('valid-message-syntax', rule as never, {
       ...options.yaml.default,
       errors: [
         {
-          message: `If you want to use '${TEST_RULE_ID_PREFIX}valid-message-syntax' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n' documentation`,
+          message: `If you want to use '${TEST_RULE_ID_PREFIX}valid-message-syntax' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n-ex' documentation`,
           line: 1,
           column: 1
         },
@@ -375,7 +375,7 @@ tester.run('valid-message-syntax', rule as never, {
       ...options.vue.default,
       errors: [
         {
-          message: `If you want to use '${TEST_RULE_ID_PREFIX}valid-message-syntax' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n' documentation`,
+          message: `If you want to use '${TEST_RULE_ID_PREFIX}valid-message-syntax' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n-ex' documentation`,
           line: 1,
           column: 1
         },

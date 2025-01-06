@@ -24,7 +24,7 @@ import { traverseNode } from '../utils/message-compiler/traverser'
 import { getFilename, getSourceCode } from '../utils/compat'
 
 const debug = debugBuilder(
-  'eslint-plugin-vue-i18n:prefer-linked-key-with-paren'
+  'eslint-plugin-vue-i18n-ex:prefer-linked-key-with-paren'
 )
 
 function getSingleQuote(node: JSONAST.JSONStringLiteral | YAMLAST.YAMLScalar) {
@@ -190,7 +190,7 @@ export = createRule({
     docs: {
       description: 'enforce linked key to be enclosed in parentheses',
       category: 'Stylistic Issues',
-      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/prefer-linked-key-with-paren.html',
+      url: 'https://eslint-plugin-vue-i18n-ex.intlify.dev/rules/prefer-linked-key-with-paren.html',
       recommended: false
     },
     fixable: 'code',

@@ -58,9 +58,9 @@ This rule reports use of deprecated `v-t` custom directive (Deprecated in Vue I1
 
 ## :rocket: Version
 
-This rule was introduced in `@intlify/eslint-plugin-vue-i18n` v3.2.0
+This rule was introduced in `@intlify/eslint-plugin-vue-i18n-ex` v3.2.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/lib/rules/no-deprecated-v-t.ts)
-- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n/tree/master/tests/lib/rules/no-deprecated-v-t.ts)
+- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n-ex/blob/master/lib/rules/no-deprecated-v-t.ts)
+- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n-ex/tree/master/tests/lib/rules/no-deprecated-v-t.ts)

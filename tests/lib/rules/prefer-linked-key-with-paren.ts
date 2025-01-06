@@ -344,7 +344,7 @@ tester.run('prefer-linked-key-with-paren', rule as never, {
       ...options.yaml(null),
       output: null,
       errors: [
-        `If you want to use '${TEST_RULE_ID_PREFIX}prefer-linked-key-with-paren' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n' documentation`
+        `If you want to use '${TEST_RULE_ID_PREFIX}prefer-linked-key-with-paren' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n-ex' documentation`
       ]
     }
   ]

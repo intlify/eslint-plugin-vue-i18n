@@ -6,7 +6,7 @@ about: Request a change to an existing rule
 <!--
   Before proposing rule changes, please make sure it hasn't been posted already.
   You can see all open propositions here:
-  https://github.com/intlify/eslint-plugin-vue-i18n/issues?q=is%3Aissue+is%3Aopen+label%3A%22Type%3A+Feature%22
+  https://github.com/intlify/eslint-plugin-vue-i18n-ex/issues?q=is%3Aissue+is%3Aopen+label%3A%22Type%3A+Feature%22
 -->
 
 **What rule do you want to change?**

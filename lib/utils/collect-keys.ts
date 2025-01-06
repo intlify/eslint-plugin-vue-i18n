@@ -14,7 +14,7 @@ import { getCwd } from './get-cwd'
 import { isStaticLiteral, getStaticLiteralValue } from './index'
 import type { Parser } from './parser-config-resolver'
 import { buildParserFromConfig } from './parser-config-resolver'
-const debug = debugBuilder('eslint-plugin-vue-i18n:collect-keys')
+const debug = debugBuilder('eslint-plugin-vue-i18n-ex:collect-keys')
 
 /**
  *

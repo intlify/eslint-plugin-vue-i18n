@@ -22,7 +22,9 @@ import {
 } from '../utils/rule'
 import { getFilename, getSourceCode } from '../utils/compat'
 
-const debug = debugBuilder('eslint-plugin-vue-i18n:no-deprecated-modulo-syntax')
+const debug = debugBuilder(
+  'eslint-plugin-vue-i18n-ex:no-deprecated-modulo-syntax'
+)
 
 function create(context: RuleContext): RuleListener {
   const filename = getFilename(context)
@@ -120,7 +122,7 @@ export = createRule({
     docs: {
       description: 'enforce modulo interpolation to be named interpolation',
       category: 'Recommended',
-      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-deprecated-modulo-syntax.html',
+      url: 'https://eslint-plugin-vue-i18n-ex.intlify.dev/rules/no-deprecated-modulo-syntax.html',
       recommended: true
     },
     fixable: 'code',

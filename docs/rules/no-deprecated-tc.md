@@ -58,9 +58,9 @@ This rule reports use of deprecated `tc` or `$tc` (Deprecated in Vue I18n 10.0.0
 
 ## :rocket: Version
 
-This rule was introduced in `@intlify/eslint-plugin-vue-i18n` v3.0.0
+This rule was introduced in `@intlify/eslint-plugin-vue-i18n-ex` v3.0.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/lib/rules/no-deprecated-tc.ts)
-- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n/tree/master/tests/lib/rules/no-deprecated-tc.ts)
+- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n-ex/blob/master/lib/rules/no-deprecated-tc.ts)
+- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n-ex/tree/master/tests/lib/rules/no-deprecated-tc.ts)

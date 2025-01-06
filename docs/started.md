@@ -5,7 +5,7 @@
 Use [npm](https://www.npmjs.com/) or a compatible tool.
 
 ```sh
-npm install --save-dev eslint @intlify/eslint-plugin-vue-i18n
+npm install --save-dev eslint @intlify/eslint-plugin-vue-i18n-ex
 ```
 
 ::: tip Requirements
@@ -24,7 +24,7 @@ Use `eslint.config.[c|m]js` file to configure rules. This is the default in ESLi
 Example eslint.config.js:
 
 ```js
-import vueI18n from '@intlify/eslint-plugin-vue-i18n'
+import vueI18n from '@intlify/eslint-plugin-vue-i18n-ex'
 
 export default [
   // add more generic rulesets here, such as:
@@ -239,7 +239,7 @@ According to our policy, any minor update may report more linting errors than th
 
 ### What is the "Use the latest vue-eslint-parser" error?
 
-The most rules of `eslint-plugin-vue-i18n` require `vue-eslint-parser` to check `<template>` ASTs.
+The most rules of `eslint-plugin-vue-i18n-ex` require `vue-eslint-parser` to check `<template>` ASTs.
 
 Make sure you have one of the following settings in your **eslint.config.js**:
 

@@ -11,7 +11,7 @@ import { globSync } from 'glob'
 import { convertPathToPosix } from './path-utils'
 import { IgnoredPaths } from './ignored-paths'
 import debugBuilder from 'debug'
-const debug = debugBuilder('eslint-plugin-vue-i18n:glob-utils')
+const debug = debugBuilder('eslint-plugin-vue-i18n-ex:glob-utils')
 
 /**
  * Checks whether a directory exists at the given location

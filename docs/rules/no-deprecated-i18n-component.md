@@ -63,9 +63,9 @@ This rule reports use of deprecated `<i18n>` components (in Vue I18n 9.0.0+).
 
 ## :rocket: Version
 
-This rule was introduced in `@intlify/eslint-plugin-vue-i18n` v0.11.0
+This rule was introduced in `@intlify/eslint-plugin-vue-i18n-ex` v0.11.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/lib/rules/no-deprecated-i18n-component.ts)
-- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n/tree/master/tests/lib/rules/no-deprecated-i18n-component.ts)
+- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n-ex/blob/master/lib/rules/no-deprecated-i18n-component.ts)
+- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n-ex/tree/master/tests/lib/rules/no-deprecated-i18n-component.ts)

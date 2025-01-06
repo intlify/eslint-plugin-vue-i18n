@@ -3,11 +3,11 @@
 layout: home
 
 hero:
-  name: 'eslint-plugin-vue-i18n'
+  name: 'eslint-plugin-vue-i18n-ex'
   # text: 'ESLint plugin for Vue I18n'
   tagline: ESLint plugin for Vue I18n
   image:
-    src: /eslint-plugin-vue-i18n.svg
+    src: /eslint-plugin-vue-i18n-ex.svg
     alt: Logo
   actions:
     - theme: brand

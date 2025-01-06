@@ -50,7 +50,7 @@ export = createRule({
       description:
         'disallow using deprecated `tc` or `$tc` (Deprecated in Vue I18n 10.0.0, removed fully in Vue I18n 11.0.0)',
       category: 'Recommended',
-      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-deprecated-tc.html',
+      url: 'https://eslint-plugin-vue-i18n-ex.intlify.dev/rules/no-deprecated-tc.html',
       recommended: true
     },
     fixable: null,

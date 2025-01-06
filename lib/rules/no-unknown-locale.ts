@@ -13,7 +13,7 @@ import {
 } from '../utils/index'
 import type { LocaleMessage } from '../utils/locale-messages'
 import { getFilename, getSourceCode } from '../utils/compat'
-const debug = debugBuilder('eslint-plugin-vue-i18n:no-unknown-locale')
+const debug = debugBuilder('eslint-plugin-vue-i18n-ex:no-unknown-locale')
 
 function create(context: RuleContext): RuleListener {
   const filename = getFilename(context)
@@ -249,7 +249,7 @@ export = createRule({
     docs: {
       description: 'disallow unknown locale name',
       category: 'Best Practices',
-      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-unknown-locale.html',
+      url: 'https://eslint-plugin-vue-i18n-ex.intlify.dev/rules/no-unknown-locale.html',
       recommended: false
     },
     fixable: null,

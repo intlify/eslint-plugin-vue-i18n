@@ -45,7 +45,7 @@ export function getMessageSyntaxVersions(
           const ruleName = context.id
           context.report({
             loc: { line: 1, column: 0 },
-            message: `If you want to use '${ruleName}' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n' documentation`
+            message: `If you want to use '${ruleName}' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n-ex' documentation`
           })
           puttedSettingsError.add(context)
         }

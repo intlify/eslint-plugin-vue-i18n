@@ -145,14 +145,14 @@ class DocFile {
       this.since
         ? `## :rocket: Version
 
-This rule was introduced in \`@intlify/eslint-plugin-vue-i18n\` ${this.since}
+This rule was introduced in \`@intlify/eslint-plugin-vue-i18n-ex\` ${this.since}
 
 `
         : ''
     }## :mag: Implementation
 
-- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/lib/rules/${name}.ts)
-- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n/tree/master/tests/lib/rules/${name}.ts)
+- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n-ex/blob/master/lib/rules/${name}.ts)
+- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n-ex/tree/master/tests/lib/rules/${name}.ts)
 `
     if (footerPattern.test(this.content)) {
       this.content = this.content.replace(footerPattern, footer)

@@ -11,7 +11,7 @@ import { getCasingChecker } from '../utils/casing'
 import type { LocaleMessage } from '../utils/locale-messages'
 import { createRule } from '../utils/rule'
 import { getFilename, getSourceCode } from '../utils/compat'
-const debug = debugBuilder('eslint-plugin-vue-i18n:key-format-style')
+const debug = debugBuilder('eslint-plugin-vue-i18n-ex:key-format-style')
 
 const allowedCaseOptions = [
   'camelCase',
@@ -295,7 +295,7 @@ export = createRule({
     docs: {
       description: 'enforce specific casing for localization keys',
       category: 'Best Practices',
-      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/key-format-style.html',
+      url: 'https://eslint-plugin-vue-i18n-ex.intlify.dev/rules/key-format-style.html',
       recommended: false
     },
     fixable: null,

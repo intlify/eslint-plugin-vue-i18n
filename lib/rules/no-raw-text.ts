@@ -810,7 +810,7 @@ export = createRule({
     docs: {
       description: 'disallow to string literal in template or JSX',
       category: 'Recommended',
-      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-raw-text.html',
+      url: 'https://eslint-plugin-vue-i18n-ex.intlify.dev/rules/no-raw-text.html',
       recommended: true
     },
     fixable: null,

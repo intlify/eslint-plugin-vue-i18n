@@ -7,7 +7,7 @@ describe('valid rule meta', async () => {
     it(`should be valid rule url for ${rule.id}.`, () => {
       strictEqual(
         rule.url,
-        `https://eslint-plugin-vue-i18n.intlify.dev/rules/${rule.name}.html`
+        `https://eslint-plugin-vue-i18n-ex.intlify.dev/rules/${rule.name}.html`
       )
     })
   }

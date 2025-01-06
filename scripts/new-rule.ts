@@ -31,7 +31,7 @@ export = createRule({
     docs: {
       description: '...',
       category: 'Best Practices',
-      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/${ruleId}.html',
+      url: 'https://eslint-plugin-vue-i18n-ex.intlify.dev/rules/${ruleId}.html',
       recommended: false
     },
     fixable: null,

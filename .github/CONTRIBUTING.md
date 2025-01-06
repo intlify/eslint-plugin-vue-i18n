@@ -1,4 +1,4 @@
-# eslint-plugin-vue-i18n Contributing Guide
+# eslint-plugin-vue-i18n-ex Contributing Guide
 
 - [Issue Reporting Guidelines](#issue-reporting-guidelines)
 - [Pull Request Guidelines](#pull-request-guidelines)
@@ -43,12 +43,12 @@
 
 ### Work Step Example
 
-- Fork the repository from [@intlify/eslint-plugin-vue-i18n](https://github.com/intlify/eslint-plugin-vue-i18n) !
+- Fork the repository from [@intlify/eslint-plugin-vue-i18n-ex](https://github.com/intlify/eslint-plugin-vue-i18n-ex) !
 - Create your topic branch from `master`: `git branch my-new-topic origin/master`
 - Add codes and pass tests !
 - Commit your changes: `git commit -am 'Add some topic'`
 - Push to the branch: `git push origin my-new-topic`
-- Submit a pull request to `dev` branch of `@intlify/eslint-plugin-vue-i18n` repository !
+- Submit a pull request to `dev` branch of `@intlify/eslint-plugin-vue-i18n-ex` repository !
 
 ## Development Setup
 

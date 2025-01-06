@@ -181,7 +181,7 @@ export function getLocaleMessages(
     ) {
       context.report({
         loc: UNEXPECTED_ERROR_LOCATION,
-        message: `You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation`
+        message: `You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n-ex' documentation`
       })
       puttedSettingsError.add(context)
     }

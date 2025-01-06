@@ -86,9 +86,9 @@ This rule aims to enforce the `<i18n>` block to use or not the `locale` attribut
 
 ## :rocket: Version
 
-This rule was introduced in `@intlify/eslint-plugin-vue-i18n` v1.3.0
+This rule was introduced in `@intlify/eslint-plugin-vue-i18n-ex` v1.3.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/lib/rules/sfc-locale-attr.ts)
-- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n/tree/master/tests/lib/rules/sfc-locale-attr.ts)
+- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n-ex/blob/master/lib/rules/sfc-locale-attr.ts)
+- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n-ex/tree/master/tests/lib/rules/sfc-locale-attr.ts)

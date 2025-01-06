@@ -17,7 +17,9 @@ import { joinPath } from '../utils/key-path'
 import { getCwd } from '../utils/get-cwd'
 import { createRule } from '../utils/rule'
 import { getFilename, getSourceCode } from '../utils/compat'
-const debug = debugBuilder('eslint-plugin-vue-i18n:no-duplicate-keys-in-locale')
+const debug = debugBuilder(
+  'eslint-plugin-vue-i18n-ex:no-duplicate-keys-in-locale'
+)
 
 interface DictData {
   dict: I18nLocaleMessageDictionary
@@ -384,7 +386,7 @@ export = createRule({
       description:
         'disallow duplicate localization keys within the same locale',
       category: 'Best Practices',
-      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-duplicate-keys-in-locale.html',
+      url: 'https://eslint-plugin-vue-i18n-ex.intlify.dev/rules/no-duplicate-keys-in-locale.html',
       recommended: false
     },
     fixable: null,

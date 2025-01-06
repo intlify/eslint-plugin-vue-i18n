@@ -25,7 +25,7 @@ import { getCwd } from '../utils/get-cwd'
 import { createRule } from '../utils/rule'
 import { toRegExp } from '../utils/regexp'
 import { getFilename, getSourceCode } from '../utils/compat'
-const debug = debugBuilder('eslint-plugin-vue-i18n:no-unused-keys')
+const debug = debugBuilder('eslint-plugin-vue-i18n-ex:no-unused-keys')
 
 type UsedKeys = {
   [key: string]: string | UsedKeys
@@ -578,7 +578,7 @@ export = createRule({
     docs: {
       description: 'disallow unused localization keys',
       category: 'Best Practices',
-      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-unused-keys.html',
+      url: 'https://eslint-plugin-vue-i18n-ex.intlify.dev/rules/no-unused-keys.html',
       recommended: false
     },
     fixable: 'code',

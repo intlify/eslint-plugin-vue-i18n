@@ -11,7 +11,7 @@ import type { Ignore } from 'ignore'
 import ignore from 'ignore'
 import debugBuilder from 'debug'
 import type { Path } from 'path-scurry'
-const debug = debugBuilder('eslint-plugin-vue-i18n:ignored-paths')
+const debug = debugBuilder('eslint-plugin-vue-i18n-ex:ignored-paths')
 
 const ESLINT_IGNORE_FILENAME = '.eslintignore'
 

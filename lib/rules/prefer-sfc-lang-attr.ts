@@ -54,7 +54,7 @@ export = createRule({
     docs: {
       description: 'require lang attribute on `<i18n>` block',
       category: 'Best Practices',
-      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/prefer-sfc-lang-attr.html',
+      url: 'https://eslint-plugin-vue-i18n-ex.intlify.dev/rules/prefer-sfc-lang-attr.html',
       recommended: false
     },
     fixable: 'code',

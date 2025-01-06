@@ -66,9 +66,9 @@ This rule reports use of `path` prop with `<i18n-t>` component.
 
 ## :rocket: Version
 
-This rule was introduced in `@intlify/eslint-plugin-vue-i18n` v0.11.0
+This rule was introduced in `@intlify/eslint-plugin-vue-i18n-ex` v0.11.0
 
 ## :mag: Implementation
 
-- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n/blob/master/lib/rules/no-i18n-t-path-prop.ts)
-- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n/tree/master/tests/lib/rules/no-i18n-t-path-prop.ts)
+- [Rule source](https://github.com/intlify/eslint-plugin-vue-i18n-ex/blob/master/lib/rules/no-i18n-t-path-prop.ts)
+- [Test source](https://github.com/intlify/eslint-plugin-vue-i18n-ex/tree/master/tests/lib/rules/no-i18n-t-path-prop.ts)

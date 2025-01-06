@@ -54,7 +54,7 @@ export = createRule({
       description:
         'disallow use of localization methods on v-html to prevent XSS attack',
       category: 'Recommended',
-      url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-v-html.html',
+      url: 'https://eslint-plugin-vue-i18n-ex.intlify.dev/rules/no-v-html.html',
       recommended: true
     },
     fixable: null,
