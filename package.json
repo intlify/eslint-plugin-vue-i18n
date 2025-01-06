@@ -3,7 +3,7 @@
   "description": "ESLint plugin for Vue I18n",
   "version": "4.0.0-next.1",
   "license": "MIT",
-  "homepage": "https://github.com/intlify/eslint-plugin-vue-i18n-ex#readme",
+  "homepage": "https://github.com/its-lee/eslint-plugin-vue-i18n-ex#readme",
   "keywords": [
     "eslint",
     "eslint-plugin",
@@ -21,10 +21,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/intlify/eslint-plugin-vue-i18n-ex.git"
+    "url": "git+https://github.com/its-lee/eslint-plugin-vue-i18n-ex.git"
   },
   "bugs": {
-    "url": "https://github.com/intlify/eslint-plugin-vue-i18n-ex/issues"
+    "url": "https://github.com/its-lee/eslint-plugin-vue-i18n-ex/issues"
   },
   "engines": {
     "node": ">=18.0.0"

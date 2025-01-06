@@ -48,4 +48,23 @@ describe('FileLocaleMessage', () => {
       deepStrictEqual(messages.locales, ['en', 'ja'])
     })
   })
+
+  describe('localeKey: "path" with includeFilenameInKey = true', () => {
+    it('messages returned should be keyed by the filename', () => {
+      const testFilePath = resolve(
+        __dirname,
+        '../../fixtures/utils/locale-messages/locales/en/message.json'
+      )
+      const messages = new FileLocaleMessage({
+        fullpath: testFilePath,
+        localeKey: 'path',
+        localePattern: /^.*\/(?<locale>[A-Za-z0-9-_]+)\/.*\.(json5?|ya?ml)$/,
+        includeFilenameInKey: true
+      })
+      deepStrictEqual(Object.keys(messages.messages), ['message'])
+      deepStrictEqual(Object.keys(messages.messages['message'] || {}), [
+        'hello'
+      ])
+    })
+  })
 })
