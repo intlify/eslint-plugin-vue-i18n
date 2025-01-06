@@ -1,6 +1,7 @@
 <p align="center"><img width="143px" height="130px" src="./assets/eslint-plugin-vue-i18n-ex.svg" alt="ESLint plugin for Vue I18n logo"></p>
 
 <h1 align="center">eslint-plugin-vue-i18n-ex</h1>
+<p>Please note that this is a fork from the excellent <a href="https://github.com/intlify/eslint-plugin-vue-i18n">eslint-plugin-vue-18n</a> which addresses <a href="https://github.com/intlify/eslint-plugin-vue-i18n/issues/336">this issue</a>.</p>
 <p align="center">
   <a href="https://github.com/intlify/eslint-plugin-vue-i18n-ex/actions?query=workflow%3ATest"><img src="https://github.com/intlify/eslint-plugin-vue-i18n-ex/workflows/Test/badge.svg?branch=master" alt="Test Status"></a>
 </p>
