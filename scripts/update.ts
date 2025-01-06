@@ -1,30 +1,29 @@
-/**
- * @fileoverview Update script
- * @author kazuya kawaguchi (a.k.a. kazupon)
- * Forked by https://github.com/mysticatea/eslint-plugin-eslint-comments/tree/master/scripts/update.js
- */
-import { writeFileSync } from 'fs'
-import { resolve } from 'path'
-import { createIndex } from './lib/utils'
-
-// docs.
-import { updateRuleDocs } from './update-rule-docs'
-updateRuleDocs()
-import './update-docs-index'
-
-// recommended rules.
-import './update-recommended-rules'
-
-main()
+import { update as updateRuleDocs } from './update-rule-docs'
+import { update as updateDocsIndex } from './update-index-docs'
+import { update as updateLegacyBaseConfigs } from './update-legacy-base-configs'
+import { update as updateLegacyRecommentedConfigs } from './update-legacy-recommended-configs'
+import { update as updateFlatBaseConfigs } from './update-flat-base-configs'
+import { update as updateFlatRecommentedConfigs } from './update-flat-recommended-configs'
+import { update as updateIndex } from './update-index'
 
 async function main() {
-  // indices.
-  for (const pairs of [
-    [resolve(__dirname, '../lib/configs')],
-    [resolve(__dirname, '../lib/rules')],
-    [resolve(__dirname, '../lib/utils'), '', true]
-  ] as const) {
-    const [dirPath, prefix, all] = pairs
-    writeFileSync(`${dirPath}.ts`, await createIndex(dirPath, prefix, all))
-  }
+  // update docs.
+  await updateRuleDocs()
+  await updateDocsIndex()
+
+  // legacy configs
+  await updateLegacyBaseConfigs()
+  await updateLegacyRecommentedConfigs()
+
+  // flat configs
+  await updateFlatBaseConfigs()
+  await updateFlatRecommentedConfigs()
+
+  // lib index
+  await updateIndex()
 }
+
+main().catch(error => {
+  console.error(error)
+  process.exit(1)
+})

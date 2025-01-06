@@ -1,0 +1,15 @@
+{
+  "mode": "pre",
+  "tag": "next",
+  "initialVersions": {
+    "@intlify/eslint-plugin-vue-i18n": "3.2.0"
+  },
+  "changesets": [
+    "afraid-queens-shave",
+    "chilly-bugs-hear",
+    "dirty-meals-run",
+    "new-ligers-tan",
+    "old-islands-admire",
+    "seven-boxes-call"
+  ]
+}

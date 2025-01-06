@@ -13,6 +13,7 @@ This rule aims to enforces specific casing for localization key names.
 ```yaml
 camelCaseKey: The key for this value is camel case.
 kebab-case-key: The key for this value is kebab case.
+lowercase: The key for this value is lower case.
 snake_case_key: The key for this value is snake case.
 mixed_Case-key: Perhaps you don't want to use this casing.
 ```
@@ -47,10 +48,10 @@ Also, the following localization key definitions are reported as errors, because
 {
   "@intlify/vue-i18n/key-format-style": [
     "error",
-    "camelCase" | "kebab-case" | "snake_case",
+    "camelCase" | "kebab-case" | "lowercase" | "snake_case",
     {
       "allowArray": false,
-      "splitByDots": false,
+      "splitByDots": false
     }
   ]
 }
@@ -110,6 +111,34 @@ app-title: I18N Management System
 # ✗ BAD
 appTitle: I18N Management System
 app_title: I18N Management System
+```
+
+</eslint-code-block>
+
+:+1: Examples of **correct** code for this rule with `"lowercase"`:
+
+<eslint-code-block language="yaml">
+
+```yaml
+# eslint @intlify/vue-i18n/key-format-style: ['error', 'lowercase']
+
+# ✓ GOOD
+apptitle: I18N Management System
+```
+
+</eslint-code-block>
+
+:-1: Examples of **incorrect** code for this rule with `"lowercase"`:
+
+<eslint-code-block language="yaml">
+
+```yaml
+# eslint @intlify/vue-i18n/key-format-style: ['error', 'lowercase']
+
+# ✗ BAD
+appTitle: I18N Management System
+app_title: I18N Management System
+APP_TITLE: I18N Management System
 ```
 
 </eslint-code-block>

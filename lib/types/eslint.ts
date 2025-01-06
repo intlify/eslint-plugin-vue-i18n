@@ -39,13 +39,7 @@ export interface RuleContext {
     }
   }
   parserPath: string
-  parserServices: {
-    isYAML?: true
-    isJSON?: true
-  } & VueParserServices
-  getFilename(): string
-  getSourceCode(): SourceCode
-  getScope(): Scope
+
   report(descriptor: ReportDescriptor): void
   getCwd?: () => string
 }
@@ -124,6 +118,12 @@ export interface SourceCode extends TokenStore {
   hasBOM: boolean
   scopeManager: ScopeManager
   visitorKeys: VisitorKeys
+  parserServices: {
+    isYAML?: true
+    isJSON?: true
+  } & VueParserServices
+
+  getScope(node: MaybeNode): Scope
 
   getText(node?: MaybeNode, beforeCount?: number, afterCount?: number): string
   getLines(): string[]
@@ -242,6 +242,7 @@ export interface RuleMetaData {
     description: string
     category: 'Recommended' | 'Best Practices' | 'Stylistic Issues'
     recommended?: boolean
+    replacedBy?: string[]
     url: string
   }
   messages?: { [messageId: string]: string }

@@ -5,6 +5,7 @@ import { defineTemplateBodyVisitor } from '../utils/index'
 import type { RuleContext, RuleListener } from '../types'
 import type { AST as VAST } from 'vue-eslint-parser'
 import { createRule } from '../utils/rule'
+import { getSourceCode } from '../utils/compat'
 
 function create(context: RuleContext): RuleListener {
   return defineTemplateBodyVisitor(context, {
@@ -12,7 +13,8 @@ function create(context: RuleContext): RuleListener {
       if (node.name !== 'i18n') {
         return
       }
-      const tokenStore = context.parserServices.getTemplateBodyTokenStore()
+      const sourceCode = getSourceCode(context)
+      const tokenStore = sourceCode.parserServices.getTemplateBodyTokenStore()
       const tagNameToken = tokenStore.getFirstToken(node.startTag)
       context.report({
         node: tagNameToken,
@@ -90,7 +92,7 @@ export = createRule({
         'disallow using deprecated `<i18n>` components (in Vue I18n 9.0.0+)',
       category: 'Recommended',
       url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/no-deprecated-i18n-component.html',
-      recommended: false
+      recommended: true
     },
     fixable: 'code',
     schema: [],

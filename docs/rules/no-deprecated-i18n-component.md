@@ -8,6 +8,7 @@ since: v0.11.0
 
 > disallow using deprecated `<i18n>` components (in Vue I18n 9.0.0+)
 
+- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` or `*.configs["flat/recommended"]` property in a configuration file enables this rule.
 - :black_nib:️ The `--fix` option on the [command line](http://eslint.org/docs/user-guide/command-line-interface#fix) can automatically fix some of the problems reported by this rule.
 
 If you are migrating from Vue I18n v8 to v9, the `<i18n>` component should be replaced with the `<i18n-t>` component.

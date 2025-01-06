@@ -1,10 +1,10 @@
 node_modules
 .nyc_output
 .DS_Store
-docs/.vuepress/dist
+docs/.vitepress/cache
+docs/.vitepress/dist
 coverage
 *.log
 *.swp
 *~
 /dist
-.env

@@ -21,5 +21,5 @@ export function joinPath(...paths: (string | number)[]): string {
 }
 
 export function parsePath(path: string): string[] {
-  return parse(path) || []
+  return parse(path) || [path]
 }

@@ -1,9 +1,9 @@
 {
   "eslint.validate": ["javascript", "typescript", "vue", "markdown"],
   "eslint.alwaysShowStatus": true,
-  "eslint.packageManager": "yarn",
+  "eslint.packageManager": "pnpm",
   "eslint.run": "onSave",
-  "npm.packageManager": "yarn",
+  "npm.packageManager": "pnpm",
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

@@ -24,6 +24,7 @@ import { joinPath, parsePath } from '../utils/key-path'
 import { getCwd } from '../utils/get-cwd'
 import { createRule } from '../utils/rule'
 import { toRegExp } from '../utils/regexp'
+import { getFilename, getSourceCode } from '../utils/compat'
 const debug = debugBuilder('eslint-plugin-vue-i18n:no-unused-keys')
 
 type UsedKeys = {
@@ -76,7 +77,7 @@ function getUsedKeysMap(
 }
 
 function create(context: RuleContext): RuleListener {
-  const filename = context.getFilename()
+  const filename = getFilename(context)
   const options = (context.options && context.options[0]) || {}
   const enableFix = options.enableFix
   const ignores = ((options.ignores || []) as string[]).map(toRegExp)
@@ -207,36 +208,44 @@ function create(context: RuleContext): RuleListener {
     }
 
     function* fixAllRemoveKeys(fixer: RuleFixer, nodes: JSONAST.JSONNode[]) {
-      const ranges = nodes.map(node => fixRemoveRange(node))
-
+      const removed = new Set<JSONAST.JSONNode>()
       let preLast = 0
-      for (const range of ranges) {
-        yield fixer.removeRange([Math.max(preLast, range[0]), range[1]])
+      for (const node of nodes) {
+        const range = fixRemoveRange(node, removed)
+        const start = Math.max(preLast, range[0])
+        yield fixer.removeRange([start, range[1]])
         preLast = range[1]
       }
     }
 
-    /**
-     * @param {JSONNode} node
-     */
-    function fixRemoveRange(node: JSONAST.JSONNode): Range {
+    function fixRemoveRange(
+      node: JSONAST.JSONNode,
+      removedNodes: Set<JSONAST.JSONNode> = new Set()
+    ): Range {
       const parent = node.parent!
       let removeNode
       let isFirst = false
       let isLast = false
       if (parent.type === 'JSONProperty') {
         removeNode = parent
-        const index = parent.parent.properties.indexOf(parent)
+        const properties = parent.parent.properties.filter(
+          p => !removedNodes.has(p)
+        )
+        const index = properties.indexOf(parent)
         isFirst = index === 0
-        isLast = index === parent.parent.properties.length - 1
+        isLast = index === properties.length - 1
       } else {
         removeNode = node
         if (parent.type === 'JSONArrayExpression') {
-          const index = parent.elements.indexOf(node as never)
+          const elements = parent.elements.filter(
+            e => e == null || !removedNodes.has(e)
+          )
+          const index = elements.indexOf(node as never)
           isFirst = index === 0
-          isLast = index === parent.elements.length - 1
+          isLast = index === elements.length - 1
         }
       }
+      removedNodes.add(removeNode)
       const range: Range = [...removeNode.range]
 
       if (isLast || isFirst) {
@@ -447,8 +456,8 @@ function create(context: RuleContext): RuleListener {
             before
               ? before.range[1]
               : hyphen
-              ? hyphen.range[0]
-              : removeNode.range[0],
+                ? hyphen.range[0]
+                : removeNode.range[0],
             removeNode.range[1]
           ])
         }
@@ -491,6 +500,7 @@ function create(context: RuleContext): RuleListener {
     }
   }
 
+  const sourceCode = getSourceCode(context)
   if (extname(filename) === '.vue') {
     const createCustomBlockRule = (
       createVisitor: (
@@ -501,8 +511,8 @@ function create(context: RuleContext): RuleListener {
       return ctx => {
         const localeMessages = getLocaleMessages(context)
         const usedLocaleMessageKeys = collectKeysFromAST(
-          context.getSourceCode().ast as VAST.ESLintProgram,
-          context.getSourceCode().visitorKeys
+          sourceCode.ast as VAST.ESLintProgram,
+          sourceCode.visitorKeys
         )
         const targetLocaleMessage = localeMessages.findBlockLocaleMessage(
           ctx.parserServices.customBlock
@@ -517,7 +527,7 @@ function create(context: RuleContext): RuleListener {
           context
         )
 
-        return createVisitor(ctx.getSourceCode(), usedKeys)
+        return createVisitor(getSourceCode(ctx), usedKeys)
       }
     }
     return defineCustomBlocksVisitor(
@@ -525,7 +535,10 @@ function create(context: RuleContext): RuleListener {
       createCustomBlockRule(createVisitorForJson),
       createCustomBlockRule(createVisitorForYaml)
     )
-  } else if (context.parserServices.isJSON || context.parserServices.isYAML) {
+  } else if (
+    sourceCode.parserServices.isJSON ||
+    sourceCode.parserServices.isYAML
+  ) {
     const localeMessages = getLocaleMessages(context)
     const targetLocaleMessage = localeMessages.findExistLocaleMessage(filename)
     if (!targetLocaleMessage) {
@@ -540,7 +553,6 @@ function create(context: RuleContext): RuleListener {
       extensions,
       context
     )
-    const sourceCode = context.getSourceCode()
 
     const usedKeys = getUsedKeysMap(
       targetLocaleMessage,
@@ -548,9 +560,9 @@ function create(context: RuleContext): RuleListener {
       usedLocaleMessageKeys,
       context
     )
-    if (context.parserServices.isJSON) {
+    if (sourceCode.parserServices.isJSON) {
       return createVisitorForJson(sourceCode, usedKeys)
-    } else if (context.parserServices.isYAML) {
+    } else if (sourceCode.parserServices.isYAML) {
       return createVisitorForYaml(sourceCode, usedKeys)
     }
     return {}

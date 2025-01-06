@@ -1,35 +1,37 @@
 /**
  * @author Yosuke Ota
  */
-import { join } from 'path'
-import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/key-format-style')
-import type { SettingsVueI18nLocaleDirObject } from '../../../lib/types'
+import { join } from 'node:path'
 
-const vueParser = require.resolve('vue-eslint-parser')
-const jsonParser = require.resolve('jsonc-eslint-parser')
-const yamlParser = require.resolve('yaml-eslint-parser')
+import { RuleTester } from '../eslint-compat'
+
+import rule from '../../../lib/rules/key-format-style'
+import type { SettingsVueI18nLocaleDirObject } from '../../../lib/types'
+import * as vueParser from 'vue-eslint-parser'
+import * as jsonParser from 'jsonc-eslint-parser'
+import * as yamlParser from 'yaml-eslint-parser'
+
 const fileLocalesRoot = join(__dirname, '../../fixtures/key-format-style/file')
 const keyLocalesRoot = join(__dirname, '../../fixtures/key-format-style/key')
 
 const options = {
   json: {
     file: {
-      parser: jsonParser,
+      languageOptions: { parser: jsonParser },
       filename: join(fileLocalesRoot, 'test.json'),
       settings: {
         'vue-i18n': {
-          localeDir: fileLocalesRoot + '/*.{json,yaml,yml}'
+          localeDir: `${fileLocalesRoot}/*.{json,yaml,yml}`
         }
       }
     },
     key: {
-      parser: jsonParser,
+      languageOptions: { parser: jsonParser },
       filename: join(keyLocalesRoot, 'test.json'),
       settings: {
         'vue-i18n': {
           localeDir: {
-            pattern: keyLocalesRoot + '/*.{json,yaml,yml}',
+            pattern: `${keyLocalesRoot}/*.{json,yaml,yml}`,
             localeKey: 'key'
           } as SettingsVueI18nLocaleDirObject
         }
@@ -38,21 +40,21 @@ const options = {
   },
   yaml: {
     file: {
-      parser: yamlParser,
+      languageOptions: { parser: yamlParser },
       filename: join(fileLocalesRoot, 'test.yaml'),
       settings: {
         'vue-i18n': {
-          localeDir: fileLocalesRoot + '/*.{json,yaml,yml}'
+          localeDir: `${fileLocalesRoot}/*.{json,yaml,yml}`
         }
       }
     },
     key: {
-      parser: yamlParser,
+      languageOptions: { parser: yamlParser },
       filename: join(keyLocalesRoot, 'test.yaml'),
       settings: {
         'vue-i18n': {
           localeDir: {
-            pattern: keyLocalesRoot + '/*.{json,yaml,yml}',
+            pattern: `${keyLocalesRoot}/*.{json,yaml,yml}`,
             localeKey: 'key'
           } as SettingsVueI18nLocaleDirObject
         }
@@ -62,8 +64,7 @@ const options = {
 }
 
 const tester = new RuleTester({
-  parser: vueParser,
-  parserOptions: { ecmaVersion: 2015 }
+  languageOptions: { parser: vueParser, ecmaVersion: 2015 }
 })
 
 tester.run('key-format-style', rule as never, {
@@ -127,6 +128,41 @@ tester.run('key-format-style', rule as never, {
       `,
       ...options.json.file,
       options: ['kebab-case']
+    },
+    {
+      code: `
+      lowercase:
+        foobar: kebab-value
+      `,
+      ...options.yaml.file
+    },
+    {
+      code: `{
+        "lowercase": {
+          "foobar": "kebab-value"
+        }
+      }
+      `,
+      ...options.json.file
+    },
+    {
+      code: `
+      en-US:
+        lowercase:
+          foobar: kebab-value
+      `,
+      ...options.yaml.key
+    },
+    {
+      code: `{
+        "en-US": {
+          "lowercase": {
+            "foobar": "kebab-value"
+          }
+        }
+      }
+      `,
+      ...options.json.key
     },
     {
       code: `
@@ -374,6 +410,136 @@ tester.run('key-format-style', rule as never, {
         },
         {
           message: '"camelCase" is not snake_case',
+          line: 3
+        }
+      ]
+    },
+    {
+      code: `
+      foo-bar: baz
+      `,
+      ...options.yaml.file,
+      options: ['lowercase'],
+      errors: [
+        {
+          message: '"foo-bar" is not lowercase',
+          line: 2
+        }
+      ]
+    },
+    {
+      code: `
+      en-US:
+        foo-bar: baz
+      `,
+      ...options.yaml.key,
+      options: ['lowercase'],
+      errors: [
+        {
+          message: '"foo-bar" is not lowercase',
+          line: 3
+        }
+      ]
+    },
+    {
+      code: `
+      {"foo-bar": "baz"}
+      `,
+      ...options.json.file,
+      options: ['lowercase'],
+      errors: [
+        {
+          message: '"foo-bar" is not lowercase',
+          line: 2
+        }
+      ]
+    },
+    {
+      code: `
+      {"en-US": {
+        "foo-bar": "baz"
+      }}`,
+      ...options.json.key,
+      options: ['lowercase'],
+      errors: [
+        {
+          message: '"foo-bar" is not lowercase',
+          line: 3
+        }
+      ]
+    },
+    {
+      code: `
+      kebab-case:
+        snake_case: camelCase
+      `,
+      ...options.yaml.file,
+      options: ['lowercase'],
+      errors: [
+        {
+          message: '"kebab-case" is not lowercase',
+          line: 2
+        },
+        {
+          message: '"snake_case" is not lowercase',
+          line: 3
+        }
+      ]
+    },
+    {
+      code: `{
+        "kebab-case": {
+          "snake_case": "camelCase"
+        }
+      }
+      `,
+      ...options.json.file,
+      options: ['lowercase'],
+      errors: [
+        {
+          message: '"kebab-case" is not lowercase',
+          line: 2
+        },
+        {
+          message: '"snake_case" is not lowercase',
+          line: 3
+        }
+      ]
+    },
+    {
+      code: `
+      SCREAMING_SNAKE_CASE:
+        PascalCase: camelCase
+      `,
+      ...options.yaml.file,
+      options: ['lowercase'],
+      errors: [
+        {
+          message: '"SCREAMING_SNAKE_CASE" is not lowercase',
+          line: 2
+        },
+        {
+          message: '"PascalCase" is not lowercase',
+          line: 3
+        }
+      ]
+    },
+    {
+      code: `{
+        "SCREAMING_SNAKE_CASE": {
+          "PascalCase": "camelCase"
+        }
+      }
+      `,
+      ...options.json.file,
+      options: ['lowercase'],
+      errors: [
+        {
+          message: '"SCREAMING_SNAKE_CASE" is not lowercase',
+          line: 2
+        },
+        {
+          message: '"PascalCase" is not lowercase',
           line: 3
         }
       ]

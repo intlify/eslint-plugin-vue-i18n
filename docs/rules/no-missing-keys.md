@@ -8,7 +8,7 @@ since: v0.1.0
 
 > disallow missing locale message key at localization methods
 
-- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` property in a configuration file enables this rule.
+- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` or `*.configs["flat/recommended"]` property in a configuration file enables this rule.
 
 This rule warns locale message key missing if the key does not exist in locale messages.
 
@@ -71,10 +71,12 @@ localization codes:
 /* eslint @intlify/vue-i18n/no-missing-keys: 'error' */
 import VueI18n from 'vue-i18n'
 
+import en from './locales/en.json'
+
 const i18n = new VueI18n({
   locale: 'en',
   messages: {
-    en: require('./locales/en.json')
+    en
   }
 })
 
@@ -134,10 +136,12 @@ localization codes:
 /* eslint @intlify/vue-i18n/no-missing-keys: 'error' */
 import VueI18n from 'vue-i18n'
 
+import en from './locales/en.json'
+
 const i18n = new VueI18n({
   locale: 'en',
   messages: {
-    en: require('./locales/en.json')
+    en
   }
 })
 

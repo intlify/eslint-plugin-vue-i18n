@@ -13,58 +13,57 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
+        uses: actions/setup-node@v4
+      - name: Enable corepack
+        run: corepack enable
       - name: Install
-        run: yarn install
+        run: pnpm install
       - name: Lint
-        run: yarn lint
-      - name: Lint docs
-        run: yarn lint:docs
+        run: pnpm lint
   test:
-    name: 'Test for ESLint 8 on Node.js ${{ matrix.node }} OS: ${{matrix.os}}'
+    name: 'Test for Node.js ${{ matrix.node }} on ${{ matrix.os }}'
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node: [14, 16, 17, 18]
+        node: [18, 20, 22]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
+      - name: Enable corepack
+        run: corepack enable
       - name: Install
-        run: yarn install
+        run: pnpm install
       - name: Test
-        run: yarn test
+        run: pnpm test
       - name: Integration Test
         run: |
-          yarn build
-          yarn test:integrations
-  test-for-eslint:
-    name: 'Test for ESLint ${{ matrix.eslint }} on ${{ matrix.node }} OS: ${{matrix.os}}'
+          pnpm build
+          pnpm test:integrations
+  test-for-old-eslint:
+    name: 'Test for ESLint ${{ matrix.eslint }} on ${{ matrix.os }} using Node.js ${{ matrix.node }}'
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
         os: [ubuntu-latest]
-        eslint: [5, 6, 7]
-        node: [14]
+        eslint: [8]
+        node: [20]
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Node.js ${{ matrix.node }}
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
+      - name: Enable corepack
+        run: corepack enable
       - name: Install
-        run: yarn add eslint@${{ matrix.eslint }}
-      - name: Install ts-eslint v5
-        run: yarn add @typescript-eslint/parser@4 @typescript-eslint/eslint-plugin@4
-        if: matrix.eslint == 5
+        run: pnpm add eslint@${{ matrix.eslint }}
       - name: Test
-        run: yarn test
+        run: pnpm test

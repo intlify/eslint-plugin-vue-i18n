@@ -10,6 +10,7 @@ import type { AST as YAMLAST } from 'yaml-eslint-parser'
 import type { RuleContext, RuleListener } from '../types'
 import { createRule } from '../utils/rule'
 import type { DefaultTreeAdapterMap } from 'parse5'
+import { getFilename, getSourceCode } from '../utils/compat'
 
 const debug = debugBuilder('eslint-plugin-vue-i18n:no-html-messages')
 
@@ -25,7 +26,8 @@ function findHTMLNode(node: DocumentFragment): Element | undefined {
 }
 
 function create(context: RuleContext): RuleListener {
-  const filename = context.getFilename()
+  const filename = getFilename(context)
+  const sourceCode = getSourceCode(context)
 
   /**
    * @param {JSONLiteral} node
@@ -97,14 +99,14 @@ function create(context: RuleContext): RuleListener {
         }
       }
     )
-  } else if (context.parserServices.isJSON) {
+  } else if (sourceCode.parserServices.isJSON) {
     if (!getLocaleMessages(context).findExistLocaleMessage(filename)) {
       return {}
     }
     return {
       JSONLiteral: verifyJSONLiteral
     }
-  } else if (context.parserServices.isYAML) {
+  } else if (sourceCode.parserServices.isYAML) {
     if (!getLocaleMessages(context).findExistLocaleMessage(filename)) {
       return {}
     }

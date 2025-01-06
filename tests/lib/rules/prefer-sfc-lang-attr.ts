@@ -1,9 +1,13 @@
-import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/prefer-sfc-lang-attr')
+import { RuleTester } from '../eslint-compat'
+import rule from '../../../lib/rules/prefer-sfc-lang-attr'
+import * as vueParser from 'vue-eslint-parser'
 
 new RuleTester({
-  parser: require.resolve('vue-eslint-parser'),
-  parserOptions: { ecmaVersion: 2020, sourceType: 'module' }
+  languageOptions: {
+    parser: vueParser,
+    ecmaVersion: 2020,
+    sourceType: 'module'
+  }
 }).run('prefer-sfc-lang-attr', rule as never, {
   valid: [
     {

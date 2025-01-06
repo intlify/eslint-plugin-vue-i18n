@@ -14,21 +14,30 @@ import {
   getReportIndex
 } from '../utils/message-compiler/utils'
 import { parse } from '../utils/message-compiler/parser'
+import { parse as parseForV9 } from '../utils/message-compiler/parser-v9'
 import { parse as parseForV8 } from '../utils/message-compiler/parser-v8'
 import type { CompileError } from '@intlify/message-compiler'
 import { createRule } from '../utils/rule'
+import { getFilename, getSourceCode } from '../utils/compat'
 const debug = debugBuilder('eslint-plugin-vue-i18n:valid-message-syntax')
 
 function create(context: RuleContext): RuleListener {
-  const filename = context.getFilename()
-  const sourceCode = context.getSourceCode()
+  const filename = getFilename(context)
+  const sourceCode = getSourceCode(context)
   const allowNotString = Boolean(context.options[0]?.allowNotString)
   const messageSyntaxVersions = getMessageSyntaxVersions(context)
 
   function* extractMessageErrors(message: string) {
-    if (messageSyntaxVersions.v9) {
-      yield* parse(message).errors
+    // v10 and v9 generate nearly identical errors so only one of them will be returned.
+    const errorsForV10OrV9: CompileError[] = []
+    if (messageSyntaxVersions.v10) {
+      errorsForV10OrV9.push(...parse(message).errors)
     }
+    if (messageSyntaxVersions.v9 && !errorsForV10OrV9.length) {
+      errorsForV10OrV9.push(...parseForV9(message).errors)
+    }
+    yield* errorsForV10OrV9
+
     if (messageSyntaxVersions.v8) {
       yield* parseForV8(message).errors
     }
@@ -44,8 +53,8 @@ function create(context: RuleContext): RuleListener {
           message === null
             ? 'null'
             : message instanceof RegExp
-            ? 'RegExp'
-            : typeof message
+              ? 'RegExp'
+              : typeof message
         context.report({
           message: `Unexpected '${type}' message`,
           loc: reportNode.loc
@@ -177,7 +186,10 @@ function create(context: RuleContext): RuleListener {
       createVisitorForJson,
       createVisitorForYaml
     )
-  } else if (context.parserServices.isJSON || context.parserServices.isYAML) {
+  } else if (
+    sourceCode.parserServices.isJSON ||
+    sourceCode.parserServices.isYAML
+  ) {
     const localeMessages = getLocaleMessages(context)
     const targetLocaleMessage = localeMessages.findExistLocaleMessage(filename)
     if (!targetLocaleMessage) {
@@ -185,9 +197,9 @@ function create(context: RuleContext): RuleListener {
       return {}
     }
 
-    if (context.parserServices.isJSON) {
+    if (sourceCode.parserServices.isJSON) {
       return createVisitorForJson()
-    } else if (context.parserServices.isYAML) {
+    } else if (sourceCode.parserServices.isYAML) {
       return createVisitorForYaml()
     }
     return {}
@@ -204,8 +216,7 @@ export = createRule({
       description: 'disallow invalid message syntax',
       category: 'Recommended',
       url: 'https://eslint-plugin-vue-i18n.intlify.dev/rules/valid-message-syntax.html',
-      // TODO To avoid breaking changes, include it in the configuration at the time of version upgrade.
-      recommended: false
+      recommended: true
     },
     fixable: null,
     schema: [

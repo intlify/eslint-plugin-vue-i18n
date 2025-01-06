@@ -1,18 +1,18 @@
 /**
  * @author Yosuke Ota
  */
-import fs from 'fs'
-import path from 'path'
-import assert from 'assert'
+import { readFileSync, writeFileSync } from 'fs'
+import { resolve } from 'node:path'
+import { strictEqual, deepStrictEqual, notDeepStrictEqual } from 'assert'
 import { ResourceLoader } from '../../../lib/utils/resource-loader'
 
 describe('ResourceLoader', () => {
-  const testFilename = path.resolve(
+  const testFilename = resolve(
     __dirname,
     '../../fixtures/utils/resource-loader/test.json'
   )
   it('should be refresh with change file.', async () => {
-    const bk = fs.readFileSync(testFilename, 'utf8')
+    const bk = readFileSync(testFilename, 'utf8')
     try {
       let count = 0
       const resource = new ResourceLoader(
@@ -26,18 +26,18 @@ describe('ResourceLoader', () => {
         5
       )
       const before = resource.getResource()
-      assert.strictEqual(count, 1)
+      strictEqual(count, 1)
       await new Promise(resolve => setTimeout(resolve, 10))
-      assert.deepStrictEqual(resource.getResource(), before)
-      assert.strictEqual(count, 1)
+      deepStrictEqual(resource.getResource(), before)
+      strictEqual(count, 1)
 
-      fs.writeFileSync(testFilename, '"bar"', 'utf8')
+      writeFileSync(testFilename, '"bar"', 'utf8')
       await new Promise(resolve => setTimeout(resolve, 10))
-      assert.notDeepStrictEqual(resource.getResource(), before)
-      assert.deepStrictEqual(resource.getResource(), 'bar')
-      assert.strictEqual(count, 2)
+      notDeepStrictEqual(resource.getResource(), before)
+      deepStrictEqual(resource.getResource(), 'bar')
+      strictEqual(count, 2)
     } finally {
-      fs.writeFileSync(testFilename, bk, 'utf8')
+      writeFileSync(testFilename, bk, 'utf8')
     }
   })
 })

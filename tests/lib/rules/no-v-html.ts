@@ -1,12 +1,16 @@
 /**
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
-import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/no-v-html')
+import { RuleTester } from '../eslint-compat'
+import rule from '../../../lib/rules/no-v-html'
+import * as vueParser from 'vue-eslint-parser'
 
 const tester = new RuleTester({
-  parser: require.resolve('vue-eslint-parser'),
-  parserOptions: { ecmaVersion: 2015 }
+  languageOptions: {
+    parser: vueParser,
+    ecmaVersion: 2020,
+    sourceType: 'module'
+  }
 })
 
 tester.run('no-v-html', rule as never, {

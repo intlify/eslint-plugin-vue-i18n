@@ -1,9 +1,9 @@
 /**
  * @author Yosuke Ota
  */
-import fs from 'fs'
-import path from 'path'
-import assert from 'assert'
+import { writeFileSync, unlinkSync } from 'fs'
+import { join } from 'node:path'
+import { deepStrictEqual } from 'assert'
 import { getLocaleMessages } from '../../../lib/utils/index'
 import { setTimeouts } from '../../../lib/utils/default-timeouts'
 import type {
@@ -27,16 +27,18 @@ describe('getLocaleMessages', () => {
   })
 
   const localeDir = 'tests/fixtures/utils/get-locale-messages/**/*.json'
+  const parserServices = {}
   const dummyContext: RuleContext = {
     getFilename() {
       return 'input.vue'
     },
     getSourceCode() {
       return {
-        ast: {}
+        ast: {},
+        parserServices
       }
     },
-    parserServices: {},
+    parserServices,
     settings: {
       'vue-i18n': {
         localeDir
@@ -54,38 +56,38 @@ describe('getLocaleMessages', () => {
     return r
   }
   it('should be refresh with change files.', async () => {
-    const enJsonPath = path.join(
+    const enJsonPath = join(
       __dirname,
       '../../fixtures/utils/get-locale-messages/locales/en.json'
     )
-    const jaJsonPath = path.join(
+    const jaJsonPath = join(
       __dirname,
       '../../fixtures/utils/get-locale-messages/locales/ja.json'
     )
     // eslint-disable-next-line @typescript-eslint/no-var-requires
     const enJson = require(enJsonPath)
     try {
-      assert.deepStrictEqual(getAllLocaleMessages(), {
+      deepStrictEqual(getAllLocaleMessages(), {
         'en.json': enJson
       })
       const newEnJson = { ...enJson, 'new-message': 'foo' }
-      fs.writeFileSync(enJsonPath, JSON.stringify(newEnJson, null, 2), 'utf8')
+      writeFileSync(enJsonPath, JSON.stringify(newEnJson, null, 2), 'utf8')
       await new Promise(resolve => setTimeout(resolve, 10))
-      assert.deepStrictEqual(getAllLocaleMessages(), {
+      deepStrictEqual(getAllLocaleMessages(), {
         'en.json': newEnJson
       })
 
       const newJaJson = { 'new-message': 'hoge' }
-      fs.writeFileSync(jaJsonPath, JSON.stringify(newJaJson, null, 2), 'utf8')
+      writeFileSync(jaJsonPath, JSON.stringify(newJaJson, null, 2), 'utf8')
       await new Promise(resolve => setTimeout(resolve, 20))
-      assert.deepStrictEqual(getAllLocaleMessages(), {
+      deepStrictEqual(getAllLocaleMessages(), {
         'en.json': newEnJson,
         'ja.json': newJaJson
       })
     } finally {
-      fs.writeFileSync(enJsonPath, JSON.stringify(enJson, null, 2), 'utf8')
+      writeFileSync(enJsonPath, JSON.stringify(enJson, null, 2), 'utf8')
       try {
-        fs.unlinkSync(jaJsonPath)
+        unlinkSync(jaJsonPath)
       } catch (_e) {
         // ignore
       }

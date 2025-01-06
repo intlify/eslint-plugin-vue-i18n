@@ -15,8 +15,9 @@ import type {
   LinkedModifierNode,
   LinkedKeyNode
 } from '@intlify/message-compiler'
-import lodash from 'lodash'
+import { sortedLastIndex } from 'lodash'
 import { NodeTypes } from './utils'
+import type { ModuloNamedNode } from './parser-v9'
 
 export function parse(code: string): {
   ast: ResourceNode
@@ -69,7 +70,7 @@ class CodeContext {
         column: this.lines[this.lines.length - 1].length + 1
       }
     }
-    const lineNumber = lodash.sortedLastIndex(this.lineStartIndices, index)
+    const lineNumber = sortedLastIndex(this.lineStartIndices, index)
     return {
       line: lineNumber,
       column: index - this.lineStartIndices[lineNumber - 1] + 1
@@ -90,7 +91,7 @@ class CodeContext {
   }
   setEndLoc(
     node: {
-      end: number
+      end?: number
       loc?: SourceLocation
     },
     end: number
@@ -207,10 +208,13 @@ function parseAST(code: string, errors: CompileError[]): ResourceNode {
           node = listNode
         }
         if (!node) {
-          const namedNode: NamedNode = {
+          const namedNode: ModuloNamedNode = {
             type: NodeTypes.Named,
             key: trimmedKeyValue,
             ...ctx.getNodeLoc(endOffset - 1, placeholderEndOffset)
+          }
+          if (key === '%{') {
+            namedNode.modulo = true
           }
           if (!/^[a-zA-Z][a-zA-Z0-9_$]*$/.test(namedNode.key)) {
             errors.push(

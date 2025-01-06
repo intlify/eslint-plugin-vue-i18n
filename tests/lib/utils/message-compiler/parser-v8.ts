@@ -1,9 +1,9 @@
 /**
  * @author Yosuke Ota
  */
-import assert from 'assert'
+import { deepStrictEqual } from 'assert'
 import { parse } from '../../../../lib/utils/message-compiler/parser-v8'
-import { parse as parseForV9 } from '../../../../lib/utils/message-compiler/parser'
+import { parse as parseForV9 } from '../../../../lib/utils/message-compiler/parser-v9'
 import { errorsFixtures } from './parser-v8-data'
 
 describe('parser-v8', () => {
@@ -49,7 +49,7 @@ describe('parser-v8', () => {
             v8.errors = v8.errors.map((e: any) => e.message)
             v9.errors = errors
           }
-          assert.deepStrictEqual(v8, v9)
+          deepStrictEqual(v8, v9)
         })
       })
     }
@@ -61,7 +61,7 @@ describe('parser-v8', () => {
         it('should be equals', () => {
           const parsed = simply(parse(code))
           try {
-            assert.deepStrictEqual(parsed, expected)
+            deepStrictEqual(parsed, expected)
           } catch (e) {
             // require('fs').writeFileSync(
             //   __dirname + '/actual.json',

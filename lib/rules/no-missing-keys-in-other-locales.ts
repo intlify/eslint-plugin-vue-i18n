@@ -14,14 +14,14 @@ import type {
 import type { LocaleMessage, LocaleMessages } from '../utils/locale-messages'
 import { joinPath } from '../utils/key-path'
 import { createRule } from '../utils/rule'
-import { getBasename } from '../utils/path-utils'
+import { getFilename, getSourceCode } from '../utils/compat'
 const debug = debugBuilder(
   'eslint-plugin-vue-i18n:no-missing-keys-in-other-locales'
 )
 
 function create(context: RuleContext): RuleListener {
-  const filename = context.getFilename()
-  const basename = getBasename(filename)
+  const filename = getFilename(context)
+  const sourceCode = getSourceCode(context)
   const ignoreLocales: string[] = context.options[0]?.ignoreLocales || []
 
   function reportMissing(
@@ -92,20 +92,11 @@ function create(context: RuleContext): RuleListener {
       return localeMessages.locales
         .filter(locale => !ignores.has(locale))
         .map(locale => {
-          const dictList = localeMessages.localeMessages
-            .filter(lm =>
-              lm.includeFilenameInKey ? lm.basename === basename : true
-            )
-            .map(lm => {
-              const messages = lm.getMessagesFromLocale(locale)
-              return lm.includeFilenameInKey
-                ? ((messages[basename] || {}) as I18nLocaleMessageDictionary)
-                : messages
-            })
-
           return {
             locale,
-            dictList
+            dictList: localeMessages.localeMessages.map(lm =>
+              lm.getMessagesFromLocale(locale)
+            )
           }
         })
     }
@@ -132,7 +123,7 @@ function create(context: RuleContext): RuleListener {
       keyStack = {
         locale,
         otherLocaleMessages: getOtherLocaleMessages(locale),
-        keyPath: targetLocaleMessage.includeFilenameInKey ? [basename] : []
+        keyPath: []
       }
     } else {
       keyStack = {
@@ -318,7 +309,10 @@ function create(context: RuleContext): RuleListener {
         return createVisitorForYaml(targetLocaleMessage, localeMessages)
       }
     )
-  } else if (context.parserServices.isJSON || context.parserServices.isYAML) {
+  } else if (
+    sourceCode.parserServices.isJSON ||
+    sourceCode.parserServices.isYAML
+  ) {
     const localeMessages = getLocaleMessages(context)
     const targetLocaleMessage = localeMessages.findExistLocaleMessage(filename)
     if (!targetLocaleMessage) {
@@ -326,9 +320,9 @@ function create(context: RuleContext): RuleListener {
       return {}
     }
 
-    if (context.parserServices.isJSON) {
+    if (sourceCode.parserServices.isJSON) {
       return createVisitorForJson(targetLocaleMessage, localeMessages)
-    } else if (context.parserServices.isYAML) {
+    } else if (sourceCode.parserServices.isYAML) {
       return createVisitorForYaml(targetLocaleMessage, localeMessages)
     }
     return {}

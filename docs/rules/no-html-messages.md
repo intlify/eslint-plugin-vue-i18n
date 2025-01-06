@@ -8,7 +8,7 @@ since: v0.1.0
 
 > disallow use HTML localization messages
 
-- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` property in a configuration file enables this rule.
+- :star: The `"extends": "plugin:@intlify/vue-i18n/recommended"` or `*.configs["flat/recommended"]` property in a configuration file enables this rule.
 
 This rule reports in order to reduce the risk of injecting potentially unsafe localization message into the browser leading to supply-chain attack or XSS attack.
 
@@ -29,7 +29,7 @@ locale messages:
 {
   "hello": "Hello! DIO!",
   "hi": "Hi! <span>DIO!</span>",
-  "contenst": {
+  "contents": {
     "banner": "banner: <iframe src=\"https://banner.domain.com\" frameBorder=\"0\" style=\"z-index:100001;position:fixed;bottom:0;right:0\"/>",
     "modal": "modal: <span onmouseover=\"alert(document.cookie);\">modal content</span>"
   }
@@ -56,10 +56,12 @@ In localization codes of application:
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 
+import en from './locales/en.json'
+
 const i18n = new VueI18n({
   locale: 'en',
   messages: {
-    en: require('./locales/en.json')
+    en
   }
 })
 
@@ -111,6 +113,8 @@ In localization codes of application:
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 
+import en from './locales/en.json'
+
 // import some components used in i18n component
 import Banner from './path/to/components/Banner.vue'
 import Modal from './path/to/components/Modal.vue'
@@ -122,7 +126,7 @@ Vue.component('Modal', Modal)
 const i18n = new VueI18n({
   locale: 'en',
   messages: {
-    en: require('./locales/en.json')
+    en
   }
 })
 

@@ -1,29 +1,44 @@
 name: Release
 
 on:
-  workflow_dispatch:
-    branches: [master]
+  push:
+    branches:
+      - master
 
 jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    if: github.actor == 'its-lee'
     steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
+          fetch-depth: 0
+
+      - name: Setup Node.js 18
+        uses: actions/setup-node@v4
         with:
           node-version: 18
-          registry-url: "https://registry.npmjs.org"
-      - run: git switch master
-      - run: |
-          if [ -f "yarn.lock" ]; then
-            yarn install
-          else
-            npm install
-          fi
-      - run: npm run release:trigger
+
+      - name: Enable corepack
+        run: corepack enable
+
+      - name: Install Dependencies
+        run: pnpm install
+      - name: Build
+        run: pnpm run build
+
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
+        uses: changesets/action@v1
+        with:
+          # this expects you to have a npm script called version that runs some logic and then calls `changeset version`.
+          version: pnpm run version:ci
+          # This expects you to have a script called release which does a build for your packages and calls changeset publish
+          publish: pnpm run release
+          commit: 'chore: release `@intlify/eslint-plugin-vue-i18n`'
+          title: 'chore: release `@intlify/eslint-plugin-vue-i18n`'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-          #SLACK_INCOMING_HOOK: ${{ secrets.SLACK_INCOMING_HOOK }}
+          NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

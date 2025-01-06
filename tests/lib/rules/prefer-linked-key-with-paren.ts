@@ -1,63 +1,21 @@
 /**
  * @author Yosuke Ota
  */
-import { join } from 'path'
-import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/prefer-linked-key-with-paren')
+import { join } from 'node:path'
+import { RuleTester, TEST_RULE_ID_PREFIX } from '../eslint-compat'
+import { getRuleTesterTestCaseOptions } from '../test-utils'
+import rule from '../../../lib/rules/prefer-linked-key-with-paren'
+import * as vueParser from 'vue-eslint-parser'
 
-const vueParser = require.resolve('vue-eslint-parser')
-const jsonParser = require.resolve('jsonc-eslint-parser')
-const yamlParser = require.resolve('yaml-eslint-parser')
 const FIXTURES_ROOT = join(
   __dirname,
   '../../fixtures/prefer-linked-key-with-paren'
 )
 
-const options = {
-  json(messageSyntaxVersion: string | null = '^9.0.0') {
-    return {
-      parser: jsonParser,
-      filename: join(FIXTURES_ROOT, 'test.json'),
-      settings: {
-        'vue-i18n': {
-          localeDir: {
-            pattern: FIXTURES_ROOT + '/*.{json,yaml,yml}'
-          },
-          messageSyntaxVersion
-        }
-      }
-    }
-  },
-  yaml(messageSyntaxVersion: string | null = '^9.0.0') {
-    return {
-      parser: yamlParser,
-      filename: join(FIXTURES_ROOT, 'test.yaml'),
-      settings: {
-        'vue-i18n': {
-          localeDir: {
-            pattern: FIXTURES_ROOT + '/*.{json,yaml,yml}'
-          },
-          messageSyntaxVersion
-        }
-      }
-    }
-  },
-  vue(messageSyntaxVersion: string | null = '^9.0.0') {
-    return {
-      parser: vueParser,
-      filename: join(FIXTURES_ROOT, 'test.vue'),
-      settings: {
-        'vue-i18n': {
-          messageSyntaxVersion
-        }
-      }
-    }
-  }
-}
+const options = getRuleTesterTestCaseOptions(FIXTURES_ROOT)
 
 const tester = new RuleTester({
-  parser: vueParser,
-  parserOptions: { ecmaVersion: 2015 }
+  languageOptions: { parser: vueParser, ecmaVersion: 2015 }
 })
 
 tester.run('prefer-linked-key-with-paren', rule as never, {
@@ -386,7 +344,7 @@ tester.run('prefer-linked-key-with-paren', rule as never, {
       ...options.yaml(null),
       output: null,
       errors: [
-        "If you want to use 'prefer-linked-key-with-paren' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n' documentation"
+        `If you want to use '${TEST_RULE_ID_PREFIX}prefer-linked-key-with-paren' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n' documentation`
       ]
     }
   ]

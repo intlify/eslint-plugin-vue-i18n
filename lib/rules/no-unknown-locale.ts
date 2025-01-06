@@ -12,10 +12,12 @@ import {
   getAttribute
 } from '../utils/index'
 import type { LocaleMessage } from '../utils/locale-messages'
+import { getFilename, getSourceCode } from '../utils/compat'
 const debug = debugBuilder('eslint-plugin-vue-i18n:no-unknown-locale')
 
 function create(context: RuleContext): RuleListener {
-  const filename = context.getFilename()
+  const filename = getFilename(context)
+  const sourceCode = getSourceCode(context)
   const locales: string[] = context.options[0]?.locales || []
   const disableRFC5646 = context.options[0]?.disableRFC5646 || false
 
@@ -218,7 +220,10 @@ function create(context: RuleContext): RuleListener {
         )
       }
     )
-  } else if (context.parserServices.isJSON || context.parserServices.isYAML) {
+  } else if (
+    sourceCode.parserServices.isJSON ||
+    sourceCode.parserServices.isYAML
+  ) {
     const localeMessages = getLocaleMessages(context)
     const targetLocaleMessage = localeMessages.findExistLocaleMessage(filename)
     if (!targetLocaleMessage) {
@@ -226,9 +231,9 @@ function create(context: RuleContext): RuleListener {
       return {}
     }
 
-    if (context.parserServices.isJSON) {
+    if (sourceCode.parserServices.isJSON) {
       return createVisitorForJson(targetLocaleMessage, null)
-    } else if (context.parserServices.isYAML) {
+    } else if (sourceCode.parserServices.isYAML) {
       return createVisitorForYaml(targetLocaleMessage, null)
     }
     return {}

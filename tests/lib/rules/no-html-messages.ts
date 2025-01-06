@@ -1,23 +1,27 @@
 /**
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
-import { RuleTester } from 'eslint'
-import { join } from 'path'
-import fs from 'fs'
-import rule = require('../../../lib/rules/no-html-messages')
+import { RuleTester } from '../eslint-compat'
+import { join } from 'node:path'
+import { readFileSync } from 'fs'
+import rule from '../../../lib/rules/no-html-messages'
 import { getTestCasesFromFixtures } from '../test-utils'
+import * as vueParser from 'vue-eslint-parser'
 
 const cwdRoot = join(__dirname, '../../fixtures/no-html-messages')
 
 new RuleTester({
-  parser: require.resolve('vue-eslint-parser'),
-  parserOptions: { ecmaVersion: 2015, sourceType: 'module' }
+  languageOptions: {
+    parser: vueParser,
+    ecmaVersion: 2015,
+    sourceType: 'module'
+  }
 }).run('no-html-messages', rule as never, {
   valid: [
     {
       // sfc supports
       filename: 'test.vue',
-      code: `<i18n>${fs.readFileSync(
+      code: `<i18n>${readFileSync(
         require.resolve('../../fixtures/no-html-messages/valid/en.json'),
         'utf8'
       )}</i18n>
@@ -46,7 +50,7 @@ new RuleTester({
     {
       // sfc supports
       filename: 'test.vue',
-      code: `<i18n>${fs.readFileSync(
+      code: `<i18n>${readFileSync(
         require.resolve('../../fixtures/no-html-messages/invalid/en.json'),
         'utf8'
       )}</i18n>
@@ -72,7 +76,7 @@ new RuleTester({
     {
       // sfc supports
       filename: 'test.vue',
-      code: `<i18n lang="yaml">${fs.readFileSync(
+      code: `<i18n lang="yaml">${readFileSync(
         require.resolve('../../fixtures/no-html-messages/invalid/en.yaml'),
         'utf8'
       )}</i18n>

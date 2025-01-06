@@ -2,8 +2,8 @@
  * @fileoverview parser for <i18n> block
  * @author Yosuke Ota
  */
-import JSON5 from 'json5'
-import yaml from 'js-yaml'
+import { parse } from 'json5'
+import { load } from 'js-yaml'
 import type { AST as VAST } from 'vue-eslint-parser'
 import type { I18nLocaleMessageDictionary } from '../../types'
 
@@ -42,7 +42,7 @@ function parseValuesInI18nBlock(
 export function parseJsonValuesInI18nBlock(
   i18nBlock: VAST.VElement
 ): I18nLocaleMessageDictionary | null {
-  return parseValuesInI18nBlock(i18nBlock, code => JSON5.parse(code))
+  return parseValuesInI18nBlock(i18nBlock, code => parse(code))
 }
 
 /**
@@ -51,5 +51,5 @@ export function parseJsonValuesInI18nBlock(
 export function parseYamlValuesInI18nBlock(
   i18nBlock: VAST.VElement
 ): I18nLocaleMessageDictionary | null {
-  return parseValuesInI18nBlock(i18nBlock, code => yaml.load(code) as never)
+  return parseValuesInI18nBlock(i18nBlock, code => load(code) as never)
 }

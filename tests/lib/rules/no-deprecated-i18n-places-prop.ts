@@ -1,12 +1,12 @@
 /**
  * @author Yosuke Ota
  */
-import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/no-deprecated-i18n-places-prop')
+import { RuleTester } from '../eslint-compat'
+import rule from '../../../lib/rules/no-deprecated-i18n-places-prop'
+import * as vueParser from 'vue-eslint-parser'
 
 const tester = new RuleTester({
-  parser: require.resolve('vue-eslint-parser'),
-  parserOptions: { ecmaVersion: 2015 }
+  languageOptions: { parser: vueParser, ecmaVersion: 2015 }
 })
 
 tester.run('no-deprecated-i18n-places-prop', rule as never, {

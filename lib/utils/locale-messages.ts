@@ -10,16 +10,15 @@ import type {
   LocaleKeyType
 } from '../types'
 import { extname } from 'path'
-import fs from 'fs'
+import { readFileSync } from 'fs'
 import {
   parseYamlValuesInI18nBlock,
   parseJsonValuesInI18nBlock
 } from './parsers'
 import { ResourceLoader } from './resource-loader'
-import JSON5 from 'json5'
-import yaml from 'js-yaml'
+import { parse } from 'json5'
+import { load } from 'js-yaml'
 import { joinPath, parsePath } from './key-path'
-import { getBasename } from './path-utils'
 
 // see https://github.com/kazupon/vue-cli-plugin-i18n/blob/e9519235a454db52fdafcd0517ce6607821ef0b4/generator/templates/js/src/i18n.js#L10
 const DEFAULT_LOCALE_PATTERN = '[A-Za-z0-9-_]+'
@@ -39,9 +38,7 @@ export abstract class LocaleMessage {
   public readonly fullpath: string
   public readonly localeKey: LocaleKeyType
   public readonly file: string
-  public readonly basename: string
   public readonly localePattern: RegExp
-  public readonly includeFilenameInKey: boolean
   private _locales: string[] | undefined
   /**
    * @param {object} arg
@@ -49,29 +46,24 @@ export abstract class LocaleMessage {
    * @param {string[]} [arg.locales] The locales.
    * @param {LocaleKeyType} arg.localeKey Specifies how to determine the locale for localization messages.
    * @param {RegExp} args.localePattern Specifies how to determin the regular expression pattern for how to get the locale.
-   * @param {Boolean} args.includeFilenameInKey Specifies if the filename should be included in the key for messages.
    */
   constructor({
     fullpath,
     locales,
     localeKey,
-    localePattern,
-    includeFilenameInKey
+    localePattern
   }: {
     fullpath: string
     locales?: string[]
     localeKey: LocaleKeyType
     localePattern?: string | RegExp
-    includeFilenameInKey?: boolean
   }) {
     this.fullpath = fullpath
     /** @type {LocaleKeyType} Specifies how to determine the locale for localization messages. */
     this.localeKey = localeKey
     /** @type {string} The localization messages file name. */
     this.file = fullpath.replace(/^.*(\\|\/|:)/, '')
-    this.basename = getBasename(fullpath)
     this.localePattern = this.getLocalePatternWithRegex(localePattern)
-    this.includeFilenameInKey = includeFilenameInKey || false
 
     this._locales = locales
   }
@@ -205,27 +197,23 @@ export class FileLocaleMessage extends LocaleMessage {
    * @param {string[]} [arg.locales] The locales.
    * @param {LocaleKeyType} arg.localeKey Specifies how to determine the locale for localization messages.
    * @param {string | RegExp} args.localePattern Specifies how to determin the regular expression pattern for how to get the locale.
-   * @param {Boolean} args.includeFilenameInKey Specifies if the filename should be included in the key for messages.
    */
   constructor({
     fullpath,
     locales,
     localeKey,
-    localePattern,
-    includeFilenameInKey
+    localePattern
   }: {
     fullpath: string
     locales?: string[]
     localeKey: LocaleKeyType
     localePattern?: string | RegExp
-    includeFilenameInKey?: boolean
   }) {
     super({
       fullpath,
       locales,
       localeKey,
-      localePattern,
-      includeFilenameInKey
+      localePattern
     })
     this._resource = new ResourceLoader(fullpath, fileName => {
       const ext = extname(fileName).toLowerCase()
@@ -234,16 +222,15 @@ export class FileLocaleMessage extends LocaleMessage {
         delete require.cache[key]
         return require(fileName)
       } else if (ext === '.yaml' || ext === '.yml') {
-        return yaml.load(fs.readFileSync(fileName, 'utf8'))
+        return load(readFileSync(fileName, 'utf8'))
       } else if (ext === '.json' || ext === '.json5') {
-        return JSON5.parse(fs.readFileSync(fileName, 'utf8'))
+        return parse(readFileSync(fileName, 'utf8'))
       }
     })
   }
 
   getMessagesInternal(): I18nLocaleMessageDictionary {
-    const resource = this._resource.getResource()
-    return this.includeFilenameInKey ? { [this.basename]: resource } : resource
+    return this._resource.getResource()
   }
 }
 

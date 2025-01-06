@@ -29,6 +29,7 @@ import type {
 import { isKebabCase, pascalCase } from '../utils/casing'
 import { createRule } from '../utils/rule'
 import { toRegExp } from '../utils/regexp'
+import { getSourceCode } from '../utils/compat'
 
 type LiteralValue = VAST.ESLintLiteral['value']
 type TemplateOptionValueNode = StaticLiteral
@@ -94,10 +95,11 @@ function calculateLoc(
   if (!base) {
     return node.loc
   }
+  const sourceCode = getSourceCode(context)
   const range = calculateRange(node, base)
   return {
-    start: context.getSourceCode().getLocFromIndex(range[0]),
-    end: context.getSourceCode().getLocFromIndex(range[1])
+    start: sourceCode.getLocFromIndex(range[0]),
+    end: sourceCode.getLocFromIndex(range[1])
   }
 }
 
@@ -297,7 +299,7 @@ function checkVAttribute(
     const literalRange = calculateRange(literal, baseNode)
     const replaceRange = [literalRange[0] + 1, literalRange[1] - 1] as Range
     const keyRange = calculateRange(attribute.key, baseNode)
-    const sourceCode = context.getSourceCode()
+    const sourceCode = getSourceCode(context)
     const attrQuote = sourceCode.text[literalRange[0]]
     const quotes: Quotes = new Set(attrQuote as never)
     if (baseNode) {
@@ -372,7 +374,7 @@ function checkText(
       }
     }
     const replaceRange = calculateRange(textNode, baseNode)
-    const sourceCode = context.getSourceCode()
+    const sourceCode = getSourceCode(context)
     const quotes: Quotes = new Set()
     if (baseNode) {
       const baseQuote = sourceCode.text[baseNode.range[0]]
@@ -439,8 +441,9 @@ function getComponentTemplateValueNode(
     if (isStaticLiteral(templateNode.value)) {
       return templateNode.value
     } else if (templateNode.value.type === 'Identifier') {
+      const sourceCode = getSourceCode(context)
       const templateVariable = findVariable(
-        context.getScope().variables,
+        sourceCode.getScope(node).variables,
         templateNode.value.name
       )
       if (templateVariable) {
@@ -470,7 +473,8 @@ function withoutEscape(
   if (!baseNode) {
     return false
   }
-  const sourceText = context.getSourceCode().getText(baseNode).slice(1, -1)
+  const sourceCode = getSourceCode(context)
+  const sourceText = sourceCode.getText(baseNode).slice(1, -1)
   const templateText = `${getStaticLiteralValue(baseNode)}`
   return sourceText === templateText
 }
@@ -489,7 +493,8 @@ function getFixableI18nBlocks(
   context: RuleContext,
   newKey: string
 ): I18nBlockInfo[] | null {
-  const df = context.parserServices.getDocumentFragment?.()
+  const sourceCode = getSourceCode(context)
+  const df = sourceCode.parserServices.getDocumentFragment?.()
   if (!df) {
     return null
   }
@@ -550,7 +555,7 @@ function getFixableI18nBlocks(
         objects,
         offsets: {
           getLoc: (index: number) => {
-            return context.getSourceCode().getLocFromIndex(getIndex(index))
+            return sourceCode.getLocFromIndex(getIndex(index))
           },
           getIndex
         }
@@ -570,9 +575,10 @@ function* generateFixAddI18nBlock(
   resource: string,
   replaceFixes: Fix[]
 ): IterableIterator<Fix> {
+  const sourceCode = getSourceCode(context)
   const text = JSON.stringify(resource)
-  const df = context.parserServices.getDocumentFragment!()!
-  const tokenStore = context.parserServices.getTemplateBodyTokenStore()
+  const df = sourceCode.parserServices.getDocumentFragment!()!
+  const tokenStore = sourceCode.parserServices.getTemplateBodyTokenStore()
 
   if (!i18nBlocks.length) {
     let baseToken: VAST.VElement | VAST.Token = df.children.find(isVElement)!
@@ -603,21 +609,18 @@ function* generateFixAddI18nBlock(
     for (const objectNode of objects) {
       const first = objectNode.properties[0]
 
-      let indent =
+      let indent = `${
         /^\s*/.exec(
-          context.getSourceCode().lines[
-            offsets.getLoc(objectNode.range[0]).line - 1
-          ]
-        )![0] + '  '
+          sourceCode.lines[offsets.getLoc(objectNode.range[0]).line - 1]
+        )![0]
+      }  `
       let next = ''
       if (first) {
         if (objectNode.loc.start.line === first.loc.start.line) {
-          next = ',\n' + indent
+          next = `,\n${indent}`
         } else {
           indent = /^\s*/.exec(
-            context.getSourceCode().lines[
-              offsets.getLoc(first.range[0]).line - 1
-            ]
+            sourceCode.lines[offsets.getLoc(first.range[0]).line - 1]
           )![0]
           next = ','
         }

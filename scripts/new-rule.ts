@@ -1,6 +1,6 @@
-import path from 'path'
-import fs from 'fs'
-import cp from 'child_process'
+import { resolve } from 'node:path'
+import { writeFileSync } from 'fs'
+import { execSync } from 'child_process'
 const logger = console
 
 // main
@@ -16,11 +16,11 @@ const logger = console
     return
   }
 
-  const ruleFile = path.resolve(__dirname, `../lib/rules/${ruleId}.ts`)
-  const testFile = path.resolve(__dirname, `../tests/lib/rules/${ruleId}.ts`)
-  const docFile = path.resolve(__dirname, `../docs/rules/${ruleId}.md`)
+  const ruleFile = resolve(__dirname, `../lib/rules/${ruleId}.ts`)
+  const testFile = resolve(__dirname, `../tests/lib/rules/${ruleId}.ts`)
+  const docFile = resolve(__dirname, `../docs/rules/${ruleId}.md`)
 
-  fs.writeFileSync(
+  writeFileSync(
     ruleFile,
     `import type { RuleContext, RuleListener } from '../types'
 import { createRule } from '../utils/rule'
@@ -43,10 +43,11 @@ export = createRule({
 })
 `
   )
-  fs.writeFileSync(
+  writeFileSync(
     testFile,
-    `import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/${ruleId}')
+    `import { RuleTester } from '../eslint-compat'
+import rule from '../../../lib/rules/${ruleId}'
+
 const vueParser = require.resolve('vue-eslint-parser')
 
 const tester = new RuleTester({
@@ -82,14 +83,14 @@ tester.run("${ruleId}", rule as never, {
 })
 `
   )
-  fs.writeFileSync(
+  writeFileSync(
     docFile,
     `---
-title: 'vue-i18n-ex/${ruleId}'
+title: '@intlify/vue-i18n/${ruleId}'
 description: description
 ---
 
-# vue-i18n-ex/${ruleId}
+# @intlify/vue-i18n/${ruleId}
 
 > description
 
@@ -103,7 +104,7 @@ This rule reports ???.
 
 \`\`\`vue
 <script>
-/* eslint vue-i18n-ex/${ruleId}: "error" */
+/* eslint @intlify/vue-i18n/${ruleId}: "error" */
 </script>
 
 <!-- ✓ GOOD -->
@@ -119,7 +120,7 @@ This rule reports ???.
 
 \`\`\`json
 {
-  "vue-i18n-ex/${ruleId}": ["error", {
+  "@intlify/vue-i18n/${ruleId}": ["error", {
 
   }]
 }
@@ -130,7 +131,7 @@ This rule reports ???.
 `
   )
 
-  cp.execSync(`code "${ruleFile}"`)
-  cp.execSync(`code "${testFile}"`)
-  cp.execSync(`code "${docFile}"`)
+  execSync(`code "${ruleFile}"`)
+  execSync(`code "${testFile}"`)
+  execSync(`code "${docFile}"`)
 })(process.argv[2])

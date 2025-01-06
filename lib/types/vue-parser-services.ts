@@ -1,5 +1,5 @@
 import type { Rule } from 'eslint'
-import type { RuleContext } from './eslint'
+import type { RuleContext, SourceCode } from './eslint'
 import type { AST as VAST } from 'vue-eslint-parser'
 import type { TokenStore } from './types'
 import type { VElement } from 'vue-eslint-parser/ast'
@@ -53,6 +53,6 @@ export interface VueParserServices {
 
 export type CustomBlockVisitorFactory = (
   context: RuleContext & {
-    parserServices: RuleContext['parserServices'] & { customBlock: VElement }
+    parserServices: SourceCode['parserServices'] & { customBlock: VElement }
   }
-) => RuleListener | null
+) => RuleListener

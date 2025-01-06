@@ -1,33 +1,32 @@
 /**
  * @author Yosuke Ota
  */
-import path from 'path'
-import { RuleTester } from 'eslint'
-import rule = require('../../../lib/rules/no-missing-keys-in-other-locales')
+import { join } from 'node:path'
+import { RuleTester } from '../eslint-compat'
+import rule from '../../../lib/rules/no-missing-keys-in-other-locales'
+import * as vueParser from 'vue-eslint-parser'
+import * as jsonParser from 'jsonc-eslint-parser'
+import * as yamlParser from 'yaml-eslint-parser'
 
-const vueParser = require.resolve('vue-eslint-parser')
-const jsonParser = require.resolve('jsonc-eslint-parser')
-const yamlParser = require.resolve('yaml-eslint-parser')
-
-const FIXTURES_ROOT = path.join(
+const FIXTURES_ROOT = join(
   __dirname,
   '../../fixtures/no-missing-keys-in-other-locales'
 )
 
-const JSON_FILENAME_LOCALE_KEY_TYPE_FILE = path.join(
+const JSON_FILENAME_LOCALE_KEY_TYPE_FILE = join(
   FIXTURES_ROOT,
   'vue-cli-format/locales/test.json'
 )
-const YAML_FILENAME_LOCALE_KEY_TYPE_FILE = path.join(
+const YAML_FILENAME_LOCALE_KEY_TYPE_FILE = join(
   FIXTURES_ROOT,
   'vue-cli-format/locales/test.yaml'
 )
 
-const JSON_FILENAME_LOCALE_KEY_TYPE_KEY = path.join(
+const JSON_FILENAME_LOCALE_KEY_TYPE_KEY = join(
   FIXTURES_ROOT,
   'constructor-option-format/locales/test.json'
 )
-const YAML_FILENAME_LOCALE_KEY_TYPE_KEY = path.join(
+const YAML_FILENAME_LOCALE_KEY_TYPE_KEY = join(
   FIXTURES_ROOT,
   'constructor-option-format/locales/test.yaml'
 )
@@ -35,17 +34,19 @@ const YAML_FILENAME_LOCALE_KEY_TYPE_KEY = path.join(
 const SETTINGS = {
   FILE: {
     'vue-i18n': {
-      localeDir:
-        path.join(FIXTURES_ROOT, 'vue-cli-format/locales') +
-        '/*.{json,yaml,yml}'
+      localeDir: `${join(
+        FIXTURES_ROOT,
+        'vue-cli-format/locales'
+      )}/*.{json,yaml,yml}`
     }
   },
   KEY: {
     'vue-i18n': {
       localeDir: {
-        pattern:
-          path.join(FIXTURES_ROOT, 'constructor-option-format/locales') +
-          '/*.{json,yaml,yml}',
+        pattern: `${join(
+          FIXTURES_ROOT,
+          'constructor-option-format/locales'
+        )}/*.{json,yaml,yml}`,
         localeKey: 'key'
       }
     }
@@ -55,29 +56,28 @@ const SETTINGS = {
 const OPTIONS = {
   JSON_LOCALE_KEY_TYPE_FILE: {
     filename: JSON_FILENAME_LOCALE_KEY_TYPE_FILE,
-    parser: jsonParser,
+    languageOptions: { parser: jsonParser },
     settings: SETTINGS.FILE
   },
   JSON_LOCALE_KEY_TYPE_KEY: {
     filename: JSON_FILENAME_LOCALE_KEY_TYPE_KEY,
-    parser: jsonParser,
+    languageOptions: { parser: jsonParser },
     settings: SETTINGS.KEY
   },
   YAML_LOCALE_KEY_TYPE_FILE: {
     filename: YAML_FILENAME_LOCALE_KEY_TYPE_FILE,
-    parser: yamlParser,
+    languageOptions: { parser: yamlParser },
     settings: SETTINGS.FILE
   },
   YAML_LOCALE_KEY_TYPE_KEY: {
     filename: YAML_FILENAME_LOCALE_KEY_TYPE_KEY,
-    parser: yamlParser,
+    languageOptions: { parser: yamlParser },
     settings: SETTINGS.KEY
   }
 }
 
 const tester = new RuleTester({
-  parser: vueParser,
-  parserOptions: { ecmaVersion: 2015 }
+  languageOptions: { parser: vueParser, ecmaVersion: 2015 }
 })
 
 tester.run('no-missing-keys-in-other-locales', rule as never, {
@@ -157,7 +157,7 @@ tester.run('no-missing-keys-in-other-locales', rule as never, {
       ...OPTIONS.JSON_LOCALE_KEY_TYPE_FILE,
       errors: [
         {
-          message: "'missing' does not exist in 'en' and 'ja' locale(s)",
+          message: "'missing' does not exist in 'ja' and 'en' locale(s)",
           line: 1,
           column: 2
         }
@@ -170,7 +170,7 @@ tester.run('no-missing-keys-in-other-locales', rule as never, {
       errors: [
         {
           message:
-            "'missing-nest.missing' does not exist in 'en' and 'ja' locale(s)",
+            "'missing-nest.missing' does not exist in 'ja' and 'en' locale(s)",
           line: 1,
           column: 19
         }
@@ -205,7 +205,7 @@ tester.run('no-missing-keys-in-other-locales', rule as never, {
       ...OPTIONS.YAML_LOCALE_KEY_TYPE_FILE,
       errors: [
         {
-          message: "'missing' does not exist in 'en' and 'ja' locale(s)",
+          message: "'missing' does not exist in 'ja' and 'en' locale(s)",
           line: 1,
           column: 1
         }
@@ -220,7 +220,7 @@ tester.run('no-missing-keys-in-other-locales', rule as never, {
       errors: [
         {
           message:
-            "'missing-nest.missing' does not exist in 'en' and 'ja' locale(s)",
+            "'missing-nest.missing' does not exist in 'ja' and 'en' locale(s)",
           line: 3,
           column: 9
         }

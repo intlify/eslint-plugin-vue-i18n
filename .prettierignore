@@ -1,15 +1,18 @@
-!/docs/.vuepress
+!/docs/.vitepress
 !/.github
 !/.vscode
 /.nyc_output
 /assets
 /coverage
 /dist
-/docs/.vuepress/dist
+/docs/.vitepress/dist
 /node_modules
 /tests/fixtures
 /tests-integrations/config-recommended
+/docs/.vitepress/cache
 
 # ignore files
 /CHANGELOG.md
 /.github/ISSUE_TEMPLATE/
+/pnpm-lock.yaml
+/.changeset
