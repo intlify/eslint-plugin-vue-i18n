@@ -2,7 +2,7 @@
   "mode": "pre",
   "tag": "next",
   "initialVersions": {
-    "@intlify/eslint-plugin-vue-i18n-ex": "3.2.0"
+    "eslint-plugin-vue-i18n-ex": "3.2.0"
   },
   "changesets": [
     "afraid-queens-shave",
