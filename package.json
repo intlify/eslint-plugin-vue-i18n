@@ -1,7 +1,7 @@
 {
   "name": "eslint-plugin-vue-i18n-ex",
   "description": "ESLint plugin for Vue I18n",
-  "version": "4.0.0-next.1",
+  "version": "4.0.1",
   "license": "MIT",
   "homepage": "https://github.com/its-lee/eslint-plugin-vue-i18n-ex#readme",
   "keywords": [
