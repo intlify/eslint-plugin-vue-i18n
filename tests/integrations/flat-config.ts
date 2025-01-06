@@ -43,9 +43,6 @@ describe('Integration with flat config', () => {
     )
     const aVue = result.find(r => path.basename(r.filePath) === 'a.vue')
     assert.strictEqual(aVue.messages.length, 1)
-    assert.strictEqual(
-      aVue.messages[0].ruleId,
-      'vue-i18n-ex/no-missing-keys'
-    )
+    assert.strictEqual(aVue.messages[0].ruleId, 'vue-i18n-ex/no-missing-keys')
   })
 })

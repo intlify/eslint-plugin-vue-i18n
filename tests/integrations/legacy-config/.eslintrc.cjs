@@ -2,10 +2,7 @@
 
 module.exports = {
   root: true,
-  extends: [
-    'plugin:vue/recommended',
-    'plugin:vue-i18n-ex/recommended-legacy'
-  ],
+  extends: ['plugin:vue/recommended', 'plugin:vue-i18n-ex/recommended-legacy'],
   rules: {
     'vue/multi-word-component-names': 'off'
   },
