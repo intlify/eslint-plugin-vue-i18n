@@ -16,6 +16,9 @@ hero:
     - theme: alt
       text: Get started
       link: /started
+    - theme: alt
+      text: Online Playground
+      link: https://eslint-online-playground.netlify.app/#eslint-plugin-vue-i18n
 # features:
 #   - title: Feature A
 #     details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
