@@ -9,6 +9,11 @@
 </p>
 <p align="center">ESLint plugin for Vue I18n</p>
 
+<div align="center">
+[Online Playground](https://eslint-online-playground.netlify.app/#eslint-plugin-vue-i18n) •
+[Documentation](https://eslint-plugin-vue-i18n.intlify.dev/)
+</div>
+
 <h2 align="center">Supporting Intlify Project</h2>
 
 Intlify Project is an open source project that is included Vue I18n and i18n tooling and libraries with its ongoing development made possible entirely by the support of Sponsors. If you would like to become a sponsor, please consider:
