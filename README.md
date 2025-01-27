@@ -10,8 +10,10 @@
 <p align="center">ESLint plugin for Vue I18n</p>
 
 <div align="center">
+
 [Online Playground](https://eslint-online-playground.netlify.app/#eslint-plugin-vue-i18n) •
 [Documentation](https://eslint-plugin-vue-i18n.intlify.dev/)
+
 </div>
 
 <h2 align="center">Supporting Intlify Project</h2>
