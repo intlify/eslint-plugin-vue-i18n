@@ -1,0 +1,11 @@
+{
+  "name": "@intlify/eslint-plugin-vue-i18n-repro",
+  "type": "module",
+  "private": true,
+  "devDependencies": {
+    "@eslint/js": "latest",
+    "@intlify/eslint-plugin-vue-i18n": "latest",
+    "eslint": "latest",
+    "eslint-plugin-vue": "latest"
+  }
+}
