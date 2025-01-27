@@ -5,7 +5,7 @@ import pluginVue from 'eslint-plugin-vue'
 export default [
   js.configs.recommended,
   ...pluginVue.configs['flat/recommended'],
-  ...vueI18n.configs.recommended,
+  ...vueI18n.configs['flat/recommended'],
   {
     rules: {
       // override rules
