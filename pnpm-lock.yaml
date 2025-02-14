@@ -75,9 +75,6 @@ importers:
       '@types/debug':
         specifier: ^4.1.8
         version: 4.1.8
-      '@types/eslint':
-        specifier: ^8.44.1
-        version: 8.44.1
       '@types/eslint-scope':
         specifier: ^3.7.4
         version: 3.7.4
