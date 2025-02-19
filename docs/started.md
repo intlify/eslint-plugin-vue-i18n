@@ -21,6 +21,12 @@ npm install --save-dev eslint @intlify/eslint-plugin-vue-i18n
 
 Use `eslint.config.[c|m]js` file to configure rules. This is the default in ESLint v9, but can be used starting from ESLint v8.57.0. See also: https://eslint.org/docs/latest/use/configure/configuration-files-new.
 
+::: tip Requirements
+
+If you're already toe-tipping and checking out v4.0.0, you should use `vueI18n.configs.recommended` instead of `vueI18n.configs["flat/recommended"]` in the following example.
+
+:::
+
 Example eslint.config.js:
 
 ```js
