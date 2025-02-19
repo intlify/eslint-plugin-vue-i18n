@@ -31,7 +31,7 @@ export default [
   // js.configs.recommended, // '@eslint/js'
   // ...vue.configs['flat/recommended'], // 'eslint-plugin-vue'
 
-  ...vueI18n.configs.recommended,
+  ...vueI18n.configs["flat/recommended"],
   {
     rules: {
       // Optional.
