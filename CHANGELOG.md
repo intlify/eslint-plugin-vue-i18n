@@ -1,5 +1,31 @@
 # @intlify/eslint-plugin-vue-i18n
 
+## 4.0.0
+
+### Major Changes
+
+- [#556](https://github.com/intlify/eslint-plugin-vue-i18n/pull/556) [`ccc4737`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/ccc4737e798758179a51dc152ac6e8dada89c33c) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @intlify/core-base to v10
+
+- [#595](https://github.com/intlify/eslint-plugin-vue-i18n/pull/595) [`384dd5c`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/384dd5c903c8d0d6eadd36667710a0c4d5ea381e) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @intlify/message-compiler to v11
+
+- [#616](https://github.com/intlify/eslint-plugin-vue-i18n/pull/616) [`1d4beb7`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/1d4beb72e65b3bc4e879db462d924729842d358e) Thanks [@ota-meshi](https://github.com/ota-meshi)! - Drop support for vue-i18n v8 syntax
+
+- [#583](https://github.com/intlify/eslint-plugin-vue-i18n/pull/583) [`9a5601e`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/9a5601e9e2d0b30c31cee363e4b7b6aef26c1c79) Thanks [@ota-meshi](https://github.com/ota-meshi)! - docs!: Add Versioning Policy
+
+- [#557](https://github.com/intlify/eslint-plugin-vue-i18n/pull/557) [`baaa5fe`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/baaa5feb9c7dfcb86c46e63e77d2f7d9cb535738) Thanks [@renovate](https://github.com/apps/renovate)! - fix(deps): update dependency @intlify/message-compiler to v10
+
+- [#585](https://github.com/intlify/eslint-plugin-vue-i18n/pull/585) [`13d8975`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/13d8975a78bbc9c07c0c11476b9e0afefd8862e5) Thanks [@ota-meshi](https://github.com/ota-meshi)! - feat!: update config
+
+- [#614](https://github.com/intlify/eslint-plugin-vue-i18n/pull/614) [`3172959`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/31729597bc5c945669dbda2e1a85280d773a1815) Thanks [@renovate](https://github.com/apps/renovate)! - chore(deps): update dependency vue-eslint-parser to v10
+
+- [#587](https://github.com/intlify/eslint-plugin-vue-i18n/pull/587) [`9baee55`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/9baee551c0a6e88920ea9ab3a37f9b7d35100042) Thanks [@ota-meshi](https://github.com/ota-meshi)! - feat!: rename configs
+
+- [#615](https://github.com/intlify/eslint-plugin-vue-i18n/pull/615) [`4ff816f`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/4ff816f87fcffc7df8dae16ebdfc450821b1b3b5) Thanks [@ota-meshi](https://github.com/ota-meshi)! - Change parser dependencies to peerDependencies
+
+### Minor Changes
+
+- [#607](https://github.com/intlify/eslint-plugin-vue-i18n/pull/607) [`6c750f8`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/6c750f8d982fb813b2566a8936934a9506e2cecc) Thanks [@Araxor](https://github.com/Araxor)! - feat(types): add TypeScript definitions
+
 ## 4.0.0-next.2
 
 ### Major Changes
