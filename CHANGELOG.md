@@ -1,5 +1,19 @@
 # @intlify/eslint-plugin-vue-i18n
 
+## 4.0.0-next.2
+
+### Major Changes
+
+- [#616](https://github.com/intlify/eslint-plugin-vue-i18n/pull/616) [`1d4beb7`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/1d4beb72e65b3bc4e879db462d924729842d358e) Thanks [@ota-meshi](https://github.com/ota-meshi)! - Drop support for vue-i18n v8 syntax
+
+- [#614](https://github.com/intlify/eslint-plugin-vue-i18n/pull/614) [`3172959`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/31729597bc5c945669dbda2e1a85280d773a1815) Thanks [@renovate](https://github.com/apps/renovate)! - chore(deps): update dependency vue-eslint-parser to v10
+
+- [#615](https://github.com/intlify/eslint-plugin-vue-i18n/pull/615) [`4ff816f`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/4ff816f87fcffc7df8dae16ebdfc450821b1b3b5) Thanks [@ota-meshi](https://github.com/ota-meshi)! - Change parser dependencies to peerDependencies
+
+### Minor Changes
+
+- [#607](https://github.com/intlify/eslint-plugin-vue-i18n/pull/607) [`6c750f8`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/6c750f8d982fb813b2566a8936934a9506e2cecc) Thanks [@Araxor](https://github.com/Araxor)! - feat(types): add TypeScript definitions
+
 ## 4.0.0-next.1
 
 ### Major Changes
