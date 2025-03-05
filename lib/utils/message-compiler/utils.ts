@@ -17,9 +17,9 @@ export const NodeTypes = {
 } as const
 
 export type MessageSyntaxVersions = {
-  v8: boolean
   v9: boolean
   v10: boolean
+  v11: boolean
   isNotSet: boolean
   reportIfMissingSetting: () => boolean
 }
@@ -36,9 +36,9 @@ export function getMessageSyntaxVersions(
 
   if (!messageSyntaxVersion) {
     return {
-      v8: true,
       v9: true,
       v10: true,
+      v11: true,
       isNotSet: true,
       reportIfMissingSetting: () => {
         if (!puttedSettingsError.has(context)) {
@@ -54,10 +54,21 @@ export function getMessageSyntaxVersions(
     }
   }
   const range = new Range(messageSyntaxVersion)
+  const v9 = intersects(range, '^9.0.0-0')
+  const v10 = intersects(range, '^10.0.0-0')
+  const v11 = intersects(range, '>=11.0.0-0')
+  if (!v9 && !v10 && !v11 && !puttedSettingsError.has(context)) {
+    const ruleName = context.id
+    context.report({
+      loc: { line: 1, column: 0 },
+      message: `Please specify 9 or higher for 'messageSyntaxVersion' at 'settings'.`
+    })
+    puttedSettingsError.add(context)
+  }
   return {
-    v8: intersects(range, '^8.0.0 || <=8.0.0'),
-    v9: intersects(range, '^9.0.0-0'),
-    v10: intersects(range, '>=10.0.0-0'),
+    v9,
+    v10,
+    v11,
     isNotSet: false,
     reportIfMissingSetting: () => false
   }

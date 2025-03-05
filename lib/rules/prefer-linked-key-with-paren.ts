@@ -19,7 +19,6 @@ import {
   NodeTypes
 } from '../utils/message-compiler/utils'
 import { parse } from '../utils/message-compiler/parser'
-import { parse as parseForV8 } from '../utils/message-compiler/parser-v8'
 import { traverseNode } from '../utils/message-compiler/traverser'
 import { getFilename, getSourceCode } from '../utils/compat'
 
@@ -42,7 +41,7 @@ function create(context: RuleContext): RuleListener {
   const sourceCode = getSourceCode(context)
   const messageSyntaxVersions = getMessageSyntaxVersions(context)
 
-  function verifyForNewSyntax(
+  function verifySyntax(
     message: string,
     reportNode: JSONAST.JSONStringLiteral | YAMLAST.YAMLScalar,
     getReportOffset: GetReportOffset
@@ -83,49 +82,6 @@ function create(context: RuleContext): RuleListener {
     })
   }
 
-  function verifyForV8(
-    message: string,
-    reportNode: JSONAST.JSONStringLiteral | YAMLAST.YAMLScalar,
-    getReportOffset: GetReportOffset
-  ) {
-    const { ast, errors } = parseForV8(message)
-    if (errors.length) {
-      return
-    }
-    traverseNode(ast, node => {
-      if (node.type !== NodeTypes.LinkedKey) {
-        return
-      }
-      if (message[node.loc!.start.offset - 1] === '(') {
-        return
-      }
-      let range: [number, number] | null = null
-      const start = getReportOffset(node.loc!.start.offset)
-      const end = getReportOffset(node.loc!.end.offset)
-      if (start != null && end != null) {
-        range = [start, end]
-      }
-      context.report({
-        loc: range
-          ? {
-              start: sourceCode.getLocFromIndex(range[0]),
-              end: sourceCode.getLocFromIndex(range[1])
-            }
-          : reportNode.loc,
-        message: 'The linked message key must be enclosed in parentheses.',
-        fix(fixer) {
-          if (!range) {
-            return null
-          }
-          return [
-            fixer.insertTextBeforeRange(range, '('),
-            fixer.insertTextAfterRange(range, ')')
-          ]
-        }
-      })
-    })
-  }
-
   function verifyMessage(
     message: string,
     reportNode: JSONAST.JSONStringLiteral | YAMLAST.YAMLScalar,
@@ -134,18 +90,8 @@ function create(context: RuleContext): RuleListener {
     if (messageSyntaxVersions.reportIfMissingSetting()) {
       return
     }
-    const newSyntax = messageSyntaxVersions.v9 || messageSyntaxVersions.v10
-    const v8Syntax = messageSyntaxVersions.v8
-    if (newSyntax && v8Syntax) {
-      // This rule cannot support two versions in the same project.
-      return
-    }
 
-    if (newSyntax) {
-      verifyForNewSyntax(message, reportNode, getReportOffset)
-    } else if (v8Syntax) {
-      verifyForV8(message, reportNode, getReportOffset)
-    }
+    verifySyntax(message, reportNode, getReportOffset)
   }
 
   const createVisitorForJson = defineCreateVisitorForJson(verifyMessage)

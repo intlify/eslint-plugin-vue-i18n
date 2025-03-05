@@ -21,16 +21,6 @@ const options = {
         }
       }
     },
-    v8: {
-      languageOptions: { parser: jsonParser },
-      filename: join(localesRoot, 'test.json'),
-      settings: {
-        'vue-i18n': {
-          localeDir: `${localesRoot}/*.{json,yaml,yml}`,
-          messageSyntaxVersion: '^8.0.0'
-        }
-      }
-    },
     v9: {
       languageOptions: { parser: jsonParser },
       filename: join(localesRoot, 'test.json'),
@@ -49,16 +39,6 @@ const options = {
       settings: {
         'vue-i18n': {
           localeDir: `${localesRoot}/*.{json,yaml,yml}`
-        }
-      }
-    },
-    v8: {
-      languageOptions: { parser: yamlParser },
-      filename: join(localesRoot, 'test.yaml'),
-      settings: {
-        'vue-i18n': {
-          localeDir: `${localesRoot}/*.{json,yaml,yml}`,
-          messageSyntaxVersion: '^8.0.0'
         }
       }
     },
@@ -122,18 +102,6 @@ tester.run('valid-message-syntax', rule as never, {
       code: `
       key: message {foo}
       `,
-      ...options.yaml.v8
-    },
-    {
-      code: `
-      key: message @:(v8)
-      `,
-      ...options.yaml.v8
-    },
-    {
-      code: `
-      key: message {foo}
-      `,
       ...options.yaml.v9
     },
     {
@@ -165,17 +133,7 @@ tester.run('valid-message-syntax', rule as never, {
           column: 32
         },
         {
-          message: 'Unexpected placeholder key',
-          line: 3,
-          column: 32
-        },
-        {
           message: 'Not allowed nest placeholder',
-          line: 4,
-          column: 33
-        },
-        {
-          message: 'Unexpected placeholder key',
           line: 4,
           column: 33
         }
@@ -204,136 +162,6 @@ tester.run('valid-message-syntax', rule as never, {
     },
     {
       code: `
-      {
-        "list-hello": "Hello! {{0}}",
-        "named-hello": "Hello! {{name}}"
-      }
-      `,
-      ...options.json.v8,
-      errors: [
-        {
-          message: 'Unexpected placeholder key',
-          line: 3,
-          column: 32
-        },
-        {
-          message: 'Unexpected placeholder key',
-          line: 4,
-          column: 33
-        }
-      ]
-    },
-    // {
-    //   // The syntax is now allowed.
-    //   code: `
-    //   key: message @:(v8)
-    //   `,
-    //   ...options.yaml.default,
-    //   errors: [
-    //     {
-    //       message: `If you want to use '${TEST_RULE_ID_PREFIX}valid-message-syntax' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n' documentation`,
-    //       line: 1,
-    //       column: 1
-    //     },
-    //     {
-    //       message: 'Unexpected empty linked key',
-    //       line: 2,
-    //       column: 21
-    //     }
-    //   ]
-    // },
-    {
-      code: `
-      key: message { v9 }
-      `,
-      ...options.yaml.default,
-      errors: [
-        {
-          message: `If you want to use '${TEST_RULE_ID_PREFIX}valid-message-syntax' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n' documentation`,
-          line: 1,
-          column: 1
-        },
-        {
-          message: 'Unexpected space before or after the placeholder key',
-          line: 2,
-          column: 21
-        }
-      ]
-    },
-    {
-      code: `
-      key: message { v9 }
-      `,
-      ...options.yaml.v8,
-      errors: [
-        {
-          message: 'Unexpected space before or after the placeholder key',
-          line: 2,
-          column: 21
-        }
-      ]
-    },
-    // {
-    //   // The syntax is now allowed.
-    //   code: `
-    //   key: message @:(v8)
-    //   `,
-    //   ...options.yaml.v9,
-    //   errors: [
-    //     {
-    //       message: 'Unexpected empty linked key',
-    //       line: 2,
-    //       column: 21
-    //     }
-    //   ]
-    // },
-    // {
-    //   // The syntax is now allowed.
-    //   code: `
-    //   key: message new line
-    //     @:(v8)
-    //   `,
-    //   ...options.yaml.v9,
-    //   errors: [
-    //     {
-    //       message: 'Unexpected empty linked key',
-    //       line: 3,
-    //       column: 10
-    //     }
-    //   ]
-    // },
-    // {
-    //   // The syntax is now allowed.
-    //   code: `
-    //   key: "message new line
-    //     @:(v8)"
-    //   `,
-    //   ...options.yaml.v9,
-    //   errors: [
-    //     {
-    //       message: 'Unexpected empty linked key',
-    //       line: 3,
-    //       column: 10
-    //     }
-    //   ]
-    // },
-    // {
-    //   // The syntax is now allowed.
-    //   code: `
-    //   key: 'message new line
-    //     @:(v8)'
-    //   `,
-    //   ...options.yaml.v9,
-    //   errors: [
-    //     {
-    //       message: 'Unexpected empty linked key',
-    //       line: 3,
-    //       column: 10
-    //     }
-    //   ]
-    // },
-    {
-      code: `
       <i18n lang="yaml">
       foo:
         a: "message {invalid"
@@ -344,6 +172,7 @@ tester.run('valid-message-syntax', rule as never, {
         a: "message {invalid"
         b: [ "message {valid}" ]
       </i18n>
+      <!-- with v9 -->
       `,
       ...options.vue.v9,
       errors: [
@@ -371,6 +200,7 @@ tester.run('valid-message-syntax', rule as never, {
         a: "message {invalid"
         b: [ "message {valid}" ]
       </i18n>
+      <!-- with default -->
       `,
       ...options.vue.default,
       errors: [
@@ -386,73 +216,8 @@ tester.run('valid-message-syntax', rule as never, {
         },
         {
           message: 'Unterminated closing brace',
-          line: 4,
-          column: 22
-        },
-        {
-          message: 'Unterminated closing brace',
           line: 9,
           column: 22
-        },
-        {
-          message: 'Unterminated closing brace',
-          line: 9,
-          column: 22
-        }
-      ]
-    },
-
-    {
-      code: `
-      {
-        "foo": {
-          "a": "message {invalid",
-          "b": [ "message { v8invalid }" ],
-          "c": \`message
-            @.:invalid"\`,
-          "d": 42,
-          "e": /message/,
-          "f": ["message valid",,"message valid"]
-        }
-      }
-      `,
-      ...options.json.v8,
-      errors: [
-        {
-          message: 'Unterminated closing brace',
-          line: 4,
-          column: 26
-        },
-        {
-          message: 'Unexpected space before or after the placeholder key',
-          line: 5,
-          column: 28
-        },
-        {
-          message: 'Expected linked modifier value',
-          line: 7,
-          column: 14
-        },
-        {
-          message: "Unexpected 'number' message",
-          line: 8,
-          column: 16,
-          endLine: 8,
-          endColumn: 18
-        },
-        {
-          message: "Unexpected 'RegExp' message",
-          line: 9,
-          column: 16,
-          endLine: 9,
-          endColumn: 25
-        },
-        {
-          message: "Unexpected 'null' message",
-          line: 10,
-          column: 16,
-          endLine: 10,
-          endColumn: 50
         }
       ]
     },

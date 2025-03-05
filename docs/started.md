@@ -73,7 +73,7 @@ export default [
 
         // Specify the version of `vue-i18n` you are using.
         // If not specified, the message will be parsed twice.
-        messageSyntaxVersion: '^9.0.0'
+        messageSyntaxVersion: '^11.0.0'
       }
     }
   }
@@ -144,7 +144,7 @@ module.exports = {
 
       // Specify the version of `vue-i18n` you are using.
       // If not specified, the message will be parsed twice.
-      messageSyntaxVersion: '^9.0.0'
+      messageSyntaxVersion: '^11.0.0'
     }
   }
 }

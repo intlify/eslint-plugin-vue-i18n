@@ -18,40 +18,34 @@ describe('message-compiler utils', () => {
       return data
     }
     it('should be equal to the expected value', () => {
-      deepStrictEqual(get('^8.0.0'), {
-        v8: true,
-        v9: false,
-        v10: false,
-        isNotSet: false
-      })
       deepStrictEqual(get('^9.0.0'), {
-        v8: false,
         v9: true,
         v10: false,
-        isNotSet: false
-      })
-      deepStrictEqual(get('^7.0.0'), {
-        v8: true,
-        v9: false,
-        v10: false,
+        v11: false,
         isNotSet: false
       })
       deepStrictEqual(get('^10.0.0'), {
-        v8: false,
         v9: false,
         v10: true,
+        v11: false,
+        isNotSet: false
+      })
+      deepStrictEqual(get('^11.0.0'), {
+        v9: false,
+        v10: false,
+        v11: true,
         isNotSet: false
       })
       deepStrictEqual(get('>=5.0.0'), {
-        v8: true,
         v9: true,
         v10: true,
+        v11: true,
         isNotSet: false
       })
       deepStrictEqual(get('^9.0.0-beta.8'), {
-        v8: false,
         v9: true,
         v10: false,
+        v11: false,
         isNotSet: false
       })
     })

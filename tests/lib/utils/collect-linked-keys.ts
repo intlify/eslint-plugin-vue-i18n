@@ -39,18 +39,7 @@ describe('collectLinkedKeys', () => {
     const expected = ['message.homeAddress']
     deepStrictEqual(collectLinkedKeys(object, createContext()), expected)
   })
-  it('should be get the keys used in the linked message with brackets.', () => {
-    const object = {
-      message: {
-        dio: 'DIO',
-        linked: "There's a reason, you lost, @:(message.dio)."
-      }
-    }
-
-    const expected = ['message.dio']
-    deepStrictEqual(collectLinkedKeys(object, createContext()), expected)
-  })
-  it('should be get the keys used in the linked message for v9.', () => {
+  it('should be get the keys used in the linked message.', () => {
     const object = {
       message: {
         dio: 'DIO',
@@ -97,22 +86,15 @@ describe('collectLinkedKeys', () => {
         expected
       )
     })
-    it('v8', () => {
-      const expected = ['bar.a', 'bar.b', 'bar.c.a', 'foo.a', 'foo.b']
-      deepStrictEqual(
-        collectLinkedKeys(object as never, createContext('^8.0.0')).sort(),
-        expected
-      )
-    })
     it('default', () => {
-      const expected = ['bar.a', 'bar.b', 'bar.c.a', 'bar.d', 'foo.a', 'foo.b']
+      const expected = ['bar.a', 'bar.c.a', 'bar.d', 'foo.a', 'foo.b']
       deepStrictEqual(
         collectLinkedKeys(object as never, createContext()).sort(),
         expected
       )
     })
     it('>=v8', () => {
-      const expected = ['bar.a', 'bar.b', 'bar.c.a', 'bar.d', 'foo.a', 'foo.b']
+      const expected = ['bar.a', 'bar.c.a', 'bar.d', 'foo.a', 'foo.b']
       deepStrictEqual(
         collectLinkedKeys(object as never, createContext('>=8.0.0')).sort(),
         expected
