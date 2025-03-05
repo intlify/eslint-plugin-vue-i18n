@@ -58,7 +58,6 @@ export function getMessageSyntaxVersions(
   const v10 = intersects(range, '^10.0.0-0')
   const v11 = intersects(range, '>=11.0.0-0')
   if (!v9 && !v10 && !v11 && !puttedSettingsError.has(context)) {
-    const ruleName = context.id
     context.report({
       loc: { line: 1, column: 0 },
       message: `Please specify 9 or higher for 'messageSyntaxVersion' at 'settings'.`
