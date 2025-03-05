@@ -72,13 +72,10 @@
     "is-language-code": "^3.1.0",
     "js-yaml": "^4.1.0",
     "json5": "^2.2.3",
-    "jsonc-eslint-parser": "^2.3.0",
     "lodash": "^4.17.21",
     "parse5": "^7.1.2",
     "semver": "^7.5.4",
-    "synckit": "^0.9.0",
-    "vue-eslint-parser": "^9.3.1",
-    "yaml-eslint-parser": "^1.2.2"
+    "synckit": "^0.9.0"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.0",
@@ -107,6 +104,7 @@
     "esquery": "^1.5.0",
     "jiti": "^1.21.0",
     "json-schema": "^0.4.0",
+    "jsonc-eslint-parser": "^2.3.0",
     "lint-staged": "^15.0.0",
     "mocha": "^11.0.0",
     "monaco-editor": "^0.52.0",
@@ -120,10 +118,15 @@
     "typescript-eslint": "^7.11.0",
     "vitepress": "^1.0.2",
     "vue-eslint-editor": "^1.1.0",
-    "vue-github-button": "^3.1.0"
+    "vue-eslint-parser": "^10.0.0",
+    "vue-github-button": "^3.1.0",
+    "yaml-eslint-parser": "^1.2.2"
   },
   "peerDependencies": {
-    "eslint": "^8.0.0 || ^9.0.0-0"
+    "eslint": "^8.0.0 || ^9.0.0-0",
+    "jsonc-eslint-parser": "^2.3.0",
+    "vue-eslint-parser": "^9.3.1",
+    "yaml-eslint-parser": "^1.2.2"
   },
   "publishConfig": {
     "access": "public"
