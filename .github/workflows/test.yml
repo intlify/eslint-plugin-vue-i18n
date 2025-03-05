@@ -16,8 +16,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup Node.js
         uses: actions/setup-node@v4
-      - name: Enable corepack
-        run: corepack enable
+      - uses: pnpm/action-setup@v2
       - name: Install
         run: pnpm install
       - name: Lint
@@ -36,8 +35,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-      - name: Enable corepack
-        run: corepack enable
+      - uses: pnpm/action-setup@v2
       - name: Install
         run: pnpm install
       - name: Test
@@ -61,8 +59,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
-      - name: Enable corepack
-        run: corepack enable
+      - uses: pnpm/action-setup@v2
       - name: Install
         run: pnpm add eslint@${{ matrix.eslint }}
       - name: Test
