@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import Vue from 'vue'
 export default {
   provide() {
     let waitSeq = 0
@@ -14,7 +13,7 @@ export default {
     return {
       $resourceGroup: {
         async set(fileName, code) {
-          Vue.set(data.fileContents, `/path/${fileName}`, code)
+          data.fileContents[`/path/${fileName}`] = code
 
           const timeSeq = ++waitSeq
           await Vue.nextTick()
