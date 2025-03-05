@@ -58,7 +58,7 @@ export default {
     },
     messageSyntaxVersion: {
       type: String,
-      default: '^9'
+      default: '^11'
     }
   },
 

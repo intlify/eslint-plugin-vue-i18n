@@ -29,16 +29,6 @@ tester.run('prefer-linked-key-with-paren', rule as never, {
     },
     {
       code: `
-      {
-        "foo": {
-          "bar": "baz"
-        }
-      }
-      `,
-      ...options.json('^8')
-    },
-    {
-      code: `
       foo:
         bar: "@:{'baz'}"
       `,
@@ -53,20 +43,6 @@ tester.run('prefer-linked-key-with-paren', rule as never, {
     },
     {
       code: `
-      foo:
-        bar: "@:(baz)"
-      `,
-      ...options.yaml('^8')
-    },
-    {
-      code: `
-      {"foo": {
-        "bar": "@:(baz)" } }
-      `,
-      ...options.json('^8')
-    },
-    {
-      code: `
       <i18n>
       { "foo": "@:{'baz'}" }
       </i18n>
@@ -77,28 +53,12 @@ tester.run('prefer-linked-key-with-paren', rule as never, {
       `,
       ...options.vue()
     },
-
-    {
-      //  This rule cannot support two versions in the same project.
-      code: `
-      a: "@:link"
-      `,
-      ...options.yaml('^8 || ^9')
-    },
-
     {
       //  message parse error
       code: `
       a: "@.:link"
       `,
       ...options.yaml('^9')
-    },
-    {
-      //  message parse error
-      code: `
-      a: "@.:link"
-      `,
-      ...options.yaml('^8')
     }
   ],
 
@@ -141,42 +101,6 @@ tester.run('prefer-linked-key-with-paren', rule as never, {
     },
     {
       code: `
-      foo: "@:baz"
-      `,
-      ...options.yaml('^8'),
-      output: `
-      foo: "@:(baz)"
-      `,
-      errors: [
-        {
-          message: 'The linked message key must be enclosed in parentheses.',
-          line: 2,
-          column: 15,
-          endLine: 2,
-          endColumn: 18
-        }
-      ]
-    },
-    {
-      code: `
-      { "foo": "@:baz" }
-      `,
-      ...options.json('^8'),
-      output: `
-      { "foo": "@:(baz)" }
-      `,
-      errors: [
-        {
-          message: 'The linked message key must be enclosed in parentheses.',
-          line: 2,
-          column: 19,
-          endLine: 2,
-          endColumn: 22
-        }
-      ]
-    },
-    {
-      code: `
       <i18n>
       { "foo": "@:baz" }
       </i18n>
@@ -205,43 +129,6 @@ tester.run('prefer-linked-key-with-paren', rule as never, {
         },
         {
           message: 'The linked message key must be enclosed in brackets.',
-          line: 7,
-          column: 14,
-          endLine: 7,
-          endColumn: 17
-        }
-      ]
-    },
-    {
-      code: `
-      <i18n>
-      { "foo": "@:baz" }
-      </i18n>
-      <i18n lang="yaml">
-      "foo":
-        - "@:baz"
-      </i18n>
-      `,
-      ...options.vue('^8'),
-      output: `
-      <i18n>
-      { "foo": "@:(baz)" }
-      </i18n>
-      <i18n lang="yaml">
-      "foo":
-        - "@:(baz)"
-      </i18n>
-      `,
-      errors: [
-        {
-          message: 'The linked message key must be enclosed in parentheses.',
-          line: 3,
-          column: 19,
-          endLine: 3,
-          endColumn: 22
-        },
-        {
-          message: 'The linked message key must be enclosed in parentheses.',
           line: 7,
           column: 14,
           endLine: 7,
@@ -304,37 +191,6 @@ tester.run('prefer-linked-key-with-paren', rule as never, {
         'The linked message key must be enclosed in brackets.'
       ]
     },
-    {
-      code: `
-      a: message @:foo
-      b: 'message @:foo'
-      c: |
-        message @:foo
-        message @:foo
-      ? [{"message @:foo": "message @:foo"}]
-      :
-        ? "message @:foo"
-        : "foo"
-      `,
-      ...options.yaml('^8'),
-      output: `
-      a: message @:(foo)
-      b: 'message @:(foo)'
-      c: |
-        message @:foo
-        message @:foo
-      ? [{"message @:foo": "message @:foo"}]
-      :
-        ? "message @:foo"
-        : "foo"
-      `,
-      errors: [
-        'The linked message key must be enclosed in parentheses.',
-        'The linked message key must be enclosed in parentheses.',
-        'The linked message key must be enclosed in parentheses.',
-        'The linked message key must be enclosed in parentheses.'
-      ]
-    },
 
     {
       code: `
@@ -345,6 +201,21 @@ tester.run('prefer-linked-key-with-paren', rule as never, {
       output: null,
       errors: [
         `If you want to use '${TEST_RULE_ID_PREFIX}prefer-linked-key-with-paren' rule, you need to set 'messageSyntaxVersion' at 'settings'. See the 'eslint-plugin-vue-i18n' documentation`
+      ]
+    },
+
+    {
+      code: `
+      {
+        "foo": {
+          "bar": "baz"
+        }
+      }
+      `,
+      ...options.json('^8'),
+      output: null,
+      errors: [
+        "Please specify 9 or higher for 'messageSyntaxVersion' at 'settings'."
       ]
     }
   ]
