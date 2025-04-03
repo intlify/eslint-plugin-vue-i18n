@@ -6,7 +6,10 @@ import fs from 'fs'
 const FLAT_CONFIG_FILENAMES = [
   'eslint.config.js',
   'eslint.config.mjs',
-  'eslint.config.cjs'
+  'eslint.config.cjs',
+  'eslint.config.ts',
+  'eslint.config.mts',
+  'eslint.config.cts'
 ]
 /**
  * Returns whether flat config should be used.
@@ -45,8 +48,8 @@ function findUp(names: string[], options: { cwd: string }) {
       const target = path.resolve(directory, name)
       const stat = fs.existsSync(target)
         ? fs.statSync(target, {
-            throwIfNoEntry: false
-          })
+          throwIfNoEntry: false
+        })
         : null
       if (stat?.isFile()) {
         return target
