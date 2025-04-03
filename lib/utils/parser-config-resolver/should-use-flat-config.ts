@@ -48,8 +48,8 @@ function findUp(names: string[], options: { cwd: string }) {
       const target = path.resolve(directory, name)
       const stat = fs.existsSync(target)
         ? fs.statSync(target, {
-          throwIfNoEntry: false
-        })
+            throwIfNoEntry: false
+          })
         : null
       if (stat?.isFile()) {
         return target
