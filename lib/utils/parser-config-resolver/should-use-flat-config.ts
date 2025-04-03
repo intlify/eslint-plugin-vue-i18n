@@ -6,7 +6,10 @@ import fs from 'fs'
 const FLAT_CONFIG_FILENAMES = [
   'eslint.config.js',
   'eslint.config.mjs',
-  'eslint.config.cjs'
+  'eslint.config.cjs',
+  'eslint.config.ts',
+  'eslint.config.mts',
+  'eslint.config.cts'
 ]
 /**
  * Returns whether flat config should be used.
