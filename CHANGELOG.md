@@ -1,5 +1,11 @@
 # @intlify/eslint-plugin-vue-i18n
 
+## 4.0.1
+
+### Patch Changes
+
+- [#631](https://github.com/intlify/eslint-plugin-vue-i18n/pull/631) [`04d7c15`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/04d7c15c7d1b468db9467590aab4e309dfaa6c47) Thanks [@f-lawe](https://github.com/f-lawe)! - Add Typescript config files to supported filename list
+
 ## 4.0.0
 
 ### Major Changes
