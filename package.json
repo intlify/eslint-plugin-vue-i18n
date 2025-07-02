@@ -82,7 +82,7 @@
     "@changesets/cli": "^2.26.2",
     "@types/debug": "^4.1.8",
     "@types/eslint-scope": "^3.7.4",
-    "@types/glob": "^8.1.0",
+    "@types/glob": "^9.0.0",
     "@types/js-yaml": "^4.0.5",
     "@types/json-schema": "^7.0.12",
     "@types/lodash": "^4.14.196",
