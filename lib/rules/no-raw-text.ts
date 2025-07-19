@@ -839,7 +839,8 @@ export = createRule({
           ignoreText: {
             type: 'array'
           }
-        }
+        },
+        additionalProperties: false
       }
     ]
   },
