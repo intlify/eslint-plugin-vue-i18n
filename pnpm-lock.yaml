@@ -67,8 +67,8 @@ importers:
         specifier: ^4.1.8
         version: 4.1.8
       '@types/eslint-scope':
-        specifier: ^3.7.4
-        version: 3.7.4
+        specifier: ^8.0.0
+        version: 8.3.1
       '@types/glob':
         specifier: ^9.0.0
         version: 9.0.0
@@ -833,14 +833,11 @@ packages:
   '@types/debug@4.1.8':
     resolution: {integrity: sha512-/vPO1EPOs306Cvhwv7KfVfYvOJqA/S/AXjaHQiJboCZzcNDb+TIJFN9/2C9DZ//ijSKWioNyUxD792QmDJ+HKQ==}
 
-  '@types/eslint-scope@3.7.4':
-    resolution: {integrity: sha512-9K4zoImiZc3HlIp6AVUDE4CWYx22a+lhSZMYNpbjW04+YF0KWj4pJXnEMjdnFTiQibFFmElcsasJXDbdI/EPhA==}
+  '@types/eslint-scope@8.3.1':
+    resolution: {integrity: sha512-TA1UHHt+kOdoEixpauJ+NKRkatun98fEz3qMecjLfahS4EzHcQFXxU2vIhWvygZmcTyEuoQf27Ld0LXfp04vkQ==}
 
   '@types/eslint@8.44.1':
     resolution: {integrity: sha512-XpNDc4Z5Tb4x+SW1MriMVeIsMoONHCkWFMkR/aPJbzEsxqHy+4Glu/BqTdPrApfDeMaXbtNh6bseNgl5KaWrSg==}
-
-  '@types/estree@1.0.1':
-    resolution: {integrity: sha512-LG4opVs2ANWZ1TJoKc937iMmNstM/d0ae1vNbnBvBhqCSezgVUOzcLCqbI5elV8Vy6WKwKjaqR+zO9VKirBBCA==}
 
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
@@ -3923,17 +3920,15 @@ snapshots:
     dependencies:
       '@types/ms': 0.7.31
 
-  '@types/eslint-scope@3.7.4':
+  '@types/eslint-scope@8.3.1':
     dependencies:
       '@types/eslint': 8.44.1
-      '@types/estree': 1.0.1
+      '@types/estree': 1.0.6
 
   '@types/eslint@8.44.1':
     dependencies:
-      '@types/estree': 1.0.1
+      '@types/estree': 1.0.6
       '@types/json-schema': 7.0.12
-
-  '@types/estree@1.0.1': {}
 
   '@types/estree@1.0.6': {}
 
