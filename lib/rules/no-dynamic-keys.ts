@@ -1,7 +1,11 @@
 /**
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
-import { defineTemplateBodyVisitor, isStaticLiteral } from '../utils/index'
+import {
+  compositingVisitors,
+  defineTemplateBodyVisitor,
+  isStaticLiteral
+} from '../utils/index'
 import type { RuleContext, RuleListener } from '../types'
 import type { AST as VAST } from 'vue-eslint-parser'
 import { createRule } from '../utils/rule'
@@ -93,9 +97,8 @@ function checkCallExpression(
 }
 
 function create(context: RuleContext): RuleListener {
-  return defineTemplateBodyVisitor(
-    context,
-    {
+  return compositingVisitors(
+    defineTemplateBodyVisitor(context, {
       "VAttribute[directive=true][key.name='t']"(node: VAST.VDirective) {
         checkDirective(context, node)
       },
@@ -113,7 +116,7 @@ function create(context: RuleContext): RuleListener {
       CallExpression(node: VAST.ESLintCallExpression) {
         checkCallExpression(context, node)
       }
-    },
+    }),
     {
       CallExpression(node: VAST.ESLintCallExpression) {
         checkCallExpression(context, node)
