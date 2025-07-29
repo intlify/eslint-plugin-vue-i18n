@@ -1,5 +1,13 @@
 # @intlify/eslint-plugin-vue-i18n
 
+## 4.1.0
+
+### Minor Changes
+
+- [#637](https://github.com/intlify/eslint-plugin-vue-i18n/pull/637) [`383e682`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/383e682a1417c37c4b783d131584a203e2c99a96) Thanks [@mcler](https://github.com/mcler)! - Improved to apply no-dynamic-keys rule to non-Vue files as well.
+
+- [#652](https://github.com/intlify/eslint-plugin-vue-i18n/pull/652) [`98b9f70`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/98b9f70462a181184040656a6ae6d7c23f58d7af) Thanks [@andreww2012](https://github.com/andreww2012)! - fix(no-raw-text): disallow extra properties in rule options
+
 ## 4.0.1
 
 ### Patch Changes
