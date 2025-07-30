@@ -177,7 +177,7 @@ This plugin provides some predefined configs. You can use the following configs 
 
 The `localePattern` options does not support SFC i18n custom blocks (`src` attribute), only for resources of files to import when specified in VueI18n's `messages` options (VueI18n v9 and later, `messages` specified in `createI18n`) for resources of files to import.
 
-JavaScript-based locale files (e.g., `.js` and `.ts`) are not currently supported. For more information, please see [#32](https://github.com/intlify/eslint-plugin-vue-i18n/issues/32).
+JavaScript-based locale files have limited support. JavaScript (`.js`) files can be loaded and used with rules that check for missing keys (like `no-missing-keys`), but TypeScript (`.ts`) locale files are not supported. Rules that analyze locale file contents (like `no-duplicate-keys-in-locale` and `no-html-messages`) are not supported for either format. For more information, please see [#32](https://github.com/intlify/eslint-plugin-vue-i18n/issues/32).
 
 :::
 
