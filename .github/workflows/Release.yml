@@ -5,8 +5,21 @@ on:
     branches:
       - master
 
+permissions: {}
+
+# Allow one concurrent deployment
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   release:
+    # prevents this action from running on forks
+    if: github.repository == 'intlify/eslint-plugin-vue-i18n'
+    permissions:
+      contents: write # to create release (changesets/action)
+      id-token: write # OpenID Connect token needed for provenance
+      pull-requests: write # to create pull request (changesets/action)
     name: Release
     runs-on: ubuntu-latest
     steps:
@@ -16,10 +29,10 @@ jobs:
           # This makes Actions fetch all Git history so that Changesets can generate changelogs with the correct commits
           fetch-depth: 0
 
-      - name: Setup Node.js 18
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: 'lts/*'
 
       - uses: pnpm/action-setup@v4
 
@@ -40,4 +53,3 @@ jobs:
           title: 'chore: release `@intlify/eslint-plugin-vue-i18n`'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
