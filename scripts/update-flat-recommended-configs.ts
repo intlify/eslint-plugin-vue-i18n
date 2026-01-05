@@ -7,8 +7,9 @@ export async function update() {
 
   // recommended.ts
   const raw = `/** DON'T EDIT THIS FILE; was created by scripts. */
-const globals = require('globals')
-const config = require('./base')
+import globals from 'globals'
+import config from './base'
+
 export = [
   ...config,
   {
