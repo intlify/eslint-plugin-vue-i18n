@@ -1,4 +1,3 @@
-// @ts-expect-error -- ignore
 import { runAsWorker } from 'synckit'
 import { getESLint } from 'eslint-compat-utils/eslint'
 import type { Linter } from 'eslint'
