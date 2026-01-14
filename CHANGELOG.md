@@ -1,5 +1,11 @@
 # @intlify/eslint-plugin-vue-i18n
 
+## 4.1.1
+
+### Patch Changes
+
+- [#683](https://github.com/intlify/eslint-plugin-vue-i18n/pull/683) [`5338eb2`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/5338eb24e82e4986067b063747101e40263e0a5c) Thanks [@LuckyWindsck](https://github.com/LuckyWindsck)! - Fix the output type of recommend config
+
 ## 4.1.0
 
 ### Minor Changes
