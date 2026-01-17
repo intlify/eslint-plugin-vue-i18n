@@ -289,6 +289,27 @@ new RuleTester({
         }
       }
       </script>`
+    },
+    {
+      filename: 'test.vue',
+      code: `
+    <i18n locale="en">
+    {
+      "foo": "foo",
+      "bar": {
+        "nest": "nest",
+      },
+    }
+    </i18n>
+    <script>
+    export default {
+      created () {
+        this.customFn1('foo')
+        this.customFn2('bar.nest')
+      }
+    }
+    </script>`,
+      options: [{ callExpression: 'customFn\\d' }]
     }
   ],
   invalid: [
