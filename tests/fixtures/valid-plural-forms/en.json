@@ -1,0 +1,4 @@
+{
+  "valid": "one | many",
+  "alsoValid": "one item | {n} items"
+}

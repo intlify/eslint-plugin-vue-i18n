@@ -27,6 +27,7 @@ import preferLinkedKeyWithParen from './rules/prefer-linked-key-with-paren'
 import preferSfcLangAttr from './rules/prefer-sfc-lang-attr'
 import sfcLocaleAttr from './rules/sfc-locale-attr'
 import validMessageSyntax from './rules/valid-message-syntax'
+import validPluralForms from './rules/valid-plural-forms'
 
 // export plugin
 export = {
@@ -63,6 +64,7 @@ export = {
     'prefer-linked-key-with-paren': preferLinkedKeyWithParen,
     'prefer-sfc-lang-attr': preferSfcLangAttr,
     'sfc-locale-attr': sfcLocaleAttr,
-    'valid-message-syntax': validMessageSyntax
+    'valid-message-syntax': validMessageSyntax,
+    'valid-plural-forms': validPluralForms
   }
 }

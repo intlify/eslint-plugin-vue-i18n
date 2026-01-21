@@ -1,0 +1,5 @@
+{
+  "valid": "jedan | dva | više",
+  "binary": "jedan | više",
+  "invalid": "jedan | dva | tri | četiri"
+}
