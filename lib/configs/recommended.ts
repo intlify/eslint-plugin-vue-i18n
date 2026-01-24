@@ -1,4 +1,6 @@
 /** DON'T EDIT THIS FILE; was created by scripts. */
+import type { TSESLint } from '@typescript-eslint/utils'
+
 export = {
   extends: [require.resolve('./base')],
   parserOptions: {
@@ -26,4 +28,4 @@ export = {
     '@intlify/vue-i18n/no-v-html': 'warn',
     '@intlify/vue-i18n/valid-message-syntax': 'warn'
   }
-}
+} satisfies TSESLint.ClassicConfig.Config
