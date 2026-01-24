@@ -6,7 +6,7 @@ export async function update() {
   const rules = await getRules()
   // recommended.ts
   const raw = `/** DON'T EDIT THIS FILE; was created by scripts. */
-import type { TSESLint } from "@typescript-eslint/utils";
+import type { TSESLint } from '@typescript-eslint/utils'
 
 export = {
   extends: [require.resolve('./base')],

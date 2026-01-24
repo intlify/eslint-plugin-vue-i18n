@@ -5,7 +5,7 @@ import { writeFile } from './lib/utils'
 export async function update() {
   // base.ts
   const raw = `/** DON'T EDIT THIS FILE; was created by scripts. */
-import type { TSESLint } from "@typescript-eslint/utils";
+import type { TSESLint } from '@typescript-eslint/utils'
 
 export = {
   parser: require.resolve('vue-eslint-parser'),

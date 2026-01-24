@@ -7,7 +7,7 @@ export async function update() {
 
   // recommended.ts
   const raw = `/** DON'T EDIT THIS FILE; was created by scripts. */
-import type { TSESLint } from "@typescript-eslint/utils";
+import type { TSESLint } from '@typescript-eslint/utils'
 import globals from 'globals'
 import config from './base'
 
