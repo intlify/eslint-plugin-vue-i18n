@@ -5,6 +5,8 @@ import { writeFile } from './lib/utils'
 export async function update() {
   // base.ts
   const raw = `/** DON'T EDIT THIS FILE; was created by scripts. */
+import type { TSESLint } from "@typescript-eslint/utils";
+
 export = {
   parser: require.resolve('vue-eslint-parser'),
   plugins: ['@intlify/vue-i18n'],
@@ -25,7 +27,7 @@ export = {
       rules: ${JSON.stringify(disableRules, null, 2)}
     }
   ]
-}`
+} satisfies TSESLint.ClassicConfig.Config`
 
   await writeFile(path.resolve(__dirname, '../lib/configs/base.ts'), raw)
 }
