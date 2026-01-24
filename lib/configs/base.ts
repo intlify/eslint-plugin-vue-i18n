@@ -1,4 +1,6 @@
 /** DON'T EDIT THIS FILE; was created by scripts. */
+import type { TSESLint } from '@typescript-eslint/utils'
+
 export = {
   parser: require.resolve('vue-eslint-parser'),
   plugins: ['@intlify/vue-i18n'],
@@ -22,4 +24,4 @@ export = {
       }
     }
   ]
-}
+} satisfies TSESLint.ClassicConfig.Config
