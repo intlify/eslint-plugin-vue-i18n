@@ -164,7 +164,8 @@ i18n.t('hi')
       "src": "./src",
       "extensions": [".js", ".vue"],
       "ignores": [],
-      "enableFix": false
+      "enableFix": false,
+      "callExpression": "^(\\$t|t|\\$tc|tc)$"
     }
   ]
 }
@@ -174,6 +175,7 @@ i18n.t('hi')
 - `extensions`: an array to allow specified lintable target file extension. If you don't set any options, it set to `.js` and `.vue` as default.
 - `ignores`: An array of key names and patterns to exclude from the check. If you want to specify a pattern, specify a string such as `/pattern/`.
 - `enableFix`: if `true`, enable automatically remove unused keys on `eslint --fix`. If you don't set any options, it set to `false` as default. (This is an experimental feature.)
+- `callExpression`: A regular expression used to identify translation function calls.
 
 ## :couple: Related Rules
 

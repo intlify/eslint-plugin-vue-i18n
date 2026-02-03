@@ -20,7 +20,10 @@ const debug = debugBuilder('eslint-plugin-vue-i18n:collect-keys')
  *
  * @param {CallExpression} node
  */
-function getKeyFromCallExpression(node: VAST.ESLintCallExpression) {
+function getKeyFromCallExpression(
+  node: VAST.ESLintCallExpression,
+  callExpression?: RegExp
+) {
   const funcName =
     (node.callee.type === 'MemberExpression' &&
       node.callee.property.type === 'Identifier' &&
@@ -29,7 +32,7 @@ function getKeyFromCallExpression(node: VAST.ESLintCallExpression) {
     ''
 
   if (
-    !/^(\$t|t|\$tc|tc)$/.test(funcName) ||
+    !(callExpression ?? /^(\$t|t|\$tc|tc)$/).test(funcName) ||
     !node.arguments ||
     !node.arguments.length
   ) {
@@ -121,7 +124,8 @@ function collectKeyResourcesFromFiles(fileNames: string[], cwd: string) {
  */
 export function collectKeysFromAST(
   node: VAST.ESLintProgram,
-  visitorKeys?: VisitorKeys
+  visitorKeys?: VisitorKeys,
+  callExpression?: RegExp
 ): string[] {
   debug('collectKeysFromAST')
 
@@ -168,7 +172,7 @@ export function collectKeysFromAST(
       }
     } else if (node.type === 'CallExpression') {
       debug('CallExpression handling ...')
-      const key = getKeyFromCallExpression(node)
+      const key = getKeyFromCallExpression(node, callExpression)
       if (key) {
         results.add(String(key))
       }
