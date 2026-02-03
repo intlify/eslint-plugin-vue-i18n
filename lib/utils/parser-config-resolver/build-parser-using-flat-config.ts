@@ -1,4 +1,3 @@
-// @ts-expect-error -- ignore
 import { createSyncFn } from 'synckit'
 import type { ParseResult, Parser } from '.'
 

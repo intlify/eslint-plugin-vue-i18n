@@ -1,12 +1,23 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base",
     ":preserveSemverRanges",
     ":disableDependencyDashboard"
   ],
   "labels": ["Type: Dependency"],
-  "automerge": true,
-  "major": {
-    "automerge": false
-  }
+  "packageRules": [
+    {
+      "updateTypes": ["minor", "patch", "pin", "digest"],
+      "automerge": true
+    },
+    {
+      "depTypeList": ["devDependencies"],
+      "automerge": true
+    },
+    {
+      "matchManagers": ["github-actions", "devcontainer"],
+      "automerge": true
+    }
+  ]
 }

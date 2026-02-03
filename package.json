@@ -1,7 +1,7 @@
 {
   "name": "@intlify/eslint-plugin-vue-i18n",
   "description": "ESLint plugin for Vue I18n",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "license": "MIT",
   "homepage": "https://github.com/intlify/eslint-plugin-vue-i18n#readme",
   "keywords": [
@@ -42,7 +42,7 @@
     "coverage": "nyc report --reporter lcov && opener coverage/lcov-report/index.html",
     "docs": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "generate": "jiti scripts/update.ts",
+    "generate": "env-cmd -e script -- jiti scripts/update.ts",
     "fix": "run-p fix:*",
     "fix:eslint": "pnpm run lint:eslint --fix",
     "fix:prettier": "prettier --write .",
@@ -56,7 +56,7 @@
     "test:coverage": "nyc env-cmd -e test -- mocha --require @swc-node/register \"./tests/lib/**/*.ts\" --timeout 60000",
     "test:integrations": "mocha --require @swc-node/register \"./tests/integrations/*.ts\" --timeout 60000",
     "new": "jiti ./scripts/new-rule.ts",
-    "version:ci": "env-cmd -e version-ci pnpm run generate && changeset version",
+    "version:ci": "env-cmd -e version-ci -- pnpm run generate && changeset version",
     "changeset": "changeset"
   },
   "dependencies": {
@@ -75,7 +75,7 @@
     "lodash": "^4.17.21",
     "parse5": "^7.1.2",
     "semver": "^7.5.4",
-    "synckit": "^0.10.0"
+    "synckit": "^0.11.0"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.0",
