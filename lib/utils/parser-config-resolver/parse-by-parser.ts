@@ -6,7 +6,7 @@ import type { ParseResult } from '.'
 
 export function parseByParser(
   filePath: string,
-  parserDefine: Linter.ParserModule | string | undefined,
+  parserDefine: Linter.Parser | string | undefined,
   parserOptions: unknown
 ): ParseResult {
   const parser = getParser(parserDefine, filePath)
@@ -24,9 +24,9 @@ export function parseByParser(
 }
 
 function getParser(
-  parser: Linter.ParserModule | string | undefined,
+  parser: Linter.Parser | string | undefined,
   filePath: string
-): Linter.ParserModule {
+): Linter.Parser {
   if (parser) {
     if (typeof parser === 'string') {
       try {
@@ -39,7 +39,7 @@ function getParser(
     }
   }
   if (filePath.endsWith('.vue')) {
-    return { parseForESLint } as Linter.ParserModule
+    return { parseForESLint } as Linter.Parser
   }
   return require('espree')
 }
