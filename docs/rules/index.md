@@ -33,6 +33,7 @@
 | [@intlify/vue-i18n/<wbr>no-unknown-locale](./no-unknown-locale.html) | disallow unknown locale name |  |
 | [@intlify/vue-i18n/<wbr>no-unused-keys](./no-unused-keys.html) | disallow unused localization keys | :black_nib: |
 | [@intlify/vue-i18n/<wbr>prefer-sfc-lang-attr](./prefer-sfc-lang-attr.html) | require lang attribute on `<i18n>` block | :black_nib: |
+| [@intlify/vue-i18n/<wbr>valid-plural-forms](./valid-plural-forms.html) | enforce valid plural form counts for each locale to prevent runtime errors |  |
 
 ## Stylistic Issues
 

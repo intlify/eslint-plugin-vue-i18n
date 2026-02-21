@@ -29,7 +29,7 @@
   "engines": {
     "node": ">=18.0.0"
   },
-  "packageManager": "pnpm@10.23.0",
+  "packageManager": "pnpm@10.30.1",
   "type": "commonjs",
   "files": [
     "dist"
@@ -40,8 +40,8 @@
     "build": "tsc --project ./tsconfig.build.json",
     "clean": "git clean -fx .nyc_output coverage dist docs/.vitepress/dist",
     "coverage": "nyc report --reporter lcov && opener coverage/lcov-report/index.html",
-    "docs": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
+    "docs": "env-cmd -e script -- vitepress dev docs",
+    "docs:build": "env-cmd -e script -- vitepress build docs",
     "generate": "env-cmd -e script -- jiti scripts/update.ts",
     "fix": "run-p fix:*",
     "fix:eslint": "pnpm run lint:eslint --fix",

@@ -1,0 +1,4 @@
+valid: "ena | dve | tri | štiri"
+invalid: "ena | dve | tri"
+binary: "ena | več"
+notPlural: "Simple message"
