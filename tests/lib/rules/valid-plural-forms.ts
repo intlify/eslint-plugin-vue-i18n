@@ -128,6 +128,24 @@ tester.run('valid-plural-forms', rule as never, {
       options: ruleOptions,
       ...json('sl')
     },
+    // JSON: Pipe inside literal is not a plural separator - 2 forms, not 3
+    {
+      code: `{ "literal": "{'a|b'} | other" }`,
+      options: ruleOptions,
+      ...json('en')
+    },
+    // JSON: Named interpolation in plural forms
+    {
+      code: `{ "items": "{count} item | {count} items" }`,
+      options: ruleOptions,
+      ...json('en')
+    },
+    // JSON: Linked key in plural forms
+    {
+      code: `{ "linked": "@:key | other" }`,
+      options: ruleOptions,
+      ...json('en')
+    },
     // JSON: Locale-specific overrides default
     {
       code: `{ "valid": "ena | dve | tri | štiri" }`,

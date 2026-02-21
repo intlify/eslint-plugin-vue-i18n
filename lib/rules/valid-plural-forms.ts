@@ -9,6 +9,8 @@ import type { AST as YAMLAST } from 'yaml-eslint-parser'
 import type { RuleContext, RuleListener } from '../types'
 import { createRule } from '../utils/rule'
 import { getFilename, getSourceCode } from '../utils/compat'
+import { parse } from '../utils/message-compiler/parser'
+import { NodeTypes } from '../utils/message-compiler/utils'
 
 const debug = debugBuilder('eslint-plugin-vue-i18n:valid-plural-forms')
 
@@ -30,7 +32,11 @@ function create(context: RuleContext): RuleListener {
     message: unknown,
     node: JSONAST.JSONLiteral | YAMLAST.YAMLScalar
   ) {
-    if (typeof message !== 'string' || !message.includes('|')) {
+    if (typeof message !== 'string') {
+      return
+    }
+    const { ast } = parse(message)
+    if (ast.body.type !== NodeTypes.Plural) {
       return
     }
     const locale = getLocale()
@@ -38,7 +44,7 @@ function create(context: RuleContext): RuleListener {
       return
     }
     const allowedCounts = pluralFormCounts[locale] || [2, 3]
-    const formCount = message.split('|').length
+    const formCount = ast.body.cases.length
     if (!allowedCounts.includes(formCount)) {
       context.report({
         loc: node.loc,
