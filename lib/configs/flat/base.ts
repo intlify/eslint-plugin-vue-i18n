@@ -1,5 +1,5 @@
 /** DON'T EDIT THIS FILE; was created by scripts. */
-import type { TSESLint } from '@typescript-eslint/utils'
+import type { Linter } from 'eslint'
 
 export = [
   {
@@ -34,4 +34,4 @@ export = [
       'spaced-comment': 'off'
     }
   }
-] satisfies TSESLint.FlatConfig.ConfigArray
+] satisfies (Linter.FlatConfig & { name: string })[]

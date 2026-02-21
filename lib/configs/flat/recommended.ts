@@ -1,5 +1,5 @@
 /** DON'T EDIT THIS FILE; was created by scripts. */
-import type { TSESLint } from '@typescript-eslint/utils'
+import type { Linter } from 'eslint'
 import globals from 'globals'
 import config from './base'
 
@@ -35,4 +35,4 @@ export = [
       '@intlify/vue-i18n/valid-message-syntax': 'warn'
     }
   }
-] satisfies TSESLint.FlatConfig.ConfigArray
+] satisfies (Linter.FlatConfig & { name: string })[]

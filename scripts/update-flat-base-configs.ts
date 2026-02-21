@@ -5,7 +5,7 @@ import { writeFile } from './lib/utils'
 export async function update() {
   // base.ts
   const raw = `/** DON'T EDIT THIS FILE; was created by scripts. */
-import type { TSESLint } from '@typescript-eslint/utils'
+import type { Linter } from 'eslint'
 
 export = [
   {
@@ -37,7 +37,7 @@ export = [
     },
     rules: ${JSON.stringify(disableRules, null, 2)}
   }
-] satisfies TSESLint.FlatConfig.ConfigArray`
+] satisfies (Linter.FlatConfig & { name: string })[]`
 
   await writeFile(path.resolve(__dirname, '../lib/configs/flat/base.ts'), raw)
 }

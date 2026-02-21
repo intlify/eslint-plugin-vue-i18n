@@ -1,5 +1,5 @@
 /** DON'T EDIT THIS FILE; was created by scripts. */
-import type { TSESLint } from '@typescript-eslint/utils'
+import type { Linter } from 'eslint'
 
 export = {
   parser: require.resolve('vue-eslint-parser'),
@@ -24,4 +24,4 @@ export = {
       }
     }
   ]
-} satisfies TSESLint.ClassicConfig.Config
+} satisfies Linter.BaseConfig
