@@ -1,4 +1,6 @@
 /** DON'T EDIT THIS FILE; was created by scripts. */
+import type { Linter } from 'eslint'
+
 export = [
   {
     name: '@intlify/vue-i18n:base:setup',
@@ -32,4 +34,4 @@ export = [
       'spaced-comment': 'off'
     }
   }
-]
+] satisfies (Linter.FlatConfig & { name: string })[]

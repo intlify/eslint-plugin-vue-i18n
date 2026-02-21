@@ -7,6 +7,7 @@ export async function update() {
 
   // recommended.ts
   const raw = `/** DON'T EDIT THIS FILE; was created by scripts. */
+import type { Linter } from 'eslint'
 import globals from 'globals'
 import config from './base'
 
@@ -34,7 +35,7 @@ export = [
         .join('\n')}
     },
   },
-]`
+] satisfies (Linter.FlatConfig & { name: string })[]`
 
   await writeFile(
     path.resolve(__dirname, '../lib/configs/flat/recommended.ts'),

@@ -6,6 +6,8 @@ export async function update() {
   const rules = await getRules()
   // recommended.ts
   const raw = `/** DON'T EDIT THIS FILE; was created by scripts. */
+import type { Linter } from 'eslint'
+
 export = {
   extends: [require.resolve('./base')],
   parserOptions: {
@@ -25,7 +27,7 @@ export = {
       .map(rule => `'${rule.id}': 'warn',`)
       .join('\n')}
   },
-}`
+} satisfies Linter.BaseConfig`
 
   await writeFile(path.resolve(__dirname, '../lib/configs/recommended.ts'), raw)
 }
