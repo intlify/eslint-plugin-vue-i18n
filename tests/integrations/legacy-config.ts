@@ -31,7 +31,7 @@ describe('Integration with legacy config', () => {
     }
     const cliResult = cp.execSync(`${ESLINT} src/* --format=json`, {
       encoding: 'utf-8',
-      env: { ESLINT_USE_FLAT_CONFIG: 'false' }
+      env: { ...process.env, ESLINT_USE_FLAT_CONFIG: 'false' }
     })
 
     const result = JSON.parse(cliResult)

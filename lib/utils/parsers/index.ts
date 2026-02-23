@@ -31,7 +31,7 @@ function parseValuesInI18nBlock(
   }
   try {
     return parse(sourceString)
-  } catch (e) {
+  } catch (_e) {
     return null
   }
 }

@@ -190,7 +190,7 @@ export class IgnoredPaths {
         try {
           statSync(ignorePath)
           debug(`Loaded ignore file ${ignorePath}`)
-        } catch (e) {
+        } catch (_e) {
           debug('Could not find ignore file in cwd')
         }
       }
