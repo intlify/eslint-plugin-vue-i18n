@@ -2,4 +2,4 @@
 "@intlify/eslint-plugin-vue-i18n": minor
 ---
 
-chore: use eslint v10
+add support for eslint v10
