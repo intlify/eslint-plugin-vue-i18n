@@ -1,5 +1,39 @@
 # @intlify/eslint-plugin-vue-i18n
 
+## 4.2.0
+
+### Minor Changes
+
+- [#697](https://github.com/intlify/eslint-plugin-vue-i18n/pull/697) [`b8dd9e8`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/b8dd9e8b0769cf925aa6749664dcde5143c2d14a) Thanks [@samuelwei](https://github.com/samuelwei)! - add support for eslint v10
+
+- [#689](https://github.com/intlify/eslint-plugin-vue-i18n/pull/689) [`bb9e1df`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/bb9e1df96e648707f469e5f62058a077869fbf94) Thanks [@Jerc92](https://github.com/Jerc92)! - Add `valid-plural-forms` rule to validate plural form counts per locale
+
+  This rule enforces that plural messages have the correct number of forms for each locale, helping prevent runtime errors when vue-i18n's `pluralRules` function returns an out-of-bounds index.
+
+  - Defaults to `[2, 3]` for all locales (matches vue-i18n's built-in pluralization)
+  - Use `pluralFormCounts` to configure locale-specific overrides
+  - Arrays allow multiple valid counts (e.g., `[2, 4]` for languages supporting both binary and full pluralization)
+
+  Configuration example:
+
+  ```json
+  {
+    "@intlify/vue-i18n/valid-plural-forms": [
+      "error",
+      {
+        "pluralFormCounts": {
+          "sl": [2, 4],
+          "sr-latn": [2, 3]
+        }
+      }
+    ]
+  }
+  ```
+
+### Patch Changes
+
+- [#692](https://github.com/intlify/eslint-plugin-vue-i18n/pull/692) [`8d175b3`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/8d175b353ea7dce6b1741645695298d2b344ef93) Thanks [@GeniusTimo](https://github.com/GeniusTimo)! - fix: narrow types of provided configs
+
 ## 4.1.1
 
 ### Patch Changes
