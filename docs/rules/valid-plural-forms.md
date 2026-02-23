@@ -1,6 +1,7 @@
 ---
 title: '@intlify/vue-i18n/valid-plural-forms'
 description: enforce valid plural form counts for each locale to prevent runtime errors
+since: v4.2.0
 ---
 
 # @intlify/vue-i18n/valid-plural-forms
@@ -94,6 +95,10 @@ Based on [CLDR Plural Rules](https://www.unicode.org/cldr/charts/48/supplemental
 
 - [Vue I18n Pluralization](https://vue-i18n.intlify.dev/guide/essentials/pluralization)
 - [CLDR Language Plural Rules](https://www.unicode.org/cldr/charts/48/supplemental/language_plural_rules.html)
+
+## :rocket: Version
+
+This rule was introduced in `@intlify/eslint-plugin-vue-i18n` v4.2.0
 
 ## :mag: Implementation
 
