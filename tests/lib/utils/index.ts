@@ -64,7 +64,7 @@ describe('getLocaleMessages', () => {
       __dirname,
       '../../fixtures/utils/get-locale-messages/locales/ja.json'
     )
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+
     const enJson = require(enJsonPath)
     try {
       deepStrictEqual(getAllLocaleMessages(), {

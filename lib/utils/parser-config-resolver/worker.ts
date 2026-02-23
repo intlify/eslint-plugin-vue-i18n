@@ -28,7 +28,11 @@ runAsWorker(async (cwd: string, filePath: string): Promise<ParseResult> => {
     }
   )
 
-  const result = parseByParser(filePath, languageOptions.parser, parserOptions)
+  const result = parseByParser(
+    filePath,
+    languageOptions.parser as Linter.Parser | string | undefined,
+    parserOptions
+  )
   if (!result) {
     return null
   }
