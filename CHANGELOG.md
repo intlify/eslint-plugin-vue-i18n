@@ -1,5 +1,11 @@
 # @intlify/eslint-plugin-vue-i18n
 
+## 4.3.0
+
+### Minor Changes
+
+- [#714](https://github.com/intlify/eslint-plugin-vue-i18n/pull/714) [`de92326`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/de92326405421ef5686faef49af97a517815608f) Thanks [@Roman3349](https://github.com/Roman3349)! - chore(deps): allow jsonc-eslint-parser ^3.0.0
+
 ## 4.2.0
 
 ### Minor Changes
