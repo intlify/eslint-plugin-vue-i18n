@@ -235,6 +235,139 @@ tester.run('no-missing-keys', rule as never, {
               './tests/fixtures/no-missing-keys/complex-locales/locales/*.json'
           }
         }
+      },
+      // useI18n({ messages }) -- inline basic key
+      {
+        filename: 'test.vue',
+        code: `
+        <script setup>
+        import { useI18n } from 'vue-i18n'
+        const { t } = useI18n({
+          messages: {
+            en: { title: 'Welcome' },
+            ja: { title: 'ようこそ' }
+          }
+        })
+        </script>
+        <template>
+          <p>{{ t('title') }}</p>
+        </template>`
+      },
+      // useI18n({ messages }) -- inline nested key
+      {
+        filename: 'test.vue',
+        code: `
+        <script setup>
+        import { useI18n } from 'vue-i18n'
+        const { t } = useI18n({
+          messages: {
+            en: { form: { submit: 'Submit' } },
+            ja: { form: { submit: '送信' } }
+          }
+        })
+        </script>
+        <template>
+          <p>{{ t('form.submit') }}</p>
+        </template>`
+      },
+      // useI18n({ messages }) -- v-t directive
+      {
+        filename: 'test.vue',
+        code: `
+        <script setup>
+        import { useI18n } from 'vue-i18n'
+        const { t } = useI18n({
+          messages: {
+            en: { hello: 'Hello' },
+            ja: { hello: 'こんにちは' }
+          }
+        })
+        </script>
+        <template>
+          <p v-t="'hello'"></p>
+        </template>`
+      },
+      // Combined: <i18n> block + useI18n({ messages })
+      {
+        filename: 'test.vue',
+        code: `<i18n>{"en": {"fromBlock": "yes"}, "ja": {"fromBlock": "はい"}}</i18n>
+        <script setup>
+        import { useI18n } from 'vue-i18n'
+        const { t } = useI18n({
+          messages: {
+            en: { fromScript: 'yes' },
+            ja: { fromScript: 'はい' }
+          }
+        })
+        </script>
+        <template>
+          <p>{{ t('fromBlock') }}</p>
+          <p>{{ t('fromScript') }}</p>
+        </template>`
+      },
+      // useI18n({ messages }) -- local variable reference
+      {
+        filename: 'test.vue',
+        code: `
+        <script setup>
+        import { useI18n } from 'vue-i18n'
+        const msgs = {
+          en: { greeting: 'Hi' },
+          ja: { greeting: 'やあ' }
+        }
+        const { t } = useI18n({ messages: msgs })
+        </script>
+        <template>
+          <p>{{ t('greeting') }}</p>
+        </template>`
+      },
+      // useI18n({ messages }) -- default import from JSON
+      {
+        filename: join(
+          __dirname,
+          '../../fixtures/no-missing-keys/useI18n/Test.vue'
+        ),
+        code: `
+        <script setup>
+        import { useI18n } from 'vue-i18n'
+        import messages from './messages-default.json'
+        const { t } = useI18n({ messages })
+        </script>
+        <template>
+          <p>{{ t('title') }}</p>
+        </template>`
+      },
+      // useI18n({ messages }) -- named import from JS
+      {
+        filename: join(
+          __dirname,
+          '../../fixtures/no-missing-keys/useI18n/Test.vue'
+        ),
+        code: `
+        <script setup>
+        import { useI18n } from 'vue-i18n'
+        import { messages } from './messages-named.js'
+        const { t } = useI18n({ messages })
+        </script>
+        <template>
+          <p>{{ t('title') }}</p>
+        </template>`
+      },
+      // useI18n({ messages }) -- aliased named import
+      {
+        filename: join(
+          __dirname,
+          '../../fixtures/no-missing-keys/useI18n/Test.vue'
+        ),
+        code: `
+        <script setup>
+        import { useI18n } from 'vue-i18n'
+        import { messages as msgs } from './messages-named.js'
+        const { t } = useI18n({ messages: msgs })
+        </script>
+        <template>
+          <p>{{ t('title') }}</p>
+        </template>`
       }
     ]
   ),
@@ -313,7 +446,7 @@ tester.run('no-missing-keys', rule as never, {
         // settings.vue-i18n.localeDir' error
         code: `$t('missing')`,
         errors: [
-          `You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation`
+          `You need to set 'localeDir' at 'settings', or use '<i18n>' blocks or 'useI18n({ messages })'. See the 'eslint-plugin-vue-i18n' documentation`
         ]
       },
       {
@@ -413,6 +546,75 @@ tester.run('no-missing-keys', rule as never, {
             line: 14
           }
         ]
+      },
+      // useI18n({ messages }) -- inline missing key
+      {
+        filename: 'test.vue',
+        code: `
+        <script setup>
+        import { useI18n } from 'vue-i18n'
+        const { t } = useI18n({
+          messages: {
+            en: { title: 'Welcome' },
+            ja: { title: 'ようこそ' }
+          }
+        })
+        </script>
+        <template>
+          <p>{{ t('missing') }}</p>
+        </template>`,
+        errors: [`'missing' does not exist in localization message resources`]
+      },
+      // useI18n({ messages }) -- local variable reference missing key
+      {
+        filename: 'test.vue',
+        code: `
+        <script setup>
+        import { useI18n } from 'vue-i18n'
+        const msgs = {
+          en: { greeting: 'Hi' },
+          ja: { greeting: 'やあ' }
+        }
+        const { t } = useI18n({ messages: msgs })
+        </script>
+        <template>
+          <p>{{ t('missing') }}</p>
+        </template>`,
+        errors: [`'missing' does not exist in localization message resources`]
+      },
+      // useI18n({ messages }) -- default import missing key
+      {
+        filename: join(
+          __dirname,
+          '../../fixtures/no-missing-keys/useI18n/Test.vue'
+        ),
+        code: `
+        <script setup>
+        import { useI18n } from 'vue-i18n'
+        import messages from './messages-default.json'
+        const { t } = useI18n({ messages })
+        </script>
+        <template>
+          <p>{{ t('missing') }}</p>
+        </template>`,
+        errors: [`'missing' does not exist in localization message resources`]
+      },
+      // useI18n({ messages }) -- named import missing key
+      {
+        filename: join(
+          __dirname,
+          '../../fixtures/no-missing-keys/useI18n/Test.vue'
+        ),
+        code: `
+        <script setup>
+        import { useI18n } from 'vue-i18n'
+        import { messages } from './messages-named.js'
+        const { t } = useI18n({ messages })
+        </script>
+        <template>
+          <p>{{ t('missing') }}</p>
+        </template>`,
+        errors: [`'missing' does not exist in localization message resources`]
       }
     ]
   )
