@@ -139,8 +139,8 @@ importers:
         specifier: ^0.4.0
         version: 0.4.0
       jsonc-eslint-parser:
-        specifier: ^2.3.0
-        version: 2.3.0
+        specifier: ^3.0.0
+        version: 3.1.0
       lint-staged:
         specifier: ^16.0.0
         version: 16.0.0
@@ -1296,11 +1296,6 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  acorn@8.14.0:
-    resolution: {integrity: sha512-cl669nCJTZBsL97OF4kUQm5g5hC2uihk0NxY3WENAC0TYdILVkAyHymAntgxGkl7K+t0cXIrH5siy5S4XkFycA==}
-    engines: {node: '>=0.4.0'}
-    hasBin: true
-
   acorn@8.16.0:
     resolution: {integrity: sha512-UVJyE9MttOsBQIDKw1skb9nAwQuR5wuGD3+82K6JgJlm/Y+KI92oNsMNGZCYdDsVtRHSak0pcV5Dno5+4jh9sw==}
     engines: {node: '>=0.4.0'}
@@ -1846,10 +1841,6 @@ packages:
     resolution: {integrity: sha512-v3JCNCE64umkFpmkFGqzVKsOT0tN1Zr+ueqLZfpV1Ob8e+CEgPWa+OxCoGH3tnhimMKIaBm4m/vaRpJ/krRz2g==}
     engines: {node: ^10.12.0 || >=12.0.0}
 
-  espree@9.6.1:
-    resolution: {integrity: sha512-oruZaFkjorTpF32kDSI5/75ViwGeZginGGy2NoOSg3Q9bnwlnmDm4HLnkl0RE3n+njDXR037aY1+x58Z/zFdwQ==}
-    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
-
   esprima@4.0.1:
     resolution: {integrity: sha512-eGuFFw7Upda+g4p+QHvnW0RyTX/SVeJBDM/gCtMARO0cLuT2HcEKnTPvhjV6aGeqrCB/sbNop0Kszm0jsaWU4A==}
     engines: {node: '>=4'}
@@ -2376,9 +2367,9 @@ packages:
     engines: {node: '>=6'}
     hasBin: true
 
-  jsonc-eslint-parser@2.3.0:
-    resolution: {integrity: sha512-9xZPKVYp9DxnM3sd1yAsh/d59iIaswDkai8oTxbursfKYbg/ibjX0IzFt35+VZ8iEW453TVTXztnRvYUQlAfUQ==}
-    engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
+  jsonc-eslint-parser@3.1.0:
+    resolution: {integrity: sha512-75EA7EWZExL/j+MDKQrRbdzcRI2HOkRlmUw8fZJc1ioqFEOvBsq7Rt+A6yCxOt9w/TYNpkt52gC6nm/g5tFIng==}
+    engines: {node: ^20.19.0 || ^22.13.0 || >=24}
 
   jsonfile@4.0.0:
     resolution: {integrity: sha512-m6F1R3z8jjlf2imQHS2Qez5sjKWQzbuuhuJ/FKYFRZvPE3PuHcSMVZzfsLhGVOkfd20obL5SWEBew5ShlquNxg==}
@@ -3712,7 +3703,7 @@ snapshots:
       outdent: 0.5.0
       prettier: 2.8.8
       resolve-from: 5.0.0
-      semver: 7.7.1
+      semver: 7.7.4
 
   '@changesets/assemble-release-plan@5.2.4':
     dependencies:
@@ -3721,7 +3712,7 @@ snapshots:
       '@changesets/get-dependents-graph': 1.3.6
       '@changesets/types': 5.2.1
       '@manypkg/get-packages': 1.1.3
-      semver: 7.7.1
+      semver: 7.7.4
 
   '@changesets/changelog-git@0.1.14':
     dependencies:
@@ -3791,7 +3782,7 @@ snapshots:
       '@manypkg/get-packages': 1.1.3
       chalk: 2.4.2
       fs-extra: 7.0.1
-      semver: 7.7.1
+      semver: 7.7.4
 
   '@changesets/get-github-info@0.8.0':
     dependencies:
@@ -4506,7 +4497,7 @@ snapshots:
   '@typescript-eslint/visitor-keys@8.56.0':
     dependencies:
       '@typescript-eslint/types': 8.56.0
-      eslint-visitor-keys: 5.0.0
+      eslint-visitor-keys: 5.0.1
 
   '@vitejs/plugin-vue@5.0.4(vite@5.4.8(@types/node@24.10.13))(vue@3.4.21(typescript@5.1.6))':
     dependencies:
@@ -4619,14 +4610,6 @@ snapshots:
     dependencies:
       acorn: 7.4.1
 
-  acorn-jsx@5.3.2(acorn@8.10.0):
-    dependencies:
-      acorn: 8.10.0
-
-  acorn-jsx@5.3.2(acorn@8.14.0):
-    dependencies:
-      acorn: 8.14.0
-
   acorn-jsx@5.3.2(acorn@8.16.0):
     dependencies:
       acorn: 8.16.0
@@ -4636,8 +4619,6 @@ snapshots:
   acorn@7.4.1: {}
 
   acorn@8.10.0: {}
-
-  acorn@8.14.0: {}
 
   acorn@8.16.0: {}
 
@@ -5226,8 +5207,8 @@ snapshots:
 
   espree@10.3.0:
     dependencies:
-      acorn: 8.14.0
-      acorn-jsx: 5.3.2(acorn@8.14.0)
+      acorn: 8.16.0
+      acorn-jsx: 5.3.2(acorn@8.16.0)
       eslint-visitor-keys: 4.2.0
 
   espree@11.1.1:
@@ -5241,12 +5222,6 @@ snapshots:
       acorn: 7.4.1
       acorn-jsx: 5.3.2(acorn@7.4.1)
       eslint-visitor-keys: 1.3.0
-
-  espree@9.6.1:
-    dependencies:
-      acorn: 8.10.0
-      acorn-jsx: 5.3.2(acorn@8.10.0)
-      eslint-visitor-keys: 3.4.3
 
   esprima@4.0.1: {}
 
@@ -5728,12 +5703,11 @@ snapshots:
 
   json5@2.2.3: {}
 
-  jsonc-eslint-parser@2.3.0:
+  jsonc-eslint-parser@3.1.0:
     dependencies:
-      acorn: 8.10.0
-      eslint-visitor-keys: 3.4.1
-      espree: 9.6.1
-      semver: 7.7.1
+      acorn: 8.16.0
+      eslint-visitor-keys: 5.0.1
+      semver: 7.7.4
 
   jsonfile@4.0.0:
     optionalDependencies:
