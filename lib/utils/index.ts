@@ -2,12 +2,13 @@
  * @fileoverview Utilities for eslint plugin
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
-import type { AST as VAST } from 'vue-eslint-parser'
+import { AST as VAST } from 'vue-eslint-parser'
 import { sync } from 'glob'
 import { resolve, dirname, extname } from 'path'
 import {
   FileLocaleMessage,
   BlockLocaleMessage,
+  UseI18nLocaleMessage,
   LocaleMessages
 } from './locale-messages'
 import { CacheLoader } from './cache-loader'
@@ -20,8 +21,12 @@ import type {
   SettingsVueI18nLocaleDir,
   SettingsVueI18nLocaleDirObject,
   SettingsVueI18nLocaleDirGlob,
-  CustomBlockVisitorFactory
+  CustomBlockVisitorFactory,
+  I18nLocaleMessageDictionary,
+  I18nLocaleMessageValue,
+  VisitorKeys
 } from '../types'
+import { existsSync } from 'fs'
 import * as jsoncESLintParser from 'jsonc-eslint-parser'
 import * as yamlESLintParser from 'yaml-eslint-parser'
 import { getCwd } from './get-cwd'
@@ -174,14 +179,15 @@ export function getLocaleMessages(
           node.type === 'VElement' && node.name === 'i18n'
       )) ||
     []
-  if (!localeDir && !i18nBlocks.length) {
+  const useI18nMessages = getLocaleMessagesFromUseI18n(context)
+  if (!localeDir && !i18nBlocks.length && !useI18nMessages.length) {
     if (
       !puttedSettingsError.has(context) &&
       !options?.ignoreMissingSettingsError
     ) {
       context.report({
         loc: UNEXPECTED_ERROR_LOCATION,
-        message: `You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation`
+        message: `You need to set 'localeDir' at 'settings', or use '<i18n>' blocks or 'useI18n({ messages })'. See the 'eslint-plugin-vue-i18n' documentation`
       })
       puttedSettingsError.add(context)
     }
@@ -195,7 +201,8 @@ export function getLocaleMessages(
         context,
         localeDir
       )) ||
-      [])
+      []),
+    ...useI18nMessages
   ])
 }
 
@@ -323,6 +330,224 @@ function getLocaleMessagesFromI18nBlocks(
     .filter(e => e)
   i18nBlockLocaleMessages.set(sourceCode.ast, localeMessages)
   return localeMessages
+}
+
+// --- useI18n({ messages }) support ---
+
+type UseI18nResult =
+  | { type: 'inline'; dict: I18nLocaleMessageDictionary }
+  | { type: 'file'; fullpath: string; exportName: string | null }
+
+function objectExpressionToDict(
+  node: VAST.ESLintObjectExpression
+): I18nLocaleMessageDictionary | null {
+  const dict: I18nLocaleMessageDictionary = {}
+  for (const prop of node.properties) {
+    if (prop.type !== 'Property') {
+      // SpreadElement or ESLintLegacySpreadProperty
+      return null
+    }
+    if (prop.computed) continue
+    const key =
+      prop.key.type === 'Identifier'
+        ? prop.key.name
+        : prop.key.type === 'Literal'
+          ? String(prop.key.value)
+          : null
+    if (key == null) continue
+
+    const value = skipTSAsExpression(prop.value)
+    if (value.type === 'ObjectExpression') {
+      const nested = objectExpressionToDict(value)
+      if (nested == null) return null
+      dict[key] = nested
+    } else if (value.type === 'Literal') {
+      dict[key] = value.value as string | number | boolean | null
+    } else if (
+      value.type === 'TemplateLiteral' &&
+      value.expressions.length === 0
+    ) {
+      dict[key] = value.quasis[0].value.cooked ?? value.quasis[0].value.raw
+    }
+    // skip other types (not statically analyzable)
+  }
+  return dict
+}
+
+function collectVariableDeclarations(
+  ast: VAST.ESLintProgram
+): Map<string, VAST.ESLintExpression> {
+  const map = new Map<string, VAST.ESLintExpression>()
+  for (const stmt of ast.body) {
+    if (stmt.type !== 'VariableDeclaration') continue
+    for (const decl of stmt.declarations) {
+      if (decl.id.type === 'Identifier' && decl.init) {
+        map.set(decl.id.name, skipTSAsExpression(decl.init))
+      }
+    }
+  }
+  return map
+}
+
+function collectImportSources(
+  ast: VAST.ESLintProgram
+): Map<string, { source: string; importedName: string | null }> {
+  const map = new Map<
+    string,
+    { source: string; importedName: string | null }
+  >()
+  for (const node of ast.body) {
+    if (
+      node.type === 'ImportDeclaration' &&
+      node.source.type === 'Literal' &&
+      typeof node.source.value === 'string'
+    ) {
+      const source = node.source.value
+      for (const specifier of node.specifiers) {
+        if (specifier.type === 'ImportDefaultSpecifier') {
+          map.set(specifier.local.name, { source, importedName: null })
+        } else if (specifier.type === 'ImportSpecifier') {
+          const importedName =
+            specifier.imported.type === 'Identifier'
+              ? specifier.imported.name
+              : String(specifier.imported.value)
+          map.set(specifier.local.name, { source, importedName })
+        }
+        // skip ImportNamespaceSpecifier
+      }
+    }
+  }
+  return map
+}
+
+function resolveMessagesValue(
+  node: VAST.ESLintExpression | VAST.ESLintPattern,
+  variableMap: Map<string, VAST.ESLintExpression>,
+  importMap: Map<string, { source: string; importedName: string | null }>,
+  filename: string
+): UseI18nResult | null {
+  const resolved = skipTSAsExpression(node)
+  if (resolved.type === 'ObjectExpression') {
+    const dict = objectExpressionToDict(resolved)
+    if (dict) {
+      return { type: 'inline', dict }
+    }
+    return null
+  }
+  if (resolved.type === 'Identifier') {
+    // Check variable declarations first
+    const varInit = variableMap.get(resolved.name)
+    if (varInit && varInit.type === 'ObjectExpression') {
+      const dict = objectExpressionToDict(varInit)
+      if (dict) {
+        return { type: 'inline', dict }
+      }
+    }
+    // Check imports
+    const importInfo = importMap.get(resolved.name)
+    if (importInfo) {
+      const dir = dirname(filename)
+      const fullpath = resolve(dir, importInfo.source)
+      if (existsSync(fullpath)) {
+        return {
+          type: 'file',
+          fullpath,
+          exportName: importInfo.importedName
+        }
+      }
+    }
+  }
+  return null
+}
+
+function extractUseI18nMessages(
+  ast: VAST.ESLintProgram,
+  filename: string,
+  visitorKeys?: VisitorKeys
+): (UseI18nLocaleMessage | FileLocaleMessage)[] {
+  if (!ast.body || !Array.isArray(ast.body)) return []
+  const variableMap = collectVariableDeclarations(ast)
+  const importMap = collectImportSources(ast)
+  const results: (UseI18nLocaleMessage | FileLocaleMessage)[] = []
+
+  VAST.traverseNodes(ast as VAST.ESLintNode, {
+    visitorKeys,
+    enterNode(node) {
+      if (node.type !== 'CallExpression') return
+      const call = node as VAST.ESLintCallExpression
+      if (
+        call.callee.type !== 'Identifier' ||
+        call.callee.name !== 'useI18n' ||
+        call.arguments.length === 0
+      )
+        return
+
+      const arg = skipTSAsExpression(call.arguments[0])
+      if (arg.type !== 'ObjectExpression') return
+      for (const prop of arg.properties) {
+        if (prop.type !== 'Property') continue
+        if (prop.computed) continue
+        const key =
+          prop.key.type === 'Identifier'
+            ? prop.key.name
+            : prop.key.type === 'Literal'
+              ? String(prop.key.value)
+              : null
+        if (key !== 'messages') continue
+
+        const resolved = resolveMessagesValue(
+          prop.value,
+          variableMap,
+          importMap,
+          filename
+        )
+        if (!resolved) break
+        if (resolved.type === 'inline') {
+          results.push(
+            new UseI18nLocaleMessage({
+              fullpath: filename,
+              messages: resolved.dict
+            })
+          )
+        } else {
+          results.push(
+            new FileLocaleMessage({
+              fullpath: resolved.fullpath,
+              localeKey: 'key',
+              exportName: resolved.exportName
+            })
+          )
+        }
+        break
+      }
+    },
+    leaveNode() {
+      // noop
+    }
+  })
+
+  return results
+}
+
+/** @type {WeakMap<Program, LocaleMessage[]>} */
+const useI18nLocaleMessagesCache = new WeakMap()
+
+function getLocaleMessagesFromUseI18n(
+  context: RuleContext
+): (UseI18nLocaleMessage | FileLocaleMessage)[] {
+  const sourceCode = getSourceCode(context)
+  let results = useI18nLocaleMessagesCache.get(sourceCode.ast) as
+    | (UseI18nLocaleMessage | FileLocaleMessage)[]
+    | undefined
+  if (results) return results
+  const filename = getFilename(context)
+  results = extractUseI18nMessages(
+    sourceCode.ast as VAST.ESLintProgram,
+    filename,
+    sourceCode.visitorKeys
+  )
+  useI18nLocaleMessagesCache.set(sourceCode.ast, results)
+  return results
 }
 
 export function defineCustomBlocksVisitor(

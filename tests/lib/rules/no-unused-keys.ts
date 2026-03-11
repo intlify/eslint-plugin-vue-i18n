@@ -2072,7 +2072,7 @@ ${' '.repeat(6)}
             {
               line: 1,
               message:
-                "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+                "You need to set 'localeDir' at 'settings', or use '<i18n>' blocks or 'useI18n({ messages })'. See the 'eslint-plugin-vue-i18n' documentation"
             }
           ]
         },
@@ -2082,7 +2082,7 @@ ${' '.repeat(6)}
             {
               line: 1,
               message:
-                "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+                "You need to set 'localeDir' at 'settings', or use '<i18n>' blocks or 'useI18n({ messages })'. See the 'eslint-plugin-vue-i18n' documentation"
             }
           ]
         },
@@ -2092,7 +2092,7 @@ ${' '.repeat(6)}
             {
               line: 1,
               message:
-                "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+                "You need to set 'localeDir' at 'settings', or use '<i18n>' blocks or 'useI18n({ messages })'. See the 'eslint-plugin-vue-i18n' documentation"
             }
           ]
         },
@@ -2102,7 +2102,7 @@ ${' '.repeat(6)}
             {
               line: 1,
               message:
-                "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+                "You need to set 'localeDir' at 'settings', or use '<i18n>' blocks or 'useI18n({ messages })'. See the 'eslint-plugin-vue-i18n' documentation"
             }
           ]
         },
@@ -2112,7 +2112,7 @@ ${' '.repeat(6)}
             {
               line: 1,
               message:
-                "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+                "You need to set 'localeDir' at 'settings', or use '<i18n>' blocks or 'useI18n({ messages })'. See the 'eslint-plugin-vue-i18n' documentation"
             }
           ]
         },
@@ -2122,7 +2122,7 @@ ${' '.repeat(6)}
             {
               line: 1,
               message:
-                "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+                "You need to set 'localeDir' at 'settings', or use '<i18n>' blocks or 'useI18n({ messages })'. See the 'eslint-plugin-vue-i18n' documentation"
             }
           ]
         }
