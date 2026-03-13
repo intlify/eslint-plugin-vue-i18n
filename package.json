@@ -121,13 +121,13 @@
     "vue-eslint-editor": "^1.1.0",
     "vue-eslint-parser": "^10.4.0",
     "vue-github-button": "^3.1.0",
-    "yaml-eslint-parser": "^1.2.2"
+    "yaml-eslint-parser": "^2.0.0"
   },
   "peerDependencies": {
     "eslint": "^8.0.0 || ^9.0.0-0 || ^10.0.0",
     "jsonc-eslint-parser": "^2.3.0 || ^3.0.0",
     "vue-eslint-parser": "^10.0.0",
-    "yaml-eslint-parser": "^1.2.2"
+    "yaml-eslint-parser": "^2.0.0"
   },
   "publishConfig": {
     "access": "public"
