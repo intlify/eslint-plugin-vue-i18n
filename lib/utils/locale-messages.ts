@@ -189,25 +189,46 @@ export class BlockLocaleMessage extends LocaleMessage {
   }
 }
 
+export class UseI18nLocaleMessage extends LocaleMessage {
+  private _messages: I18nLocaleMessageDictionary
+  constructor({
+    fullpath,
+    messages
+  }: {
+    fullpath: string
+    messages: I18nLocaleMessageDictionary
+  }) {
+    super({ fullpath, localeKey: 'key' })
+    this._messages = messages
+  }
+  getMessagesInternal(): I18nLocaleMessageDictionary {
+    return this._messages
+  }
+}
+
 export class FileLocaleMessage extends LocaleMessage {
   private _resource: ResourceLoader<I18nLocaleMessageDictionary>
+  private _exportName: string | null
   /**
    * @param {object} arg
    * @param {string} arg.fullpath Absolute path.
    * @param {string[]} [arg.locales] The locales.
    * @param {LocaleKeyType} arg.localeKey Specifies how to determine the locale for localization messages.
    * @param {string | RegExp} args.localePattern Specifies how to determin the regular expression pattern for how to get the locale.
+   * @param {string} [arg.exportName] The named export to access from the loaded resource.
    */
   constructor({
     fullpath,
     locales,
     localeKey,
-    localePattern
+    localePattern,
+    exportName
   }: {
     fullpath: string
     locales?: string[]
     localeKey: LocaleKeyType
     localePattern?: string | RegExp
+    exportName?: string | null
   }) {
     super({
       fullpath,
@@ -215,6 +236,7 @@ export class FileLocaleMessage extends LocaleMessage {
       localeKey,
       localePattern
     })
+    this._exportName = exportName ?? null
     this._resource = new ResourceLoader(fullpath, fileName => {
       const ext = extname(fileName).toLowerCase()
       if (ext === '.js') {
@@ -230,7 +252,13 @@ export class FileLocaleMessage extends LocaleMessage {
   }
 
   getMessagesInternal(): I18nLocaleMessageDictionary {
-    return this._resource.getResource()
+    const raw = this._resource.getResource()
+    if (this._exportName) {
+      return (
+        (raw[this._exportName] as I18nLocaleMessageDictionary | undefined) ?? {}
+      )
+    }
+    return raw
   }
 }
 
