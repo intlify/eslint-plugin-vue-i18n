@@ -4,7 +4,6 @@
  * @see https://github.com/eslint/eslint/blob/v5.2.0/lib/util/glob-util.js
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
-import { uniqBy } from 'lodash'
 import { existsSync, statSync, realpathSync } from 'fs'
 import { resolve } from 'path'
 import { globSync } from 'glob'
@@ -225,6 +224,7 @@ export function listFilesToProcess(
     })
   })
 
+  const seenPathDescriptors = new Set<string>()
   const allPathDescriptors = resolvedPathsByGlobPattern.reduce(
     (pathsForAllGlobs, pathsForCurrentGlob, index) => {
       if (
@@ -238,14 +238,23 @@ export function listFilesToProcess(
       }
 
       pathsForCurrentGlob.forEach(pathDescriptor => {
-        switch (pathDescriptor?.behavior) {
+        if (
+          !pathDescriptor ||
+          seenPathDescriptors.has(pathDescriptor.filename)
+        ) {
+          return
+        }
+
+        switch (pathDescriptor.behavior) {
           case NORMAL_LINT:
+            seenPathDescriptors.add(pathDescriptor.filename)
             pathsForAllGlobs.push({
               filename: pathDescriptor.filename,
               ignored: false
             })
             break
           case IGNORE_AND_WARN:
+            seenPathDescriptors.add(pathDescriptor.filename)
             pathsForAllGlobs.push({
               filename: pathDescriptor.filename,
               ignored: true
@@ -257,7 +266,7 @@ export function listFilesToProcess(
 
           default:
             throw new Error(
-              `Unexpected file behavior for ${pathDescriptor?.filename}`
+              `Unexpected file behavior for ${pathDescriptor.filename}`
             )
         }
       })
@@ -270,10 +279,6 @@ export function listFilesToProcess(
     }[]
   )
 
-  const ret = uniqBy(
-    allPathDescriptors,
-    pathDescriptor => pathDescriptor.filename
-  )
-  debug(ret)
-  return ret
+  debug(allPathDescriptors)
+  return allPathDescriptors
 }

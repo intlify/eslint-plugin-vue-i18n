@@ -44,9 +44,6 @@ importers:
       json5:
         specifier: ^2.2.3
         version: 2.2.3
-      lodash:
-        specifier: ^4.17.21
-        version: 4.18.1
       parse5:
         specifier: ^7.1.2
         version: 7.1.2
@@ -81,9 +78,6 @@ importers:
       '@types/json-schema':
         specifier: ^7.0.12
         version: 7.0.12
-      '@types/lodash':
-        specifier: ^4.14.196
-        version: 4.14.196
       '@types/mocha':
         specifier: ^10.0.1
         version: 10.0.1
@@ -1074,9 +1068,6 @@ packages:
 
   '@types/linkify-it@3.0.5':
     resolution: {integrity: sha512-yg6E+u0/+Zjva+buc3EIb+29XEg4wltq7cSmd4Uc2EE/1nUVmxyzpX6gUXD0V8jIrG0r7YeOGVIbYRkxeooCtw==}
-
-  '@types/lodash@4.14.196':
-    resolution: {integrity: sha512-22y3o88f4a94mKljsZcanlNWPzO0uBsBdzLAngf2tp533LzZcQzb6+eZPJ+vCTt+bqF2XnvT9gejTLsAcJAJyQ==}
 
   '@types/markdown-it@13.0.7':
     resolution: {integrity: sha512-U/CBi2YUUcTHBt5tjO2r5QV/x0Po6nsYwQU4Y04fBS6vfoImaiZ6f8bi3CjTCxBPQSO1LMyUqkByzi8AidyxfA==}
@@ -4376,8 +4367,6 @@ snapshots:
   '@types/json-schema@7.0.15': {}
 
   '@types/linkify-it@3.0.5': {}
-
-  '@types/lodash@4.14.196': {}
 
   '@types/markdown-it@13.0.7':
     dependencies:
