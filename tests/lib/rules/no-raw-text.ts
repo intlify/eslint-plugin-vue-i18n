@@ -1621,6 +1621,38 @@ tester.run('no-raw-text', rule as never, {
           ]
         }
       ]
+    },
+    {
+      // text node with surrounding whitespace: warning message trims for readability
+      code: `<template>
+  <div>
+    raw text
+  </div>
+</template>`,
+      errors: [
+        {
+          message: `raw text 'raw text' is used`,
+          suggestions: [
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output:
+                '<i18n>\n' +
+                '{\n' +
+                '  "en": {\n' +
+                '    "\\n    raw text\\n  ": "\\n    raw text\\n  "\n' +
+                '  }\n' +
+                '}\n' +
+                '</i18n>\n' +
+                '\n' +
+                '<template>\n' +
+                '  <div>{{$t(`\n' +
+                '    raw text\n' +
+                '  `)}}</div>\n' +
+                '</template>'
+            }
+          ]
+        }
+      ]
     }
   ]
 })

@@ -217,7 +217,7 @@ function checkLiteral(
   const loc = calculateLoc(literal, baseNode, context)
   context.report({
     loc,
-    message: `raw text '${value}' is used`,
+    message: `raw text '${`${value}`.trim()}' is used`,
     suggest: buildSuggest()
   })
 
@@ -284,7 +284,7 @@ function checkVAttribute(
   const loc = calculateLoc(literal, baseNode, context)
   context.report({
     loc,
-    message: `raw text '${value}' is used`,
+    message: `raw text '${`${value}`.trim()}' is used`,
     suggest: buildSuggest()
   })
 
@@ -363,7 +363,7 @@ function checkText(
   const loc = calculateLoc(textNode, baseNode, context)
   context.report({
     loc,
-    message: `raw text '${value}' is used`,
+    message: `raw text '${value.trim()}' is used`,
     suggest: buildSuggest()
   })
 
