@@ -1,5 +1,15 @@
 # @intlify/eslint-plugin-vue-i18n
 
+## 4.4.0
+
+### Minor Changes
+
+- [#731](https://github.com/intlify/eslint-plugin-vue-i18n/pull/731) [`d753ca3`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/d753ca343c174b38b805d108cfbafd5f89fdb1ed) Thanks [@lukashass](https://github.com/lukashass)! - chore(deps): allow yaml-eslint-parser ^2.0.0
+
+### Patch Changes
+
+- [#734](https://github.com/intlify/eslint-plugin-vue-i18n/pull/734) [`1c6e0a8`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/1c6e0a84969f89cde8198493d17c29989a244ab0) Thanks [@SAY-5](https://github.com/SAY-5)! - fix(no-raw-text): trim leading and trailing whitespace in warning message for readability
+
 ## 4.3.0
 
 ### Minor Changes
