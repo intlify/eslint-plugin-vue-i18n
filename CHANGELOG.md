@@ -1,5 +1,11 @@
 # @intlify/eslint-plugin-vue-i18n
 
+## 4.5.0
+
+### Minor Changes
+
+- [#732](https://github.com/intlify/eslint-plugin-vue-i18n/pull/732) [`e0c6a3f`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/e0c6a3f2b3e0fe9858183da911a17c29632ed82f) Thanks [@andreww2012](https://github.com/andreww2012)! - refactor: replace lodash with vanilla js
+
 ## 4.4.0
 
 ### Minor Changes
