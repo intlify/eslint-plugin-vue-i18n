@@ -136,6 +136,16 @@ new RuleTester({
     }),
     ...getTestCasesFromFixtures({
       eslint: '>=6',
+      cwd: join(cwdRoot, './valid/vue3-sfc-local-overlap'),
+      localeDir: `./locales/*.json`,
+      options: [
+        {
+          src: '.'
+        }
+      ]
+    }),
+    ...getTestCasesFromFixtures({
+      eslint: '>=6',
       cwd: join(cwdRoot, './valid/constructor-option-format'),
       localeDir: {
         pattern: `./locales/*.{json,yaml,yml}`,
@@ -2064,6 +2074,7 @@ ${' '.repeat(6)}
         'path-locales/locales/ja/message.yaml': true,
         'path-locales/src/App.vue': true,
         'path-locales/src/main.js': true,
+        'vue3-sfc-local-overlap/src/App.vue': true,
         'vue-cli-format/src/App.vue': true,
         'vue-cli-format/src/main.js': true,
         'constructor-option-format/locales/index.json': {
@@ -2117,6 +2128,16 @@ ${' '.repeat(6)}
           ]
         },
         'multiple-locales/locales3/index.json': {
+          output: null,
+          errors: [
+            {
+              line: 1,
+              message:
+                "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+            }
+          ]
+        },
+        'vue3-sfc-local-overlap/locales/en-GB.json': {
           output: null,
           errors: [
             {
