@@ -4,7 +4,6 @@
  * @see https://github.com/eslint/eslint/blob/v5.2.0/lib/util/glob-util.js
  * @author kazuya kawaguchi (a.k.a. kazupon)
  */
-import { uniqBy } from 'lodash'
 import { existsSync, statSync, realpathSync } from 'fs'
 import { resolve } from 'path'
 import { globSync } from 'glob'
@@ -225,55 +224,53 @@ export function listFilesToProcess(
     })
   })
 
-  const allPathDescriptors = resolvedPathsByGlobPattern.reduce(
-    (pathsForAllGlobs, pathsForCurrentGlob, index) => {
-      if (
-        pathsForCurrentGlob.every(
-          pathDescriptor => pathDescriptor?.behavior === SILENTLY_IGNORE
-        )
-      ) {
-        throw new (
-          pathsForCurrentGlob.length ? AllFilesIgnoredError : NoFilesFoundError
-        )(globPatterns[index])
+  const allPathDescriptors = resolvedPathsByGlobPattern.reduce<
+    Map<string, /* file name */ boolean /* is ignored */>
+  >((pathsForAllGlobs, pathsForCurrentGlob, index) => {
+    if (
+      pathsForCurrentGlob.every(
+        pathDescriptor => pathDescriptor?.behavior === SILENTLY_IGNORE
+      )
+    ) {
+      throw new (
+        pathsForCurrentGlob.length ? AllFilesIgnoredError : NoFilesFoundError
+      )(globPatterns[index])
+    }
+
+    pathsForCurrentGlob.forEach(pathDescriptor => {
+      if (!pathDescriptor || pathsForAllGlobs.has(pathDescriptor.filename)) {
+        return
       }
 
-      pathsForCurrentGlob.forEach(pathDescriptor => {
-        switch (pathDescriptor?.behavior) {
-          case NORMAL_LINT:
-            pathsForAllGlobs.push({
-              filename: pathDescriptor.filename,
-              ignored: false
-            })
-            break
-          case IGNORE_AND_WARN:
-            pathsForAllGlobs.push({
-              filename: pathDescriptor.filename,
-              ignored: true
-            })
-            break
-          case SILENTLY_IGNORE:
-            // do nothing
-            break
+      switch (pathDescriptor.behavior) {
+        case NORMAL_LINT:
+          pathsForAllGlobs.set(pathDescriptor.filename, false)
+          break
+        case IGNORE_AND_WARN:
+          pathsForAllGlobs.set(pathDescriptor.filename, true)
+          break
+        case SILENTLY_IGNORE:
+          // do nothing
+          break
 
-          default:
-            throw new Error(
-              `Unexpected file behavior for ${pathDescriptor?.filename}`
-            )
-        }
-      })
+        default:
+          throw new Error(
+            `Unexpected file behavior for ${pathDescriptor.filename}`
+          )
+      }
+    })
 
-      return pathsForAllGlobs
-    },
-    [] as {
-      filename: string
-      ignored: boolean
-    }[]
+    return pathsForAllGlobs
+  }, new Map())
+
+  const result = Array.from(
+    allPathDescriptors.entries(),
+    ([filename, ignored]) => ({
+      filename,
+      ignored
+    })
   )
 
-  const ret = uniqBy(
-    allPathDescriptors,
-    pathDescriptor => pathDescriptor.filename
-  )
-  debug(ret)
-  return ret
+  debug(result)
+  return result
 }
