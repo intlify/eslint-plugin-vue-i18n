@@ -1,5 +1,11 @@
 # @intlify/eslint-plugin-vue-i18n
 
+## 4.5.1
+
+### Patch Changes
+
+- [#738](https://github.com/intlify/eslint-plugin-vue-i18n/pull/738) [`a573c37`](https://github.com/intlify/eslint-plugin-vue-i18n/commit/a573c3729bc0a533070eeaaa23279a41b43a2150) Thanks [@iichernyshev](https://github.com/iichernyshev)! - Fix false positives in `no-unused-keys` when a used key is a prefix of another used key.
+
 ## 4.5.0
 
 ### Minor Changes
