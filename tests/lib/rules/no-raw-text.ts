@@ -1653,6 +1653,53 @@ tester.run('no-raw-text', rule as never, {
           ]
         }
       ]
+    },
+    {
+      // keyPrefix: the suggested key includes the prefix of the matched resource
+      filename: 'test.vue',
+      code: `<template><p>This field is required</p></template>`,
+      settings: {
+        'vue-i18n': {
+          localeDir: [
+            {
+              pattern:
+                './tests/fixtures/no-raw-text/key-prefix/locales/**/main.json',
+              localeKey: 'path',
+              localePattern: /\/(?<locale>[^/]+)\/[^/]+\.json$/
+            },
+            {
+              pattern:
+                './tests/fixtures/no-raw-text/key-prefix/locales/**/errors.json',
+              localeKey: 'path',
+              localePattern: /\/(?<locale>[^/]+)\/[^/]+\.json$/,
+              keyPrefix: 'errors'
+            }
+          ]
+        }
+      },
+      errors: [
+        {
+          message: `raw text 'This field is required' is used`,
+          suggestions: [
+            {
+              desc: `Replace to "{{$t('errors.required')}}".`,
+              output: `<template><p>{{$t('errors.required')}}</p></template>`
+            },
+            {
+              desc: "Add the resource to the '<i18n>' block.",
+              output: `<i18n>
+{
+  "en": {
+    "This field is required": "This field is required"
+  }
+}
+</i18n>
+
+<template><p>{{$t('This field is required')}}</p></template>`
+            }
+          ]
+        }
+      ]
     }
   ]
 })

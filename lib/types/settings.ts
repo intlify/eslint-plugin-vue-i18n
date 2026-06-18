@@ -39,4 +39,13 @@ export interface SettingsVueI18nLocaleDirObject {
    * If you omit it, it will be captured from the resource path with the same regular expression pattern as `vue-cli-plugin-i18n`.
    */
   localePattern?: string | RegExp
+  /**
+   * Specifies the prefix key for the localization messages stored in the matched files.
+   *
+   * The messages of each matched file are treated as if they were nested under this key.
+   * For example, when set to `'foo.bar'`, the contents of the file are resolved as the
+   * messages located at the `foo.bar` key path. This is useful when localization messages
+   * of a single locale are split across multiple files that are merged under different keys.
+   */
+  keyPrefix?: string
 }
