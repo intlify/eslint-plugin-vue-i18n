@@ -31,6 +31,11 @@ const YAML_FILENAME_LOCALE_KEY_TYPE_KEY = join(
   'constructor-option-format/locales/test.yaml'
 )
 
+const JSON_FILENAME_LOCALE_KEY_PREFIX = join(
+  FIXTURES_ROOT,
+  'key-prefix/locales/en/errors.json'
+)
+
 const SETTINGS = {
   FILE: {
     'vue-i18n': {
@@ -49,6 +54,26 @@ const SETTINGS = {
         )}/*.{json,yaml,yml}`,
         localeKey: 'key'
       }
+    }
+  },
+  KEY_PREFIX: {
+    'vue-i18n': {
+      localeDir: [
+        {
+          pattern: `${join(FIXTURES_ROOT, 'key-prefix/locales')}/**/main.json`,
+          localeKey: 'path',
+          localePattern: /\/(?<locale>[^/]+)\/[^/]+\.json$/
+        },
+        {
+          pattern: `${join(
+            FIXTURES_ROOT,
+            'key-prefix/locales'
+          )}/**/errors.json`,
+          localeKey: 'path',
+          localePattern: /\/(?<locale>[^/]+)\/[^/]+\.json$/,
+          keyPrefix: 'errors'
+        }
+      ]
     }
   }
 }
@@ -73,6 +98,11 @@ const OPTIONS = {
     filename: YAML_FILENAME_LOCALE_KEY_TYPE_KEY,
     languageOptions: { parser: yamlParser },
     settings: SETTINGS.KEY
+  },
+  JSON_LOCALE_KEY_PREFIX: {
+    filename: JSON_FILENAME_LOCALE_KEY_PREFIX,
+    languageOptions: { parser: jsonParser },
+    settings: SETTINGS.KEY_PREFIX
   }
 }
 
@@ -148,6 +178,16 @@ tester.run('no-missing-keys-in-other-locales', rule as never, {
       : Message
       `,
       ...OPTIONS.YAML_LOCALE_KEY_TYPE_FILE
+    },
+    {
+      // keyPrefix: all keys exist in the other locale
+      code: `{"required": "test", "nested": {"field": "test"}}`,
+      ...OPTIONS.JSON_LOCALE_KEY_PREFIX
+    },
+    {
+      // keyPrefix: nested key exists in the other locale
+      code: `{"nested": {"field": "test"}}`,
+      ...OPTIONS.JSON_LOCALE_KEY_PREFIX
     }
   ],
 
@@ -396,6 +436,18 @@ tester.run('no-missing-keys-in-other-locales', rule as never, {
         "'missing7' does not exist in 'ja' locale(s)",
         "'missing8' does not exist in 'ja' locale(s)"
       ]
+    },
+    {
+      // keyPrefix: key missing in the other locale is reported with the prefix
+      code: `{"required": "test", "nested": {"field": "test"}, "only-en": "test"}`,
+      ...OPTIONS.JSON_LOCALE_KEY_PREFIX,
+      errors: ["'errors.only-en' does not exist in 'ja' locale(s)"]
+    },
+    {
+      // keyPrefix: missing nested key is reported with the prefix
+      code: `{"required": "test", "nested": {"field": "test", "extra": "test"}}`,
+      ...OPTIONS.JSON_LOCALE_KEY_PREFIX,
+      errors: ["'errors.nested.extra' does not exist in 'ja' locale(s)"]
     }
   ]
 })

@@ -12,7 +12,7 @@ import type {
   RuleListener
 } from '../types'
 import type { LocaleMessage, LocaleMessages } from '../utils/locale-messages'
-import { joinPath } from '../utils/key-path'
+import { joinPath, parsePath } from '../utils/key-path'
 import { createRule } from '../utils/rule'
 import { getFilename, getSourceCode } from '../utils/compat'
 const debug = debugBuilder(
@@ -120,10 +120,28 @@ function create(context: RuleContext): RuleListener {
     let keyStack: KeyStack
     if (targetLocaleMessage.isResolvedLocaleByFileName()) {
       const locale = targetLocaleMessage.locales[0]
+      const keyPath: (string | number)[] = []
+      let otherLocaleMessages = getOtherLocaleMessages(locale)
+      if (targetLocaleMessage.keyPrefix) {
+        for (const path of parsePath(targetLocaleMessage.keyPrefix)) {
+          keyPath.push(path)
+          otherLocaleMessages = otherLocaleMessages.map(
+            ({ locale, dictList }) => ({
+              locale,
+              dictList: dictList
+                .map(dict => dict[path])
+                .filter(
+                  (dict): dict is I18nLocaleMessageDictionary =>
+                    dict != null && typeof dict === 'object'
+                )
+            })
+          )
+        }
+      }
       keyStack = {
         locale,
-        otherLocaleMessages: getOtherLocaleMessages(locale),
-        keyPath: []
+        otherLocaleMessages,
+        keyPath
       }
     } else {
       keyStack = {
