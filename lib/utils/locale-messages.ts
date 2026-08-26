@@ -39,6 +39,7 @@ export abstract class LocaleMessage {
   public readonly localeKey: LocaleKeyType
   public readonly file: string
   public readonly localePattern: RegExp
+  public readonly keyPrefix: string | undefined
   private _locales: string[] | undefined
   /**
    * @param {object} arg
@@ -46,17 +47,20 @@ export abstract class LocaleMessage {
    * @param {string[]} [arg.locales] The locales.
    * @param {LocaleKeyType} arg.localeKey Specifies how to determine the locale for localization messages.
    * @param {RegExp} args.localePattern Specifies how to determin the regular expression pattern for how to get the locale.
+   * @param {string} [arg.keyPrefix] Specifies the prefix key path that the messages of the file are nested under.
    */
   constructor({
     fullpath,
     locales,
     localeKey,
-    localePattern
+    localePattern,
+    keyPrefix
   }: {
     fullpath: string
     locales?: string[]
     localeKey: LocaleKeyType
     localePattern?: string | RegExp
+    keyPrefix?: string
   }) {
     this.fullpath = fullpath
     /** @type {LocaleKeyType} Specifies how to determine the locale for localization messages. */
@@ -64,6 +68,8 @@ export abstract class LocaleMessage {
     /** @type {string} The localization messages file name. */
     this.file = fullpath.replace(/^.*(\\|\/|:)/, '')
     this.localePattern = this.getLocalePatternWithRegex(localePattern)
+    /** @type {string | undefined} The prefix key path that the messages are nested under. */
+    this.keyPrefix = keyPrefix || undefined
 
     this._locales = locales
   }
@@ -122,6 +128,12 @@ export abstract class LocaleMessage {
    * Gets messages for the given locale.
    */
   getMessagesFromLocale(locale: string): I18nLocaleMessageDictionary {
+    return this.applyKeyPrefix(this.getLocaleMessagesInternal(locale))
+  }
+
+  private getLocaleMessagesInternal(
+    locale: string
+  ): I18nLocaleMessageDictionary {
     if (this.isResolvedLocaleByFileName()) {
       if (!this.locales.includes(locale)) {
         return {}
@@ -132,6 +144,23 @@ export abstract class LocaleMessage {
       return (this.messages[locale] || {}) as I18nLocaleMessageDictionary
     }
     return {}
+  }
+
+  /**
+   * Nests the given messages under the configured `keyPrefix`, if any.
+   */
+  private applyKeyPrefix(
+    messages: I18nLocaleMessageDictionary
+  ): I18nLocaleMessageDictionary {
+    if (!this.keyPrefix) {
+      return messages
+    }
+    const paths = parsePath(this.keyPrefix)
+    let result: I18nLocaleMessageDictionary = messages
+    for (let index = paths.length - 1; index >= 0; index--) {
+      result = { [paths[index]]: result }
+    }
+    return result
   }
 }
 
@@ -202,18 +231,21 @@ export class FileLocaleMessage extends LocaleMessage {
     fullpath,
     locales,
     localeKey,
-    localePattern
+    localePattern,
+    keyPrefix
   }: {
     fullpath: string
     locales?: string[]
     localeKey: LocaleKeyType
     localePattern?: string | RegExp
+    keyPrefix?: string
   }) {
     super({
       fullpath,
       locales,
       localeKey,
-      localePattern
+      localePattern,
+      keyPrefix
     })
     this._resource = new ResourceLoader(fullpath, fileName => {
       const ext = extname(fileName).toLowerCase()

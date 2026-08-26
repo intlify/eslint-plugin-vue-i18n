@@ -31,6 +31,27 @@ const localeDirs = [
   ]
 ]
 
+const keyPrefixLocalePattern = /\/(?<locale>[^/]+)\/[^/]+\.json$/u
+const keyPrefixSettings = {
+  'vue-i18n': {
+    localeDir: [
+      {
+        pattern:
+          './tests/fixtures/no-missing-keys/key-prefix/locales/**/main.json',
+        localeKey: 'path',
+        localePattern: keyPrefixLocalePattern
+      },
+      {
+        pattern:
+          './tests/fixtures/no-missing-keys/key-prefix/locales/**/errors.json',
+        localeKey: 'path',
+        localePattern: keyPrefixLocalePattern,
+        keyPrefix: 'errors'
+      }
+    ]
+  }
+}
+
 function buildTestsForLocales<
   T extends RawRuleTester.ValidTestCase | RawRuleTester.InvalidTestCase
 >(testcases: T[], otherTestcases: T[]): T[] {
@@ -235,6 +256,24 @@ tester.run('no-missing-keys', rule as never, {
               './tests/fixtures/no-missing-keys/complex-locales/locales/*.json'
           }
         }
+      },
+      {
+        // keyPrefix: key without prefix
+        filename: 'test.vue',
+        code: `<template>
+          {{ $t('hello') }}
+          {{ $t('messages.nested.hello') }}
+        </template>`,
+        settings: keyPrefixSettings
+      },
+      {
+        // keyPrefix: key resolved under the prefix
+        filename: 'test.vue',
+        code: `<template>
+          {{ $t('errors.required') }}
+          {{ $t('errors.nested.field') }}
+        </template>`,
+        settings: keyPrefixSettings
       }
     ]
   ),
@@ -412,6 +451,26 @@ tester.run('no-missing-keys', rule as never, {
             message: "'bar' does not exist in localization message resources",
             line: 14
           }
+        ]
+      },
+      {
+        // keyPrefix: key used without its required prefix is missing
+        filename: 'test.vue',
+        code: `<template>
+          {{ $t('required') }}
+        </template>`,
+        settings: keyPrefixSettings,
+        errors: [`'required' does not exist in localization message resources`]
+      },
+      {
+        // keyPrefix: missing key under the prefix
+        filename: 'test.vue',
+        code: `<template>
+          {{ $t('errors.missing') }}
+        </template>`,
+        settings: keyPrefixSettings,
+        errors: [
+          `'errors.missing' does not exist in localization message resources`
         ]
       }
     ]
