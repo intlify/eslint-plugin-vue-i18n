@@ -36,8 +36,8 @@ importers:
         specifier: ^4.0.0
         version: 4.0.0
       is-language-code:
-        specifier: ^3.1.0
-        version: 3.1.0
+        specifier: ^5.0.0
+        version: 5.2.2
       js-yaml:
         specifier: ^4.1.0
         version: 4.3.1
@@ -2216,8 +2216,9 @@ packages:
   is-hexadecimal@1.0.4:
     resolution: {integrity: sha512-gyPJuv83bHMpocVYoqof5VDiZveEoGoFL8m3BXNb2VW8Xs+rz9kqO8LOQ5DH6EsuvilT1ApazU0pyl+ytbPtlw==}
 
-  is-language-code@3.1.0:
-    resolution: {integrity: sha512-zJdQ3QTeLye+iphMeK3wks+vXSRFKh68/Pnlw7aOfApFSEIOhYa8P9vwwa6QrImNNBMJTiL1PpYF0f4BxDuEgA==}
+  is-language-code@5.2.2:
+    resolution: {integrity: sha512-k1sHKmFnGUwKYgzEX4lLrRONPOQZ49sxI1unasz+ldcddmJj3c7PLmxVxazZtRGJO4Aiww6CrRbCp3upJBa5Gw==}
+    engines: {node: '>=18.20.8'}
 
   is-negative-zero@2.0.2:
     resolution: {integrity: sha512-dqJvarLawXsFbNDeJW7zAz8ItJ9cd28YufuuFzh0G8pNHjJMnY08Dv7sYX2uF5UpQOwieAeOExEYAWWfu7ZZUA==}
@@ -5553,9 +5554,7 @@ snapshots:
 
   is-hexadecimal@1.0.4: {}
 
-  is-language-code@3.1.0:
-    dependencies:
-      '@babel/runtime': 7.22.6
+  is-language-code@5.2.2: {}
 
   is-negative-zero@2.0.2: {}
 
