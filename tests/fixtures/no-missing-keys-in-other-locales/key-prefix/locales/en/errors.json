@@ -1,0 +1,6 @@
+{
+  "required": "This field is required",
+  "nested": {
+    "field": "Invalid field"
+  }
+}

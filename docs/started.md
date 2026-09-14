@@ -69,6 +69,13 @@ export default [
         //     pattern: './path/to/locales3/*.{json,json5,yaml,yml}',
         //     localeKey: 'key'
         //   },
+        //   {
+        //     // 'keyPrefix' case (messages are nested under the `errors` key)
+        //     pattern: './path/to/locales4/**/errors.{json,json5,yaml,yml}',
+        //     localePattern: /^.*\/(?<locale>[A-Za-z0-9-_]+)\/.*\.(json5?|ya?ml)$/,
+        //     localeKey: 'path',
+        //     keyPrefix: 'errors'
+        //   },
         // ]
 
         // Specify the version of `vue-i18n` you are using.
@@ -140,6 +147,13 @@ module.exports = {
       //     pattern: './path/to/locales3/*.{json,json5,yaml,yml}',
       //     localeKey: 'key'
       //   },
+      //   {
+      //     // 'keyPrefix' case (messages are nested under the `errors` key)
+      //     pattern: './path/to/locales4/**/errors.{json,json5,yaml,yml}',
+      //     localePattern: /^.*\/(?<locale>[A-Za-z0-9-_]+)\/.*\.(json5?|ya?ml)$/,
+      //     localeKey: 'path',
+      //     keyPrefix: 'errors'
+      //   },
       // ]
 
       // Specify the version of `vue-i18n` you are using.
@@ -170,6 +184,7 @@ This plugin provides some predefined configs. You can use the following configs 
       - `'path'` ... Determine the locale name from the path. In this case, the locale must be had structured with your rule on the path. It can be captured with the regular expression named capture. The resource file should only contain messages for that locale.
       - `'key'` ... Determine the locale name from the root key name of the file contents. The value of that key should only contain messages for that locale. Used when the resource file is in the format given to the `messages` option of the `VueI18n` constructor option.
     - `localePattern` ... Specifies how to determine pattern the locale for localization messages. This option means, when `localeKey` is `'path'`, you will need to capture the locale using a regular expression. You need to use the locale capture as a named capture `?<locale>`, so it’s be able to capture from the path of the locale resources. If you omit it, it will be captured from the resource path with the same regular expression pattern as `vue-cli-plugin-i18n`.
+    - `keyPrefix` (Optional, `string`) ... Specifies the prefix key path under which the messages of the matched files are nested. The contents of each matched file are treated as if they were located at this key path. This is useful when the localization messages of a single locale are split across multiple files that are merged under different keys. For example, with `keyPrefix: 'errors'`, the messages of the matched file are resolved at the `errors` key path (so a `required` key in the file is referenced as `errors.required` in your source code).
   - Array option ... An array of String option and Object option. Useful if you have multiple locale directories.
 - `messageSyntaxVersion` (Optional) ... Specify the version of `vue-i18n` you are using. If not specified, the message will be parsed twice. Also, some rules require this setting.
 

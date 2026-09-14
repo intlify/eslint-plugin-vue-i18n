@@ -57,23 +57,40 @@ function getUsedKeysMap(
   /** @type {UsedKeys} */
   const usedKeysMap: UsedKeys = {}
 
-  for (const key of [...usedkeys, ...collectLinkedKeys(values, context)]) {
-    usedKeysMap[key] = usedKeysMap[key] || {} // Set original key.
-    const paths = parsePath(key)
-    let map = usedKeysMap
-    while (paths.length) {
-      const path = paths.shift()!
-      map = map[path] = (map[path] as UsedKeys) || {}
+  // Keys used in the source code are referenced with the `keyPrefix` (if any),
+  // while linked keys (e.g. `@:foo`) are resolved relative to the file itself.
+  const addKeys = (target: UsedKeys, keys: Iterable<string>) => {
+    for (const key of keys) {
+      target[key] = target[key] || {} // Set original key.
+      const paths = parsePath(key)
+      let map = target
+      while (paths.length) {
+        const path = paths.shift()!
+        map = map[path] = (map[path] as UsedKeys) || {}
+      }
     }
   }
 
+  addKeys(usedKeysMap, usedkeys)
+
+  // When `keyPrefix` is specified, the messages of the file are nested under
+  // that prefix, so move into the prefix to align with the file structure.
+  let fileUsedKeysMap = usedKeysMap
+  if (targetLocaleMessage.keyPrefix) {
+    for (const path of parsePath(targetLocaleMessage.keyPrefix)) {
+      fileUsedKeysMap = (fileUsedKeysMap[path] as UsedKeys) || {}
+    }
+  }
+
+  addKeys(fileUsedKeysMap, collectLinkedKeys(values, context))
+
   if (targetLocaleMessage.localeKey === 'key') {
     return targetLocaleMessage.locales.reduce((keys, locale) => {
-      keys[locale] = usedKeysMap
+      keys[locale] = fileUsedKeysMap
       return keys
     }, {} as UsedKeys)
   }
-  return usedKeysMap
+  return fileUsedKeysMap
 }
 
 function create(context: RuleContext): RuleListener {
@@ -86,7 +103,8 @@ function create(context: RuleContext): RuleListener {
     usedKeys: UsedKeys,
     {
       buildFixer,
-      buildAllFixer
+      buildAllFixer,
+      initialKeyPath = []
     }: {
       buildFixer: (
         node: N
@@ -96,10 +114,11 @@ function create(context: RuleContext): RuleListener {
       buildAllFixer: (
         node: N[]
       ) => (fixer: RuleFixer) => null | Fix | Fix[] | IterableIterator<Fix>
+      initialKeyPath?: (string | number)[]
     }
   ) {
     /** @type {PathStack} */
-    let pathStack: PathStack = { usedKeys, keyPath: [] }
+    let pathStack: PathStack = { usedKeys, keyPath: [...initialKeyPath] }
     const reports: { node: N; keyPath: (string | number)[] }[] = []
     return {
       enterKey(key: string | number, reportNode: N, ignoreReport: boolean) {
@@ -162,8 +181,13 @@ function create(context: RuleContext): RuleListener {
    * @param {SourceCode} sourceCode
    * @param {UsedKeys} usedKeys
    */
-  function createVisitorForJson(sourceCode: SourceCode, usedKeys: UsedKeys) {
+  function createVisitorForJson(
+    sourceCode: SourceCode,
+    usedKeys: UsedKeys,
+    initialKeyPath: (string | number)[] = []
+  ) {
     const verifyContext = createVerifyContext(usedKeys, {
+      initialKeyPath,
       buildFixer(node: JSONAST.JSONNode) {
         return fixer => fixer.removeRange(fixRemoveRange(node))
       },
@@ -269,8 +293,13 @@ function create(context: RuleContext): RuleListener {
   /**
    * Create node visitor for YAML
    */
-  function createVisitorForYaml(sourceCode: SourceCode, usedKeys: UsedKeys) {
+  function createVisitorForYaml(
+    sourceCode: SourceCode,
+    usedKeys: UsedKeys,
+    initialKeyPath: (string | number)[] = []
+  ) {
     const verifyContext = createVerifyContext(usedKeys, {
+      initialKeyPath,
       buildFixer(node: YAMLAST.YAMLNode) {
         return function* (fixer) {
           const parentToCheck = node.parent!
@@ -560,10 +589,17 @@ function create(context: RuleContext): RuleListener {
       usedLocaleMessageKeys,
       context
     )
+    // When `keyPrefix` is specified (except for the `'key'` locale key, whose
+    // root keys are the locales), reported key paths are prefixed so they match
+    // the keys referenced in the source code.
+    const initialKeyPath =
+      targetLocaleMessage.keyPrefix && targetLocaleMessage.localeKey !== 'key'
+        ? parsePath(targetLocaleMessage.keyPrefix)
+        : []
     if (sourceCode.parserServices.isJSON) {
-      return createVisitorForJson(sourceCode, usedKeys)
+      return createVisitorForJson(sourceCode, usedKeys, initialKeyPath)
     } else if (sourceCode.parserServices.isYAML) {
-      return createVisitorForYaml(sourceCode, usedKeys)
+      return createVisitorForYaml(sourceCode, usedKeys, initialKeyPath)
     }
     return {}
   } else {
