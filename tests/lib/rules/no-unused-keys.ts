@@ -191,6 +191,28 @@ new RuleTester({
         }
       ]
     }),
+    ...getTestCasesFromFixtures({
+      eslint: '>=6',
+      cwd: join(cwdRoot, './valid/key-prefix'),
+      localeDir: [
+        {
+          pattern: `./locales/**/main.json`,
+          localeKey: 'path',
+          localePattern: /^.*\/(?<locale>[A-Za-z0-9-_]+)\/.*\.(json5?|ya?ml)$/
+        },
+        {
+          pattern: `./locales/**/errors.json`,
+          localeKey: 'path',
+          localePattern: /^.*\/(?<locale>[A-Za-z0-9-_]+)\/.*\.(json5?|ya?ml)$/,
+          keyPrefix: 'errors'
+        }
+      ],
+      options: [
+        {
+          src: '.'
+        }
+      ]
+    }),
     {
       filename: 'test.vue',
       code: `
@@ -2146,6 +2168,27 @@ ${' '.repeat(6)}
                 "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
             }
           ]
+        },
+        'key-prefix/src/App.vue': true,
+        'key-prefix/locales/en/main.json': {
+          output: null,
+          errors: [
+            {
+              line: 1,
+              message:
+                "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+            }
+          ]
+        },
+        'key-prefix/locales/en/errors.json': {
+          output: null,
+          errors: [
+            {
+              line: 1,
+              message:
+                "You need to set 'localeDir' at 'settings', or '<i18n>' blocks. See the 'eslint-plugin-vue-i18n' documentation"
+            }
+          ]
         }
       }
     ),
@@ -2874,6 +2917,52 @@ hello_dio: "こんにちは、アンダースコア DIO！"
     "hello_dio": "こんにちは、アンダースコア DIO！",
     "hello {name}": "こんにちは、{name}！"
   }
+}
+`
+                }
+              ]
+            }
+          ]
+        }
+      }
+    ),
+    ...getTestCasesFromFixtures(
+      {
+        eslint: '>=6',
+        cwd: join(cwdRoot, './invalid/key-prefix'),
+        localeDir: [
+          {
+            pattern: `./locales/**/main.json`,
+            localeKey: 'path',
+            localePattern: /^.*\/(?<locale>[A-Za-z0-9-_]+)\/.*\.(json5?|ya?ml)$/
+          },
+          {
+            pattern: `./locales/**/errors.json`,
+            localeKey: 'path',
+            localePattern:
+              /^.*\/(?<locale>[A-Za-z0-9-_]+)\/.*\.(json5?|ya?ml)$/,
+            keyPrefix: 'errors'
+          }
+        ],
+        options: [{ src: '.', enableFix: true }]
+      },
+      {
+        'src/App.vue': true,
+        'locales/en/main.json': true,
+        'locales/en/errors.json': {
+          output: `{
+  "required": "This field is required"
+}
+`,
+          errors: [
+            {
+              line: 3,
+              message: "unused 'errors.unused' key",
+              suggestions: [
+                {
+                  desc: "Remove the 'errors.unused' key.",
+                  output: `{
+  "required": "This field is required"
 }
 `
                 }
