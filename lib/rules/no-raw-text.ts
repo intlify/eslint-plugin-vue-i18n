@@ -831,13 +831,15 @@ export = createRule({
             additionalProperties: false
           },
           ignoreNodes: {
-            type: 'array'
+            type: 'array',
+            items: { type: 'string' }
           },
           ignorePattern: {
             type: 'string'
           },
           ignoreText: {
-            type: 'array'
+            type: 'array',
+            items: { type: 'string' }
           }
         },
         additionalProperties: false
