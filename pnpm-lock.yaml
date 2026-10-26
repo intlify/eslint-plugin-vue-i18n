@@ -24,8 +24,8 @@ importers:
         specifier: ^0.6.0
         version: 0.6.3(eslint@10.0.1(jiti@2.6.1))
       glob:
-        specifier: ^10.3.3
-        version: 10.5.0
+        specifier: ^13.0.0
+        version: 13.0.6
       globals:
         specifier: ^17.0.0
         version: 17.6.0
@@ -4330,7 +4330,7 @@ snapshots:
 
   '@types/glob@9.0.0':
     dependencies:
-      glob: 10.5.0
+      glob: 13.0.6
 
   '@types/is-ci@3.0.0':
     dependencies:
