@@ -13,7 +13,7 @@ import type {
   RuleListener,
   SourceCode
 } from '../types'
-import { joinPath } from '../utils/key-path'
+import { joinPath, parsePath } from '../utils/key-path'
 import { getCwd } from '../utils/get-cwd'
 import { createRule } from '../utils/rule'
 import { getFilename, getSourceCode } from '../utils/compat'
@@ -52,7 +52,11 @@ function create(context: RuleContext): RuleListener {
   ): PathStack {
     if (targetLocaleMessage.isResolvedLocaleByFileName()) {
       const locale = targetLocaleMessage.locales[0]
-      return createInitLocalePathStack(locale, otherLocaleMessages)
+      return createInitLocalePathStack(
+        locale,
+        otherLocaleMessages,
+        targetLocaleMessage.keyPrefix
+      )
     } else {
       return {
         keyPath: [],
@@ -63,17 +67,31 @@ function create(context: RuleContext): RuleListener {
   }
   function createInitLocalePathStack(
     locale: string,
-    otherLocaleMessages: LocaleMessage[]
+    otherLocaleMessages: LocaleMessage[],
+    keyPrefix?: string
   ): PathStack {
+    const keyPath: (string | number)[] = []
+    let otherDictionaries: DictData[] = otherLocaleMessages.map(lm => {
+      return {
+        dict: lm.getMessagesFromLocale(locale),
+        source: lm
+      }
+    })
+    if (keyPrefix) {
+      for (const path of parsePath(keyPrefix)) {
+        keyPath.push(path)
+        otherDictionaries = otherDictionaries
+          .map(({ dict, source }) => ({ dict: dict[path], source }))
+          .filter(
+            (data): data is DictData =>
+              data.dict != null && typeof data.dict === 'object'
+          )
+      }
+    }
     return {
-      keyPath: [],
+      keyPath,
       locale,
-      otherDictionaries: otherLocaleMessages.map(lm => {
-        return {
-          dict: lm.getMessagesFromLocale(locale),
-          source: lm
-        }
-      })
+      otherDictionaries
     }
   }
 

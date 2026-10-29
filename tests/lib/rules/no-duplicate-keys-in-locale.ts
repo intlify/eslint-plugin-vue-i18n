@@ -110,6 +110,24 @@ new RuleTester({
           localeKey: 'key'
         }
       ]
+    }),
+    // keyPrefix: namespaces are nested under different keys, so there are no
+    // duplicates across files.
+    ...getTestCasesFromFixtures({
+      cwd: join(cwdRoot, './valid/key-prefix'),
+      localeDir: [
+        {
+          pattern: `./locales/**/main.json`,
+          localeKey: 'path',
+          localePattern: /\/(?<locale>[^/]+)\/[^/]+\.json$/
+        },
+        {
+          pattern: `./locales/**/errors.json`,
+          localeKey: 'path',
+          localePattern: /\/(?<locale>[^/]+)\/[^/]+\.json$/,
+          keyPrefix: 'errors'
+        }
+      ]
     })
   ],
   invalid: [
@@ -622,6 +640,64 @@ new RuleTester({
             {
               line: 28,
               message: "duplicate key 'json-dupe'"
+            }
+          ]
+        }
+      }
+    ),
+    // keyPrefix: `main.json` also defines `errors.required`, which collides with
+    // the `errors.json` file that is nested under the `errors` key prefix.
+    ...getTestCasesFromFixtures(
+      {
+        cwd: join(cwdRoot, './invalid/key-prefix'),
+        localeDir: [
+          {
+            pattern: `./locales/**/main.json`,
+            localeKey: 'path',
+            localePattern: /\/(?<locale>[^/]+)\/[^/]+\.json$/
+          },
+          {
+            pattern: `./locales/**/errors.json`,
+            localeKey: 'path',
+            localePattern: /\/(?<locale>[^/]+)\/[^/]+\.json$/,
+            keyPrefix: 'errors'
+          }
+        ]
+      },
+      {
+        'locales/en/main.json': {
+          errors: [
+            {
+              line: 4,
+              message:
+                "duplicate key 'errors.required' in 'en'. \"./locales/en/errors.json\" has the same key"
+            }
+          ]
+        },
+        'locales/en/errors.json': {
+          errors: [
+            {
+              line: 2,
+              message:
+                "duplicate key 'errors.required' in 'en'. \"./locales/en/main.json\" has the same key"
+            }
+          ]
+        },
+        'locales/ja/main.json': {
+          errors: [
+            {
+              line: 4,
+              message:
+                "duplicate key 'errors.required' in 'ja'. \"./locales/ja/errors.json\" has the same key"
+            }
+          ]
+        },
+        'locales/ja/errors.json': {
+          errors: [
+            {
+              line: 2,
+              message:
+                "duplicate key 'errors.required' in 'ja'. \"./locales/ja/main.json\" has the same key"
             }
           ]
         }

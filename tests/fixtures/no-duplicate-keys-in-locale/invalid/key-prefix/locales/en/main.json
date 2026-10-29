@@ -1,0 +1,6 @@
+{
+  "hello": "hello world",
+  "errors": {
+    "required": "This field is required (defined in main)"
+  }
+}
