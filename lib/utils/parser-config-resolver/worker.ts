@@ -2,11 +2,14 @@ import { runAsWorker } from 'synckit'
 import { getESLint } from 'eslint-compat-utils/eslint'
 import type { Linter } from 'eslint'
 import type { ParseResult } from '.'
+import { CacheLoader } from '../cache-loader'
 import { parseByParser } from './parse-by-parser'
 const ESLint = getESLint()
+// A new ESLint instance reloads the config file and rebuilds the config array.
+const eslintLoader = new CacheLoader((cwd: string) => new ESLint({ cwd }))
 
 runAsWorker(async (cwd: string, filePath: string): Promise<ParseResult> => {
-  const eslint = new ESLint({ cwd })
+  const eslint = eslintLoader.get(cwd)
   const config: Linter.FlatConfig =
     await eslint.calculateConfigForFile(filePath)
   const languageOptions = config.languageOptions || {}
