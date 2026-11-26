@@ -86,7 +86,7 @@
     "@types/js-yaml": "^4.0.5",
     "@types/json-schema": "^7.0.12",
     "@types/mocha": "^10.0.1",
-    "@types/node": "^24.0.0",
+    "@types/node": "^26.0.0",
     "@types/prettier": "^3.0.0",
     "@types/semver": "^7.5.0",
     "@typescript-eslint/eslint-plugin": "^8.56.0",
